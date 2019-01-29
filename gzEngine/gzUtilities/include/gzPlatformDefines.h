@@ -108,9 +108,9 @@
 
 #if defined(__WIN32__) || defined(_WIN32)	 //If its a Windows platform
 # define GZ_PLATFORM GZ_PLATFORM_WIN32
-#elif defined( __APPLE_CC__ )				       //if its a Apple platform
+#elif defined( __APPLE_CC__ )	 //if its a Apple platform
 # define GZ_PLATFORM GZ_PLATFORM_OSX
-#else										                   //Will consider it as a Linux platform
+#else 	//Will consider it as a Linux platform
 # define GZ_PLATFORM GZ_PLATFORM_LINUX
 #endif
 
@@ -205,5 +205,67 @@
 # define GZ_PLUGIN_EXPORT __attribute__((visibility ("default")))
 #endif
 
+/************************************************************************/
+/*                                                                      */
+/************************************************************************/
+#if GZ_PLATFORM == GZ_PLATFORM_WIN32
+# if defined(_DEBUG) || defined(DEBUG)
+#   define GZ_DEBUG_MODE 1
+# else
+#   define GZ_DEBUG_MODE 0
+# endif
+# if GZ_COMPILER == GZ_COMPILER_INTEL
+#   define GZ_THREADLOCAL __declspec(thread)
+# endif
+#endif
+
+/************************************************************************/
+/*                                                                      */
+/************************************************************************/
+#if GZ_PLATFORM == GZ_PLATFORM_LINUX || GZ_PLATFORM == GZ_PLATFORM_OSX
+#define stricmp strcasecmp
+
+//
+# if defined(_DEBUG) || defined(DEBUG)
+#   define GZ_DEBUG_MODE 1
+# else
+#   define GZ_DEBUG_MODE 0
+# endif
+# if GZ_COMPILER == GZ_COMPILER_INTEL
+#   define GZ_THREADLOCAL __thread
+# endif
+#endif
+
+/************************************************************************/
+/*                                                                      */
+/************************************************************************/
+#if GZ_DEBUG_MODE
+# define GZ_DEBUG_ONLY(x) x
+# define GZ_ASSERT(x) assert(x)
+#else
+# define GZ_DEBUG_ONLY(x)
+# define GZ_ASSERT(x)
+#endif
+
+/************************************************************************/
+/*                                                                      */
+/************************************************************************/
+
+//
+#if GZ_COMPILER == GZ_COMPILER_MSVC
+/**
+ * 
+ */
+
+//
+# define _CRT_SECURE_NO_WARNINGS
+/**
+ * 
+ */
+
+#pragma  warning(disable : 4201)
+#pragma  warning(disable : 4251)
+#pragma  warning(disable : 4996)
+#pragma  warning(disable : 4503)
 
 
