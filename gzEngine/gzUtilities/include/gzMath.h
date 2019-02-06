@@ -8,8 +8,8 @@ namespace gzEngineSDK {
     GZ_PLATFORM == GZ_PLATFORM_LINUX || \
     GZ_PLATFORM == GZ_PLATFORM_OSX
 
-  using PlatformMath Math;
+  using Math = PlatformMath;
 #else
-  using PlatformMath Math;
+  using Math = PlatformMath;
 #endif
 }

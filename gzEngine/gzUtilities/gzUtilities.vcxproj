@@ -169,9 +169,7 @@
     <ClInclude Include="include\gzPlatformMath.h" />
     <ClInclude Include="include\gzPlatformTypes.h" />
     <ClInclude Include="include\gzPrerequisitesUtilities.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\deletemecpp.cpp" />
+    <ClInclude Include="include\gzVector2f.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

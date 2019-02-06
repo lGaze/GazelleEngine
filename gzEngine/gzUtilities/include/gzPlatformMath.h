@@ -1,3 +1,9 @@
+/****************************************************************************
+/* @filename gzPlatformMath
+/* @author Gazelle
+/* @date 2019/02/05
+/* @brief 
+/*****************************************************************************/
 #pragma once
 
 #include "gzPrerequisitesUtilities.h"
@@ -142,5 +148,82 @@ namespace gzEngineSDK {
     log10(float Value) {
       return std::log10f(Value);
     }
+
+    /************************************************************************/
+    /* Power functions                                                      */
+    /************************************************************************/
+
+    /**
+     * @brief 
+     */
+    static FORCEINLINE float
+    pow(float Value, float Exponent) {
+      return std::powf(Value, Exponent);
+    }
+
+    /**
+     * @brief 
+     */
+     static FORCEINLINE float
+     sqrt(float Value) {
+       return std::sqrt(Value);
+     }
+
+     /************************************************************************/
+     /* Rounding functions                                                   */
+     /************************************************************************/
+
+     /**
+      * @brief 
+      */
+     static FORCEINLINE float
+     ceil(float Value) {
+       return std::ceilf(Value);
+     }
+
+     /**
+      * @brief 
+      */
+     static FORCEINLINE float
+     floor(float Value) {
+       return std::floorf(Value);
+     }
+
+     /**
+      * @brief 
+      */
+     static FORCEINLINE float
+     trunc(float Value) {
+       return std::truncf(Value);
+     }
+
+     /**
+      * @brief 
+      */
+     static FORCEINLINE float
+     round(float Value) {
+       return std::roundf(Value);
+     }
+
+     /************************************************************************/
+     /* Minimum and Maximum functions                                        */
+     /************************************************************************/
+     
+     /**
+      * @brief 
+      */
+     static FORCEINLINE float
+     max(float Value1, float Value2 ) {
+       return std::fmaxf(Value1, Value2);
+     }
+
+     /**
+      * @brief 
+      */
+     static FORCEINLINE float
+     min(float Value1, float Value2) {
+     return std::fminf(Value1, Value2);
+     }
+
   };
 }
