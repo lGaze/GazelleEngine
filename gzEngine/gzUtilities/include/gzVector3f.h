@@ -9,7 +9,6 @@
 #pragma once
 
 #include "gzPrerequisitesUtilities.h"
-#include "gzMath.h"
 
 namespace gzEngineSDK {
   class GZ_UTILITY_EXPORT Vector3f

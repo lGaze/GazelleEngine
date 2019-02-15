@@ -97,7 +97,7 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <PreprocessorDefinitions />
+      <PreprocessorDefinitions>GZ_UTILITY_EXPORTS</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -114,7 +114,7 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <PreprocessorDefinitions />
+      <PreprocessorDefinitions>GZ_UTILITY_EXPORTS</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -133,7 +133,7 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <PreprocessorDefinitions />
+      <PreprocessorDefinitions>GZ_UTILITY_EXPORTS</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -154,7 +154,7 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <PreprocessorDefinitions />
+      <PreprocessorDefinitions>GZ_UTILITY_EXPORTS</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -164,12 +164,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\gzForwardDeclarationUtilities.h" />
     <ClInclude Include="include\gzMath.h" />
     <ClInclude Include="include\gzMatrix4.h" />
     <ClInclude Include="include\gzPlatformDefines.h" />
     <ClInclude Include="include\gzPlatformMath.h" />
     <ClInclude Include="include\gzPlatformTypes.h" />
     <ClInclude Include="include\gzPrerequisitesUtilities.h" />
+    <ClInclude Include="include\gzStdHeaders.h" />
     <ClInclude Include="include\gzVector2f.h" />
     <ClInclude Include="include\gzVector3f.h" />
     <ClInclude Include="include\gzVector4f.h" />
