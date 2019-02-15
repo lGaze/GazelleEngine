@@ -14,7 +14,7 @@
 namespace gzEngineSDK {
   class GZ_UTILITY_EXPORT Matrix4
   {
-  public:
+   public:
 
     /**
      * @brief 
@@ -103,7 +103,7 @@ namespace gzEngineSDK {
     /************************************************************************/
     /* Member declaration                                                   */
     /************************************************************************/
-  public:
+   public:
 
     union {
 

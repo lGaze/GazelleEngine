@@ -15,8 +15,10 @@
 /* Platform specific stuff                                                 */
 /***************************************************************************/
 #include "gzPlatformDefines.h"
+
 /***************************************************************************/
 /* Include of short-hand names for varius built-in types                   */
 /***************************************************************************/
 #include "gzPlatformTypes.h"    //Platform types
 #include "gzStdHeaders.h"       //Commonly used standard headers
+#include "gzForwardDeclarationUtilities.h"    //Forward declarations

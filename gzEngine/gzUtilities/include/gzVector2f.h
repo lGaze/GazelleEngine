@@ -12,7 +12,7 @@
 namespace gzEngineSDK {
   class GZ_UTILITY_EXPORT Vector2f
   {
-  public:
+   public:
 
     /**
      * @brief 
@@ -128,7 +128,7 @@ namespace gzEngineSDK {
    /************************************************************************/
    /* Member declarations                                                  */
    /************************************************************************/
-
+  public:
    /**
     * @brief 
     */
