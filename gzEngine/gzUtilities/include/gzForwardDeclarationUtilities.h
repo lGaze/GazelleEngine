@@ -1,5 +1,5 @@
 /***************************************************************************/  
-/* @filename gzForwardDeclarationUtilities
+/* @filename gzForwardDeclarationUtilities.h
 /* @author Victor Flores
 /* @date 2019/02/14
 /* @brief Utility header that makes forward declarations

@@ -1,5 +1,5 @@
 /***************************************************************************/
-/* @filename gzRay
+/* @filename gzRay.h
 /* @author Victor Flores
 /* @date 2019/02/15
 /* @brief 
@@ -14,20 +14,26 @@ namespace gzEngineSDK {
   class GZ_UTILITY_EXPORT Ray
   {
    public:
-     /**
-      * @brief Default constructor
-      */
+
+    /**
+     * @brief Default constructor
+     */
     Ray() = default;
 
     /**
      * @brief 
      */
-    Ray(const Vector3f& OriginPos, const Vector3f& Direction);
+    Ray(const Vector3f& originPos, const Vector3f& direction);
 
     /**
      * @brief Default destructor
      */
     ~Ray() = default;
+
+    /************************************************************************/
+    /* Ray functions                                                        */
+    /************************************************************************/
+    
 
     /************************************************************************/
     /* Member declaration                                                   */
@@ -37,11 +43,11 @@ namespace gzEngineSDK {
      /**
       * @brief 
       */
-     Vector3f originPos;
+    Vector3f originPos;
 
      /**
       * @brief 
       */
-     Vector3f direction;
+    Vector3f direction;
   };
 }

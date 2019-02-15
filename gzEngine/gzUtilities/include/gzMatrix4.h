@@ -1,6 +1,6 @@
 /****************************************************************************
 /* @filename gzMatrix4.h
-/* @author Gazelle
+/* @author Victor Flores
 /* @date 2019/02/06
 /* @brief 
 /*****************************************************************************/
@@ -39,7 +39,7 @@ namespace gzEngineSDK {
     /**
      * @brief 
      */
-    Matrix4( Vector4f VectorA, Vector4f VectorB, Vector4f VectorC, Vector4f VectorD);
+    Matrix4(Vector4f VectorA, Vector4f VectorB, Vector4f VectorC, Vector4f VectorD);
 
    /************************************************************************/
    /* Overloaded operators                                                 */
@@ -115,7 +115,6 @@ namespace gzEngineSDK {
       }matrix;
       float m[4][4];
     };
-  
 
   };
 }

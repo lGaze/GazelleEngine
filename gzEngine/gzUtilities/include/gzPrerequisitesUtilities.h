@@ -1,13 +1,13 @@
 /***************************************************************************/
 /* @filename gzPrerequisitesUtilities
-/* @author Gazelle
+/* @author Victor Flores
 /* @date 2019/02/14
 /* @brief Utility include with the most basic defines needed
 /***************************************************************************/  
 #pragma once
 
 /***************************************************************************/  
-/* Most basic includes (requiered for everything else)                     */                                                                     */
+/* Most basic includes (requiered for everything else)                     */                                                                  
 /***************************************************************************/
 #include <cassert>
 
