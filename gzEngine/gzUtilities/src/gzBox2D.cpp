@@ -1,16 +1,17 @@
 /**************************************************************************/
-/* @filename gzSphere.cpp
+/* @filename gzBox2D.cpp
 /* @author Victor Flores 
 /* @date 2019/02/15
 /* @brief 
 /**************************************************************************/
 
-#include "gzSphere.h"
+#include "gzBox2D.h"
 
 namespace gzEngineSDK {
- 
-  Sphere::Sphere(const Vector3f & position, float radius) : 
-    centerPos(position), 
-    radiusSize(radius) {}
-  
+
+  Box2D::Box2D(const Vector2f & centerPos, const float height, const float width) : 
+    boxCenter(centerPos), 
+    boxHeight(height),
+    boxWidth(width) {}
+
 }

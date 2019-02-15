@@ -9,6 +9,8 @@
 
 namespace gzEngineSDK {
   
+  //TODO fix the constructors
+
   Matrix4::Matrix4(
     float m00, float m01, float m02, float m03,
     float m10, float m11, float m12, float m13,
