@@ -9,9 +9,9 @@
 
 namespace gzEngineSDK {
 
-  Box2D::Box2D(const Vector2f & centerPos, const float height, const float width) : 
-    boxCenter(centerPos), 
-    boxHeight(height),
-    boxWidth(width) {}
-
+  Box2D::Box2D(const Vector2f & centerPos, const float height, const float width) 
+    : boxCenter(centerPos), 
+      boxHeight(height),
+      boxWidth(width)
+  {}
 }

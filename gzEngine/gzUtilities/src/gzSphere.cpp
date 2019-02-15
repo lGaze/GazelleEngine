@@ -9,8 +9,9 @@
 
 namespace gzEngineSDK {
  
-  Sphere::Sphere(const Vector3f & position, float radius) : 
-    centerPos(position), 
-    radiusSize(radius) {}
+  Sphere::Sphere(const Vector3f & position, float radius)
+    : centerPos(position), 
+      radiusSize(radius) 
+  {}
   
 }
