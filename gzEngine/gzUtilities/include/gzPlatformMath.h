@@ -7,7 +7,6 @@
 #pragma once
 
 #include "gzPrerequisitesUtilities.h"
-#include <cmath>
 
 namespace gzEngineSDK {
   class GZ_UTILITY_EXPORT PlatformMath

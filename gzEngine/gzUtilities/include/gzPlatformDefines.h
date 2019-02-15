@@ -28,9 +28,7 @@
 #define GZ_DEBUG_DETAILED_SYMBOLS  1
 
 /************************************************************************/
-/**
- * Compiler type and version.
- */                                                                     
+/* Compiler type and version.                                                                   
 /************************************************************************/ 
 
 #if defined(__clang__)
@@ -74,9 +72,7 @@
 #endif
 
 /************************************************************************/
-/**
- * See if we can use __forceinline or if we need to use __inline instead
- */                                                                     
+/* See if we can use __forceinline or if we need to use __inline instead                                                                  
 /************************************************************************/
 
 #if GZ_COMPILER == GZ_COMPILER_MSVC     //If we are compiling on Visual Studio
@@ -101,9 +97,7 @@
 #endif
 
 /************************************************************************/
-/**
- * Finds the current platform
- */                                                                     
+/* Finds the current platform                                                                    
 /************************************************************************/
 
 #if defined(__WIN32__) || defined(_WIN32)	 //If its a Windows platform
@@ -115,9 +109,7 @@
 #endif
 
 /************************************************************************/
-/**
- * Finds the architecture type
- */                                                                     
+/* Finds the architecture type                                                                   
 /************************************************************************/
 
 #if defined(__x86_64__) || defined(_M_X64)    //
@@ -127,9 +119,7 @@
 #endif
 
 /************************************************************************/
-/**
- * Memory Alignment macros
- */
+/* Memory Alignment macros
 /************************************************************************/
 
 #if GZ_COMPILER == GZ_COMPILER_MSVC      //If we are compiling on Visual Studio
@@ -144,10 +134,8 @@
 #endif
 
 /************************************************************************/
-/**
- * For throw override (deprecated on c++11 but visual studio does not have handle
- * no exception)
- */                                                                     
+/* For throw override (deprecated on c++11 but visual studio does
+/* not have handle no exception)                                                                     
 /************************************************************************/
 
 #if GZ_COMPILER == GZ_COMPILER_MSVC
@@ -161,9 +149,7 @@
 #endif
 
 /************************************************************************/
-/**
- * Library export specifics
- */                                                                     
+/* Library export specifics                                                                  
 /************************************************************************/
 
 #if GZ_PLATFORM == GZ_PLATFORM_WIN32
