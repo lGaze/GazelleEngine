@@ -1,6 +1,6 @@
 /****************************************************************************
 /* @filename gzMatrix4.cpp
-/* @author Gazelle
+/* @author Victor Flores
 /* @date 2019/02/06
 /* @brief 
 /*****************************************************************************/
@@ -121,6 +121,7 @@ namespace gzEngineSDK {
         m[i][j] += Matrix.m[i][j];
       }
     }
+    return *this;
   }
 
   Matrix4&
@@ -130,6 +131,7 @@ namespace gzEngineSDK {
         m[i][j] -= Matrix.m[i][j];
       }
     }
+    return *this;
   }
 
   Matrix4&
@@ -139,6 +141,7 @@ namespace gzEngineSDK {
         m[i][j] *= Matrix.m[i][j];
       }
     }
+    return *this;
   }
 
   void

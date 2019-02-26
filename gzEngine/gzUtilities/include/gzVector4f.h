@@ -8,6 +8,7 @@
 #pragma once
 
 #include "gzPrerequisitesUtilities.h"
+#include "gzMath.h"
 
 
 namespace gzEngineSDK {
