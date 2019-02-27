@@ -14,6 +14,7 @@
 #include <cmath>
 #include <cstdint>
 #include <cassert>
+#include <cstring>
 
 /***************************************************************************/
 /* STL containers                                                          */
@@ -68,6 +69,10 @@ using Deque = std::deque<T, A>;
 template<typename T, typename A = std::allocator<T>>
 using Vector = std::vector <T, A>;
 
+/**
+ * @brief 
+ */
+using String = std::string;
 
 /**
  * @brief 

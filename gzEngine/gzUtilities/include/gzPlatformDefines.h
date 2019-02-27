@@ -11,7 +11,7 @@
 #define GZ_COMPILER_CLANG       4     //Clang Studio Compiler
 
 #define GZ_ARCHITECTURE_X86_32  1     //Intel x86 32 bits
-#define GZ_ARCHITECTURE_X86_32  2     //Intel x86 64 bits
+#define GZ_ARCHITECTURE_X86_64  2     //Intel x86 64 bits
 
 #define GZ_ENDIAN_LITTLE        1     //little Endian
 #define GZ_ENDIAN_BIG           2     //Big Endian

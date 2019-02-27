@@ -92,7 +92,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>./include/</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>true</OpenMPSupport>
@@ -109,7 +109,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>./include/</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>true</OpenMPSupport>
@@ -128,7 +128,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>./include/</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>true</OpenMPSupport>
@@ -149,7 +149,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>./include/</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>true</OpenMPSupport>
@@ -165,9 +165,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\gzBox2D.h" />
+    <ClInclude Include="include\gzException.h" />
     <ClInclude Include="include\gzForwardDeclarationUtilities.h" />
     <ClInclude Include="include\gzMath.h" />
     <ClInclude Include="include\gzMatrix4.h" />
+    <ClInclude Include="include\gzModule.h" />
     <ClInclude Include="include\gzPlane.h" />
     <ClInclude Include="include\gzPlatformDefines.h" />
     <ClInclude Include="include\gzPlatformMath.h" />
@@ -183,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\gzBox2D.cpp" />
+    <ClCompile Include="src\gzException.cpp" />
     <ClCompile Include="src\gzMatrix4.cpp" />
     <ClCompile Include="src\gzPlane.cpp" />
     <ClCompile Include="src\gzRay.cpp" />
