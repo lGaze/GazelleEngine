@@ -25,7 +25,7 @@ namespace gzEngineSDK {
   template<class T>
   class Module
   {
-  public:
+   public:
     /**
      * @brief Returns a reference to the module instance. Module has to have
      *        been started up first otherwise an exception will be thrown.
@@ -75,7 +75,7 @@ namespace gzEngineSDK {
         //"Trying to start an already started module."
       }
 
-      _instance() = ge_new<T>(std::forward<Args>(args)...);
+      _instance() = new T(std::forward<Args>(args)...);
       isStartedUp() = true;
 
       static_cast<Module*>(_instance())->onStartUp();
@@ -96,7 +96,7 @@ namespace gzEngineSDK {
         //"Trying to start an already started module."
       }
 
-      _instance() = ge_new<SubType>(std::forward<Args>(args)...);
+      _instance() = new SubType(std::forward<Args>(args)...);
       isStartedUp() = true;
 
       static_cast<Module*>(_instance())->onStartUp();
@@ -119,7 +119,7 @@ namespace gzEngineSDK {
 
       static_cast<Module*>(_instance())->onShutDown();
 
-      ge_delete(_instance());
+      delete _instance();
       isDestroyed() = true;
     }
 
