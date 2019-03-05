@@ -111,7 +111,7 @@ namespace gzEngineSDK {
   }
 
   bool 
-  Device::gzCreateVertexshader( const void * pShaderBytecode,
+  Device::CreateVertexshader( const void * pShaderBytecode,
                                 SIZE_T BytecodeLength, 
                                 ID3D11ClassLinkage * pClassLinkage,
                                 ID3D11VertexShader ** ppVertexShader )
@@ -132,7 +132,7 @@ namespace gzEngineSDK {
   }
 
   bool 
-  Device::gzCreateInputLayout( const D3D11_INPUT_ELEMENT_DESC * pInputElementDescs,
+  Device::CreateInputLayout( const D3D11_INPUT_ELEMENT_DESC * pInputElementDescs,
                                uint32 NumElements,
                                const void * pShaderBytecodeWithInputSignature,
                                SIZE_T BytecodeLength, 
@@ -154,7 +154,7 @@ namespace gzEngineSDK {
   }
 
   bool 
-  Device::gzCreatePixelShader( const void * pShaderBytecode,
+  Device::CreatePixelShader( const void * pShaderBytecode,
                                SIZE_T BytecodeLength, 
                                ID3D11ClassLinkage * pClassLinkage,
                                ID3D11PixelShader ** ppPixelShader )
@@ -174,7 +174,7 @@ namespace gzEngineSDK {
   }
 
   bool 
-  Device::gzCreateBuffer( const D3D11_BUFFER_DESC * pDesc,
+  Device::CreateBuffer( const D3D11_BUFFER_DESC * pDesc,
                           const D3D11_SUBRESOURCE_DATA * pInitialData,
                           ID3D11Buffer ** ppBuffer )
   {
@@ -192,7 +192,7 @@ namespace gzEngineSDK {
   }
 
   bool 
-  Device::gzCreateSamplerState( const D3D11_SAMPLER_DESC * pSamplerDesc,
+  Device::CreateSamplerState( const D3D11_SAMPLER_DESC * pSamplerDesc,
                                 ID3D11SamplerState ** ppSamplerState )
   {
     HRESULT result = S_OK;

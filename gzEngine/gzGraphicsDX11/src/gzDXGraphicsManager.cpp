@@ -98,8 +98,167 @@ namespace gzEngineSDK {
   {
     m_psamplerState = new SamplerState();
     m_psamplerState->CreateSamplerDesc();
-    return m_pdevice->gzCreateSamplerState( &m_psamplerState->getSamplerDesc(),
+    return m_pdevice->CreateSamplerState( &m_psamplerState->getSamplerDesc(),
                                             m_psamplerState->getSamplerInterface() );
+  }
+
+  void 
+  DXGraphicsManager::SetRenderTargets( uint32 NumViews )
+  {
+    m_pdeviceContext->SetRenderTargets( NumViews,
+                                        m_prenderTarget->getRenderTargetInterface(),
+                                        *m_pdepth->getDepthStencilViewInterface());
+  }
+
+  void
+  DXGraphicsManager::SetViewports( uint32 NumViewports )
+  {
+    m_pdeviceContext->SetViewports( NumViewports,
+                                    &m_pviewPort->getVewPortInterface() );
+  }
+
+  void 
+  DXGraphicsManager::SetInputLayout()
+  {
+    m_pdeviceContext->SetInputLayout( *m_pinputLayout->getInputLayputInterface() );
+  }
+
+  void 
+  DXGraphicsManager::SetVertexBuffers( uint32 StartSlot, 
+                                       uint32 NumBuffers,
+                                       const uint32 *pStrides, 
+                                       const uint32 *pOffsets )
+  {
+    m_pdeviceContext->SetVertexBuffers( StartSlot,
+                                        NumBuffers,
+                                        m_pvertexBuffer->getBufferInterface(),
+                                        pStrides,
+                                        pOffsets );
+  }
+
+  void 
+  DXGraphicsManager::SetIndexBuffer( DXGI_FORMAT Format, uint32 Offset )
+  {
+    m_pdeviceContext->SetIndexBuffer( *m_pindexBuffer->getBufferInterface(),
+                                      Format,
+                                      Offset );
+  }
+
+  void 
+  DXGraphicsManager::SetPrimitiveTopology( uint32 Topology )
+  {
+    m_pdeviceContext->SetPrimitiveTopology( Topology );
+  }
+
+  void 
+  DXGraphicsManager::UpdateSubresource( uint32 BufferIndex,
+                                             uint32 DstSubresource,
+                                             const D3D11_BOX *pDstBox,
+                                             const void *pSrcData,
+                                             uint32 SrcRowPitch, 
+                                             uint32 SrcDepthPitch )
+  {
+    m_pdeviceContext->UpdateSubresource(
+      *m_constantBuffers[BufferIndex]->getBufferInterface(),
+      DstSubresource,
+      pDstBox,
+      pSrcData,
+      SrcRowPitch,
+      SrcDepthPitch );
+  }
+
+  void 
+  DXGraphicsManager::ClearRenderTargetView( const float ColorRGBA[4] )
+  {
+    m_pdeviceContext->ClearRenderTargetView( 
+      *m_prenderTarget->getRenderTargetInterface(),
+       ColorRGBA );
+  }
+
+  void 
+  DXGraphicsManager::ClearDepthStencilView( uint32 ClearFlags, float Depth, uint8 Stencil )
+  {
+    m_pdeviceContext->ClearDepthStencilView( *m_pdepth->getDepthStencilViewInterface(),
+                                             ClearFlags,
+                                             Depth,
+                                             Stencil );
+  }
+
+  void 
+  DXGraphicsManager::SetVertexShader( ID3D11ClassInstance *const *ppClassInstances,
+                                      uint32 NumClassInstances )
+  {
+    m_pdeviceContext->SetVertexShader( *m_pvertexShader->getVertexShaderInterface(),
+                                       ppClassInstances,
+                                       NumClassInstances );
+
+  }
+
+  void 
+  DXGraphicsManager::SetVSConstantBuffers( uint32 BufferIndex,
+                                           uint32 StartSlot,
+                                           uint32 NumBuffers )
+  {
+    m_pdeviceContext->SetVSConstantBuffers(
+      StartSlot,
+      NumBuffers,
+      m_constantBuffers[BufferIndex]->getBufferInterface() );
+  }
+
+  void 
+  DXGraphicsManager::SetPixelShader( ID3D11ClassInstance *const *ppClassInstances, uint32 NumClassInstances )
+  {
+    m_pdeviceContext->SetPixelShader( *m_ppixelShader->getPixelShaderInterface(),
+                                      ppClassInstances,
+                                      NumClassInstances );
+  }
+
+  void 
+  DXGraphicsManager::SetPSConstantBuffers( uint32 BufferIndex, uint32 StartSlot, uint32 NumBuffers )
+  {
+    m_pdeviceContext->SetPSConstantBuffers(
+      StartSlot,
+      NumBuffers,
+      m_constantBuffers[BufferIndex]->getBufferInterface());
+  }
+
+  //TODO: Shader class
+  void
+  DXGraphicsManager::SetShaderResources( uint32 StartSlot, uint32 NumViews )
+  {
+   /* m_pdeviceContext->SetShaderResources(StartSlot,
+                                          NumViews,
+                                          &m_Shader)*/
+  }
+
+  void
+  DXGraphicsManager::SetSamplers( uint32 StartSlot, uint32 NumSamplers )
+  {
+    m_pdeviceContext->SetSamplers( StartSlot,
+                                   NumSamplers,
+                                   m_psamplerState->getSamplerInterface() );
+  }
+
+  void 
+  DXGraphicsManager::DrawIndexed( uint32 indexCount,
+                                       uint32 StartIndexLocation,
+                                       int32 BaseVertexLocation )
+  {
+    m_pdeviceContext->DrawIndexed( indexCount,
+                                   StartIndexLocation,
+                                   BaseVertexLocation );
+  }
+
+  bool DXGraphicsManager::GetBuffer( uint32 Buffer )
+  {
+    return m_pswapChain->getBuffer( Buffer,
+                                   __uuidof( ID3D11Texture2D ),
+                                   ( LPVOID* ) m_ptexture->GetTextureInterface());
+  }
+
+  bool DXGraphicsManager::Present( uint32 SyncInterval, uint32 Flags )
+  {
+    return m_pswapChain->Present( SyncInterval, Flags );
   }
 
   bool
@@ -116,7 +275,7 @@ namespace gzEngineSDK {
   bool 
   DXGraphicsManager::CreateVertexShader()
   {
-    return m_pdevice->gzCreateVertexshader( m_pvertexShader->m_pVSBlob->GetBufferPointer(),
+    return m_pdevice->CreateVertexshader( m_pvertexShader->m_pVSBlob->GetBufferPointer(),
                                             m_pvertexShader->m_pVSBlob->GetBufferSize(),
                                             nullptr,
                                             m_pvertexShader->getVertexShaderInterface() );
@@ -126,7 +285,7 @@ namespace gzEngineSDK {
   DXGraphicsManager::CreateInputLayout()
   {
     m_pinputLayout = new InputLayout();
-    return m_pdevice->gzCreateInputLayout( &m_pinputLayout->m_vLayout[0],
+    return m_pdevice->CreateInputLayout( &m_pinputLayout->m_vLayout[0],
                                            m_pinputLayout->m_vLayout.size(),
                                            m_pvertexShader->m_pVSBlob->GetBufferPointer(),
                                            m_pvertexShader->m_pVSBlob->GetBufferSize(),
@@ -136,7 +295,7 @@ namespace gzEngineSDK {
   bool 
   DXGraphicsManager::CreatePixelShader()
   {
-    return m_pdevice->gzCreatePixelShader( m_ppixelShader->m_pPSBlob->GetBufferPointer(),
+    return m_pdevice->CreatePixelShader( m_ppixelShader->m_pPSBlob->GetBufferPointer(),
                                            m_ppixelShader->m_pPSBlob->GetBufferSize(),
                                            nullptr,
                                            m_ppixelShader->getPixelShaderInterface() );
@@ -158,7 +317,7 @@ namespace gzEngineSDK {
     if ( bufferType == 1 )
     {
       m_pvertexBuffer = tempBuffer;
-      bool result = m_pdevice->gzCreateBuffer(
+      bool result = m_pdevice->CreateBuffer(
         &m_pvertexBuffer->getBufferDesc(),
         pInitialData,
         m_pvertexBuffer->getBufferInterface() );
@@ -168,7 +327,7 @@ namespace gzEngineSDK {
     if ( bufferType == 2 )
     {
       m_pindexBuffer = tempBuffer;
-      return m_pdevice->gzCreateBuffer(
+      return m_pdevice->CreateBuffer(
         &m_pindexBuffer->getBufferDesc(),
         pInitialData,
         m_pindexBuffer->getBufferInterface() );
@@ -176,7 +335,7 @@ namespace gzEngineSDK {
 
     if ( bufferType == 4 )
     {
-      m_pdevice->gzCreateBuffer(
+      m_pdevice->CreateBuffer(
         &tempBuffer->getBufferDesc(),
         pInitialData,
         tempBuffer->getBufferInterface() );

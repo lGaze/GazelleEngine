@@ -153,7 +153,7 @@ class DeviceContext
    * @brief
    */
   void 
-  gDrawIndexed( uint32 IndexCount,
+  DrawIndexed( uint32 IndexCount,
                 uint32 StartIndexLocation,
                 INT BaseVertexLocation );
 

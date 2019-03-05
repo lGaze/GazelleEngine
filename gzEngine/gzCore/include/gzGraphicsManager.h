@@ -165,7 +165,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    */
   virtual void
   SetVertexShader( ID3D11ClassInstance *const *ppClassInstances,
-                   uint32 NumClassInstances );
+                   uint32 NumClassInstances ) = 0;
 
   /**
    * @brief
@@ -207,8 +207,9 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   /**
    * @brief
    */
-  virtual void 
-  DrawIndexed( uint32 StartIndexLocation,
+  virtual void
+  DrawIndexed( uint32 indexCount,
+               uint32 StartIndexLocation,
                int32 BaseVertexLocation ) = 0;
 
   /**

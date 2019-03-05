@@ -96,6 +96,130 @@ class DXGraphicsManager : public GraphicsManager
   virtual bool 
   CreateSamplerState() override;
 
+  /**
+   * @brief 
+   */
+  virtual void
+  SetRenderTargets( uint32 NumViews ) override;
+
+  /**
+   * @brief 
+   */
+  virtual void
+  SetViewports( uint32 NumViewports ) override;
+
+  /**
+   * @brief 
+   */
+  virtual void
+  SetInputLayout() override;
+
+  /**
+   * @brief 
+   */
+  virtual void
+  SetVertexBuffers( uint32 StartSlot,
+                    uint32 NumBuffers,
+                    const uint32 *pStrides,
+                    const uint32 *pOffsets ) override;
+
+  /**
+   * @brief 
+   */
+  virtual void
+  SetIndexBuffer( DXGI_FORMAT Format, uint32 Offset ) override;
+
+  /**
+   * @brief 
+   */
+  virtual void
+  SetPrimitiveTopology( uint32 Topology ) override;
+
+  /**
+   * @brief 
+   */
+  virtual void
+  UpdateSubresource( uint32 BufferIndex,
+                     uint32 DstSubresource,
+                     const D3D11_BOX *pDstBox,
+                     const void *pSrcData, 
+                     uint32 SrcRowPitch, 
+                     uint32 SrcDepthPitch ) override;
+
+
+  /**
+   * @brief 
+   */
+  virtual void
+  ClearRenderTargetView( const float ColorRGBA[4] ) override;
+
+  /**
+   * @brief 
+   */
+  virtual void
+  ClearDepthStencilView( uint32 ClearFlags, float Depth, uint8 Stencil ) override;
+
+  /**
+   * @brief 
+   */
+  virtual void
+  SetVertexShader( ID3D11ClassInstance *const *ppClassInstances,
+                   uint32 NumClassInstances ) override;
+
+
+  /**
+   * @brief 
+   */
+  virtual void
+  SetVSConstantBuffers( uint32 BufferIndex, 
+                        uint32 StartSlot, 
+                        uint32 NumBuffers ) override;
+
+  /**
+   * @brief 
+   */
+  virtual void 
+  SetPixelShader( ID3D11ClassInstance *const *ppClassInstances,
+                  uint32 NumClassInstances ) override;
+
+  /**
+   * @brief 
+   */
+  virtual void 
+  SetPSConstantBuffers( uint32 BufferIndex, uint32 StartSlot, uint32 NumBuffers ) override;
+
+  /**
+   * @brief 
+   */
+  virtual void 
+  SetShaderResources( uint32 StartSlot, uint32 NumViews ) override;
+
+  /**
+   * @brief 
+   */
+  virtual void
+  SetSamplers( uint32 StartSlot, uint32 NumSamplers ) override;
+
+  /**
+   * @brief 
+   */
+  virtual void
+  DrawIndexed(uint32 indexCount,
+               uint32 StartIndexLocation, 
+               int32 BaseVertexLocation ) override;
+
+  /**
+   * @brief 
+   */
+  virtual bool
+  GetBuffer( uint32 Buffer ) override;
+
+  /**
+   * @brief 
+   */
+  virtual bool 
+  Present( uint32 SyncInterval, uint32 Flags ) override;
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

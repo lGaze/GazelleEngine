@@ -65,7 +65,7 @@ class Device
    * @brief Creates the Vertex Shader
    */
   bool
-  gzCreateVertexshader( const void *pShaderBytecode,
+  CreateVertexshader( const void *pShaderBytecode,
                         SIZE_T BytecodeLength,
                         ID3D11ClassLinkage *pClassLinkage,
                         ID3D11VertexShader **ppVertexShader );
@@ -74,7 +74,7 @@ class Device
    * @brief Creates the inputlayout
    */
   bool
-  gzCreateInputLayout( const D3D11_INPUT_ELEMENT_DESC *pInputElementDescs,
+  CreateInputLayout( const D3D11_INPUT_ELEMENT_DESC *pInputElementDescs,
                        uint32 NumElements,
                        const void *pShaderBytecodeWithInputSignature,
                        SIZE_T BytecodeLength,
@@ -84,7 +84,7 @@ class Device
    * @brief Creates the Pixel Shader
    */
   bool
-  gzCreatePixelShader( const void *pShaderBytecode,
+  CreatePixelShader( const void *pShaderBytecode,
                        SIZE_T BytecodeLength,
                        ID3D11ClassLinkage *pClassLinkage,
                        ID3D11PixelShader **ppPixelShader );
@@ -93,7 +93,7 @@ class Device
    * @brief Creates a Buffer
    */
   bool
-  gzCreateBuffer( const D3D11_BUFFER_DESC *pDesc,
+  CreateBuffer( const D3D11_BUFFER_DESC *pDesc,
                   const D3D11_SUBRESOURCE_DATA *pInitialData,
                   ID3D11Buffer **ppBuffer );
 
@@ -101,7 +101,7 @@ class Device
    * @brief Creates a SamplerState
    */
   bool
-  gzCreateSamplerState( const D3D11_SAMPLER_DESC *pSamplerDesc,
+  CreateSamplerState( const D3D11_SAMPLER_DESC *pSamplerDesc,
                         ID3D11SamplerState **ppSamplerState );
 
 

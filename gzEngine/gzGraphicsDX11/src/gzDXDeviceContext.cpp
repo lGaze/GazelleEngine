@@ -162,7 +162,7 @@ namespace gzEngineSDK {
   }
 
   void 
-  DeviceContext::gDrawIndexed( uint32 IndexCount, 
+  DeviceContext::DrawIndexed( uint32 IndexCount, 
                                uint32 StartIndexLocation,
                                INT BaseVertexLocation )
   {
