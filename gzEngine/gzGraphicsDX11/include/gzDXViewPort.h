@@ -1,65 +1,56 @@
 /**************************************************************************/
-/* @filename gzWindow.h
+/* @filename gzDXViewPort.h
 /* @author Victor Flores 
-/* @date 2019/03/02
+/* @date 2019/03/04
 /* @brief 
 /**************************************************************************/
 #pragma once
 
-#include "gzPrerequisitesCore.h"
-#include <windows.h>
+#include "gzDXPrerequisites.h"
 
 namespace gzEngineSDK {
-class GZ_CORE_EXPORT Window
+class ViewPort
 {
  public:
    
   /**
    * @brief default constructor
    */
-  Window() = default;
+  ViewPort() = default;
 	
   /**
    * @brief default destructor
    */
-  ~Window() = default;
+  ~ViewPort() = default;
 	
   /************************************************************************/
-  /* Window functions                                                     */
+  /* ViewPort functions                                                   */
   /************************************************************************/
 	
   /**
-   * @brief Function which initializates the window
-   * @returns Bool value which indicates if the initialization of the window succeed
-   */
-  bool
-  initWindow();
-
-  /**
-   * @brief Dispaches all the windows messages
+   * @brief Sets the ViewPort
    */
   void
-  messageHandler();
+  SetViewPort( uint32 width, uint32 height );
 
   /**
-   * @brief WndProc
+   * @brief Gets the ViewPort interface
    */
-  static LRESULT
-  CALLBACK WndProc( HWND window,
-                    UINT message,
-                    WPARAM wParam,
-                    LPARAM lParam );
+  FORCEINLINE D3D11_VIEWPORT
+  getVewPortInterface() {
+    return m_ViewPort;
+  }
 
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 	
- public:
+ private:
 
    /**
-    * @brief Handler of the window
+    * @brief Viewport Structure
     */
-   HWND m_hWnd;
+   D3D11_VIEWPORT m_ViewPort;
 
  };
 }

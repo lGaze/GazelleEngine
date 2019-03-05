@@ -1,65 +1,53 @@
 /**************************************************************************/
-/* @filename gzWindow.h
+/* @filename gzDXDeviceContext.h
 /* @author Victor Flores 
-/* @date 2019/03/02
+/* @date 2019/03/04
 /* @brief 
 /**************************************************************************/
+
 #pragma once
 
-#include "gzPrerequisitesCore.h"
-#include <windows.h>
+#include "gzDXPrerequisites.h"
 
 namespace gzEngineSDK {
-class GZ_CORE_EXPORT Window
+class DeviceContext
 {
  public:
    
   /**
    * @brief default constructor
    */
-  Window() = default;
+   DeviceContext();
 	
   /**
    * @brief default destructor
    */
-  ~Window() = default;
+  ~ DeviceContext() = default;
 	
   /************************************************************************/
-  /* Window functions                                                     */
+  /*  DeviceContext functions                                             */
   /************************************************************************/
 	
   /**
-   * @brief Function which initializates the window
-   * @returns Bool value which indicates if the initialization of the window succeed
+   * @brief 
    */
-  bool
-  initWindow();
-
-  /**
-   * @brief Dispaches all the windows messages
-   */
-  void
-  messageHandler();
-
-  /**
-   * @brief WndProc
-   */
-  static LRESULT
-  CALLBACK WndProc( HWND window,
-                    UINT message,
-                    WPARAM wParam,
-                    LPARAM lParam );
+  FORCEINLINE ID3D11DeviceContext**
+  getDeviceContextInterface() {
+    return &m_pDeviceContext;
+  };
 
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 	
- public:
-
+ private:
+   
    /**
-    * @brief Handler of the window
+    * @brief DeviceContext interface
     */
-   HWND m_hWnd;
+   ID3D11DeviceContext* m_pDeviceContext;
 
+   D3D11_PRIMITIVE_TOPOLOGY m_Topology;
+   
  };
 }

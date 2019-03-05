@@ -8,12 +8,12 @@
 #pragma once
 
 #include "gzPrerequisitesCore.h"
-#include "gzModule.h"
 #include "gzWindow.h"
+#include <gzModule.h>
 
 
 namespace gzEngineSDK {
-class GZ_UTILITY_EXPORT BaseApp : public Module<BaseApp>
+class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
 {
  public:
    

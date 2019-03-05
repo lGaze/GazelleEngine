@@ -7,10 +7,11 @@
 #pragma once
 
 #include "gzPrerequisitesCore.h"
-#include "gzModule.h"
+#include <gzModule.h>
+
 
 namespace gzEngineSDK {
-class GZ_UTILITY_EXPORT GraphicsManager : public Module<GraphicsManager>
+class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
 {
  public:
    
@@ -44,49 +45,58 @@ class GZ_UTILITY_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief 
    */
   virtual bool
-  CreateDepthStencilView() = 0;
-
+  CreateTexture2D( uint32 width,
+                   uint32 height,
+                   uint32 format,
+                   uint32 usage ) = 0;
   /**
    * @brief 
-   */
+   * /
+  virtual bool
+  CreateDepthStencilView() = 0;
+
+  / **
+   * @brief 
+   * /
   virtual bool
   CreateVertexShader() = 0;
 
-  /**
+  / **
    * @brief 
-   */
+   * /
   virtual bool
   CreateInputLayout() = 0;
 
-  /**
+  / **
    * @brief 
-   */
+   * /
   virtual bool
   CreatePixelShader() = 0;
 
-  /**
+  / **
    * @brief 
-   */
+   * /
   virtual bool
   CreateBuffer() = 0;
 
-  /**
+  / **
    * @brief 
-   */
+   * /
   virtual bool
   CreateTexture2D() = 0;
 
-  /**
+  / **
    * @brief 
-   */
+   * /
   virtual bool
   CreateVertexAndIndexBufferFromFile( std::string file ) = 0;
 
   /**
    * @brief 
-   */
+   * /
   virtual bool
   CreateSamplerState() = 0;
+
 
 
   /************************************************************************/
