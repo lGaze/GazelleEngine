@@ -8,6 +8,7 @@
 
 #include "gzDXPrerequisites.h"
 
+//TODO: Arreglr las deprecated
 namespace gzEngineSDK {
 class Shader
 {
@@ -16,7 +17,7 @@ class Shader
   /**
    * @brief default constructor
    */
-  Shader() = default;
+  Shader();
 	
   /**
    * @brief default destructor
@@ -27,11 +28,36 @@ class Shader
   /* Shader functions                                                     */
   /************************************************************************/
 	
+  /**
+   * @brief 
+   */
+  bool
+  CompileShaderFromFile( LPCSTR  szFileName,
+                         LPCSTR szEntryPoint,
+                         LPCSTR szShaderModel,
+                         ID3DBlob** ppBlobOut );
+
+  /**
+   * @brief 
+   */
+  bool
+  LoadTexture( ID3D11Device* pDevice,
+               LPCWSTR pSrcFile,
+               HRESULT* pHResult );
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 	
- public:
+  public:
+  
+
+  /**
+   * @brief 
+   */
+  ID3D11ShaderResourceView* m_pTextureRV;
+
+
    
  };
 }

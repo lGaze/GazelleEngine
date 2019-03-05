@@ -300,5 +300,6 @@ class DXGraphicsManager : public GraphicsManager
     * @brief 
     */
    Vector<Buffer*> m_constantBuffers;
+
  };
 }

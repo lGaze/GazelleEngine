@@ -18,6 +18,7 @@
 #include "gzDXDepth.h"
 #include "gzDXSamplerState.h"
 #include "gzDXBuffer.h"
+#include "gzDXShader.h"
 
 namespace gzEngineSDK {
 
@@ -26,8 +27,8 @@ namespace gzEngineSDK {
     m_pdeviceContext(new DeviceContext()),
     m_pswapChain(new SwapChain()),
     m_prenderTarget(new RenderTarget()),
-    m_pviewPort(new ViewPort()) {}
-    //m_pshader(new Shader()), 
+    m_pviewPort(new ViewPort()),
+    m_pshader(new Shader()) { }
 
 
   bool
@@ -40,7 +41,7 @@ namespace gzEngineSDK {
     //Create SwapChain description
     m_pswapChain->CreateSwapChainDesc( width, height, hWnd );
 
-    //Create the Device, Swapchain and DEvice Context
+    //Create the Device, Swapchain and Device Context
     restult = m_pdevice->CreateDeviceAndSwapChain(
       m_pswapChain->getCurrentSCD(),
       m_pswapChain->getSwapChainInterface(),
@@ -222,13 +223,13 @@ namespace gzEngineSDK {
       m_constantBuffers[BufferIndex]->getBufferInterface());
   }
 
-  //TODO: Shader class
+ 
   void
   DXGraphicsManager::SetShaderResources( uint32 StartSlot, uint32 NumViews )
   {
-   /* m_pdeviceContext->SetShaderResources(StartSlot,
+    m_pdeviceContext->SetShaderResources( StartSlot,
                                           NumViews,
-                                          &m_Shader)*/
+                                          &m_pshader->m_pTextureRV );
   }
 
   void
