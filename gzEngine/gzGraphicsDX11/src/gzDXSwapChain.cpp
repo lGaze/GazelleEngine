@@ -41,4 +41,17 @@ namespace gzEngineSDK {
 
     return result;
   }
+
+  bool 
+  SwapChain::Present( uint32 SyncInterval, uint32 Flags )
+  {
+    HRESULT result = S_OK;
+
+    result = m_pSwapChain->Present( SyncInterval, Flags );
+    if (FAILED(result))
+    {
+      return false;
+    }
+    return true;
+  }
 }

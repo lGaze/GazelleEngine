@@ -23,7 +23,7 @@ class DXGraphicsManager : public GraphicsManager
   /**
    * @brief default destructor
    */
-  ~DXGraphicsManager() = default;
+  virtual ~DXGraphicsManager() {} 
 	
   /************************************************************************/
   /* DXGraphicsmanager functions                                          */
@@ -56,6 +56,46 @@ class DXGraphicsManager : public GraphicsManager
   virtual bool 
   CreateDepthStencilView() override;
 
+  /**
+   * @brief 
+   */
+  virtual bool 
+  CreateVertexShader() override;
+
+  /**
+   * @brief 
+   */
+  virtual bool 
+  CreateInputLayout() override;
+
+  /**
+   * @brief 
+   */
+  virtual bool 
+  CreatePixelShader() override;
+
+  /**
+   * @brief 
+   */
+  virtual bool
+  CreateBuffer( uint32 usage,
+                uint32 bytewidth,
+                uint32 bufferType,
+                uint32 cpuflags,
+                const D3D11_SUBRESOURCE_DATA * pInitialData ) override;
+
+  /**
+   * @brief 
+   */
+  virtual bool 
+  CreateVertexAndIndexBufferFromFile( std::string file ) override;
+
+  /**
+   * @brief 
+   */
+  virtual bool 
+  CreateSamplerState() override;
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
@@ -83,9 +123,58 @@ class DXGraphicsManager : public GraphicsManager
    RenderTarget * m_prenderTarget;
 
    /**
-    * @brief 
+    * @brief Pointer to the Texture Class
     */
    Texture * m_ptexture;
 
+   /**
+    * @brief Pointer to the Depth Class
+    */
+   Depth * m_pdepth;
+
+   /**
+    * @brief Pointer to the InputLayput Class
+    */
+   InputLayout * m_pinputLayout;
+
+   /**
+    * @brief Pointer to the Vertex Shader Class
+    */
+   VertexShader * m_pvertexShader;
+
+   /**
+    * @brief Pointer to the Pixel Shader Class
+    */
+   PixelShader * m_ppixelShader;
+
+   /**
+    * @brief Pointer to the Shader Class
+    */
+   Shader * m_pshader;
+
+   /**
+    * @brief Pointer to the View Port Class
+    */
+   ViewPort * m_pviewPort;
+
+   /**
+    * @brief Pointer to the Sampler State Class
+    */
+   SamplerState * m_psamplerState;
+
+   /**
+    * @brief 
+    */
+   Buffer * m_pvertexBuffer;
+
+   /**
+    * @brief 
+    */
+   Buffer * m_pindexBuffer;
+
+   /**
+    * @brief 
+    */
+   Vector<Buffer*> m_constantBuffers;
  };
 }

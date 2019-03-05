@@ -36,6 +36,22 @@ class Buffer
                     uint32 buffertype,
                     uint32 cpuflags );
 
+  /**
+   * @brief Gets the buffer interface
+   */
+  FORCEINLINE ID3D11Buffer**
+  getBufferInterface() {
+    return &m_pBuffer;
+  }
+
+  /**
+   * @brief Gets the buffer description
+   */
+  FORCEINLINE D3D11_BUFFER_DESC
+  getBufferDesc() {
+    return m_BufferDesc;
+  }
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

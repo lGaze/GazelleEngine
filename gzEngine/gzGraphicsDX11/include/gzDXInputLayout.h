@@ -16,7 +16,7 @@ class InputLayout
   /**
    * @brief default constructor
    */
-  InputLayout();
+   InputLayout();
 	
   /**
    * @brief default destructor
@@ -39,6 +39,14 @@ class InputLayout
                int inputSlotClass,
                unsigned int instanceDataStepRate );
 
+  /**
+   * @brief Gets the InputLayout Interface
+   */
+  FORCEINLINE ID3D11InputLayout**
+  getInputLayputInterface() {
+    return &m_pInputlayout;
+  }
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
@@ -50,6 +58,7 @@ class InputLayout
    */
   ID3D11InputLayout* m_pInputlayout;
 
+ public:
   /**
    * @brief Vector with all the descriptions of the InputLayout
    */

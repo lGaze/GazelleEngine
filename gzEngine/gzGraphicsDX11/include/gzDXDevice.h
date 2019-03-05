@@ -75,7 +75,7 @@ class Device
    */
   bool
   gzCreateInputLayout( const D3D11_INPUT_ELEMENT_DESC *pInputElementDescs,
-                       UINT NumElements,
+                       uint32 NumElements,
                        const void *pShaderBytecodeWithInputSignature,
                        SIZE_T BytecodeLength,
                        ID3D11InputLayout **ppInputLayout );

@@ -40,6 +40,12 @@ class SwapChain
   getBuffer( uint32 buffer, REFIID riid, void** ppSurface );
 
   /**
+   * @brief 
+   */
+  bool
+  Present( uint32 SyncInterval, uint32 Flags );
+
+  /**
    * @brief Gets the swapchain interface
    */
   FORCEINLINE IDXGISwapChain**

@@ -32,7 +32,7 @@ namespace gzEngineSDK {
     IDXGISwapChain ** SwapChainInterface,
     ID3D11DeviceContext ** DeviceContextInterface )
   {
-    for ( UINT driverTypeIndex = 0; driverTypeIndex < m_numFeatureLevels; driverTypeIndex++ )
+    for ( uint32 driverTypeIndex = 0; driverTypeIndex < m_numFeatureLevels; driverTypeIndex++ )
     {
       m_driverType = m_driverTypes[driverTypeIndex];
       HRESULT res = D3D11CreateDeviceAndSwapChain(
@@ -133,7 +133,7 @@ namespace gzEngineSDK {
 
   bool 
   Device::gzCreateInputLayout( const D3D11_INPUT_ELEMENT_DESC * pInputElementDescs,
-                               UINT NumElements,
+                               uint32 NumElements,
                                const void * pShaderBytecodeWithInputSignature,
                                SIZE_T BytecodeLength, 
                                ID3D11InputLayout ** ppInputLayout )
