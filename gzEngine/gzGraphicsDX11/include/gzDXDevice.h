@@ -38,7 +38,7 @@ class Device
                             ID3D11DeviceContext ** DeviceContextInterface );
 
   /**
-   * @brief 
+   * @brief Creates a Render Target View
    */
   bool
   CreateRenderTargetView( ID3D11Resource *pResource,
@@ -46,17 +46,71 @@ class Device
                           ID3D11RenderTargetView **ppRTView );
 
   /**
-   * @brief 
+   * @brief Creates a Texture 2D
    */
   bool
   CreateTexture2D( const D3D11_TEXTURE2D_DESC *pDesc,
                    const D3D11_SUBRESOURCE_DATA *pInitialData,
                    ID3D11Texture2D **ppTexture2D );
 
+  /**
+   * @brief Creates the DepthStencilView
+   */
+  bool
+  CreateDepthStencilView( ID3D11Resource *pResource,
+                          const D3D11_DEPTH_STENCIL_VIEW_DESC *pDesc,
+                          ID3D11DepthStencilView **ppDepthStencilView );
+
+  /**
+   * @brief Creates the Vertex Shader
+   */
+  bool
+  gzCreateVertexshader( const void *pShaderBytecode,
+                        SIZE_T BytecodeLength,
+                        ID3D11ClassLinkage *pClassLinkage,
+                        ID3D11VertexShader **ppVertexShader );
+
+  /**
+   * @brief Creates the inputlayout
+   */
+  bool
+  gzCreateInputLayout( const D3D11_INPUT_ELEMENT_DESC *pInputElementDescs,
+                       UINT NumElements,
+                       const void *pShaderBytecodeWithInputSignature,
+                       SIZE_T BytecodeLength,
+                       ID3D11InputLayout **ppInputLayout );
+
+  /**
+   * @brief Creates the Pixel Shader
+   */
+  bool
+  gzCreatePixelShader( const void *pShaderBytecode,
+                       SIZE_T BytecodeLength,
+                       ID3D11ClassLinkage *pClassLinkage,
+                       ID3D11PixelShader **ppPixelShader );
+
+  /**
+   * @brief Creates a Buffer
+   */
+  bool
+  gzCreateBuffer( const D3D11_BUFFER_DESC *pDesc,
+                  const D3D11_SUBRESOURCE_DATA *pInitialData,
+                  ID3D11Buffer **ppBuffer );
+
+  /**
+   * @brief Creates a SamplerState
+   */
+  bool
+  gzCreateSamplerState( const D3D11_SAMPLER_DESC *pSamplerDesc,
+                        ID3D11SamplerState **ppSamplerState );
+
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 	
+
+
  private:
 
    ID3D11Device* m_pDevice;

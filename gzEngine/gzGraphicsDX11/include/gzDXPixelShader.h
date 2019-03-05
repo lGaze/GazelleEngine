@@ -1,85 +1,57 @@
 /**************************************************************************/
-/* @filename gzDXTexture.h
+/* @filename gzDXPixelShader.h
 /* @author Victor Flores 
 /* @date 2019/03/04
 /* @brief 
 /**************************************************************************/
-
 #pragma once
 
 #include "gzDXPrerequisites.h"
 
 namespace gzEngineSDK {
-class Texture
+class PixelShader
 {
  public:
    
   /**
    * @brief default constructor
    */
-  Texture();
+  PixelShader();
 	
   /**
    * @brief default destructor
    */
-  ~Texture() = default;
+  ~PixelShader() = default;
 	
   /************************************************************************/
-  /* Texture functions                                                    */
+  /* PixelShader functions                                               */
   /************************************************************************/
-   
-   /**
-    * @brief 
-    */
-   void
-   CreateTextureDesc( uint32 width,
-                      uint32 height,
-                      uint32 format,
-                      uint32 usage );
-
-
-
-   /**
-    * @brief 
-    */
-   FORCEINLINE ID3D11Texture2D **
-   GetTextureInterface() {
-     return &m_ptex;
-   }
-
-   /**
-    * @brief 
-    */
-   FORCEINLINE D3D11_TEXTURE2D_DESC
-   GetTextureDesc() {
-     return m_desc;
-   }
+	
+  /**
+   * @brief Gets the PixelShaderInterface
+   */
+  FORCEINLINE ID3D11PixelShader**
+  getPixelShaderInterface() {
+    return &m_pPixelShader;
+  }
 
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-
+	
  private:
 
    /**
-    * @brief
+    * @brief Pixel Shader interface
     */
-   ID3D11Texture2D* m_ptex;
+   ID3D11PixelShader * m_pPixelShader;
+
+ public:
 
    /**
     * @brief 
     */
-   D3D11_TEXTURE2D_DESC m_desc;
-
-   /**
-    * @brief 
-    */
-   DXGI_FORMAT m_format;
-
-   /**
-    * @brief
-    */
-   D3D11_USAGE m_usage;
+   ID3DBlob* m_pPSBlob;
    
  };
 }

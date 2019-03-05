@@ -92,4 +92,120 @@ namespace gzEngineSDK {
     return true;
   }
 
+  bool 
+  Device::CreateDepthStencilView( ID3D11Resource * pResource,
+                                  const D3D11_DEPTH_STENCIL_VIEW_DESC * pDesc, 
+                                  ID3D11DepthStencilView ** ppDepthStencilView )
+  {
+    HRESULT result = S_OK;
+
+    result = m_pDevice->CreateDepthStencilView( pResource,
+                                                pDesc,
+                                                ppDepthStencilView );
+    if (FAILED(result))
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+  bool 
+  Device::gzCreateVertexshader( const void * pShaderBytecode,
+                                SIZE_T BytecodeLength, 
+                                ID3D11ClassLinkage * pClassLinkage,
+                                ID3D11VertexShader ** ppVertexShader )
+  {
+    HRESULT result = S_OK;
+
+    result = m_pDevice->CreateVertexShader( pShaderBytecode,
+                                            BytecodeLength,
+                                            pClassLinkage,
+                                            ppVertexShader );
+
+    if (FAILED(result))
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+  bool 
+  Device::gzCreateInputLayout( const D3D11_INPUT_ELEMENT_DESC * pInputElementDescs,
+                               UINT NumElements,
+                               const void * pShaderBytecodeWithInputSignature,
+                               SIZE_T BytecodeLength, 
+                               ID3D11InputLayout ** ppInputLayout )
+  {
+    HRESULT result = S_OK;
+
+    result = m_pDevice->CreateInputLayout( pInputElementDescs,
+                                           NumElements,
+                                           pShaderBytecodeWithInputSignature,
+                                           BytecodeLength,
+                                           ppInputLayout );
+    if (FAILED(result))
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+  bool 
+  Device::gzCreatePixelShader( const void * pShaderBytecode,
+                               SIZE_T BytecodeLength, 
+                               ID3D11ClassLinkage * pClassLinkage,
+                               ID3D11PixelShader ** ppPixelShader )
+  {
+    HRESULT result = S_OK;
+
+    result = m_pDevice->CreatePixelShader( pShaderBytecode,
+                                           BytecodeLength,
+                                           pClassLinkage,
+                                           ppPixelShader );
+    if (FAILED(result))
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+  bool 
+  Device::gzCreateBuffer( const D3D11_BUFFER_DESC * pDesc,
+                          const D3D11_SUBRESOURCE_DATA * pInitialData,
+                          ID3D11Buffer ** ppBuffer )
+  {
+    HRESULT result = S_OK;
+
+    result = m_pDevice->CreateBuffer( pDesc,
+                                      pInitialData,
+                                      ppBuffer );
+    
+    if (FAILED(result))
+    {
+      return false;
+    }
+    return true;
+  }
+
+  bool 
+  Device::gzCreateSamplerState( const D3D11_SAMPLER_DESC * pSamplerDesc,
+                                ID3D11SamplerState ** ppSamplerState )
+  {
+    HRESULT result = S_OK;
+    
+    result = m_pDevice->CreateSamplerState( pSamplerDesc,
+                                            ppSamplerState );
+
+    if (FAILED(result))
+    {
+      return false;
+    }
+
+    return true;
+  }
+
 }

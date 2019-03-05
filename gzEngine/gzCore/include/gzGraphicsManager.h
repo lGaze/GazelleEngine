@@ -51,11 +51,11 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
                    uint32 usage ) = 0;
   /**
    * @brief 
-   * /
+   */
   virtual bool
   CreateDepthStencilView() = 0;
 
-  / **
+  /**
    * @brief 
    * /
   virtual bool

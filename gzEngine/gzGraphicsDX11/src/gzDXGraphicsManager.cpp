@@ -82,7 +82,7 @@ namespace gzEngineSDK {
   bool
   DXGraphicsManager::CreateDepthStencilView()
   {
-  
+   
   }
 
 }

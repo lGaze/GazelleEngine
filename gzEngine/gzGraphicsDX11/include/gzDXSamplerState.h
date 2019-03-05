@@ -1,85 +1,70 @@
 /**************************************************************************/
-/* @filename gzDXTexture.h
+/* @filename gzDXSamplerState.h
 /* @author Victor Flores 
 /* @date 2019/03/04
 /* @brief 
 /**************************************************************************/
-
 #pragma once
 
 #include "gzDXPrerequisites.h"
 
 namespace gzEngineSDK {
-class Texture
+class SamplerState
 {
  public:
    
   /**
    * @brief default constructor
    */
-  Texture();
+  SamplerState();
 	
   /**
    * @brief default destructor
    */
-  ~Texture() = default;
+  ~SamplerState() = default;
 	
   /************************************************************************/
-  /* Texture functions                                                    */
+  /* SamplerState functions                                               */
   /************************************************************************/
-   
-   /**
-    * @brief 
-    */
-   void
-   CreateTextureDesc( uint32 width,
-                      uint32 height,
-                      uint32 format,
-                      uint32 usage );
+	
+  /**
+   * @brief Creates Sampler description
+   */
+  void
+  CreateSamplerDesc();
 
+  /**
+   * @brief Gets the sampler description
+   */
+  FORCEINLINE D3D11_SAMPLER_DESC
+  getSamplerDesc() {
+    return m_SamplerDesc;
+  }
 
-
-   /**
-    * @brief 
-    */
-   FORCEINLINE ID3D11Texture2D **
-   GetTextureInterface() {
-     return &m_ptex;
-   }
-
-   /**
-    * @brief 
-    */
-   FORCEINLINE D3D11_TEXTURE2D_DESC
-   GetTextureDesc() {
-     return m_desc;
-   }
+  /**
+   * @brief Gets the sampler interface
+   */
+  FORCEINLINE ID3D11SamplerState**
+  getSamplerInterface() {
+    return &m_pSamplerLinear;
+  }
 
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 
+	
  private:
-
-   /**
-    * @brief
-    */
-   ID3D11Texture2D* m_ptex;
-
-   /**
-    * @brief 
-    */
-   D3D11_TEXTURE2D_DESC m_desc;
-
-   /**
-    * @brief 
-    */
-   DXGI_FORMAT m_format;
-
-   /**
-    * @brief
-    */
-   D3D11_USAGE m_usage;
    
+   /**
+    * @brief 
+    */
+   D3D11_SAMPLER_DESC m_SamplerDesc;
+
+   /**
+    * @brief 
+    */
+   ID3D11SamplerState * m_pSamplerLinear;
+
  };
 }

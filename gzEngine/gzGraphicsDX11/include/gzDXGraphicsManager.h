@@ -50,6 +50,12 @@ class DXGraphicsManager : public GraphicsManager
                    uint32 format,
                    uint32 usage ) override;
 
+  /**
+   * @brief 
+   */
+  virtual bool 
+  CreateDepthStencilView() override;
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

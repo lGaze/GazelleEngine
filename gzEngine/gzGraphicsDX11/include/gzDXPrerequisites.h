@@ -18,5 +18,6 @@ namespace gzEngineSDK {
   class DeviceContext;
   class SwapChain;
   class RenderTarget;
+  class Texture;
 }
 
