@@ -82,7 +82,7 @@ class DXGraphicsManager : public GraphicsManager
                 uint32 bytewidth,
                 uint32 bufferType,
                 uint32 cpuflags,
-                const D3D11_SUBRESOURCE_DATA * pInitialData ) override;
+                const void * pInitialData ) override;
 
   /**
    * @brief 
@@ -127,7 +127,7 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   virtual void
-  SetIndexBuffer( DXGI_FORMAT Format, uint32 Offset ) override;
+  SetIndexBuffer( int32 Format, uint32 Offset ) override;
 
   /**
    * @brief 
@@ -141,7 +141,7 @@ class DXGraphicsManager : public GraphicsManager
   virtual void
   UpdateSubresource( uint32 BufferIndex,
                      uint32 DstSubresource,
-                     const D3D11_BOX *pDstBox,
+                     const void *pDstBox,
                      const void *pSrcData, 
                      uint32 SrcRowPitch, 
                      uint32 SrcDepthPitch ) override;
@@ -163,7 +163,7 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   virtual void
-  SetVertexShader( ID3D11ClassInstance *const *ppClassInstances,
+  SetVertexShader( void *const *ppClassInstances,
                    uint32 NumClassInstances ) override;
 
 
@@ -179,7 +179,7 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   virtual void 
-  SetPixelShader( ID3D11ClassInstance *const *ppClassInstances,
+  SetPixelShader( void *const *ppClassInstances,
                   uint32 NumClassInstances ) override;
 
   /**
@@ -297,7 +297,7 @@ class DXGraphicsManager : public GraphicsManager
    Buffer * m_pindexBuffer;
 
    /**
-    * @brief 
+    * @brief Vector of constantBuffers
     */
    Vector<Buffer*> m_constantBuffers;
 

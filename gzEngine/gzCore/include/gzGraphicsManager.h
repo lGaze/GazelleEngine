@@ -18,12 +18,12 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   /**
    * @brief default constructor
    */
-  GraphicsManager() {}
+  GraphicsManager();
 	
   /**
    * @brief default destructor
    */
-  virtual ~GraphicsManager() {}
+  virtual ~GraphicsManager();
 	
   /************************************************************************/
   /* GraphicsManager functions                                            */
@@ -81,7 +81,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
                 uint32 bytewidth,
                 uint32 bufferType,
                 uint32 cpuflags,
-                const D3D11_SUBRESOURCE_DATA * pInitialData ) = 0;
+                const void * pInitialData ) = 0;
 
   /**
    * @brief 
@@ -126,7 +126,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief
    */
   virtual void
-  SetIndexBuffer( DXGI_FORMAT Format,
+  SetIndexBuffer( int32 Format,
                     uint32 Offset ) = 0;
 
   /**
@@ -141,7 +141,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   virtual void
   UpdateSubresource( uint32 BufferIndex,
                      uint32 DstSubresource,
-                     const D3D11_BOX *pDstBox,
+                     const void *pDstBox,
                      const void *pSrcData,
                      uint32 SrcRowPitch,
                      uint32 SrcDepthPitch ) = 0;
@@ -164,7 +164,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief
    */
   virtual void
-  SetVertexShader( ID3D11ClassInstance *const *ppClassInstances,
+  SetVertexShader( void *const *ppClassInstances,
                    uint32 NumClassInstances ) = 0;
 
   /**
@@ -179,7 +179,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief
    */
   virtual void
-  SetPixelShader( ID3D11ClassInstance *const *ppClassInstances,
+  SetPixelShader( void *const *ppClassInstances,
                   uint32 NumClassInstances ) = 0;
 
   /**
@@ -231,4 +231,10 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
  public:
    
  };
+
+/*
+ GraphicsManager&
+ g_GraphicsManager() {
+   return GraphicsManager::instance();
+ }*/
 }

@@ -29,8 +29,8 @@ namespace gzEngineSDK {
 #endif
 
     ID3DBlob* pErrorBlob;
-    hr = D3DX11CompileFromFile( szFileName, NULL, NULL, szEntryPoint, szShaderModel,
-                                dwShaderFlags, 0, NULL, ppBlobOut, &pErrorBlob, NULL );
+    hr = true; /*D3DX11CompileFromFile( szFileName, NULL, NULL, szEntryPoint, szShaderModel,
+                                dwShaderFlags, 0, NULL, ppBlobOut, &pErrorBlob, NULL );*/
     if ( FAILED( hr ) )
     {
       if ( pErrorBlob != NULL )
@@ -51,11 +51,11 @@ namespace gzEngineSDK {
   {
     HRESULT result = S_OK;
 
-    result = D3DX11CreateShaderResourceViewFromFileW( pDevice,
+   /* result = D3DX11CreateShaderResourceViewFromFileW( pDevice,
                                                       pSrcFile,
                                                       nullptr,
                                                       nullptr,
-                                                      &m_pTextureRV, pHResult );
+                                                      &m_pTextureRV, pHResult )*/;
     
     if (FAILED(result))
     {

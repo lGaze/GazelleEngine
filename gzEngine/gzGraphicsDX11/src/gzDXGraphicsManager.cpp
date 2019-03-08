@@ -137,11 +137,13 @@ namespace gzEngineSDK {
                                         pOffsets );
   }
 
+  //TODO: Check this
   void 
-  DXGraphicsManager::SetIndexBuffer( DXGI_FORMAT Format, uint32 Offset )
+  DXGraphicsManager::SetIndexBuffer( int32 Format, uint32 Offset )
   {
+    DXGI_FORMAT format = static_cast< DXGI_FORMAT > ( Format );
     m_pdeviceContext->SetIndexBuffer( *m_pindexBuffer->getBufferInterface(),
-                                      Format,
+                                      format,
                                       Offset );
   }
 
@@ -151,18 +153,21 @@ namespace gzEngineSDK {
     m_pdeviceContext->SetPrimitiveTopology( Topology );
   }
 
+  //TODO: Check this
   void 
   DXGraphicsManager::UpdateSubresource( uint32 BufferIndex,
                                              uint32 DstSubresource,
-                                             const D3D11_BOX *pDstBox,
+                                             const void *pDstBox,
                                              const void *pSrcData,
                                              uint32 SrcRowPitch, 
                                              uint32 SrcDepthPitch )
   {
+    const D3D11_BOX * box = static_cast< const D3D11_BOX* >( pDstBox );
+
     m_pdeviceContext->UpdateSubresource(
       *m_constantBuffers[BufferIndex]->getBufferInterface(),
       DstSubresource,
-      pDstBox,
+      box,
       pSrcData,
       SrcRowPitch,
       SrcDepthPitch );
@@ -185,12 +190,17 @@ namespace gzEngineSDK {
                                              Stencil );
   }
 
+   //TODO: Fix the class instances
   void 
-  DXGraphicsManager::SetVertexShader( ID3D11ClassInstance *const *ppClassInstances,
+  DXGraphicsManager::SetVertexShader( void *const *ppClassInstances,
                                       uint32 NumClassInstances )
   {
+/*
+    ID3D11ClassInstance *const *ClassInstance = 
+      static_cast< ID3D11ClassInstance *const > ( ppClassInstances );*/
+
     m_pdeviceContext->SetVertexShader( *m_pvertexShader->getVertexShaderInterface(),
-                                       ppClassInstances,
+                                       nullptr,
                                        NumClassInstances );
 
   }
@@ -206,11 +216,12 @@ namespace gzEngineSDK {
       m_constantBuffers[BufferIndex]->getBufferInterface() );
   }
 
+  //TODO: Fix the class instances
   void 
-  DXGraphicsManager::SetPixelShader( ID3D11ClassInstance *const *ppClassInstances, uint32 NumClassInstances )
+  DXGraphicsManager::SetPixelShader( void *const *ppClassInstances, uint32 NumClassInstances )
   {
     m_pdeviceContext->SetPixelShader( *m_ppixelShader->getPixelShaderInterface(),
-                                      ppClassInstances,
+                                      nullptr,
                                       NumClassInstances );
   }
 
@@ -302,13 +313,17 @@ namespace gzEngineSDK {
                                            m_ppixelShader->getPixelShaderInterface() );
   }
 
+  //TODO: Check this param
   bool 
     DXGraphicsManager::CreateBuffer( uint32 usage,
                                      uint32 bytewidth,
                                      uint32 bufferType,
                                      uint32 cpuflags,
-                                     const D3D11_SUBRESOURCE_DATA * pInitialData )
+                                     const void * pInitialData )
   {
+    const D3D11_SUBRESOURCE_DATA* data = 
+      static_cast< const D3D11_SUBRESOURCE_DATA* > ( pInitialData );
+
     Buffer * tempBuffer = new Buffer();
     tempBuffer->CreateBufferDesc( usage,
                                   bytewidth,
@@ -320,7 +335,7 @@ namespace gzEngineSDK {
       m_pvertexBuffer = tempBuffer;
       bool result = m_pdevice->CreateBuffer(
         &m_pvertexBuffer->getBufferDesc(),
-        pInitialData,
+        data,
         m_pvertexBuffer->getBufferInterface() );
       return result;
     }
@@ -330,7 +345,7 @@ namespace gzEngineSDK {
       m_pindexBuffer = tempBuffer;
       return m_pdevice->CreateBuffer(
         &m_pindexBuffer->getBufferDesc(),
-        pInitialData,
+        data,
         m_pindexBuffer->getBufferInterface() );
     }
 
@@ -338,7 +353,7 @@ namespace gzEngineSDK {
     {
       m_pdevice->CreateBuffer(
         &tempBuffer->getBufferDesc(),
-        pInitialData,
+        data,
         tempBuffer->getBufferInterface() );
       m_constantBuffers.push_back( tempBuffer );
     }

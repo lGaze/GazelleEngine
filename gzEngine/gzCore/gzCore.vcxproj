@@ -25,8 +25,8 @@
     <ClInclude Include="include\gzWindow.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\deleteme.cpp" />
     <ClCompile Include="src\gzBaseApp.cpp" />
+    <ClCompile Include="src\gzGraphicsManager.cpp" />
     <ClCompile Include="src\gzWindow.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
