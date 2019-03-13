@@ -47,17 +47,44 @@ namespace gzEngineSDK {
     if (!loadLibrary("gzGraphicsDX11d.dll", "CreateManagerObject"))
     {
       std::cout << "Failed to load the library " << std::endl;
+      return false;
     }
 
-    GraphicsManager::instance().InitGraphicsManager(window->m_hWnd, 640, 480);
+    if (!postInit())
+    {
+      std::cout << "Failed to Initialize" << std::endl;
+      return false;
+    }
 
     return true;
+  }
+
+  bool 
+  BaseApp::postInit()
+  {
+    bool result = true;
+
+    result = GraphicsManager::instance().InitGraphicsManager(
+      static_cast< void* >( window->getHWND() ), 640, 480 );
+
+    result = GraphicsManager::instance().CreateTexture2D( 640, 480, 45, 0 );
+
+    result = GraphicsManager::instance().CreateDepthStencilView();
+
+    result = GraphicsManager::instance().CreateRenderTargetView();
+
+    GraphicsManager::instance().SetRenderTargets(1);
+
+    return result;
+
   }
 
   void 
   BaseApp::render()
   {
-    //Render
+    float ClearColor[4] = { 1.0f, 1.0f, 0.3f, 1.0f };
+    GraphicsManager::instance().ClearRenderTargetView( ClearColor );
+    GraphicsManager::instance().Present( 0, 0 );
   }
 
   void 

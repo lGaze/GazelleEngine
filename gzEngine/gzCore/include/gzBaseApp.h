@@ -50,6 +50,12 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
   initApp();
 
   /**
+   * @brief 
+   */
+  bool
+  postInit();
+
+  /**
    * @brief Fuction for Render
    */
   void 

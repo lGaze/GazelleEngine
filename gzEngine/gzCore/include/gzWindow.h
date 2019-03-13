@@ -28,6 +28,7 @@ class GZ_CORE_EXPORT Window
   /* Window functions                                                     */
   /************************************************************************/
 	
+  //TODO: Params of this func width, height and string
   /**
    * @brief Function which initializates the window
    * @returns Bool value which indicates if the initialization of the window succeed
@@ -50,11 +51,17 @@ class GZ_CORE_EXPORT Window
                     WPARAM wParam,
                     LPARAM lParam );
 
+  /**
+   * @brief Gets the handler of the window
+   */
+  FORCEINLINE HWND
+  getHWND() { return m_hWnd; }
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 	
- public:
+ private:
 
    /**
     * @brief Handler of the window

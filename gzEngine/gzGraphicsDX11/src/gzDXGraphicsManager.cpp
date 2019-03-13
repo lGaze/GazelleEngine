@@ -51,6 +51,7 @@ namespace gzEngineSDK {
     return restult;
   }
 
+  //TODO: Separate and fix this function 
   bool 
   DXGraphicsManager::CreateRenderTargetView()
   {
