@@ -34,7 +34,8 @@ namespace gzEngineSDK {
     return 0;
   }
 
-  bool BaseApp::initApp()
+  bool 
+  BaseApp::initApp()
   {
     window = new Window();
     if (!window->initWindow())
@@ -42,17 +43,59 @@ namespace gzEngineSDK {
       std::cout << "Init Window failed" << std::endl;
       return false;
     }
+
+    if (!loadLibrary("gzGraphicsDX11d.dll", "CreateManagerObject"))
+    {
+      std::cout << "Failed to load the library " << std::endl;
+    }
+
+    GraphicsManager::instance().InitGraphicsManager(window->m_hWnd, 640, 480);
+
     return true;
   }
 
-  void BaseApp::render()
+  void 
+  BaseApp::render()
   {
     //Render
   }
 
-  void BaseApp::update()
+  void 
+  BaseApp::update()
   {
     //Update
+  }
+
+  bool 
+  BaseApp::loadLibrary( String libraryName, String funcName )
+  {
+    HINSTANCE hCGDll = LoadLibraryEx( libraryName.c_str(),
+                                      nullptr,
+                                      LOAD_WITH_ALTERED_SEARCH_PATH );
+
+    if (!hCGDll)
+    {
+      std::cout << "Could not load the dynamic" << "" << std::endl;
+      return false;
+    }
+
+    m_graphicsFunc = (createGraphicsManager)GetProcAddress(hCGDll,
+                                                           funcName.c_str());
+
+    if (!m_graphicsFunc)
+    {
+      std::cout << "Could not locate the function" << std::endl;
+      return false;
+    }
+
+    hCGDll = LoadLibraryEx( libraryName.c_str(),
+                            nullptr,
+                            0 );
+
+    m_graphicsFunc = (createGraphicsManager)GetProcAddress(hCGDll,
+                                                           funcName.c_str());
+    m_graphicsFunc();
+    return true;                                                     
   }
 
   BaseApp&

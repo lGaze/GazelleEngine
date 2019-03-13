@@ -43,6 +43,7 @@
     <ClCompile Include="src\gzDXGraphicsManager.cpp" />
     <ClCompile Include="src\gzDXInputLayout.cpp" />
     <ClCompile Include="src\gzDXPixelShader.cpp" />
+    <ClCompile Include="src\gzDXPlugin.cpp" />
     <ClCompile Include="src\gzDXRenderTarget.cpp" />
     <ClCompile Include="src\gzDXSamplerState.cpp" />
     <ClCompile Include="src\gzDXSwapChain.cpp" />

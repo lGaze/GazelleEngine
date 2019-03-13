@@ -31,3 +31,32 @@ namespace gzEngineSDK {
   class SamplerState;
 }
 
+/*
+#if GZ_PLATFORM == GZ_PLATFORM_WIN32
+# if GZ_COMPILER == GZ_COMPILER_MSVC
+#   if defined( GZ_STATIC_LIB )
+#     define GZ_DIRECTX_EXPORT
+#   else
+#     if defined( GZ_DIRECTX_EXPORTS )
+#       define GZ_DIRECTX_EXPORT __declspec( dllexport )
+#     else
+#       define GZ_DIRECTX_EXPORT __declspec( dllimport )
+#     endif
+#   endif
+# else //Any other compiler
+#   if defined( GZ_STATIC_LIB )
+#     define GZ_DIRECTX_EXPORT
+#   else
+#     if defined( GZ_DIRECTX_EXPORTS )
+#       define GZ_DIRECTX_EXPORT __attribute__ ((dllexport))
+#     else
+#       define GZ_DIRECTX_EXPORT __attribute__ ((dllimport))
+#     endif
+#   endif
+# endif
+# define GZ_DIRECTX_HIDDEN
+#else //Linux/Mac Settings
+# define GZ_DIRECTX_EXPORT __attribute__ ((visibility ("default")))
+# define GZ_DIRECTX_HIDDEN __attribute__ ((visibility ("hidden")))
+#endif*/
+

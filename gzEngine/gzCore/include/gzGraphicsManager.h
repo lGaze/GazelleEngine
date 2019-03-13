@@ -127,7 +127,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    */
   virtual void
   SetIndexBuffer( int32 Format,
-                    uint32 Offset ) = 0;
+                  uint32 Offset ) = 0;
 
   /**
    * @brief

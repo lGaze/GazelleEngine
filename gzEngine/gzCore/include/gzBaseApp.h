@@ -10,6 +10,7 @@
 #include "gzPrerequisitesCore.h"
 #include "gzWindow.h"
 #include <gzModule.h>
+#include <gzGraphicsManager.h>
 
 
 namespace gzEngineSDK {
@@ -60,6 +61,16 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
   void
   update();
 
+  //TODO: Class for loadig libraries 
+  /**
+   * @brief Function for load plugins 
+   * @returns Bool value wich indicates if the library could be loaded or not
+   */
+  bool
+  loadLibrary(String libraryName, String funcName);
+  
+
+  using createGraphicsManager = void*(*)();
 
   /************************************************************************/
   /* Member declarations                                                  */
@@ -76,6 +87,13 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
     * @brief 
     */
    Window* window;
+
+ private:
+
+   /**
+    * @brief 
+    */
+   createGraphicsManager m_graphicsFunc;
 
 };
 
