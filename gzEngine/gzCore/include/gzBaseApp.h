@@ -21,7 +21,11 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
   /**
    * @brief default constructor
    */
-  BaseApp() = default;
+  BaseApp( uint32 windowWidth,
+           uint32 windowHeight,
+           String windowName,
+           uint32 posX,
+           uint32 posY );
 	
   /**
    * @brief default destructor
@@ -82,7 +86,7 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
   /* Member declarations                                                  */
   /************************************************************************/
 	
- public:
+ private:
    
    /**
     * @brief Value wich indicates if the mainloop continues 
@@ -92,15 +96,37 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
-   Window* window;
-
- private:
+   Window* m_pwindow;
 
    /**
     * @brief 
     */
    createGraphicsManager m_graphicsFunc;
 
+   /**
+    * @brief 
+    */
+   uint32 m_windowWidth;
+
+   /**
+    * @brief 
+    */
+   uint32 m_windowHeight;
+
+   /**
+    * @brief 
+    */
+   String m_windowName;
+
+   /**
+    * @brief 
+    */
+   uint32 m_windowPosX;
+
+   /**
+    * @brief 
+    */
+   uint32 m_windowPosY;
 };
 
 BaseApp&

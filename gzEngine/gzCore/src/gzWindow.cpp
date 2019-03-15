@@ -10,7 +10,11 @@
 namespace gzEngineSDK {
 
   bool 
-  Window::initWindow()
+  Window::initWindow( uint32 width,
+                      uint32 height,
+                      String windowName,
+                      uint32 posX,
+                      uint32 posY)
   {
     //register class
     WNDCLASSEX wndclass;
@@ -24,18 +28,16 @@ namespace gzEngineSDK {
     wndclass.hCursor = LoadCursor( 0, IDC_ARROW );
     wndclass.hbrBackground = ( HBRUSH ) ( COLOR_WINDOW + 1 );
     wndclass.lpszMenuName = NULL;
-    wndclass.lpszClassName = "gzEngine";
+    wndclass.lpszClassName = windowName.c_str();
     wndclass.hIconSm = LoadIcon( 0, IDI_APPLICATION );
     if ( !RegisterClassEx( &wndclass ) )
       return false;
 
     //Create window
-    RECT rc = { 0, 0, 640, 480 };
-    AdjustWindowRect( &rc, WS_OVERLAPPEDWINDOW, FALSE );
 
-    m_hWnd = CreateWindowEx( 0, "gzEngine", "gzEngine",
-                             WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
-                             CW_USEDEFAULT, CW_USEDEFAULT, 0, 0,
+    m_hWnd = CreateWindowEx( 0, windowName.c_str(), windowName.c_str(),
+                             WS_OVERLAPPEDWINDOW, posX, posY,
+                             width, height, 0, 0,
                              GetModuleHandle( 0 ), 0 );
 
     if ( !m_hWnd )

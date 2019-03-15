@@ -9,6 +9,17 @@
 
 namespace gzEngineSDK {
 
+  BaseApp::BaseApp(uint32 windowWidth, 
+                   uint32 windowHeight, 
+                   String windowName,
+                   uint32 posX,
+                   uint32 posY) : 
+    m_windowWidth(windowWidth),
+    m_windowHeight(windowHeight),
+    m_windowName(windowName),
+    m_windowPosX(posX),
+    m_windowPosY(posY) { }
+
   int32
   BaseApp::runMainLoop()
   {
@@ -22,7 +33,7 @@ namespace gzEngineSDK {
     while(m_mainLoop)
     {
 
-      window->messageHandler();
+      m_pwindow->messageHandler();
 
       //Update
       update();
@@ -37,8 +48,12 @@ namespace gzEngineSDK {
   bool 
   BaseApp::initApp()
   {
-    window = new Window();
-    if (!window->initWindow())
+    m_pwindow = new Window();
+    if (!m_pwindow->initWindow( m_windowWidth, 
+                                m_windowHeight, 
+                                m_windowName,
+                                m_windowPosX,
+                                m_windowPosY ))
     {
       std::cout << "Init Window failed" << std::endl;
       return false;
@@ -65,7 +80,7 @@ namespace gzEngineSDK {
     bool result = true;
 
     result = GraphicsManager::instance().InitGraphicsManager(
-      static_cast< void* >( window->getHWND() ), 640, 480 );
+      static_cast< void* >( m_pwindow->getHWND() ), 640, 480 );
 
     result = GraphicsManager::instance().CreateTexture2D( 640, 480, 45, 0 );
 
@@ -82,7 +97,7 @@ namespace gzEngineSDK {
   void 
   BaseApp::render()
   {
-    float ClearColor[4] = { 1.0f, 1.0f, 0.3f, 1.0f };
+    float ClearColor[4] = { 1.0f, 0.7f, 0.0f, 1.0f };
     GraphicsManager::instance().ClearRenderTargetView( ClearColor );
     GraphicsManager::instance().Present( 0, 0 );
   }

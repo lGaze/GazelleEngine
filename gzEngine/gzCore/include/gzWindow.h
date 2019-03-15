@@ -28,13 +28,16 @@ class GZ_CORE_EXPORT Window
   /* Window functions                                                     */
   /************************************************************************/
 	
-  //TODO: Params of this func width, height and string
   /**
    * @brief Function which initializates the window
    * @returns Bool value which indicates if the initialization of the window succeed
    */
   bool
-  initWindow();
+  initWindow( uint32 width,
+              uint32 height,
+              String windowName,
+              uint32 posX,
+              uint32 posY );
 
   /**
    * @brief Dispaches all the windows messages
