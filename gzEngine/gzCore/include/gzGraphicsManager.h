@@ -23,7 +23,8 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   /**
    * @brief default destructor
    */
-  virtual ~GraphicsManager();
+  virtual 
+  ~GraphicsManager();
 	
   /************************************************************************/
   /* GraphicsManager functions                                            */
@@ -33,19 +34,26 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief 
    */
   virtual bool
-  InitGraphicsManager(void* hWnd, int32 width, int32 height ) = 0;
+  initGraphicsManager(void* hWnd, int32 width, int32 height ) = 0;
 
   /**
    * @brief 
    */
   virtual bool
-  CreateRenderTargetView() = 0;
+  createRenderTarget() = 0;
+
 
   /**
    * @brief 
    */
   virtual bool
-  CreateTexture2D( uint32 width,
+  creteBackBuffer() = 0;
+
+  /**
+   * @brief 
+   */
+  virtual bool
+  createTexture2D( uint32 width,
                    uint32 height,
                    uint32 format,
                    uint32 usage ) = 0;
@@ -53,31 +61,31 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief 
    */
   virtual bool
-  CreateDepthStencilView() = 0;
+  createDepthStencilView() = 0;
 
   /**
    * @brief 
    */
   virtual bool
-  CreateVertexShader() = 0;
+  createVertexShader() = 0;
 
   /**
    * @brief 
    */
   virtual bool
-  CreateInputLayout() = 0;
+  createInputLayout() = 0;
 
   /**
    * @brief 
    */
   virtual bool
-  CreatePixelShader() = 0;
+  createPixelShader() = 0;
 
   /**
    * @brief 
    */
   virtual bool
-  CreateBuffer( uint32 usage,
+  createBuffer( uint32 usage,
                 uint32 bytewidth,
                 uint32 bufferType,
                 uint32 cpuflags,
@@ -87,37 +95,37 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief 
    */
   virtual bool
-  CreateVertexAndIndexBufferFromFile( std::string file ) = 0;
+  createVertexAndIndexBufferFromFile( std::string file ) = 0;
 
   /**
    * @brief 
    */
   virtual bool
-  CreateSamplerState() = 0;
+  createSamplerState() = 0;
 
   /**
    * @brief 
    */
   virtual void
-  SetRenderTargets( uint32 NumViews ) = 0;
+  setRenderTargets( uint32 NumViews ) = 0;
 
    /**
    * @brief
    */
   virtual void 
-  SetViewports( uint32 NumViewports ) = 0;
+  setViewports( uint32 NumViewports ) = 0;
 
   /**
    * @brief
    */
   virtual void 
-  SetInputLayout() = 0;
+  setInputLayout() = 0;
 
   /**
    * @brief
    */
   virtual void
-  SetVertexBuffers( uint32 StartSlot,
+  setVertexBuffers( uint32 StartSlot,
                       uint32 NumBuffers,
                       const uint32 *pStrides,
                       const uint32 *pOffsets ) = 0;
@@ -126,20 +134,20 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief
    */
   virtual void
-  SetIndexBuffer( int32 Format,
+  setIndexBuffer( int32 Format,
                   uint32 Offset ) = 0;
 
   /**
    * @brief
    */
   virtual void 
-  SetPrimitiveTopology( uint32 Topology ) = 0;
+  setPrimitiveTopology( uint32 Topology ) = 0;
 
   /**
    * @brief
    */
   virtual void
-  UpdateSubresource( uint32 BufferIndex,
+  updateSubresource( uint32 BufferIndex,
                      uint32 DstSubresource,
                      const void *pDstBox,
                      const void *pSrcData,
@@ -150,13 +158,13 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief
    */
   virtual void 
-  ClearRenderTargetView( const float ColorRGBA[4] ) = 0;
+  clearRenderTargetView( const float ColorRGBA[4] ) = 0;
 
   /**
    * @brief
    */
   virtual void
-  ClearDepthStencilView( uint32 ClearFlags,
+  clearDepthStencilView( uint32 ClearFlags,
                          float Depth,
                          uint8 Stencil ) = 0;
 
@@ -164,14 +172,14 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief
    */
   virtual void
-  SetVertexShader( void *const *ppClassInstances,
+  setVertexShader( void *const *ppClassInstances,
                    uint32 NumClassInstances ) = 0;
 
   /**
    * @brief
    */
   virtual void
-  SetVSConstantBuffers( uint32 BufferIndex,
+  setVSConstantBuffers( uint32 BufferIndex,
                         uint32 StartSlot,
                         uint32 NumBuffers ) = 0;
 
@@ -179,14 +187,14 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief
    */
   virtual void
-  SetPixelShader( void *const *ppClassInstances,
+  setPixelShader( void *const *ppClassInstances,
                   uint32 NumClassInstances ) = 0;
 
   /**
    * @brief
    */
   virtual void
-  SetPSConstantBuffers( uint32 BufferIndex,
+  setPSConstantBuffers( uint32 BufferIndex,
                         uint32 StartSlot,
                         uint32 NumBuffers ) = 0;
 
@@ -194,21 +202,21 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief
    */
   virtual void
-  SetShaderResources( uint32 StartSlot,
+  setShaderResources( uint32 StartSlot,
                       uint32 NumViews ) = 0;
 
   /**
    * @brief
    */
   virtual void
-  SetSamplers( uint32 StartSlot,
+  setSamplers( uint32 StartSlot,
                uint32 NumSamplers ) = 0;
 
   /**
    * @brief
    */
   virtual void
-  DrawIndexed( uint32 indexCount,
+  drawIndexed( uint32 indexCount,
                uint32 StartIndexLocation,
                int32 BaseVertexLocation ) = 0;
 
@@ -216,13 +224,13 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief
    */
   virtual bool 
-  GetBuffer( uint32 Buffer ) = 0;
+  getBuffer( uint32 Buffer ) = 0;
 
   /**
    * @brief
    */
   virtual bool 
-  Present( uint32 SyncInterval, uint32 Flags ) = 0;
+  present( uint32 SyncInterval, uint32 Flags ) = 0;
 
   /************************************************************************/
   /* Member declarations                                                  */
@@ -232,9 +240,9 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    
  };
 
-/*
  GraphicsManager&
  g_GraphicsManager() {
    return GraphicsManager::instance();
- }*/
+ }
+
 }

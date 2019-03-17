@@ -10,12 +10,12 @@
 
 namespace gzEngineSDK {
 
-  Texture::Texture()
+  DXTexture::DXTexture()
   {
     m_ptex = nullptr;
   }
   void 
-  Texture::CreateTextureDesc( uint32 width, 
+  DXTexture::CreateTextureDesc( uint32 width, 
                               uint32 height, 
                               uint32 format, 
                               uint32 usage )
@@ -35,4 +35,11 @@ namespace gzEngineSDK {
     m_desc.CPUAccessFlags = 0;
     m_desc.MiscFlags = 0;
   }
+
+  bool 
+  DXTexture::createTexture2D()
+  {
+    
+  }
+
 }

@@ -1,65 +1,52 @@
 /**************************************************************************/
-/* @filename gzDXRenderTarget.h
+/* @filename gzRenderTarget.h
 /* @author Victor Flores 
-/* @date 2019/03/04
+/* @date 2019/03/16
 /* @brief 
 /**************************************************************************/
 
 #pragma once
 
-#include "gzDXPrerequisites.h"
-#include "gzDXGraphicsManager.h"
-#include  <gzRenderTarget.h>
+#include "gzPrerequisitesCore.h"
+
 
 namespace gzEngineSDK {
-class DXRenderTarget : public RenderTarget
+class GZ_CORE_EXPORT RenderTarget
 {
  public:
    
   /**
    * @brief default constructor
    */
-  DXRenderTarget();
+  RenderTarget() = default;
 	
   /**
    * @brief default destructor
    */
-  ~DXRenderTarget() = default;
+  virtual 
+  ~RenderTarget() = default;
 	
   /************************************************************************/
   /* RenderTarget functions                                               */
   /************************************************************************/
 	
   /**
-   * @brief Gets the RenderTarget interface
+   * @brief This function creates a new RederTarget
    */
-  FORCEINLINE ID3D11RenderTargetView**
-  getRenderTargetInterface() {
-    return &m_prenderTargetView;
-  }
+  virtual bool
+  createRenderTarget() = 0;
 
   /**
-   * @brief 
+   * @brief This function creates a Render target for backBuffer
    */
-  virtual bool 
-  createRenderTarget() override;
-
-  /**
-   * @brief 
-   */
-  virtual bool 
-  createBackBuffer() override;
+  virtual bool
+  createBackBuffer() = 0;
 
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 	
- private:
-
-  /**
-   * @brief RenderTarget Interface
-   */
-  ID3D11RenderTargetView * m_prenderTargetView;
+ public:
    
-};
+ };
 }

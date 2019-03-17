@@ -8,21 +8,22 @@
 #pragma once
 
 #include "gzDXPrerequisites.h"
+#include  <gzTexture.h>
 
 namespace gzEngineSDK {
-class Texture
+class DXTexture : public Texture
 {
  public:
    
   /**
    * @brief default constructor
    */
-  Texture();
+  DXTexture();
 	
   /**
    * @brief default destructor
    */
-  ~Texture() = default;
+  ~DXTexture() = default;
 	
   /************************************************************************/
   /* Texture functions                                                    */
@@ -55,7 +56,13 @@ class Texture
      return m_desc;
    }
 
-  /************************************************************************/
+   /**
+    * @brief This function creates a 2D Texture
+    */
+   virtual bool
+   createTexture2D() override;
+
+     /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 

@@ -33,19 +33,19 @@ class DXGraphicsManager : public GraphicsManager
    * @brief Initializes all the things that GraphicsManager needs
    */
   virtual bool
-  InitGraphicsManager(void* hWnd, int32 width, int32 heigh) override;
+  initGraphicsManager(void* hWnd, int32 width, int32 heigh) override;
 
   /**
    * @brief 
    */
   virtual bool
-  CreateRenderTargetView() override;
+  createRenderTarget() override;
 
   /**
    * @brief 
    */
   virtual bool 
-  CreateTexture2D( uint32 width,
+  createTexture2D( uint32 width,
                    uint32 height,
                    uint32 format,
                    uint32 usage ) override;
@@ -54,31 +54,31 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   virtual bool 
-  CreateDepthStencilView() override;
+  createDepthStencilView() override;
 
   /**
    * @brief 
    */
   virtual bool 
-  CreateVertexShader() override;
+  createVertexShader() override;
 
   /**
    * @brief 
    */
   virtual bool 
-  CreateInputLayout() override;
+  createInputLayout() override;
 
   /**
    * @brief 
    */
   virtual bool 
-  CreatePixelShader() override;
+  createPixelShader() override;
 
   /**
    * @brief 
    */
   virtual bool
-  CreateBuffer( uint32 usage,
+  createBuffer( uint32 usage,
                 uint32 bytewidth,
                 uint32 bufferType,
                 uint32 cpuflags,
@@ -88,37 +88,37 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   virtual bool 
-  CreateVertexAndIndexBufferFromFile( std::string file ) override;
+  createVertexAndIndexBufferFromFile( std::string file ) override;
 
   /**
    * @brief 
    */
   virtual bool 
-  CreateSamplerState() override;
+  createSamplerState() override;
 
   /**
    * @brief 
    */
   virtual void
-  SetRenderTargets( uint32 NumViews ) override;
+  setRenderTargets( uint32 NumViews ) override;
 
   /**
    * @brief 
    */
   virtual void
-  SetViewports( uint32 NumViewports ) override;
+  setViewports( uint32 NumViewports ) override;
 
   /**
    * @brief 
    */
   virtual void
-  SetInputLayout() override;
+  setInputLayout() override;
 
   /**
    * @brief 
    */
   virtual void
-  SetVertexBuffers( uint32 StartSlot,
+  setVertexBuffers( uint32 StartSlot,
                     uint32 NumBuffers,
                     const uint32 *pStrides,
                     const uint32 *pOffsets ) override;
@@ -127,19 +127,19 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   virtual void
-  SetIndexBuffer( int32 Format, uint32 Offset ) override;
+  setIndexBuffer( int32 Format, uint32 Offset ) override;
 
   /**
    * @brief 
    */
   virtual void
-  SetPrimitiveTopology( uint32 Topology ) override;
+  setPrimitiveTopology( uint32 Topology ) override;
 
   /**
    * @brief 
    */
   virtual void
-  UpdateSubresource( uint32 BufferIndex,
+  updateSubresource( uint32 BufferIndex,
                      uint32 DstSubresource,
                      const void *pDstBox,
                      const void *pSrcData, 
@@ -151,19 +151,19 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   virtual void
-  ClearRenderTargetView( const float ColorRGBA[4] ) override;
+  clearRenderTargetView( const float ColorRGBA[4] ) override;
 
   /**
    * @brief 
    */
   virtual void
-  ClearDepthStencilView( uint32 ClearFlags, float Depth, uint8 Stencil ) override;
+  clearDepthStencilView( uint32 ClearFlags, float Depth, uint8 Stencil ) override;
 
   /**
    * @brief 
    */
   virtual void
-  SetVertexShader( void *const *ppClassInstances,
+  setVertexShader( void *const *ppClassInstances,
                    uint32 NumClassInstances ) override;
 
 
@@ -171,7 +171,7 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   virtual void
-  SetVSConstantBuffers( uint32 BufferIndex, 
+  setVSConstantBuffers( uint32 BufferIndex, 
                         uint32 StartSlot, 
                         uint32 NumBuffers ) override;
 
@@ -179,32 +179,32 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   virtual void 
-  SetPixelShader( void *const *ppClassInstances,
+  setPixelShader( void *const *ppClassInstances,
                   uint32 NumClassInstances ) override;
 
   /**
    * @brief 
    */
   virtual void 
-  SetPSConstantBuffers( uint32 BufferIndex, uint32 StartSlot, uint32 NumBuffers ) override;
+  setPSConstantBuffers( uint32 BufferIndex, uint32 StartSlot, uint32 NumBuffers ) override;
 
   /**
    * @brief 
    */
   virtual void 
-  SetShaderResources( uint32 StartSlot, uint32 NumViews ) override;
+  setShaderResources( uint32 StartSlot, uint32 NumViews ) override;
 
   /**
    * @brief 
    */
   virtual void
-  SetSamplers( uint32 StartSlot, uint32 NumSamplers ) override;
+  setSamplers( uint32 StartSlot, uint32 NumSamplers ) override;
 
   /**
    * @brief 
    */
   virtual void
-  DrawIndexed(uint32 indexCount,
+  drawIndexed(uint32 indexCount,
                uint32 StartIndexLocation, 
                int32 BaseVertexLocation ) override;
 
@@ -212,15 +212,21 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   virtual bool
-  GetBuffer( uint32 Buffer ) override;
+  getBuffer( uint32 Buffer ) override;
 
   /**
    * @brief 
    */
   virtual bool 
-  Present( uint32 SyncInterval, uint32 Flags ) override;
+  present( uint32 SyncInterval, uint32 Flags ) override;
 
-  /************************************************************************/
+  /**
+   * @brief 
+   */
+  virtual bool 
+  creteBackBuffer() override;
+
+    /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 	
@@ -244,7 +250,7 @@ class DXGraphicsManager : public GraphicsManager
   /**
    * @brief Pointer to the RenderTarget Class
    */
-  RenderTarget * m_prenderTarget;
+  DXRenderTarget * m_prenderTarget;
 
   /**
    * @brief Pointer to the Texture Class

@@ -22,6 +22,7 @@
     <ClInclude Include="include\gzBaseApp.h" />
     <ClInclude Include="include\gzGraphicsManager.h" />
     <ClInclude Include="include\gzPrerequisitesCore.h" />
+    <ClInclude Include="include\gzRenderTarget.h" />
     <ClInclude Include="include\gzWindow.h" />
   </ItemGroup>
   <ItemGroup>

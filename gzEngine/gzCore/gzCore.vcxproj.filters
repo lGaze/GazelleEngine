@@ -27,6 +27,9 @@
     <ClInclude Include="include\gzGraphicsManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\gzRenderTarget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\gzBaseApp.cpp">

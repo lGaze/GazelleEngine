@@ -80,9 +80,14 @@ namespace gzEngineSDK {
     bool result = true;
 
     result = GraphicsManager::instance().InitGraphicsManager(
-      static_cast< void* >( m_pwindow->getHWND() ), 640, 480 );
+      static_cast< void* >( m_pwindow->getHWND() ), 
+      m_windowWidth, 
+      m_windowHeight );
 
-    result = GraphicsManager::instance().CreateTexture2D( 640, 480, 45, 0 );
+    result = GraphicsManager::instance().CreateTexture2D( m_windowWidth,
+                                                          m_windowHeight,
+                                                          45, 
+                                                          0 );
 
     result = GraphicsManager::instance().CreateDepthStencilView();
 
