@@ -30,201 +30,51 @@ class DXGraphicsManager : public GraphicsManager
   /************************************************************************/
 
   /**
-   * @brief Initializes all the things that GraphicsManager needs
-   */
-  virtual bool
-  initGraphicsManager(void* hWnd, int32 width, int32 heigh) override;
-
-  /**
-   * @brief 
-   */
-  virtual bool
-  createRenderTarget() override;
-
-  /**
-   * @brief 
+   * @brief Initializes the Graphics Device, SwapChain and DeviceContext
    */
   virtual bool 
-  createTexture2D( uint32 width,
-                   uint32 height,
-                   uint32 format,
-                   uint32 usage ) override;
+  initGraphicsManager( void* hWnd, int32 width, int32 height ) override;
 
   /**
-   * @brief 
+   * @brief Creates a Texture2D from a Descriptor
    */
-  virtual bool 
-  createDepthStencilView() override;
+  virtual Texture* 
+  createTexture2D( TEXTURE2D_DESCRIPTOR textureInfo ) override;
+
+
+
+  virtual RenderTarget* 
+  createRenderTarget( Texture * texture ) override;
+
 
   /**
-   * @brief 
+   * @brief Creates a RenderTarget from back buffer
    */
-  virtual bool 
-  createVertexShader() override;
+  virtual RenderTarget* 
+  creteRenderTargetFromBackBuffer() override;
+
 
   /**
-   * @brief 
-   */
-  virtual bool 
-  createInputLayout() override;
-
-  /**
-   * @brief 
-   */
-  virtual bool 
-  createPixelShader() override;
-
-  /**
-   * @brief 
-   */
-  virtual bool
-  createBuffer( uint32 usage,
-                uint32 bytewidth,
-                uint32 bufferType,
-                uint32 cpuflags,
-                const void * pInitialData ) override;
-
-  /**
-   * @brief 
-   */
-  virtual bool 
-  createVertexAndIndexBufferFromFile( std::string file ) override;
-
-  /**
-   * @brief 
-   */
-  virtual bool 
-  createSamplerState() override;
-
-  /**
-   * @brief 
+   * @brief Sets the render target with the given render taget
    */
   virtual void
-  setRenderTargets( uint32 NumViews ) override;
-
-  /**
-   * @brief 
-   */
-  virtual void
-  setViewports( uint32 NumViewports ) override;
-
-  /**
-   * @brief 
-   */
-  virtual void
-  setInputLayout() override;
-
-  /**
-   * @brief 
-   */
-  virtual void
-  setVertexBuffers( uint32 StartSlot,
-                    uint32 NumBuffers,
-                    const uint32 *pStrides,
-                    const uint32 *pOffsets ) override;
-
-  /**
-   * @brief 
-   */
-  virtual void
-  setIndexBuffer( int32 Format, uint32 Offset ) override;
-
-  /**
-   * @brief 
-   */
-  virtual void
-  setPrimitiveTopology( uint32 Topology ) override;
-
-  /**
-   * @brief 
-   */
-  virtual void
-  updateSubresource( uint32 BufferIndex,
-                     uint32 DstSubresource,
-                     const void *pDstBox,
-                     const void *pSrcData, 
-                     uint32 SrcRowPitch, 
-                     uint32 SrcDepthPitch ) override;
+  setRenderTargets( uint32 NumViews,
+                    RenderTarget * renderTarget, 
+                    Depth * depth ) override;
 
 
   /**
-   * @brief 
-   */
-  virtual void
-  clearRenderTargetView( const float ColorRGBA[4] ) override;
-
-  /**
-   * @brief 
-   */
-  virtual void
-  clearDepthStencilView( uint32 ClearFlags, float Depth, uint8 Stencil ) override;
-
-  /**
-   * @brief 
-   */
-  virtual void
-  setVertexShader( void *const *ppClassInstances,
-                   uint32 NumClassInstances ) override;
-
-
-  /**
-   * @brief 
-   */
-  virtual void
-  setVSConstantBuffers( uint32 BufferIndex, 
-                        uint32 StartSlot, 
-                        uint32 NumBuffers ) override;
-
-  /**
-   * @brief 
+   * @brief Clears the given render target with the given color
    */
   virtual void 
-  setPixelShader( void *const *ppClassInstances,
-                  uint32 NumClassInstances ) override;
-
-  /**
-   * @brief 
-   */
-  virtual void 
-  setPSConstantBuffers( uint32 BufferIndex, uint32 StartSlot, uint32 NumBuffers ) override;
-
-  /**
-   * @brief 
-   */
-  virtual void 
-  setShaderResources( uint32 StartSlot, uint32 NumViews ) override;
-
-  /**
-   * @brief 
-   */
-  virtual void
-  setSamplers( uint32 StartSlot, uint32 NumSamplers ) override;
-
-  /**
-   * @brief 
-   */
-  virtual void
-  drawIndexed(uint32 indexCount,
-               uint32 StartIndexLocation, 
-               int32 BaseVertexLocation ) override;
-
-  /**
-   * @brief 
-   */
-  virtual bool
-  getBuffer( uint32 Buffer ) override;
+  clearRenderTargetView( const float ColorRGBA[4], 
+                         RenderTarget * renderTarget ) override;
 
   /**
    * @brief 
    */
   virtual bool 
   present( uint32 SyncInterval, uint32 Flags ) override;
-
-  /**
-   * @brief 
-   */
-  virtual bool 
-  creteBackBuffer() override;
 
     /************************************************************************/
   /* Member declarations                                                  */
@@ -255,12 +105,12 @@ class DXGraphicsManager : public GraphicsManager
   /**
    * @brief Pointer to the Texture Class
    */
-  Texture * m_ptexture;
+  DXTexture * m_ptexture;
 
   /**
    * @brief Pointer to the Depth Class
    */
-  Depth * m_pdepth;
+  DXDepth * m_pdepth;
 
   /**
    * @brief Pointer to the InputLayput Class

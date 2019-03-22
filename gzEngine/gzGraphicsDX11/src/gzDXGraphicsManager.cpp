@@ -26,13 +26,13 @@ namespace gzEngineSDK {
     m_pdevice(new Device()),
     m_pdeviceContext(new DeviceContext()),
     m_pswapChain(new SwapChain()),
-    m_prenderTarget(new RenderTarget()),
+    m_prenderTarget(new DXRenderTarget()),
     m_pviewPort(new ViewPort()),
     m_pshader(new Shader()) { }
 
 
   bool
-  DXGraphicsManager::InitGraphicsManager( void* hWnd, 
+  DXGraphicsManager::initGraphicsManager( void* hWnd, 
                                           int32 width,
                                           int32 height )
   {
@@ -51,313 +51,81 @@ namespace gzEngineSDK {
     return restult;
   }
 
-  //TODO: Separate and fix this function 
-  bool 
-  DXGraphicsManager::CreateRenderTargetView()
+  Texture* 
+  DXGraphicsManager::createTexture2D( TEXTURE2D_DESCRIPTOR textureInfo )
   {
-    bool result = true;
-    Texture * renderTargetTex = new Texture();
-    m_pswapChain->getBuffer( 0,
-                             __uuidof( ID3D11Texture2D ),
-                             ( LPVOID* ) renderTargetTex->GetTextureInterface());
+    m_ptexture = new DXTexture();
+    //Create the DX texture descriptor and the texture
+    m_ptexture->create2DTextueDescriptor( textureInfo );
+    m_pdevice->CreateTexture2D( &m_ptexture->gzGetTextureDesc(),
+                                nullptr,
+                                m_ptexture->gzGetTextureInterface() );
 
-    result = m_pdevice->CreateRenderTargetView(
-      *renderTargetTex->GetTextureInterface(),
+    return reinterpret_cast< Texture* >( m_ptexture );
+  }
+
+
+  RenderTarget* 
+  DXGraphicsManager::creteRenderTargetFromBackBuffer()
+  {
+    m_prenderTarget = new DXRenderTarget();
+    m_ptexture = new DXTexture();
+    m_pswapChain->getBuffer( 
+      0,
+      __uuidof( ID3D11Texture2D ),                          
+      ( LPVOID* ) m_ptexture->gzGetTextureInterface() );
+
+    m_pdevice->CreateRenderTargetView(
+      *m_ptexture->gzGetTextureInterface(),
       nullptr,
-      m_prenderTarget->getRenderTargetInterface());
+      m_prenderTarget->getRenderTargetInterface() );
 
-    return result;
+    return reinterpret_cast< RenderTarget* >( m_prenderTarget );
   }
 
-  bool DXGraphicsManager::CreateTexture2D( uint32 width,
-                                           uint32 height,
-                                           uint32 format,
-                                           uint32 usage )
+
+  void 
+  DXGraphicsManager::setRenderTargets( uint32 NumViews, 
+                                       RenderTarget * renderTarget,
+                                       Depth * depth)
   {
-    bool result = true;
 
-    m_ptexture = new Texture();
-    m_ptexture->CreateTextureDesc( width,
-                                   height,
-                                   format,
-                                   usage );
+    m_pdepth = reinterpret_cast< DXDepth* >( depth );
+    m_prenderTarget = reinterpret_cast< DXRenderTarget* > ( renderTarget );
 
-    result = m_pdevice->CreateTexture2D( &m_ptexture->GetTextureDesc(),
-                                         nullptr,
-                                         m_ptexture->GetTextureInterface() );
+    m_pdeviceContext->SetRenderTargets(
+      NumViews,
+      m_prenderTarget->getRenderTargetInterface(),
+      nullptr );
 
-    return result;
-  }
-
-  bool 
-  DXGraphicsManager::CreateVertexAndIndexBufferFromFile( std::string file )
-  {
-    return false;
-  }
-
-  bool 
-  DXGraphicsManager::CreateSamplerState()
-  {
-    m_psamplerState = new SamplerState();
-    m_psamplerState->CreateSamplerDesc();
-    return m_pdevice->CreateSamplerState( &m_psamplerState->getSamplerDesc(),
-                                            m_psamplerState->getSamplerInterface() );
   }
 
   void 
-  DXGraphicsManager::SetRenderTargets( uint32 NumViews )
+  DXGraphicsManager::clearRenderTargetView( const float ColorRGBA[4], 
+                                            RenderTarget * renderTarget )
   {
-    m_pdeviceContext->SetRenderTargets( NumViews,
-                                        m_prenderTarget->getRenderTargetInterface(),
-                                        *m_pdepth->getDepthStencilViewInterface());
-  }
+    m_prenderTarget = reinterpret_cast< DXRenderTarget* > ( renderTarget );
 
-  void
-  DXGraphicsManager::SetViewports( uint32 NumViewports )
-  {
-    m_pdeviceContext->SetViewports( NumViewports,
-                                    &m_pviewPort->getVewPortInterface() );
-  }
-
-  void 
-  DXGraphicsManager::SetInputLayout()
-  {
-    m_pdeviceContext->SetInputLayout( *m_pinputLayout->getInputLayputInterface() );
-  }
-
-  void 
-  DXGraphicsManager::SetVertexBuffers( uint32 StartSlot, 
-                                       uint32 NumBuffers,
-                                       const uint32 *pStrides, 
-                                       const uint32 *pOffsets )
-  {
-    m_pdeviceContext->SetVertexBuffers( StartSlot,
-                                        NumBuffers,
-                                        m_pvertexBuffer->getBufferInterface(),
-                                        pStrides,
-                                        pOffsets );
-  }
-
-  //TODO: Check this
-  void 
-  DXGraphicsManager::SetIndexBuffer( int32 Format, uint32 Offset )
-  {
-    DXGI_FORMAT format = static_cast< DXGI_FORMAT > ( Format );
-    m_pdeviceContext->SetIndexBuffer( *m_pindexBuffer->getBufferInterface(),
-                                      format,
-                                      Offset );
-  }
-
-  void 
-  DXGraphicsManager::SetPrimitiveTopology( uint32 Topology )
-  {
-    m_pdeviceContext->SetPrimitiveTopology( Topology );
-  }
-
-  //TODO: Check this
-  void 
-  DXGraphicsManager::UpdateSubresource( uint32 BufferIndex,
-                                             uint32 DstSubresource,
-                                             const void *pDstBox,
-                                             const void *pSrcData,
-                                             uint32 SrcRowPitch, 
-                                             uint32 SrcDepthPitch )
-  {
-    const D3D11_BOX * box = static_cast< const D3D11_BOX* >( pDstBox );
-
-    m_pdeviceContext->UpdateSubresource(
-      *m_constantBuffers[BufferIndex]->getBufferInterface(),
-      DstSubresource,
-      box,
-      pSrcData,
-      SrcRowPitch,
-      SrcDepthPitch );
-  }
-
-  void 
-  DXGraphicsManager::ClearRenderTargetView( const float ColorRGBA[4] )
-  {
-    m_pdeviceContext->ClearRenderTargetView( 
+    m_pdeviceContext->ClearRenderTargetView(
       *m_prenderTarget->getRenderTargetInterface(),
-       ColorRGBA );
+      ColorRGBA );
   }
 
-  void 
-  DXGraphicsManager::ClearDepthStencilView( uint32 ClearFlags, float Depth, uint8 Stencil )
+  RenderTarget*
+  DXGraphicsManager::createRenderTarget( Texture * texture )
   {
-    m_pdeviceContext->ClearDepthStencilView( *m_pdepth->getDepthStencilViewInterface(),
-                                             ClearFlags,
-                                             Depth,
-                                             Stencil );
+    reinterpret_cast < DXTexture * > ( texture );
+
+    //m_pdevice->CreateRenderTargetView()
+    
+    return reinterpret_cast< RenderTarget* > ( m_prenderTarget );
+    
   }
 
-   //TODO: Fix the class instances
-  void 
-  DXGraphicsManager::SetVertexShader( void *const *ppClassInstances,
-                                      uint32 NumClassInstances )
-  {
-/*
-    ID3D11ClassInstance *const *ClassInstance = 
-      static_cast< ID3D11ClassInstance *const > ( ppClassInstances );*/
-
-    m_pdeviceContext->SetVertexShader( *m_pvertexShader->getVertexShaderInterface(),
-                                       nullptr,
-                                       NumClassInstances );
-
-  }
-
-  void 
-  DXGraphicsManager::SetVSConstantBuffers( uint32 BufferIndex,
-                                           uint32 StartSlot,
-                                           uint32 NumBuffers )
-  {
-    m_pdeviceContext->SetVSConstantBuffers(
-      StartSlot,
-      NumBuffers,
-      m_constantBuffers[BufferIndex]->getBufferInterface() );
-  }
-
-  //TODO: Fix the class instances
-  void 
-  DXGraphicsManager::SetPixelShader( void *const *ppClassInstances, uint32 NumClassInstances )
-  {
-    m_pdeviceContext->SetPixelShader( *m_ppixelShader->getPixelShaderInterface(),
-                                      nullptr,
-                                      NumClassInstances );
-  }
-
-  void 
-  DXGraphicsManager::SetPSConstantBuffers( uint32 BufferIndex, uint32 StartSlot, uint32 NumBuffers )
-  {
-    m_pdeviceContext->SetPSConstantBuffers(
-      StartSlot,
-      NumBuffers,
-      m_constantBuffers[BufferIndex]->getBufferInterface());
-  }
-
- 
-  void
-  DXGraphicsManager::SetShaderResources( uint32 StartSlot, uint32 NumViews )
-  {
-    m_pdeviceContext->SetShaderResources( StartSlot,
-                                          NumViews,
-                                          &m_pshader->m_pTextureRV );
-  }
-
-  void
-  DXGraphicsManager::SetSamplers( uint32 StartSlot, uint32 NumSamplers )
-  {
-    m_pdeviceContext->SetSamplers( StartSlot,
-                                   NumSamplers,
-                                   m_psamplerState->getSamplerInterface() );
-  }
-
-  void 
-  DXGraphicsManager::DrawIndexed( uint32 indexCount,
-                                       uint32 StartIndexLocation,
-                                       int32 BaseVertexLocation )
-  {
-    m_pdeviceContext->DrawIndexed( indexCount,
-                                   StartIndexLocation,
-                                   BaseVertexLocation );
-  }
-
-  bool DXGraphicsManager::GetBuffer( uint32 Buffer )
-  {
-    return m_pswapChain->getBuffer( Buffer,
-                                   __uuidof( ID3D11Texture2D ),
-                                   ( LPVOID* ) m_ptexture->GetTextureInterface());
-  }
-
-  bool DXGraphicsManager::Present( uint32 SyncInterval, uint32 Flags )
+  bool 
+  DXGraphicsManager::present( uint32 SyncInterval, uint32 Flags )
   {
     return m_pswapChain->Present( SyncInterval, Flags );
-  }
-
-  bool
-  DXGraphicsManager::CreateDepthStencilView()
-  {
-    m_pdepth = new Depth();
-
-    m_pdepth->CreateDepthStencilViewDesc( m_ptexture->GetTextureDesc() );
-    return m_pdevice->CreateDepthStencilView( *m_ptexture->GetTextureInterface(),
-                                              &m_pdepth->getDepthStencilViewDesc(),
-                                              m_pdepth->getDepthStencilViewInterface() );
-  }
-
-  bool 
-  DXGraphicsManager::CreateVertexShader()
-  {
-    return m_pdevice->CreateVertexshader( m_pvertexShader->m_pVSBlob->GetBufferPointer(),
-                                            m_pvertexShader->m_pVSBlob->GetBufferSize(),
-                                            nullptr,
-                                            m_pvertexShader->getVertexShaderInterface() );
-  }
-
-  bool 
-  DXGraphicsManager::CreateInputLayout()
-  {
-    m_pinputLayout = new InputLayout();
-    return m_pdevice->CreateInputLayout( &m_pinputLayout->m_vLayout[0],
-                                           m_pinputLayout->m_vLayout.size(),
-                                           m_pvertexShader->m_pVSBlob->GetBufferPointer(),
-                                           m_pvertexShader->m_pVSBlob->GetBufferSize(),
-                                           m_pinputLayout->getInputLayputInterface() );
-  }
-
-  bool 
-  DXGraphicsManager::CreatePixelShader()
-  {
-    return m_pdevice->CreatePixelShader( m_ppixelShader->m_pPSBlob->GetBufferPointer(),
-                                           m_ppixelShader->m_pPSBlob->GetBufferSize(),
-                                           nullptr,
-                                           m_ppixelShader->getPixelShaderInterface() );
-  }
-
-  //TODO: Check this param
-  bool 
-    DXGraphicsManager::CreateBuffer( uint32 usage,
-                                     uint32 bytewidth,
-                                     uint32 bufferType,
-                                     uint32 cpuflags,
-                                     const void * pInitialData )
-  {
-    const D3D11_SUBRESOURCE_DATA* data = 
-      static_cast< const D3D11_SUBRESOURCE_DATA* > ( pInitialData );
-
-    Buffer * tempBuffer = new Buffer();
-    tempBuffer->CreateBufferDesc( usage,
-                                  bytewidth,
-                                  bufferType,
-                                  cpuflags );
-
-    if ( bufferType == 1 )
-    {
-      m_pvertexBuffer = tempBuffer;
-      bool result = m_pdevice->CreateBuffer(
-        &m_pvertexBuffer->getBufferDesc(),
-        data,
-        m_pvertexBuffer->getBufferInterface() );
-      return result;
-    }
-
-    if ( bufferType == 2 )
-    {
-      m_pindexBuffer = tempBuffer;
-      return m_pdevice->CreateBuffer(
-        &m_pindexBuffer->getBufferDesc(),
-        data,
-        m_pindexBuffer->getBufferInterface() );
-    }
-
-    if ( bufferType == 4 )
-    {
-      m_pdevice->CreateBuffer(
-        &tempBuffer->getBufferDesc(),
-        data,
-        tempBuffer->getBufferInterface() );
-      m_constantBuffers.push_back( tempBuffer );
-    }
   }
 
 }

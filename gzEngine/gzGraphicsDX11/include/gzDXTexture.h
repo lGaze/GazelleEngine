@@ -28,65 +28,46 @@ class DXTexture : public Texture
   /************************************************************************/
   /* Texture functions                                                    */
   /************************************************************************/
-   
-   /**
-    * @brief 
-    */
-   void
-   CreateTextureDesc( uint32 width,
-                      uint32 height,
-                      uint32 format,
-                      uint32 usage );
+  
+  /**
+   * @brief Creates a Directx Descriptor of a Core 2D Texture Descriptor
+   */
+  void 
+  create2DTextueDescriptor( TEXTURE2D_DESCRIPTOR desc );
 
+  /**
+   * @brief Gets the Texture Interface
+   */
+  FORCEINLINE ID3D11Texture2D**
+  gzGetTextureInterface()
+  {
+    return &m_ptex;
+  };
 
+  /**
+   * @brief Gets the texture Descriptor
+   */
+  FORCEINLINE D3D11_TEXTURE2D_DESC  
+  gzGetTextureDesc()
+  {
+    return m_desc;
+  };
 
-   /**
-    * @brief 
-    */
-   FORCEINLINE ID3D11Texture2D **
-   GetTextureInterface() {
-     return &m_ptex;
-   }
-
-   /**
-    * @brief 
-    */
-   FORCEINLINE D3D11_TEXTURE2D_DESC
-   GetTextureDesc() {
-     return m_desc;
-   }
-
-   /**
-    * @brief This function creates a 2D Texture
-    */
-   virtual bool
-   createTexture2D() override;
-
-     /************************************************************************/
+  /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 
  private:
 
    /**
-    * @brief
+    * @brief Texture Interface
     */
    ID3D11Texture2D* m_ptex;
 
    /**
-    * @brief 
+    * @brief Texture Description
     */
    D3D11_TEXTURE2D_DESC m_desc;
-
-   /**
-    * @brief 
-    */
-   DXGI_FORMAT m_format;
-
-   /**
-    * @brief
-    */
-   D3D11_USAGE m_usage;
-   
- };
+ 
+};
 }

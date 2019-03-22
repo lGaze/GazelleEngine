@@ -31,7 +31,7 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    * @brief default destructor
    */
   ~BaseApp() = default;
-	
+	 
   /************************************************************************/
   /* BaseApp functions                                                    */
   /************************************************************************/
@@ -127,6 +127,11 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
     * @brief 
     */
    uint32 m_windowPosY;
+
+   /**
+    * @brief 
+    */
+   RenderTarget * BackBuffer;
 };
 
 BaseApp&

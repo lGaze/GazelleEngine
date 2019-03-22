@@ -1,11 +1,15 @@
 /**************************************************************************/
-/* @filename gzDXRenderTarget.cpp
+/* @filename gzTexture.cpp
 /* @author Victor Flores 
-/* @date 2019/03/04
+/* @date 2019/03/21
 /* @brief 
 /**************************************************************************/
-#include "gzDXRenderTarget.h"
+
+#include "gzTexture.h"
 
 namespace gzEngineSDK {
-  DXRenderTarget::DXRenderTarget() : m_prenderTargetView(nullptr) { }
+
+  Texture::Texture() { }
+  Texture::~Texture() { }
+
 }

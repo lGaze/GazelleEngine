@@ -79,21 +79,15 @@ namespace gzEngineSDK {
   {
     bool result = true;
 
-    result = GraphicsManager::instance().InitGraphicsManager(
+    result = GraphicsManager::instance().initGraphicsManager(
       static_cast< void* >( m_pwindow->getHWND() ), 
       m_windowWidth, 
       m_windowHeight );
 
-    result = GraphicsManager::instance().CreateTexture2D( m_windowWidth,
-                                                          m_windowHeight,
-                                                          45, 
-                                                          0 );
 
-    result = GraphicsManager::instance().CreateDepthStencilView();
+    BackBuffer = GraphicsManager::instance().creteRenderTargetFromBackBuffer();
 
-    result = GraphicsManager::instance().CreateRenderTargetView();
-
-    GraphicsManager::instance().SetRenderTargets(1);
+    GraphicsManager::instance().setRenderTargets( 1, BackBuffer, nullptr );
 
     return result;
 
@@ -103,8 +97,8 @@ namespace gzEngineSDK {
   BaseApp::render()
   {
     float ClearColor[4] = { 1.0f, 0.7f, 0.0f, 1.0f };
-    GraphicsManager::instance().ClearRenderTargetView( ClearColor );
-    GraphicsManager::instance().Present( 0, 0 );
+    GraphicsManager::instance().clearRenderTargetView( ClearColor, BackBuffer);
+    GraphicsManager::instance().present( 0, 0 );
   }
 
   void 

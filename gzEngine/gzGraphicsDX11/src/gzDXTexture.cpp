@@ -10,36 +10,27 @@
 
 namespace gzEngineSDK {
 
-  DXTexture::DXTexture()
+  DXTexture::DXTexture() : m_ptex(nullptr)
   {
-    m_ptex = nullptr;
+    ZeroMemory( &m_desc, sizeof( m_desc ) );
   }
-  void 
-  DXTexture::CreateTextureDesc( uint32 width, 
-                              uint32 height, 
-                              uint32 format, 
-                              uint32 usage )
-  {
-    m_format = ( DXGI_FORMAT ) format;
-    m_usage = ( D3D11_USAGE ) usage;
 
-    m_desc.Width = width;
-    m_desc.Height = height;
-    m_desc.MipLevels = 1;
-    m_desc.ArraySize = 1;
-    m_desc.Format = m_format;
+  void 
+  DXTexture::create2DTextueDescriptor( TEXTURE2D_DESCRIPTOR desc )
+  {
+
+    m_desc.Width = desc.Width;
+    m_desc.Height = desc.Height;
+    m_desc.MipLevels = desc.MipLevels;
+    m_desc.ArraySize = desc.ArraySize;
+    m_desc.Format = static_cast< DXGI_FORMAT >( desc.Format );
     m_desc.SampleDesc.Count = 1;
     m_desc.SampleDesc.Quality = 0;
-    m_desc.Usage = m_usage;
-    m_desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-    m_desc.CPUAccessFlags = 0;
-    m_desc.MiscFlags = 0;
-  }
+    m_desc.Usage = static_cast< D3D11_USAGE >( desc.Usage );
+    m_desc.BindFlags = static_cast < D3D11_BIND_FLAG > ( desc.BindFlags );
+    m_desc.CPUAccessFlags = desc.CPUAccessFlags;
+    m_desc.MiscFlags = desc.MiscFlags;
 
-  bool 
-  DXTexture::createTexture2D()
-  {
-    
   }
 
 }

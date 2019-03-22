@@ -1,12 +1,22 @@
 /**************************************************************************/
 /* @filename gzPrerequisitesCore.h
-/* @author Victor Flores 
+/* @author Victor Flores
 /* @date 2019/02/26
-/* @brief 
+/* @brief
 /**************************************************************************/
 #pragma once
 
 #include <gzPrerequisitesUtilities.h>
+#include "gzGraphicsDescriptors.h"
+
+
+namespace gzEngineSDK {
+
+  class Texture;
+  class RenderTarget;
+  class Depth;
+
+}
 
 //DLL export
 #if GZ_PLATFORM == GZ_PLATFORM_WIN32

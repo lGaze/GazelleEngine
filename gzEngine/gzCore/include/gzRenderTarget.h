@@ -18,29 +18,18 @@ class GZ_CORE_EXPORT RenderTarget
   /**
    * @brief default constructor
    */
-  RenderTarget() = default;
+  RenderTarget();
 	
   /**
    * @brief default destructor
    */
   virtual 
-  ~RenderTarget() = default;
+  ~RenderTarget();
 	
   /************************************************************************/
   /* RenderTarget functions                                               */
   /************************************************************************/
 	
-  /**
-   * @brief This function creates a new RederTarget
-   */
-  virtual bool
-  createRenderTarget() = 0;
-
-  /**
-   * @brief This function creates a Render target for backBuffer
-   */
-  virtual bool
-  createBackBuffer() = 0;
 
   /************************************************************************/
   /* Member declarations                                                  */

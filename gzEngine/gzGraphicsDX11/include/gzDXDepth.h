@@ -7,21 +7,22 @@
 #pragma once
 
 #include "gzDXPrerequisites.h"
+#include <gzDepth.h>
 
 namespace gzEngineSDK {
-class Depth
+class DXDepth : public Depth
 {
  public:
    
   /**
    * @brief default constructor
    */
-  Depth();
+  DXDepth();
 	
   /**
    * @brief default destructor
    */
-  ~Depth() = default;
+  ~DXDepth() = default;
 	
   /************************************************************************/
   /* Depth functions                                                      */
@@ -64,20 +65,20 @@ class Depth
 	
  private:
 
-   /**
-    * @brief 
-    */
-   ID3D11Texture2D* m_pDepthStencil;
+  /**
+   * @brief 
+   */
+  ID3D11Texture2D* m_pDepthStencil;
 
-   /**
-    * @brief 
-    */
-   ID3D11DepthStencilView* m_pDepthStencilView;
+  /**
+   * @brief 
+   */
+  ID3D11DepthStencilView* m_pDepthStencilView;
 
-   /**
-    * @brief
-    */
-   D3D11_DEPTH_STENCIL_VIEW_DESC m_DescDSV;
+  /**
+   * @brief
+   */
+  D3D11_DEPTH_STENCIL_VIEW_DESC m_DescDSV;
    
  };
 }

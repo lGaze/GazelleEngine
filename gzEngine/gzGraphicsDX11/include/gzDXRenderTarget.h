@@ -19,7 +19,7 @@ class DXRenderTarget : public RenderTarget
   /**
    * @brief default constructor
    */
-  DXRenderTarget();
+   DXRenderTarget();
 	
   /**
    * @brief default destructor
@@ -37,18 +37,6 @@ class DXRenderTarget : public RenderTarget
   getRenderTargetInterface() {
     return &m_prenderTargetView;
   }
-
-  /**
-   * @brief 
-   */
-  virtual bool 
-  createRenderTarget() override;
-
-  /**
-   * @brief 
-   */
-  virtual bool 
-  createBackBuffer() override;
 
   /************************************************************************/
   /* Member declarations                                                  */
