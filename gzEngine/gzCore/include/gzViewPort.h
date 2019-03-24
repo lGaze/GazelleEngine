@@ -1,39 +1,39 @@
 /**************************************************************************/
-/* @filename gzDepth.h
-/* @author Victor Flores
-/* @date 2019/03/21
-/* @brief
-/*************************************************************************/
+/* @filename gzViewPort.h
+/* @author Victor Flores 
+/* @date 2019/03/24
+/* @brief 
+/**************************************************************************/
 
 #pragma once
 
 #include "gzPrerequisitesCore.h"
 
 namespace gzEngineSDK {
-class GZ_CORE_EXPORT Depth
+class GZ_CORE_EXPORT ViewPort
 {
  public:
-
+   
   /**
    * @brief default constructor
    */
-  Depth();
-
+  ViewPort();
+	
   /**
    * @brief default destructor
    */
   virtual
-  ~Depth();
-
+  ~ViewPort();
+	
   /************************************************************************/
-  /* Depth functions                                                      */
+  /* ViewPort functions                                               */
   /************************************************************************/
-
+	
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-
+	
  public:
-
+   
  };
 }

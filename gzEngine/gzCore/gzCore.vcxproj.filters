@@ -39,6 +39,9 @@
     <ClInclude Include="include\gzDepth.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\gzViewPort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\gzBaseApp.cpp">
@@ -54,6 +57,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gzRenderTarget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gzDepth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gzViewPort.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

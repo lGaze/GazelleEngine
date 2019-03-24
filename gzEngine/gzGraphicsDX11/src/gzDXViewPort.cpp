@@ -9,14 +9,19 @@
 
 namespace gzEngineSDK {
 
-  void
-  ViewPort::SetViewPort( uint32 width, uint32 height )
+  DXViewPort::DXViewPort()
   {
-    m_ViewPort.Width = ( FLOAT ) width;
-    m_ViewPort.Height = ( FLOAT ) height;
-    m_ViewPort.MinDepth = 0.0f;
-    m_ViewPort.MaxDepth = 1.0f;
-    m_ViewPort.TopLeftX = 0;
-    m_ViewPort.TopLeftY = 0;
+    ZeroMemory( &m_ViewPort, sizeof( m_ViewPort ) );
+  }
+
+  void
+  DXViewPort::SetViewPort( VIEWPORT_DESCRIPTOR viewportDesc )
+  {
+    m_ViewPort.Width    = viewportDesc.Width;
+    m_ViewPort.Height   = viewportDesc.Height;
+    m_ViewPort.MinDepth = viewportDesc.MinDepth;
+    m_ViewPort.MaxDepth = viewportDesc.MaxDepth;
+    m_ViewPort.TopLeftX = viewportDesc.TopLeftX;
+    m_ViewPort.TopLeftY = viewportDesc.TopLeftY;
   }
 }

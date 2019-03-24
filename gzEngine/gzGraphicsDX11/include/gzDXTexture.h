@@ -33,7 +33,7 @@ class DXTexture : public Texture
    * @brief Creates a Directx Descriptor of a Core 2D Texture Descriptor
    */
   void 
-  create2DTextueDescriptor( TEXTURE2D_DESCRIPTOR desc );
+  create2DTextueDescriptor( TEXTURE2D_DESCRIPTOR &desc );
 
   /**
    * @brief Gets the Texture Interface

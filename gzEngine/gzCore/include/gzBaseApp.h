@@ -131,7 +131,12 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
-   RenderTarget * BackBuffer;
+   RenderTarget * m_pBackBuffer;
+
+   /**
+    * @brief 
+    */
+   Depth * m_pDepthStencilView;
 };
 
 BaseApp&

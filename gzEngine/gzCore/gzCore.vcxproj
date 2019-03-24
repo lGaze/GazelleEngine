@@ -26,12 +26,15 @@
     <ClInclude Include="include\gzPrerequisitesCore.h" />
     <ClInclude Include="include\gzRenderTarget.h" />
     <ClInclude Include="include\gzTexture.h" />
+    <ClInclude Include="include\gzViewPort.h" />
     <ClInclude Include="include\gzWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\gzBaseApp.cpp" />
+    <ClCompile Include="src\gzDepth.cpp" />
     <ClCompile Include="src\gzGraphicsManager.cpp" />
     <ClCompile Include="src\gzRenderTarget.cpp" />
+    <ClCompile Include="src\gzViewPort.cpp" />
     <ClCompile Include="src\gzWindow.cpp" />
     <ClCompile Include="src\gzTexture.cpp" />
   </ItemGroup>

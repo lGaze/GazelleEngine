@@ -84,10 +84,41 @@ namespace gzEngineSDK {
       m_windowWidth, 
       m_windowHeight );
 
+    TEXTURE2D_DESCRIPTOR depthTextureDesc;
+    depthTextureDesc.Width = m_windowWidth;
+    depthTextureDesc.Height = m_windowHeight;
+    depthTextureDesc.MipLevels = 1;
+    depthTextureDesc.ArraySize = 1;
+    depthTextureDesc.Format = FORMAT_D24_UNORM_S8_UINT;
+    depthTextureDesc.Usage = USAGE_DEFAULT;
+    depthTextureDesc.BindFlags = BIND_DEPTH_STENCIL;
+    depthTextureDesc.CPUAccessFlags = 0;
+    depthTextureDesc.MiscFlags = 0;
 
-    BackBuffer = GraphicsManager::instance().creteRenderTargetFromBackBuffer();
+    DEPTH_STENCIL_VIEW_DESCRIPTOR desc;
+    desc.Format = FORMAT_D24_UNORM_S8_UINT;
+    desc.ViewDimension = DSV_DIMENSION_TEXTURE2D;
 
-    GraphicsManager::instance().setRenderTargets( 1, BackBuffer, nullptr );
+
+    m_pDepthStencilView =
+      GraphicsManager::instance().createDepthStencilView( desc, 
+                                                          depthTextureDesc );
+
+    m_pBackBuffer = GraphicsManager::instance().creteRenderTargetFromBackBuffer();
+
+    GraphicsManager::instance().setRenderTargets( 1,
+                                                  m_pBackBuffer,
+                                                  m_pDepthStencilView );
+
+    VIEWPORT_DESCRIPTOR vp;
+    vp.Width = static_cast< float >( m_windowWidth );
+    vp.Height = static_cast< float >( m_windowHeight );
+    vp.MinDepth = 0.0f;
+    vp.MaxDepth = 1.0f;
+    vp.TopLeftX = 0;
+    vp.TopLeftY = 0;
+
+    GraphicsManager::instance().setViewports( 1, vp );
 
     return result;
 
@@ -97,7 +128,12 @@ namespace gzEngineSDK {
   BaseApp::render()
   {
     float ClearColor[4] = { 1.0f, 0.7f, 0.0f, 1.0f };
-    GraphicsManager::instance().clearRenderTargetView( ClearColor, BackBuffer);
+    GraphicsManager::instance().clearRenderTargetView( ClearColor, m_pBackBuffer);
+    GraphicsManager::instance().clearDepthStencilView( CLEAR_DEPTH, 
+                                                       1.0f, 
+                                                       0, 
+                                                       m_pDepthStencilView );
+
     GraphicsManager::instance().present( 0, 0 );
   }
 

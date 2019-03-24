@@ -27,7 +27,7 @@ namespace gzEngineSDK {
     m_pdeviceContext(new DeviceContext()),
     m_pswapChain(new SwapChain()),
     m_prenderTarget(new DXRenderTarget()),
-    m_pviewPort(new ViewPort()),
+    m_pviewPort(new DXViewPort()),
     m_pshader(new Shader()) { }
 
 
@@ -40,7 +40,6 @@ namespace gzEngineSDK {
 
     //Create SwapChain description
     m_pswapChain->CreateSwapChainDesc( width, height, hWnd );
-
     //Create the Device, Swapchain and Device Context
     restult = m_pdevice->CreateDeviceAndSwapChain(
       m_pswapChain->getCurrentSCD(),
@@ -52,10 +51,9 @@ namespace gzEngineSDK {
   }
 
   Texture* 
-  DXGraphicsManager::createTexture2D( TEXTURE2D_DESCRIPTOR textureInfo )
+  DXGraphicsManager::createTexture2D( TEXTURE2D_DESCRIPTOR &textureInfo )
   {
     m_ptexture = new DXTexture();
-    //Create the DX texture descriptor and the texture
     m_ptexture->create2DTextueDescriptor( textureInfo );
     m_pdevice->CreateTexture2D( &m_ptexture->gzGetTextureDesc(),
                                 nullptr,
@@ -96,7 +94,7 @@ namespace gzEngineSDK {
     m_pdeviceContext->SetRenderTargets(
       NumViews,
       m_prenderTarget->getRenderTargetInterface(),
-      nullptr );
+      *m_pdepth->getDepthStencilViewInterface() );
 
   }
 
@@ -126,6 +124,48 @@ namespace gzEngineSDK {
   DXGraphicsManager::present( uint32 SyncInterval, uint32 Flags )
   {
     return m_pswapChain->Present( SyncInterval, Flags );
+  }
+
+  Depth* 
+  DXGraphicsManager::createDepthStencilView( DEPTH_STENCIL_VIEW_DESCRIPTOR &desc,
+                                             TEXTURE2D_DESCRIPTOR &texDesc)
+  {
+    m_ptexture = new DXTexture();
+    m_pdepth = new DXDepth();
+    m_ptexture->create2DTextueDescriptor( texDesc );
+    m_pdevice->CreateTexture2D( &m_ptexture->gzGetTextureDesc(),
+                                nullptr,
+                                m_ptexture->gzGetTextureInterface() );
+     
+    m_pdepth->CreateDepthStencilViewDesc( desc );
+    m_pdevice->CreateDepthStencilView( *m_ptexture->gzGetTextureInterface(),
+                                       &m_pdepth->getDepthStencilViewDesc(),
+                                       m_pdepth->getDepthStencilViewInterface() );
+
+    return reinterpret_cast< Depth* >( m_pdepth );
+
+  }
+
+  void 
+  DXGraphicsManager::clearDepthStencilView( uint32 ClearFlags, 
+                                            float Depthf,
+                                            uint8 Stencil,
+                                            Depth * depth )
+  {
+    m_pdepth = reinterpret_cast< DXDepth* >( depth );
+    m_pdeviceContext->ClearDepthStencilView(
+      *m_pdepth->getDepthStencilViewInterface(),
+      ClearFlags,
+      Depthf,
+      Stencil );
+  }
+
+  void 
+  DXGraphicsManager::setViewports( uint32 NumViewports, VIEWPORT_DESCRIPTOR &viewportDesc )
+  {
+    m_pviewPort->SetViewPort( viewportDesc );
+    m_pdeviceContext->SetViewports( NumViewports, 
+                                    &m_pviewPort->getVewPortDesc() );
   }
 
 }

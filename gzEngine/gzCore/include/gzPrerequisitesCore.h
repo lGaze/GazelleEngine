@@ -15,6 +15,7 @@ namespace gzEngineSDK {
   class Texture;
   class RenderTarget;
   class Depth;
+  class ViewPort;
 
 }
 

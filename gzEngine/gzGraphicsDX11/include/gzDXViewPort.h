@@ -7,21 +7,22 @@
 #pragma once
 
 #include "gzDXPrerequisites.h"
+#include <gzViewPort.h>
 
 namespace gzEngineSDK {
-class ViewPort
+class DXViewPort : public ViewPort
 {
  public:
    
   /**
    * @brief default constructor
    */
-  ViewPort() = default;
+  DXViewPort();
 	
   /**
    * @brief default destructor
    */
-  ~ViewPort() = default;
+  ~DXViewPort() = default;
 	
   /************************************************************************/
   /* ViewPort functions                                                   */
@@ -31,13 +32,13 @@ class ViewPort
    * @brief Sets the ViewPort
    */
   void
-  SetViewPort( uint32 width, uint32 height );
+  SetViewPort( VIEWPORT_DESCRIPTOR viewportDesc );
 
   /**
    * @brief Gets the ViewPort interface
    */
   FORCEINLINE D3D11_VIEWPORT
-  getVewPortInterface() {
+  getVewPortDesc() {
     return m_ViewPort;
   }
 

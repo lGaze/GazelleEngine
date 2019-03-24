@@ -32,7 +32,7 @@ class DXDepth : public Depth
    * @brief Creates the description for DepthStencilView
    */
   void
-  CreateDepthStencilViewDesc( D3D11_TEXTURE2D_DESC descDepth );
+  CreateDepthStencilViewDesc( DEPTH_STENCIL_VIEW_DESCRIPTOR &descDepth );
 
   /**
    * @brief Gets the texture of the DepthStencil

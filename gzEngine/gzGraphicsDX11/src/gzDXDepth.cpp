@@ -10,14 +10,16 @@
 namespace gzEngineSDK {
   
   DXDepth::DXDepth(): m_pDepthStencil(nullptr),
-                  m_pDepthStencilView(nullptr) {}
+                      m_pDepthStencilView(nullptr) {}
 
   void 
-  DXDepth::CreateDepthStencilViewDesc( D3D11_TEXTURE2D_DESC descDepth )
+  DXDepth::CreateDepthStencilViewDesc( DEPTH_STENCIL_VIEW_DESCRIPTOR &descDepth )
   {
     ZeroMemory( &m_DescDSV, sizeof( m_DescDSV ) );
-    m_DescDSV.Format = descDepth.Format;
-    m_DescDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+    m_DescDSV.Format = static_cast< DXGI_FORMAT >( descDepth.Format );
+    m_DescDSV.ViewDimension = 
+      static_cast< D3D11_DSV_DIMENSION > ( descDepth.ViewDimension );
+    //TODO: Fix this
     m_DescDSV.Texture2D.MipSlice = 0;
   }
 

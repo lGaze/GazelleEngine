@@ -42,7 +42,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief 
    */
   virtual Texture*
-  createTexture2D( TEXTURE2D_DESCRIPTOR textureInfo ) = 0;
+  createTexture2D( TEXTURE2D_DESCRIPTOR &textureInfo ) = 0;
 
   /**
    * @brief 
@@ -58,13 +58,13 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   creteRenderTargetFromBackBuffer() = 0;
 
 
-/*
-  / **
+  /**
    * @brief 
-   * /
-  virtual bool
-  createDepthStencilView() = 0;
-*/
+   */
+  virtual Depth*
+  createDepthStencilView( DEPTH_STENCIL_VIEW_DESCRIPTOR &desc,
+                          TEXTURE2D_DESCRIPTOR &texDesc ) = 0;
+
 
 /*
   / **
@@ -115,13 +115,13 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
                     RenderTarget * renderTarget, 
                     Depth * depth ) = 0;
 
- /*  / **
+  /**
    * @brief
-   * /
+   */
   virtual void 
-  setViewports( uint32 NumViewports ) = 0;
+  setViewports( uint32 NumViewports, VIEWPORT_DESCRIPTOR &viewportDesc ) = 0;
 
-  / **
+  /**
    * @brief
    * /
   virtual void 
@@ -168,15 +168,15 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   clearRenderTargetView( const float ColorRGBA[4],
                          RenderTarget * renderTarget ) = 0;
 
-/*
-  / **
+  /**
    * @brief
-   * /
+   */
   virtual void
   clearDepthStencilView( uint32 ClearFlags,
-                         float Depth,
-                         uint8 Stencil ) = 0;
-*/
+                         float Depthf,
+                         uint8 Stencil,
+                         Depth * depth) = 0;
+
 
  /* / **
    * @brief

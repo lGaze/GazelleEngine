@@ -39,7 +39,7 @@ class DXGraphicsManager : public GraphicsManager
    * @brief Creates a Texture2D from a Descriptor
    */
   virtual Texture* 
-  createTexture2D( TEXTURE2D_DESCRIPTOR textureInfo ) override;
+  createTexture2D( TEXTURE2D_DESCRIPTOR &textureInfo ) override;
 
 
 
@@ -76,7 +76,26 @@ class DXGraphicsManager : public GraphicsManager
   virtual bool 
   present( uint32 SyncInterval, uint32 Flags ) override;
 
-    /************************************************************************/
+  /**
+   * @brief Creates a DepthStencil with the given descriptor
+   */
+  virtual Depth* 
+  createDepthStencilView( DEPTH_STENCIL_VIEW_DESCRIPTOR &desc,
+                          TEXTURE2D_DESCRIPTOR &texDesc ) override;
+
+
+  virtual void 
+  clearDepthStencilView( uint32 ClearFlags, 
+                         float Depthf, 
+                         uint8 Stencil, 
+                         Depth * depth ) override;
+
+
+  virtual void 
+  setViewports( uint32 NumViewports, 
+                VIEWPORT_DESCRIPTOR &viewportDesc ) override;
+
+  /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 	
@@ -135,7 +154,7 @@ class DXGraphicsManager : public GraphicsManager
   /**
    * @brief Pointer to the View Port Class
    */
-  ViewPort * m_pviewPort;
+  DXViewPort * m_pviewPort;
 
   /**
    * @brief Pointer to the Sampler State Class

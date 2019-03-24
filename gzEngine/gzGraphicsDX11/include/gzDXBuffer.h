@@ -67,17 +67,6 @@ class Buffer
    * @brief Buffer interface
    */
   ID3D11Buffer* m_pBuffer;
-
-  /**
-   * @brief 
-   */
-  D3D11_USAGE m_Usage;
-
-  /**
-   * @brief
-   */
-  D3D11_BIND_FLAG m_BindFlag;
-
    
  };
 }

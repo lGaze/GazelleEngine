@@ -16,7 +16,7 @@ namespace gzEngineSDK {
   }
 
   void 
-  DXTexture::create2DTextueDescriptor( TEXTURE2D_DESCRIPTOR desc )
+  DXTexture::create2DTextueDescriptor( TEXTURE2D_DESCRIPTOR &desc )
   {
 
     m_desc.Width = desc.Width;
