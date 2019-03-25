@@ -120,6 +120,40 @@ namespace gzEngineSDK {
 
     GraphicsManager::instance().setViewports( 1, vp );
 
+    WORD indices[] =
+    {
+        3,1,0,
+        2,1,3,
+
+        6,4,5,
+        7,4,6,
+
+        11,9,8,
+        10,9,11,
+
+        14,12,13,
+        15,12,14,
+
+        19,17,16,
+        18,17,19,
+
+        22,20,21,
+        23,20,22
+    };
+
+    Buffer * indexBuffer;
+    SUBRESOUCE_DATA initData;
+    ZeroMemory( &initData, sizeof( initData ) );
+    BUFFER_DESCRIPTOR bufferDesc;
+    ZeroMemory( &bufferDesc, sizeof( bufferDesc ) );
+    bufferDesc.Usage = USAGE_DEFAULT;
+    bufferDesc.ByteWidth = sizeof( WORD ) * 36;
+    bufferDesc.BindFlags = BIND_INDEX_BUFFER;
+    bufferDesc.CPUAccessFlags = 0;
+    initData.pSysMem = indices;
+    indexBuffer = GraphicsManager::instance().createBuffer( bufferDesc, &initData );
+    GraphicsManager::instance().setIndexBuffer( FORMAT_R16_UINT, indexBuffer, 0 );
+
     return result;
 
   }

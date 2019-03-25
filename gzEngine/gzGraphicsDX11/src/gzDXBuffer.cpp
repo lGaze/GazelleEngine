@@ -9,24 +9,19 @@
 
 namespace gzEngineSDK {
 
-  Buffer::Buffer() : m_pBuffer(nullptr) { }
+  DXBuffer::DXBuffer() : m_pBuffer(nullptr) { }
 
   void 
-  Buffer::CreateBufferDesc( uint32 usage,
-                            uint32 bytewidth,
-                            uint32 buffertype,
-                            uint32 cpuflags )
+  DXBuffer::CreateBufferDesc( BUFFER_DESCRIPTOR &bufferDesc )
   {
 
     ZeroMemory( &m_BufferDesc, sizeof( m_BufferDesc ) );
-    m_Usage = static_cast< D3D11_USAGE >( usage );
-    m_BindFlag = static_cast< D3D11_BIND_FLAG >( buffertype );
 
-    m_BufferDesc.Usage = m_Usage;
-    m_BufferDesc.ByteWidth = bytewidth;
-    m_BufferDesc.BindFlags = m_BindFlag;
-    m_BufferDesc.CPUAccessFlags = cpuflags;
-    m_BufferDesc.MiscFlags = 0;
+    m_BufferDesc.Usage = static_cast< D3D11_USAGE >( bufferDesc.Usage );
+    m_BufferDesc.ByteWidth = bufferDesc.ByteWidth;
+    m_BufferDesc.BindFlags = bufferDesc.BindFlags;
+    m_BufferDesc.CPUAccessFlags = bufferDesc.CPUAccessFlags;
+    m_BufferDesc.MiscFlags = bufferDesc.MiscFlags;
 
   }
 }

@@ -161,11 +161,53 @@ namespace gzEngineSDK {
   }
 
   void 
-  DXGraphicsManager::setViewports( uint32 NumViewports, VIEWPORT_DESCRIPTOR &viewportDesc )
+  DXGraphicsManager::setViewports( uint32 NumViewports, 
+                                   VIEWPORT_DESCRIPTOR &viewportDesc )
   {
     m_pviewPort->SetViewPort( viewportDesc );
     m_pdeviceContext->SetViewports( NumViewports, 
                                     &m_pviewPort->getVewPortDesc() );
+  }
+
+  Buffer* 
+  DXGraphicsManager::createBuffer( BUFFER_DESCRIPTOR &bufferDesc,
+                                   const SUBRESOUCE_DATA * pInitialData )
+  {
+    
+    m_pBuffer = new DXBuffer();
+    m_pBuffer->CreateBufferDesc( bufferDesc );
+
+    m_pdevice->CreateBuffer(
+      &m_pBuffer->getBufferDesc(),
+      reinterpret_cast< const D3D11_SUBRESOURCE_DATA * >( pInitialData ),
+      m_pBuffer->getBufferInterface() );
+
+    return reinterpret_cast< Buffer* >( m_pBuffer );
+
+  }
+
+  void 
+  DXGraphicsManager::setVertexBuffers( uint32 StartSlot, 
+                                       uint32 NumBuffers, 
+                                       Buffer * buffer, 
+                                       const uint32 *pStrides, 
+                                       const uint32 *pOffsets )
+  {
+    m_pBuffer = reinterpret_cast< DXBuffer* >( buffer );
+    m_pdeviceContext->SetVertexBuffers( StartSlot,
+                                        NumBuffers,
+                                        m_pBuffer->getBufferInterface(),
+                                        pStrides,
+                                        pOffsets );
+  }
+
+  void 
+  DXGraphicsManager::setIndexBuffer( int32 Format, Buffer * buffer, uint32 Offset )
+  {
+    m_pBuffer = reinterpret_cast< DXBuffer* >( buffer );
+    m_pdeviceContext->SetIndexBuffer( *m_pBuffer->getBufferInterface(),
+                                      static_cast< DXGI_FORMAT >( Format ),
+                                      Offset );
   }
 
 }

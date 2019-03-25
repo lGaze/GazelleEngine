@@ -85,17 +85,14 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   virtual bool
   createPixelShader() = 0;
 
-  / **
+  /**
    * @brief 
-   * /
-  virtual bool
-  createBuffer( uint32 usage,
-                uint32 bytewidth,
-                uint32 bufferType,
-                uint32 cpuflags,
-                const void * pInitialData ) = 0;
+   */
+  virtual Buffer*
+  createBuffer( BUFFER_DESCRIPTOR &bufferDesc,
+                const SUBRESOUCE_DATA * pInitialData ) = 0;
 
-  / **
+  /**
    * @brief 
    * /
   virtual bool
@@ -108,7 +105,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   createSamplerState() = 0;*/
 
   /**
-   * @brief 
+   * @brief This function sets the rendet target view
    */
   virtual void
   setRenderTargets( uint32 NumViews, 
@@ -116,7 +113,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
                     Depth * depth ) = 0;
 
   /**
-   * @brief
+   * @brief This function sets the viewport
    */
   virtual void 
   setViewports( uint32 NumViewports, VIEWPORT_DESCRIPTOR &viewportDesc ) = 0;
@@ -127,23 +124,25 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   virtual void 
   setInputLayout() = 0;
 
-  / **
+  /**
    * @brief
-   * /
+   */
   virtual void
   setVertexBuffers( uint32 StartSlot,
-                      uint32 NumBuffers,
-                      const uint32 *pStrides,
-                      const uint32 *pOffsets ) = 0;
+                    uint32 NumBuffers,
+                    Buffer * buffer,
+                    const uint32 *pStrides,
+                    const uint32 *pOffsets ) = 0;
 
-  / **
+  /**
    * @brief
-   * /
+   */
   virtual void
   setIndexBuffer( int32 Format,
+                  Buffer * buffer,
                   uint32 Offset ) = 0;
 
-  / **
+  /**
    * @brief
    * /
   virtual void 

@@ -83,17 +83,43 @@ class DXGraphicsManager : public GraphicsManager
   createDepthStencilView( DEPTH_STENCIL_VIEW_DESCRIPTOR &desc,
                           TEXTURE2D_DESCRIPTOR &texDesc ) override;
 
-
+  /**
+   * @brief 
+   */
   virtual void 
   clearDepthStencilView( uint32 ClearFlags, 
                          float Depthf, 
                          uint8 Stencil, 
                          Depth * depth ) override;
 
-
+  /**
+   * @brief 
+   */
   virtual void 
   setViewports( uint32 NumViewports, 
                 VIEWPORT_DESCRIPTOR &viewportDesc ) override;
+
+  /**
+   * @brief 
+   */
+  virtual Buffer*
+  createBuffer( BUFFER_DESCRIPTOR &bufferDesc, 
+                const SUBRESOUCE_DATA * pInitialData ) override;
+
+
+  /**
+   * @brief 
+   */
+  virtual void 
+  setVertexBuffers( uint32 StartSlot, 
+                    uint32 NumBuffers, 
+                    Buffer * buffer, 
+                    const uint32 *pStrides, 
+                    const uint32 *pOffsets ) override;
+
+
+  virtual void 
+  setIndexBuffer( int32 Format, Buffer * buffer, uint32 Offset ) override;
 
   /************************************************************************/
   /* Member declarations                                                  */
@@ -164,17 +190,7 @@ class DXGraphicsManager : public GraphicsManager
   /**
    * @brief 
    */
-  Buffer * m_pvertexBuffer;
-
-  /**
-   * @brief 
-   */
-  Buffer * m_pindexBuffer;
-
-  /**
-   * @brief Vector of constantBuffers
-   */
-  Vector<Buffer*> m_constantBuffers;
+  DXBuffer * m_pBuffer;
 
  };
 }

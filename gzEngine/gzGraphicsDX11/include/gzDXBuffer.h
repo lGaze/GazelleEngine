@@ -7,21 +7,22 @@
 #pragma once
 
 #include "gzDXPrerequisites.h"
+#include <gzBuffer.h>
 
 namespace gzEngineSDK {
-class Buffer
+class DXBuffer : public Buffer
 {
  public:
    
   /**
    * @brief default constructor
    */
-  Buffer();
+  DXBuffer();
 	
   /**
    * @brief default destructor
    */
-  ~Buffer() = default;
+  ~DXBuffer() = default;
 	
   /************************************************************************/
   /* Buffer functions                                                    */
@@ -31,10 +32,7 @@ class Buffer
    * @brief Create a Description for the buffer
    */
   void
-  CreateBufferDesc( uint32 usage,
-                    uint32 bytewidth,
-                    uint32 buffertype,
-                    uint32 cpuflags );
+  CreateBufferDesc( BUFFER_DESCRIPTOR &bufferDesc );
 
   /**
    * @brief Gets the buffer interface

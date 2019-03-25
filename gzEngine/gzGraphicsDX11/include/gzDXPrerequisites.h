@@ -21,7 +21,7 @@ namespace gzEngineSDK {
   class SwapChain;
   class DXRenderTarget;
   class DXTexture;
-  class Buffer;
+  class DXBuffer;
   class DXDepth;
   class InputLayout;
   class PixelShader;

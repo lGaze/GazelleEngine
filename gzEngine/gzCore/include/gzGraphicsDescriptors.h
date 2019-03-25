@@ -42,12 +42,45 @@ struct VIEWPORT_DESCRIPTOR
   float MaxDepth;
 };
 
+struct BUFFER_DESCRIPTOR
+{
+  uint32 ByteWidth;
+  uint32 Usage;
+  uint32 BindFlags;
+  uint32 CPUAccessFlags;
+  uint32 MiscFlags;
+  uint32 StructureByteStride;
+
+};
+
+struct SUBRESOUCE_DATA
+{
+  const void *pSysMem;
+  uint32 SysMemPitch;
+  uint32 SysMemSlicePitch;
+
+};
+
+struct SAMPLER_DESC
+{
+  uint32 Filter;
+  uint32 AddressU;
+  uint32 AddressY;
+  uint32 AddressW;
+  float MipLODBias;
+  uint32 MaxAnisotropy;
+  uint32 ComparisonFunc;
+  float BorderColor[4];
+  float MinLOF;
+  float MaxLOD;
+
+};
 
 enum TEXTURE_FORMATS
 {
   FORMAT_UNKNOWN           = 0,
   FORMAT_D24_UNORM_S8_UINT = 45,
-
+  FORMAT_R16_UINT          = 57,
 };
 
 enum USAGES
@@ -90,5 +123,64 @@ enum CLEAR_DSV_FLAGS
   CLEAR_STENCIL = 2
 };
 
+enum FILTER
+{
+  FILTER_MIN_MAG_MIP_POINT                           = 0,
+  FILTER_MIN_MAG_POINT_MIP_LINEAR                    = 1,
+  FILTER_MIN_POINT_MAG_LINEAR_MIP_POINT              = 4,
+  FILTER_MIN_POINT_MAG_MIP_LINEAR                    = 5,
+  FILTER_MIN_LINEAR_MAG_MIP_POINT                    = 16,
+  FILTER_MIN_LINEAR_MAG_POINT_MIP_LINEAR             = 17,
+  FILTER_MIN_MAG_LINEAR_MIP_POINT                    = 20,
+  FILTER_MIN_MAG_MIP_LINEAR                          = 21,
+  FILTER_ANISOTROPIC                                 = 85,
+  FILTER_COMPARISON_MIN_MAG_MIP_POINT                = 128,
+  FILTER_COMPARISON_MIN_MAG_POINT_MIP_LINEAR         = 129,
+  FILTER_COMPARISON_MIN_POINT_MAG_LINEAR_MIP_POINT   = 132,
+  FILTER_COMPARISON_MIN_POINT_MAG_MIP_LINEAR         = 133,
+  FILTER_COMPARISON_MIN_LINEAR_MAG_MIP_POINT         = 144,
+  FILTER_COMPARISON_MIN_LINEAR_MAG_POINT_MIP_LINEAR  = 145,
+  FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT         = 148,
+  FILTER_COMPARISON_MIN_MAG_MIP_LINEAR               = 149,
+  FILTER_COMPARISON_ANISOTROPIC                      = 213,
+  FILTER_MINIMUM_MIN_MAG_MIP_POINT                   = 256,
+  FILTER_MINIMUM_MIN_MAG_POINT_MIP_LINEAR            = 257,
+  FILTER_MINIMUM_MIN_POINT_MAG_LINEAR_MIP_POINT      = 260,
+  FILTER_MINIMUM_MIN_POINT_MAG_MIP_LINEAR            = 261,
+  FILTER_MINIMUM_MIN_LINEAR_MAG_MIP_POINT            = 272,
+  FILTER_MINIMUM_MIN_LINEAR_MAG_POINT_MIP_LINEAR     = 273,
+  FILTER_MINIMUM_MIN_MAG_LINEAR_MIP_POINT            = 276,
+  FILTER_MINIMUM_MIN_MAG_MIP_LINEAR                  = 277,
+  FILTER_MINIMUM_ANISOTROPIC                         = 341,
+  FILTER_MAXIMUM_MIN_MAG_MIP_POINT                   = 384,
+  FILTER_MAXIMUM_MIN_MAG_POINT_MIP_LINEAR            = 385,
+  FILTER_MAXIMUM_MIN_POINT_MAG_LINEAR_MIP_POINT      = 388,
+  FILTER_MAXIMUM_MIN_POINT_MAG_MIP_LINEAR            = 389,
+  FILTER_MAXIMUM_MIN_LINEAR_MAG_MIP_POINT            = 400,
+  FILTER_MAXIMUM_MIN_LINEAR_MAG_POINT_MIP_LINEAR     = 401,
+  FILTER_MAXIMUM_MIN_MAG_LINEAR_MIP_POINT            = 404,
+  FILTER_MAXIMUM_MIN_MAG_MIP_LINEAR                  = 405,
+  FILTER_MAXIMUM_ANISOTROPIC                         = 469
+};
 
+enum ADDRESS_MODE
+{
+  TEXTURE_ADDRESS_WRAP        = 1,
+  TEXTURE_ADDRESS_MIRROR      = 2,
+  TEXTURE_ADDRESS_CLAMP       = 3,
+  TEXTURE_ADDRESS_BORDER      = 4,
+  TEXTURE_ADDRESS_MIRROR_ONCE = 5
+};
+
+enum COMPARISON_FUNC
+{
+  COMPARISON_NEVER         = 1,
+  COMPARISON_LESS          = 2,
+  COMPARISON_EQUAL         = 3,
+  COMPARISON_LESS_EQUAL    = 4,
+  COMPARISON_GREATER       = 5,
+  COMPARISON_NOT_EQUAL     = 6,
+  COMPARISON_GREATER_EQUAL = 7,
+  COMPARISON_ALWAYS        = 8
+};
 }

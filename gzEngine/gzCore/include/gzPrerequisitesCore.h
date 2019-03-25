@@ -16,6 +16,7 @@ namespace gzEngineSDK {
   class RenderTarget;
   class Depth;
   class ViewPort;
+  class Buffer;
 
 }
 

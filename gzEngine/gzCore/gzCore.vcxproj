@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\gzBaseApp.h" />
+    <ClInclude Include="include\gzBuffer.h" />
     <ClInclude Include="include\gzDepth.h" />
     <ClInclude Include="include\gzGraphicsDescriptors.h" />
     <ClInclude Include="include\gzGraphicsManager.h" />
@@ -31,6 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\gzBaseApp.cpp" />
+    <ClCompile Include="src\gzBuffer.cpp" />
     <ClCompile Include="src\gzDepth.cpp" />
     <ClCompile Include="src\gzGraphicsManager.cpp" />
     <ClCompile Include="src\gzRenderTarget.cpp" />
