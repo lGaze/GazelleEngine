@@ -151,8 +151,24 @@ namespace gzEngineSDK {
     bufferDesc.BindFlags = BIND_INDEX_BUFFER;
     bufferDesc.CPUAccessFlags = 0;
     initData.pSysMem = indices;
-    indexBuffer = GraphicsManager::instance().createBuffer( bufferDesc, &initData );
-    GraphicsManager::instance().setIndexBuffer( FORMAT_R16_UINT, indexBuffer, 0 );
+    indexBuffer = 
+      GraphicsManager::instance().createBuffer( bufferDesc, &initData );
+    GraphicsManager::instance().setIndexBuffer( FORMAT_R16_UINT, 
+                                                indexBuffer, 
+                                                0 );
+
+   
+    SAMPLER_DESC sampDesc;
+    ZeroMemory( &sampDesc, sizeof( sampDesc ) );
+    sampDesc.Filter = FILTER_MIN_MAG_MIP_LINEAR;
+    sampDesc.AddressU = TEXTURE_ADDRESS_WRAP;
+    sampDesc.AddressY = TEXTURE_ADDRESS_WRAP;
+    sampDesc.AddressW = TEXTURE_ADDRESS_WRAP;
+    sampDesc.ComparisonFunc = COMPARISON_NEVER;
+    sampDesc.MinLOD = 0;
+    sampDesc.MaxLOD = 3.402823466e+38f;
+    
+    m_pSampler = GraphicsManager::instance().createSamplerState( sampDesc );
 
     return result;
 
@@ -167,6 +183,8 @@ namespace gzEngineSDK {
                                                        1.0f, 
                                                        0, 
                                                        m_pDepthStencilView );
+
+    GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
 
     GraphicsManager::instance().present( 0, 0 );
   }

@@ -1,71 +1,39 @@
 /**************************************************************************/
-/* @filename gzDXSamplerState.h
+/* @filename gzSamplerState.h
 /* @author Victor Flores 
-/* @date 2019/03/04
+/* @date 2019/03/25
 /* @brief 
 /**************************************************************************/
+
 #pragma once
 
-#include "gzDXPrerequisites.h"
-#include <gzSamplerState.h>
+#include "gzPrerequisitesCore.h"
 
 namespace gzEngineSDK {
-class DXSamplerState : public SamplerState
+class GZ_CORE_EXPORT SamplerState
 {
  public:
    
   /**
    * @brief default constructor
    */
-  DXSamplerState();
+  SamplerState();
 	
   /**
    * @brief default destructor
    */
-  ~DXSamplerState() = default;
+  virtual
+  ~SamplerState();
 	
   /************************************************************************/
   /* SamplerState functions                                               */
   /************************************************************************/
 	
-  /**
-   * @brief Creates Sampler description
-   */
-  void
-  CreateSamplerDesc( SAMPLER_DESC &samplerDesc );
-
-  /**
-   * @brief Gets the sampler description
-   */
-  FORCEINLINE D3D11_SAMPLER_DESC
-  getSamplerDesc() {
-    return m_SamplerDesc;
-  }
-
-  /**
-   * @brief Gets the sampler interface
-   */
-  FORCEINLINE ID3D11SamplerState**
-  getSamplerInterface() {
-    return &m_pSamplerLinear;
-  }
-
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-
 	
- private:
+ public:
    
-   /**
-    * @brief 
-    */
-   D3D11_SAMPLER_DESC m_SamplerDesc;
-
-   /**
-    * @brief 
-    */
-   ID3D11SamplerState * m_pSamplerLinear;
-
  };
 }

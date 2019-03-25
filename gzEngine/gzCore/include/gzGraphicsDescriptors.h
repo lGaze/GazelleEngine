@@ -71,7 +71,7 @@ struct SAMPLER_DESC
   uint32 MaxAnisotropy;
   uint32 ComparisonFunc;
   float BorderColor[4];
-  float MinLOF;
+  float MinLOD;
   float MaxLOD;
 
 };

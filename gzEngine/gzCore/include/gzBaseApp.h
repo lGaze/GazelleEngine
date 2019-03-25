@@ -137,6 +137,12 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
     * @brief 
     */
    Depth * m_pDepthStencilView;
+
+   /**
+    * @brief 
+    */
+   SamplerState * m_pSampler;
+
 };
 
 BaseApp&

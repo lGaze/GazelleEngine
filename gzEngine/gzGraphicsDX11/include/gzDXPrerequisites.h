@@ -28,7 +28,7 @@ namespace gzEngineSDK {
   class VertexShader;
   class Shader;
   class DXViewPort;
-  class SamplerState;
+  class DXSamplerState;
 }
 
 /*

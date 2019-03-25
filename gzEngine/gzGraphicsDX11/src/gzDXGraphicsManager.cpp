@@ -210,4 +210,27 @@ namespace gzEngineSDK {
                                       Offset );
   }
 
+  SamplerState* 
+  DXGraphicsManager::createSamplerState( SAMPLER_DESC &samplerDesc )
+  {
+    m_psamplerState = new DXSamplerState();
+    m_psamplerState->CreateSamplerDesc( samplerDesc );
+    m_pdevice->CreateSamplerState( &m_psamplerState->getSamplerDesc(),
+                                   m_psamplerState->getSamplerInterface() );
+
+    return reinterpret_cast< SamplerState* >( m_psamplerState );
+
+  }
+
+  void 
+  DXGraphicsManager::setSamplerState( uint32 startSlot, 
+                                      SamplerState* sampler, 
+                                      uint32 numSamplers )
+  {
+    m_psamplerState = reinterpret_cast< DXSamplerState* >( sampler );
+    m_pdeviceContext->SetSamplers( startSlot,
+                                   numSamplers,
+                                   m_psamplerState->getSamplerInterface() );
+  }
+
 }

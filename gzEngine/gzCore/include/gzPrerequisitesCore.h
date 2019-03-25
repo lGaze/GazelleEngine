@@ -17,6 +17,7 @@ namespace gzEngineSDK {
   class Depth;
   class ViewPort;
   class Buffer;
+  class SamplerState;
 
 }
 

@@ -98,11 +98,11 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   virtual bool
   createVertexAndIndexBufferFromFile( std::string file ) = 0;
 
-  / **
+  /**
    * @brief 
-   * /
-  virtual bool
-  createSamplerState() = 0;*/
+   */
+  virtual SamplerState*
+  createSamplerState( SAMPLER_DESC &samplerDesc ) = 0;
 
   /**
    * @brief This function sets the rendet target view
@@ -214,14 +214,15 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   setShaderResources( uint32 StartSlot,
                       uint32 NumViews ) = 0;
 
-  / **
+  /**
    * @brief
-   * /
+   */
   virtual void
-  setSamplers( uint32 StartSlot,
-               uint32 NumSamplers ) = 0;
+  setSamplerState( uint32 startSlot, 
+                   SamplerState* sampler, 
+                   uint32 numSamplers   ) = 0;
 
-  / **
+  /**
    * @brief
    * /
   virtual void

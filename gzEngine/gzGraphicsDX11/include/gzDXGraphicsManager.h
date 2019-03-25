@@ -76,6 +76,7 @@ class DXGraphicsManager : public GraphicsManager
   virtual bool 
   present( uint32 SyncInterval, uint32 Flags ) override;
 
+
   /**
    * @brief Creates a DepthStencil with the given descriptor
    */
@@ -117,9 +118,27 @@ class DXGraphicsManager : public GraphicsManager
                     const uint32 *pStrides, 
                     const uint32 *pOffsets ) override;
 
-
+  /**
+   * @brief 
+   */
   virtual void 
   setIndexBuffer( int32 Format, Buffer * buffer, uint32 Offset ) override;
+
+
+  /**
+   * @brief 
+   */
+  virtual SamplerState* 
+  createSamplerState( SAMPLER_DESC &samplerDesc ) override;
+
+
+  
+
+
+  virtual void 
+  setSamplerState( uint32 startSlot, 
+                   SamplerState* sampler, 
+                   uint32 numSamplers ) override;
 
   /************************************************************************/
   /* Member declarations                                                  */
@@ -185,7 +204,7 @@ class DXGraphicsManager : public GraphicsManager
   /**
    * @brief Pointer to the Sampler State Class
    */
-  SamplerState * m_psamplerState;
+  DXSamplerState * m_psamplerState;
 
   /**
    * @brief 
