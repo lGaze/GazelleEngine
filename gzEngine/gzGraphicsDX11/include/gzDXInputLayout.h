@@ -31,13 +31,7 @@ class InputLayout
    * @brief Pushes the description to te vector of descriptions
    */
   void
-  AddToLayout( std::string* semanticName,
-               unsigned int semanticIndex,
-               int format,
-               unsigned int inputSlot,
-               unsigned int alignedByteOffset,
-               int inputSlotClass,
-               unsigned int instanceDataStepRate );
+  AddToLayout( INPUT_LAYOUT_DESCRIPTOR &inputLayoutDesc );
 
   /**
    * @brief Gets the InputLayout Interface

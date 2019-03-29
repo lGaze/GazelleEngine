@@ -7,24 +7,25 @@
 #pragma once
 
 #include "gzDXPrerequisites.h"
+#include <gzPixelShader.h>
 
 namespace gzEngineSDK {
-class PixelShader
+class DXPixelShader : public PixelShader
 {
  public:
    
   /**
    * @brief default constructor
    */
-  PixelShader();
+  DXPixelShader();
 	
   /**
    * @brief default destructor
    */
-  ~PixelShader() = default;
+  ~DXPixelShader() = default;
 	
   /************************************************************************/
-  /* PixelShader functions                                               */
+  /* PixelShader functions                                                */
   /************************************************************************/
 	
   /**
@@ -35,23 +36,31 @@ class PixelShader
     return &m_pPixelShader;
   }
 
+  /**
+   * @brief 
+   */
+  FORCEINLINE ID3DBlob ** 
+  gzGetPSBlob()  {
+    return &m_pPSBlob;
+  };
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 	
  private:
 
-   /**
-    * @brief Pixel Shader interface
-    */
-   ID3D11PixelShader * m_pPixelShader;
+  /**
+   * @brief Pixel Shader interface
+   */
+  ID3D11PixelShader * m_pPixelShader;
 
  public:
 
-   /**
-    * @brief 
-    */
-   ID3DBlob* m_pPSBlob;
-   
+  /**
+   * @brief
+   */
+  ID3DBlob* m_pPSBlob;
+
  };
 }

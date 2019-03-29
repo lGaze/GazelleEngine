@@ -9,32 +9,43 @@
 
 namespace gzEngineSDK {
 
-  Shader::Shader() : m_pTextureRV(nullptr) { }
+  DXShader::DXShader() : m_pTextureRV(nullptr) { }
 
   bool
-  Shader::CompileShaderFromFile( LPCSTR szFileName,
-                                 LPCSTR szEntryPoint,
-                                 LPCSTR szShaderModel,
-                                 ID3DBlob ** ppBlobOut )
+    DXShader::CompileShaderFromFile( const WString & szFileName,
+                                     const String & szEntryPoint,
+                                     const String & szShaderModel,
+                                     ID3DBlob ** m_pBlob)
   {
     HRESULT hr = S_OK;
 
     DWORD dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
 #if defined( DEBUG ) || defined( _DEBUG )
-  // Set the D3DCOMPILE_DEBUG flag to embed debug information in the shaders.
-  // Setting this flag improves the shader debugging experience, but still allows 
-  // the shaders to be optimized and to run exactly the way they will run in 
-  // the release configuration of this program.
+
     dwShaderFlags |= D3DCOMPILE_DEBUG;
+
 #endif
 
     ID3DBlob* pErrorBlob;
-    hr = true; /*D3DX11CompileFromFile( szFileName, NULL, NULL, szEntryPoint, szShaderModel,
-                                dwShaderFlags, 0, NULL, ppBlobOut, &pErrorBlob, NULL );*/
+    hr = D3DCompileFromFile( szFileName.c_str(),
+                             nullptr,
+                             D3D_COMPILE_STANDARD_FILE_INCLUDE, 
+                             szEntryPoint.c_str(), 
+                             szShaderModel.c_str(),
+                             dwShaderFlags, 
+                             0, 
+                             m_pBlob,
+                             &pErrorBlob);
     if ( FAILED( hr ) )
     {
-      if ( pErrorBlob != NULL )
-        OutputDebugStringA( ( char* ) pErrorBlob->GetBufferPointer() );
+      if ( pErrorBlob != nullptr )
+      {
+
+        MessageBoxA( nullptr,
+                     static_cast< char* > ( pErrorBlob->GetBufferPointer() ),
+                     "Shader Compiler Error",
+                     MB_OK );
+      }
       if ( pErrorBlob ) pErrorBlob->Release();
       return false;
     }
@@ -45,7 +56,7 @@ namespace gzEngineSDK {
 
 
   bool 
-  Shader::LoadTexture( ID3D11Device * pDevice, 
+  DXShader::LoadTexture( ID3D11Device * pDevice, 
                        LPCWSTR pSrcFile, 
                        HRESULT * pHResult )
   {

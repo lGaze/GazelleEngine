@@ -66,24 +66,29 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
                           TEXTURE2D_DESCRIPTOR &texDesc ) = 0;
 
 
-/*
-  / **
-   * @brief 
-   * /
-  virtual bool
-  createVertexShader() = 0;
 
-  / **
+  /**
    * @brief 
-   * /
-  virtual bool
-  createInputLayout() = 0;
+   */
+  virtual VertexShader*
+  CreateVertexShader( const WString & fileName,
+                      const String & EntryPoint,
+                      const String & ShaderModel ) = 0;
 
-  / **
+  /**
    * @brief 
-   * /
-  virtual bool
-  createPixelShader() = 0;
+   */
+  virtual InputLayout*
+  createInputLayout( INPUT_LAYOUT_DESCRIPTOR & inputLayoutDesc,
+                     VertexShader * vertexShader) = 0;
+
+  /**
+   * @brief 
+   */
+  virtual PixelShader*
+  createPixelShader( const WString & fileName,
+                     const String & EntryPoint,
+                     const String & ShaderModel ) = 0;
 
   /**
    * @brief 
@@ -102,7 +107,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief 
    */
   virtual SamplerState*
-  createSamplerState( SAMPLER_DESC &samplerDesc ) = 0;
+  createSamplerState( SAMPLER_DESCRIPTOR &samplerDesc ) = 0;
 
   /**
    * @brief This function sets the rendet target view
@@ -177,14 +182,13 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
                          Depth * depth) = 0;
 
 
- /* / **
+  /**
    * @brief
-   * /
+   */
   virtual void
-  setVertexShader( void *const *ppClassInstances,
-                   uint32 NumClassInstances ) = 0;
+  setVertexShader( VertexShader * vertexShader ) = 0;
 
-  / **
+  /**
    * @brief
    * /
   virtual void
@@ -192,14 +196,13 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
                         uint32 StartSlot,
                         uint32 NumBuffers ) = 0;
 
-  / **
+  /**
    * @brief
-   * /
+   */
   virtual void
-  setPixelShader( void *const *ppClassInstances,
-                  uint32 NumClassInstances ) = 0;
+  setPixelShader( PixelShader * pixelShader ) = 0;
 
-  / **
+  /**
    * @brief
    * /
   virtual void
@@ -231,12 +234,6 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
                int32 BaseVertexLocation ) = 0;
 */
 
-/*
-  / **
-   * @brief
-   * /
-  virtual bool 
-  getBuffer( uint32 Buffer ) = 0;*/
 
   /**
    * @brief

@@ -12,24 +12,19 @@ namespace gzEngineSDK {
   InputLayout::InputLayout() : m_pInputlayout(nullptr) { }
 
   void 
-  InputLayout::AddToLayout( std::string * semanticName,
-                            unsigned int semanticIndex,
-                            int format,
-                            unsigned int inputSlot,
-                            unsigned int alignedByteOffset,
-                            int inputSlotClass,
-                            unsigned int instanceDataStepRate )
+  InputLayout::AddToLayout( INPUT_LAYOUT_DESCRIPTOR &inputLayoutDesc )
   {
+
     D3D11_INPUT_ELEMENT_DESC toPush;
     ZeroMemory( &toPush, sizeof( toPush ) );
-    toPush.SemanticName = semanticName->c_str();
-    toPush.SemanticIndex = semanticIndex;
-    toPush.Format = ( DXGI_FORMAT ) format;
-    toPush.InputSlot = inputSlot;
-    toPush.AlignedByteOffset = alignedByteOffset;
-    toPush.InputSlotClass = ( D3D11_INPUT_CLASSIFICATION ) inputSlotClass;
-    toPush.InstanceDataStepRate = instanceDataStepRate;
-
+    toPush.SemanticName = inputLayoutDesc.SemanticName->c_str();
+    toPush.SemanticIndex = inputLayoutDesc.SemanticIndex;
+    toPush.Format = static_cast< DXGI_FORMAT >( inputLayoutDesc.Format );
+    toPush.InputSlot = inputLayoutDesc.InputSlot;
+    toPush.AlignedByteOffset = inputLayoutDesc.AlignedByteOffset;
+    toPush.InputSlotClass = 
+      static_cast< D3D11_INPUT_CLASSIFICATION > (inputLayoutDesc.InputSlotClass);
+    toPush.InstanceDataStepRate = inputLayoutDesc.InstanceDataStepRate;
     m_vLayout.push_back( toPush );
   }
 

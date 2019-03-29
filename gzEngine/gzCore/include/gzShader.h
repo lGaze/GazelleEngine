@@ -1,66 +1,38 @@
 /**************************************************************************/
-/* @filename gzDXVertexShader.h
+/* @filename gzShader.h
 /* @author Victor Flores 
-/* @date 2019/03/04
+/* @date 2019/03/28
 /* @brief 
 /**************************************************************************/
+
 #pragma once
 
-#include "gzDXPrerequisites.h"
-#include <gzVertexShader.h>
+#include "gzPrerequisitesCore.h"
 
 namespace gzEngineSDK {
-class DXVertexShader : public VertexShader
+class GZ_CORE_EXPORT Shader
 {
  public:
    
   /**
    * @brief default constructor
    */
-  DXVertexShader();
+  Shader();
 	
   /**
    * @brief default destructor
    */
-  ~DXVertexShader() = default;
+  ~Shader();
 	
   /************************************************************************/
-  /* VertexShader functions                                               */
+  /* Shader functions                                                    */
   /************************************************************************/
 	
-  /**
-	 * @brief Gets the VertexShader interface
-	 */
-  FORCEINLINE ID3D11VertexShader**
-  getVertexShaderInterface() {
-    return &m_pVertexShader;
-  }
-
-  /**
-   * @brief 
-   */
-  FORCEINLINE ID3DBlob **
-  gzGetVSBlob() {
-    return &m_pVSBlob;
-  };
-
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 	
- private:
-
-  /**
-   * @brief VertexShader Interface
-   */
-  ID3D11VertexShader * m_pVertexShader;
-
  public:
-
-  /**
-   * @brief 
-   */
-  ID3DBlob * m_pVSBlob;
-
+   
  };
 }

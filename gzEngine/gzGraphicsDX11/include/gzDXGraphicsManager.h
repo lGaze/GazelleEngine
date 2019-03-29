@@ -129,16 +129,47 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   virtual SamplerState* 
-  createSamplerState( SAMPLER_DESC &samplerDesc ) override;
+  createSamplerState( SAMPLER_DESCRIPTOR &samplerDesc ) override;
 
 
   
 
-
+  /**
+   * @brief 
+   */
   virtual void 
   setSamplerState( uint32 startSlot, 
                    SamplerState* sampler, 
                    uint32 numSamplers ) override;
+
+
+  /**
+   * @brief 
+   */
+  virtual VertexShader* 
+  CreateVertexShader( const WString & fileName,
+                      const String & EntryPoint,
+                      const String & ShaderModel ) override;
+
+  /**
+   * @brief 
+   */
+  virtual void 
+  setVertexShader( VertexShader * vertexShader ) override;
+
+  /**
+   * @brief 
+   */
+  virtual PixelShader*
+  createPixelShader( const WString & fileName,
+                     const String & EntryPoint,
+                     const String & ShaderModel ) override;
+
+  /**
+   * @brief 
+   */
+  virtual void 
+  setPixelShader( PixelShader * pixelShader ) override;
 
   /************************************************************************/
   /* Member declarations                                                  */
@@ -184,17 +215,17 @@ class DXGraphicsManager : public GraphicsManager
   /**
    * @brief Pointer to the Vertex Shader Class
    */
-  VertexShader * m_pvertexShader;
+  DXVertexShader * m_pvertexShader;
 
   /**
    * @brief Pointer to the Pixel Shader Class
    */
-  PixelShader * m_ppixelShader;
+  DXPixelShader * m_ppixelShader;
 
   /**
    * @brief Pointer to the Shader Class
    */
-  Shader * m_pshader;
+  DXShader * m_pShader;
 
   /**
    * @brief Pointer to the View Port Class

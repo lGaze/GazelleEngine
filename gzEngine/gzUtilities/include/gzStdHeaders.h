@@ -78,6 +78,11 @@ using String = std::string;
 /**
  * @brief 
  */
+using WString = std::wstring;
+
+/**
+ * @brief 
+ */
 template<typename T, typename A = std::allocator<T>>
 using List = std::list<T, A>;
 

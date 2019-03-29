@@ -18,6 +18,10 @@ namespace gzEngineSDK {
   class ViewPort;
   class Buffer;
   class SamplerState;
+  class Shader;
+  class VertexShader;
+  class PixelShader;
+  class InputLayout;
 
 }
 

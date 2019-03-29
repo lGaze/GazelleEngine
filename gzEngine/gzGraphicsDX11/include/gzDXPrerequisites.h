@@ -24,9 +24,9 @@ namespace gzEngineSDK {
   class DXBuffer;
   class DXDepth;
   class InputLayout;
-  class PixelShader;
-  class VertexShader;
-  class Shader;
+  class DXPixelShader;
+  class DXVertexShader;
+  class DXShader;
   class DXViewPort;
   class DXSamplerState;
 }

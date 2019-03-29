@@ -158,7 +158,7 @@ namespace gzEngineSDK {
                                                 0 );
 
    
-    SAMPLER_DESC sampDesc;
+    SAMPLER_DESCRIPTOR sampDesc;
     ZeroMemory( &sampDesc, sizeof( sampDesc ) );
     sampDesc.Filter = FILTER_MIN_MAG_MIP_LINEAR;
     sampDesc.AddressU = TEXTURE_ADDRESS_WRAP;

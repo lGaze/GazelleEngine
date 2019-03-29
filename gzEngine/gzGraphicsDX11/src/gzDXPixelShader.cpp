@@ -8,5 +8,5 @@
 #include "gzDXPixelShader.h"
 
 namespace gzEngineSDK {
-  PixelShader::PixelShader() : m_pPixelShader(nullptr), m_pPSBlob(nullptr) { }
+  DXPixelShader::DXPixelShader() : m_pPixelShader(nullptr), m_pPSBlob(nullptr) { }
 }

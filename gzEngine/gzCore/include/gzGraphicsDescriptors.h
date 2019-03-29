@@ -61,7 +61,7 @@ struct SUBRESOUCE_DATA
 
 };
 
-struct SAMPLER_DESC
+struct SAMPLER_DESCRIPTOR
 {
   uint32 Filter;
   uint32 AddressU;
@@ -73,6 +73,18 @@ struct SAMPLER_DESC
   float BorderColor[4];
   float MinLOD;
   float MaxLOD;
+
+};
+
+struct INPUT_LAYOUT_DESCRIPTOR
+{
+  String * SemanticName;
+  uint32 SemanticIndex;
+  uint32 Format;
+  uint32 InputSlot;
+  uint32 AlignedByteOffset;
+  uint32 InputSlotClass;
+  uint32 InstanceDataStepRate;
 
 };
 
@@ -183,4 +195,11 @@ enum COMPARISON_FUNC
   COMPARISON_GREATER_EQUAL = 7,
   COMPARISON_ALWAYS        = 8
 };
+
+enum INPUT_CLASSIFICATION
+{
+  INPUT_PER_VERTEX_DATA   = 0,
+  INPUT_PER_INSTANCE_DATA = 1
+};
+
 }

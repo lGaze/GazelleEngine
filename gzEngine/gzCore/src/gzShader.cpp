@@ -1,14 +1,14 @@
 /**************************************************************************/
-/* @filename gzDXVertexShader.cpp
+/* @filename gzShader.cpp
 /* @author Victor Flores 
-/* @date 2019/03/04
+/* @date 2019/03/28
 /* @brief 
 /**************************************************************************/
 
-#include "gzDXVertexShader.h"
+#include "gzShader.h"
 
 namespace gzEngineSDK {
 
-  DXVertexShader::DXVertexShader() : m_pVertexShader(nullptr), m_pVSBlob(nullptr){ }
-
+  Shader::Shader() { }
+  Shader::~Shader() { }
 }

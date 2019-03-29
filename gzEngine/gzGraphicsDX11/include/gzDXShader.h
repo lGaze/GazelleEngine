@@ -7,22 +7,23 @@
 #pragma once
 
 #include "gzDXPrerequisites.h"
+#include <gzShader.h>
 
 //TODO: Arreglr las deprecated
 namespace gzEngineSDK {
-class Shader
+class DXShader : public Shader
 {
  public:
    
   /**
    * @brief default constructor
    */
-  Shader();
+  DXShader();
 	
   /**
    * @brief default destructor
    */
-  ~Shader() = default;
+  ~DXShader() = default;
 	
   /************************************************************************/
   /* Shader functions                                                     */
@@ -32,10 +33,10 @@ class Shader
    * @brief 
    */
   bool
-  CompileShaderFromFile( LPCSTR  szFileName,
-                         LPCSTR szEntryPoint,
-                         LPCSTR szShaderModel,
-                         ID3DBlob** ppBlobOut );
+  CompileShaderFromFile( const WString & szFileName,
+                         const String & szEntryPoint,
+                         const String & szShaderModel,
+                         ID3DBlob ** m_pBlob);
 
   /**
    * @brief 
@@ -49,7 +50,7 @@ class Shader
   /* Member declarations                                                  */
   /************************************************************************/
 	
-  public:
+ public:
   
 
   /**
@@ -58,6 +59,6 @@ class Shader
   ID3D11ShaderResourceView* m_pTextureRV;
 
 
-   
+
  };
 }

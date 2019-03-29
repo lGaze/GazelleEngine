@@ -28,7 +28,7 @@ namespace gzEngineSDK {
     m_pswapChain(new SwapChain()),
     m_prenderTarget(new DXRenderTarget()),
     m_pviewPort(new DXViewPort()),
-    m_pshader(new Shader()) { }
+    m_pShader(new DXShader()) { }
 
 
   bool
@@ -211,7 +211,7 @@ namespace gzEngineSDK {
   }
 
   SamplerState* 
-  DXGraphicsManager::createSamplerState( SAMPLER_DESC &samplerDesc )
+  DXGraphicsManager::createSamplerState( SAMPLER_DESCRIPTOR &samplerDesc )
   {
     m_psamplerState = new DXSamplerState();
     m_psamplerState->CreateSamplerDesc( samplerDesc );
@@ -231,6 +231,64 @@ namespace gzEngineSDK {
     m_pdeviceContext->SetSamplers( startSlot,
                                    numSamplers,
                                    m_psamplerState->getSamplerInterface() );
+  }
+
+  VertexShader* 
+  DXGraphicsManager::CreateVertexShader( const WString & fileName, 
+                                         const String & EntryPoint,
+                                         const String & ShaderModel )
+  {
+    m_pvertexShader = new DXVertexShader();
+    m_pShader->CompileShaderFromFile( fileName, 
+                                      EntryPoint, 
+                                      ShaderModel, 
+                                      m_pvertexShader->gzGetVSBlob() );
+    
+    m_pdevice->CreateVertexshader( 
+      m_pvertexShader->m_pVSBlob->GetBufferPointer(),
+      m_pvertexShader->m_pVSBlob->GetBufferSize(),
+      nullptr,
+      m_pvertexShader->getVertexShaderInterface());
+
+    return reinterpret_cast < VertexShader* > ( m_pvertexShader );
+  }
+
+  void 
+  DXGraphicsManager::setVertexShader( VertexShader * vertexShader )
+  {
+    m_pvertexShader = reinterpret_cast< DXVertexShader* >( vertexShader );
+    m_pdeviceContext->SetVertexShader( 
+      *m_pvertexShader->getVertexShaderInterface(),
+      nullptr,
+      0 );
+  }
+
+  PixelShader* 
+  DXGraphicsManager::createPixelShader( const WString & fileName, 
+                                        const String & EntryPoint, 
+                                        const String & ShaderModel )
+  {
+    m_ppixelShader = new DXPixelShader();
+    m_pShader->CompileShaderFromFile( fileName,
+                                      EntryPoint, 
+                                      ShaderModel,
+                                      m_ppixelShader->gzGetPSBlob() );
+
+    m_pdevice->CreatePixelShader( m_ppixelShader->m_pPSBlob->GetBufferPointer(),
+                                  m_ppixelShader->m_pPSBlob->GetBufferSize(),
+                                  nullptr,
+                                  m_ppixelShader->getPixelShaderInterface() );
+
+    return reinterpret_cast < PixelShader* >( m_ppixelShader );
+  }
+
+  void 
+  DXGraphicsManager::setPixelShader( PixelShader * pixelShader )
+  {
+    m_ppixelShader = reinterpret_cast < DXPixelShader* > ( pixelShader );
+    m_pdeviceContext->SetPixelShader( *m_ppixelShader->getPixelShaderInterface(),
+                                      nullptr,
+                                      0 );
   }
 
 }
