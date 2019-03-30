@@ -171,7 +171,25 @@ class DXGraphicsManager : public GraphicsManager
   virtual void 
   setPixelShader( PixelShader * pixelShader ) override;
 
-  /************************************************************************/
+  /**
+   * @brief 
+   */
+  virtual InputLayout*
+  createInputLayout( VertexShader * vertexShader ) override;
+
+  /**
+   * @brief Sets the given inputLayout
+   */
+  virtual void 
+  setInputLayout( InputLayout * inputLayout ) override;
+
+  /**
+   * @brief Sets the Primitive topology with the given Topology
+   */
+  virtual void 
+  setPrimitiveTopology( uint32 Topology ) override;
+
+    /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 	
@@ -210,7 +228,7 @@ class DXGraphicsManager : public GraphicsManager
   /**
    * @brief Pointer to the InputLayput Class
    */
-  InputLayout * m_pinputLayout;
+  DXInputLayout * m_pinputLayout;
 
   /**
    * @brief Pointer to the Vertex Shader Class

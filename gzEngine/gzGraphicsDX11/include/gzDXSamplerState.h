@@ -32,7 +32,7 @@ class DXSamplerState : public SamplerState
    * @brief Creates Sampler description
    */
   void
-  CreateSamplerDesc( SAMPLER_DESC &samplerDesc );
+  CreateSamplerDesc( SAMPLER_DESCRIPTOR &samplerDesc );
 
   /**
    * @brief Gets the sampler description

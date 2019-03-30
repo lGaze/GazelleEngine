@@ -291,4 +291,39 @@ namespace gzEngineSDK {
                                       0 );
   }
 
+  InputLayout* 
+  DXGraphicsManager::createInputLayout(  VertexShader * vertexShader )
+  {
+    m_pinputLayout = new DXInputLayout();
+    m_pvertexShader = reinterpret_cast< DXVertexShader* >( vertexShader );
+
+    m_pinputLayout->CreateInputLayout( m_pvertexShader->m_pVSBlob );
+   
+    m_pdevice->CreateInputLayout( 
+      m_pinputLayout->getInputLayoutDesc(),
+      m_pinputLayout->getnumElem(),
+      m_pvertexShader->m_pVSBlob->GetBufferPointer(),
+      m_pvertexShader->m_pVSBlob->GetBufferSize(),
+      m_pinputLayout->getInputLayputInterface() );
+
+    return reinterpret_cast < InputLayout* >( m_pinputLayout );
+  }
+
+  void 
+  DXGraphicsManager::setInputLayout( InputLayout * inputLayout )
+  {
+    m_pinputLayout = reinterpret_cast< DXInputLayout* >( inputLayout );
+    m_pdeviceContext->SetInputLayout( 
+      *m_pinputLayout->getInputLayputInterface() );
+  }
+
+  void 
+  DXGraphicsManager::setPrimitiveTopology( uint32 Topology )
+  {
+    D3D_PRIMITIVE_TOPOLOGY topology = 
+      static_cast< D3D_PRIMITIVE_TOPOLOGY >( Topology );
+
+    m_pdeviceContext->SetPrimitiveTopology( topology );
+  }
+
 }

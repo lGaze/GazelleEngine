@@ -79,11 +79,16 @@ namespace gzEngineSDK {
   {
     bool result = true;
 
+    //Creates the Device, Context and SwapChain
     result = GraphicsManager::instance().initGraphicsManager(
       static_cast< void* >( m_pwindow->getHWND() ), 
       m_windowWidth, 
       m_windowHeight );
 
+    //Creates the Render Target
+    m_pBackBuffer = GraphicsManager::instance().creteRenderTargetFromBackBuffer();
+
+    //Creates the Depth descriptor
     TEXTURE2D_DESCRIPTOR depthTextureDesc;
     depthTextureDesc.Width = m_windowWidth;
     depthTextureDesc.Height = m_windowHeight;
@@ -95,21 +100,22 @@ namespace gzEngineSDK {
     depthTextureDesc.CPUAccessFlags = 0;
     depthTextureDesc.MiscFlags = 0;
 
+    //Creates the Depth Stencil descriptor
     DEPTH_STENCIL_VIEW_DESCRIPTOR desc;
     desc.Format = FORMAT_D24_UNORM_S8_UINT;
     desc.ViewDimension = DSV_DIMENSION_TEXTURE2D;
 
-
+    //Creates the DepthStencil View
     m_pDepthStencilView =
       GraphicsManager::instance().createDepthStencilView( desc, 
                                                           depthTextureDesc );
 
-    m_pBackBuffer = GraphicsManager::instance().creteRenderTargetFromBackBuffer();
-
+    //Sets the Render Target
     GraphicsManager::instance().setRenderTargets( 1,
                                                   m_pBackBuffer,
                                                   m_pDepthStencilView );
 
+    //Creates the Viewport Descriptor
     VIEWPORT_DESCRIPTOR vp;
     vp.Width = static_cast< float >( m_windowWidth );
     vp.Height = static_cast< float >( m_windowHeight );
@@ -118,7 +124,30 @@ namespace gzEngineSDK {
     vp.TopLeftX = 0;
     vp.TopLeftY = 0;
 
+    //Sets the Viewport
     GraphicsManager::instance().setViewports( 1, vp );
+
+    //Compile and create the vertex shader
+    m_pVertexShader = GraphicsManager::instance().CreateVertexShader( 
+      L"C:\\Proyectos\\GazelleEngine\\gzEngine\\bin\\Shaders\\Phong.fx",
+      "VS",
+      "vs_4_0" );
+
+
+    //Create the InputLayout with the blob
+    InputLayout * inputLayout;
+    inputLayout = GraphicsManager::instance().createInputLayout(
+      m_pVertexShader);
+
+    //Set the InputLayout
+    GraphicsManager::instance().setInputLayout( inputLayout );
+
+    //Compile and Create the pixel shader
+    m_pPixelShader = GraphicsManager::instance().createPixelShader(
+      L"C:\\Proyectos\\GazelleEngine\\gzEngine\\bin\\Shaders\\Phong.fx",
+      "PS",
+      "ps_4_0" );
+
 
     WORD indices[] =
     {
@@ -169,6 +198,8 @@ namespace gzEngineSDK {
     sampDesc.MaxLOD = 3.402823466e+38f;
     
     m_pSampler = GraphicsManager::instance().createSamplerState( sampDesc );
+
+
 
     return result;
 

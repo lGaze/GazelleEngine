@@ -143,6 +143,15 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
     */
    SamplerState * m_pSampler;
 
+   /**
+    * @brief 
+    */
+   VertexShader * m_pVertexShader;
+
+   /**
+    * @brief 
+    */
+   PixelShader * m_pPixelShader;
 };
 
 BaseApp&

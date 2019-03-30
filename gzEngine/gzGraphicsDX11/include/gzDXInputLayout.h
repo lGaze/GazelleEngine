@@ -7,31 +7,42 @@
 #pragma once
 
 #include "gzDXPrerequisites.h"
+#include <gzInputLayout.h>
 
 namespace gzEngineSDK {
-class InputLayout
+class DXInputLayout : public InputLayout
 {
  public:
    
   /**
    * @brief default constructor
    */
-   InputLayout();
+   DXInputLayout();
 	
   /**
    * @brief default destructor
    */
-  ~InputLayout() = default;
+  ~DXInputLayout() = default;
 	
   /************************************************************************/
   /* InputLayout functions                                                */
   /************************************************************************/
+
+/*
   
-  /**
+  / **
    * @brief Pushes the description to te vector of descriptions
+   * /
+  void
+  AddToLayout( INPUT_LAYOUT_DESCRIPTOR &inputLayoutDesc );*/
+
+
+  /**
+   * @brief 
    */
   void
-  AddToLayout( INPUT_LAYOUT_DESCRIPTOR &inputLayoutDesc );
+  CreateInputLayout( ID3DBlob * pblob );
+
 
   /**
    * @brief Gets the InputLayout Interface
@@ -41,6 +52,21 @@ class InputLayout
     return &m_pInputlayout;
   }
 
+  /**
+   * @brief 
+   */
+  FORCEINLINE D3D11_INPUT_ELEMENT_DESC *
+  getInputLayoutDesc() {
+    return m_pInputLayoutDescArray;
+  }
+
+  /**
+   * @brief 
+   */
+  FORCEINLINE uint32
+  getnumElem() {
+    return m_numElem;
+  }
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
@@ -52,11 +78,22 @@ class InputLayout
    */
   ID3D11InputLayout* m_pInputlayout;
 
- public:
   /**
-   * @brief Vector with all the descriptions of the InputLayout
+   * @brief 
    */
-  std::vector<D3D11_INPUT_ELEMENT_DESC> m_vLayout;
+  D3D11_INPUT_ELEMENT_DESC * m_pInputLayoutDescArray;
+
+  /**
+   * @brief 
+   */
+  uint32 m_numElem;
+
+/*
+ public:
+  / **
+   * @brief Vector with all the descriptions of the InputLayout
+   * /
+  std::vector<D3D11_INPUT_ELEMENT_DESC> m_vLayout;*/
    
  };
 }

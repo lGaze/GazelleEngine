@@ -79,8 +79,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief 
    */
   virtual InputLayout*
-  createInputLayout( INPUT_LAYOUT_DESCRIPTOR & inputLayoutDesc,
-                     VertexShader * vertexShader) = 0;
+  createInputLayout( VertexShader * vertexShader ) = 0;
 
   /**
    * @brief 
@@ -125,9 +124,9 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
 
   /**
    * @brief
-   * /
+   */
   virtual void 
-  setInputLayout() = 0;
+  setInputLayout( InputLayout * inputLayout ) = 0;
 
   /**
    * @brief
@@ -149,11 +148,11 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
 
   /**
    * @brief
-   * /
+   */
   virtual void 
   setPrimitiveTopology( uint32 Topology ) = 0;
 
-  / **
+  /**
    * @brief
    * /
   virtual void

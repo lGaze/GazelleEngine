@@ -14,7 +14,7 @@ namespace gzEngineSDK {
   }
 
   //TODO: Arreglar esta descripcion
-  void DXSamplerState::CreateSamplerDesc( SAMPLER_DESC &samplerDesc )
+  void DXSamplerState::CreateSamplerDesc( SAMPLER_DESCRIPTOR &samplerDesc )
   {
 
     m_SamplerDesc.Filter = static_cast< D3D11_FILTER >( samplerDesc.Filter );

@@ -6,12 +6,16 @@
 /**************************************************************************/
 #pragma once
 #pragma comment(lib, "d3d11")
+#pragma comment(lib, "D3DCompiler")
+#pragma comment(lib, "dxguid")
+
 
 #include <gzPrerequisitesCore.h>
 #include <gzPrerequisitesUtilities.h>
 
 #include <d3d11.h>
 #include <d3dcompiler.h>
+
 
 
 namespace gzEngineSDK {
@@ -23,7 +27,7 @@ namespace gzEngineSDK {
   class DXTexture;
   class DXBuffer;
   class DXDepth;
-  class InputLayout;
+  class DXInputLayout;
   class DXPixelShader;
   class DXVertexShader;
   class DXShader;
