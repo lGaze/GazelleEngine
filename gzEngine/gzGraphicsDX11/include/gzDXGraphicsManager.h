@@ -189,7 +189,68 @@ class DXGraphicsManager : public GraphicsManager
   virtual void 
   setPrimitiveTopology( uint32 Topology ) override;
 
-    /************************************************************************/
+  /**
+   * @brief Sets the given buffer as constant in the vertex shader
+   */
+  virtual void 
+  setVSConstantBuffers( Buffer * buffer,
+                        uint32 StartSlot, 
+                        uint32 NumBuffers ) override;
+
+  /**
+   * @brief Sets the given buffer as a constant in the pixel shader
+   */
+  virtual void 
+  setPSConstantBuffers( Buffer * buffer,
+                        uint32 StartSlot, 
+                        uint32 NumBuffers ) override;
+
+
+  /**
+   * @brief 
+   */
+  virtual void 
+  drawIndexed( uint32 indexCount,
+               uint32 StartIndexLocation, 
+               int32 BaseVertexLocation ) override;
+
+
+  /**
+   * @brief 
+
+   */
+  virtual void 
+  updateSubresource( Buffer * buffer, const void *pSrcData ) override;
+
+  /**
+   * @brief 
+   */
+  virtual Texture * 
+  LoadTextureFromFile( const String filename, uint32 mipMaps ) override;
+
+  /**
+   * @brief 
+   */
+  virtual void 
+  setShaderResources( Texture* texture, 
+                      uint32 StartSlot, 
+                      uint32 NumViews ) override;
+
+  /**
+   * @brief 
+   */
+  virtual Texture * 
+  CreateShaderResourceViewFromFile( const String filenme,
+                                    SHADER_RESOURCE_VIEW_DESC & desc ) override;
+
+  /**
+   * @brief 
+   */
+  virtual Texture *
+  CreateShaderResourceView( Texture * texture, 
+                            SHADER_RESOURCE_VIEW_DESC & desc ) override;
+
+  /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 	

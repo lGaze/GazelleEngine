@@ -11,6 +11,7 @@
 #include "gzWindow.h"
 #include <gzModule.h>
 #include <gzGraphicsManager.h>
+#include "IDVMath.h"
 
 
 namespace gzEngineSDK {
@@ -152,6 +153,35 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
     * @brief 
     */
    PixelShader * m_pPixelShader;
+
+
+ /************************************************************************/
+ /*       Test                                                           */
+ /************************************************************************/
+
+   struct SimpleVertex
+   {
+     XVECTOR3 Pos;
+     XVECTOR3 Tex;
+   };
+
+   struct CBNeverChanges
+   {
+     XMATRIX44 mView;
+   };
+
+   struct CBChangeOnResize
+   {
+     XMATRIX44 mProjection;
+   };
+
+   struct CBChangesEveryFrame
+   {
+     XMATRIX44 mWorld;
+     XVECTOR3 vMeshColor;
+     XVECTOR3 ViewPosition;
+   };
+
 };
 
 BaseApp&

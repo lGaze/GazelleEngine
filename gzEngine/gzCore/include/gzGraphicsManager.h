@@ -154,15 +154,10 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
 
   /**
    * @brief
-   * /
+   */
   virtual void
-  updateSubresource( uint32 BufferIndex,
-                     uint32 DstSubresource,
-                     const void *pDstBox,
-                     const void *pSrcData,
-                     uint32 SrcRowPitch,
-                     uint32 SrcDepthPitch ) = 0;
-*/
+  updateSubresource( Buffer * buffer, const void *pSrcData ) = 0;
+
 
   /**
    * @brief
@@ -189,9 +184,9 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
 
   /**
    * @brief
-   * /
+   */
   virtual void
-  setVSConstantBuffers( uint32 BufferIndex,
+  setVSConstantBuffers( Buffer * buffer,
                         uint32 StartSlot,
                         uint32 NumBuffers ) = 0;
 
@@ -203,17 +198,18 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
 
   /**
    * @brief
-   * /
+   */
   virtual void
-  setPSConstantBuffers( uint32 BufferIndex,
+  setPSConstantBuffers( Buffer * buffer,
                         uint32 StartSlot,
                         uint32 NumBuffers ) = 0;
 
-  / **
+  /**
    * @brief
-   * /
+   */
   virtual void
-  setShaderResources( uint32 StartSlot,
+  setShaderResources( Texture*texture,
+                      uint32 StartSlot,
                       uint32 NumViews ) = 0;
 
   /**
@@ -224,14 +220,17 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
                    SamplerState* sampler, 
                    uint32 numSamplers   ) = 0;
 
+
+  //TODO: Make it better with the mesh 
+
   /**
    * @brief
-   * /
+   */
   virtual void
   drawIndexed( uint32 indexCount,
                uint32 StartIndexLocation,
                int32 BaseVertexLocation ) = 0;
-*/
+
 
 
   /**
@@ -239,6 +238,27 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    */
   virtual bool 
   present( uint32 SyncInterval, uint32 Flags ) = 0;
+
+  /**
+   * @brief 
+   */
+  virtual Texture *
+  LoadTextureFromFile( const String filename, uint32 mipMaps ) = 0;
+
+  /**
+   * @brief 
+   */
+  virtual Texture *
+  CreateShaderResourceViewFromFile( const String filenme, 
+                                    SHADER_RESOURCE_VIEW_DESC & desc ) = 0;
+
+  /**
+   * @brief 
+   */
+  virtual Texture *
+  CreateShaderResourceView(Texture * texture, 
+                            SHADER_RESOURCE_VIEW_DESC & desc) = 0;
+
 
   /************************************************************************/
   /* Member declarations                                                  */

@@ -129,7 +129,7 @@ namespace gzEngineSDK {
 
     //Compile and create the vertex shader
     m_pVertexShader = GraphicsManager::instance().CreateVertexShader( 
-      L"C:\\Proyectos\\GazelleEngine\\gzEngine\\bin\\Shaders\\Phong.fx",
+      L"Shaders\\Tutorial07.fx",
       "VS",
       "vs_4_0" );
 
@@ -144,11 +144,72 @@ namespace gzEngineSDK {
 
     //Compile and Create the pixel shader
     m_pPixelShader = GraphicsManager::instance().createPixelShader(
-      L"C:\\Proyectos\\GazelleEngine\\gzEngine\\bin\\Shaders\\Phong.fx",
+      L"Shaders\\Phong.fx",
       "PS",
       "ps_4_0" );
 
 
+    // Create vertex buffer
+    SimpleVertex vertices[] =
+    {
+        { XVECTOR3( -1.0f, 1.0f, -1.0f ), XVECTOR3( 0.0f, 1.0f, 0.0f ) },
+        { XVECTOR3( 1.0f, 1.0f, -1.0f ),  XVECTOR3( 0.0f, 1.0f, 0.0f ) },
+        { XVECTOR3( 1.0f, 1.0f, 1.0f ),   XVECTOR3( 0.0f, 1.0f, 0.0f ) },
+        { XVECTOR3( -1.0f, 1.0f, 1.0f ),  XVECTOR3( 0.0f, 1.0f, 0.0f ) },
+
+        { XVECTOR3( -1.0f, -1.0f, -1.0f ), XVECTOR3( 0.0f, -1.0f, 0.0f ) },
+        { XVECTOR3( 1.0f, -1.0f, -1.0f ),  XVECTOR3( 0.0f, -1.0f, 0.0f ) },
+        { XVECTOR3( 1.0f, -1.0f, 1.0f ),   XVECTOR3( 0.0f, -1.0f, 0.0f ) },
+        { XVECTOR3( -1.0f, -1.0f, 1.0f ),  XVECTOR3( 0.0f, -1.0f, 0.0f ) },
+
+        { XVECTOR3( -1.0f, -1.0f, 1.0f ),  XVECTOR3( -1.0f, 0.0f, 0.0f ) },
+        { XVECTOR3( -1.0f, -1.0f, -1.0f ), XVECTOR3( -1.0f, 0.0f, 0.0f ) },
+        { XVECTOR3( -1.0f, 1.0f, -1.0f ),  XVECTOR3( -1.0f, 0.0f, 0.0f ) },
+        { XVECTOR3( -1.0f, 1.0f, 1.0f ),   XVECTOR3( -1.0f, 0.0f, 0.0f ) },
+
+        { XVECTOR3( 1.0f, -1.0f, 1.0f ),  XVECTOR3( 1.0f, 0.0f, 0.0f ) },
+        { XVECTOR3( 1.0f, -1.0f, -1.0f ), XVECTOR3( 1.0f, 0.0f, 0.0f ) },
+        { XVECTOR3( 1.0f, 1.0f, -1.0f ),  XVECTOR3( 1.0f, 0.0f, 0.0f ) },
+        { XVECTOR3( 1.0f, 1.0f, 1.0f ),   XVECTOR3( 1.0f, 0.0f, 0.0f ) },
+
+        { XVECTOR3( -1.0f, -1.0f, -1.0f ), XVECTOR3( 0.0f, 0.0f, -1.0f ) },
+        { XVECTOR3( 1.0f, -1.0f, -1.0f ),  XVECTOR3( 0.0f, 0.0f, -1.0f ) },
+        { XVECTOR3( 1.0f, 1.0f, -1.0f ),   XVECTOR3( 0.0f, 0.0f, -1.0f ) },
+        { XVECTOR3( -1.0f, 1.0f, -1.0f ),  XVECTOR3( 0.0f, 0.0f, -1.0f ) },
+
+        { XVECTOR3( -1.0f, -1.0f, 1.0f ), XVECTOR3( 0.0f, 0.0f, 1.0f ) },
+        { XVECTOR3( 1.0f, -1.0f, 1.0f ),  XVECTOR3( 0.0f, 0.0f, 1.0f ) },
+        { XVECTOR3( 1.0f, 1.0f, 1.0f ),   XVECTOR3( 0.0f, 0.0f, 1.0f ) },
+        { XVECTOR3( -1.0f, 1.0f, 1.0f ),  XVECTOR3( 0.0f, 0.0f, 1.0f ) },
+    };  
+
+    //Vertex buffer desc
+
+    Buffer * vertexBuffer;
+    SUBRESOUCE_DATA initData;
+    memset( &initData, 0, sizeof( initData ) );
+    BUFFER_DESCRIPTOR bufferDesc;
+    memset( &bufferDesc, 0, sizeof( bufferDesc ) );
+    bufferDesc.Usage = USAGE_DEFAULT;
+    bufferDesc.ByteWidth = sizeof( SimpleVertex ) * 24;
+    bufferDesc.BindFlags = BIND_VERTEX_BUFFER;
+    bufferDesc.CPUAccessFlags = 0;
+
+    initData.pSysMem = vertices;
+
+    vertexBuffer = GraphicsManager::instance().createBuffer( bufferDesc, 
+                                                             &initData );
+
+    //Sets the index buffer
+    uint32 stride = sizeof( SimpleVertex );
+    uint32 offset = 0;
+    GraphicsManager::instance().setVertexBuffers( 0, 
+                                                  1, 
+                                                  vertexBuffer, 
+                                                  &stride, 
+                                                  &offset );
+
+    //Create index buffer       
     WORD indices[] =
     {
         3,1,0,
@@ -170,11 +231,10 @@ namespace gzEngineSDK {
         23,20,22
     };
 
+    //Index buffer desc
     Buffer * indexBuffer;
-    SUBRESOUCE_DATA initData;
-    ZeroMemory( &initData, sizeof( initData ) );
-    BUFFER_DESCRIPTOR bufferDesc;
-    ZeroMemory( &bufferDesc, sizeof( bufferDesc ) );
+    memset( &initData, 0, sizeof( initData ) );
+    memset( &bufferDesc, 0, sizeof( bufferDesc ) );
     bufferDesc.Usage = USAGE_DEFAULT;
     bufferDesc.ByteWidth = sizeof( WORD ) * 36;
     bufferDesc.BindFlags = BIND_INDEX_BUFFER;
@@ -182,13 +242,41 @@ namespace gzEngineSDK {
     initData.pSysMem = indices;
     indexBuffer = 
       GraphicsManager::instance().createBuffer( bufferDesc, &initData );
+
+    //Sets the index buffer
     GraphicsManager::instance().setIndexBuffer( FORMAT_R16_UINT, 
                                                 indexBuffer, 
                                                 0 );
 
+    //Sets primitive topology
+    GraphicsManager::instance().setPrimitiveTopology( 4 );
    
+    //Create the constant buffers desc
+    bufferDesc.Usage = USAGE_DEFAULT;
+    bufferDesc.ByteWidth = sizeof( CBNeverChanges );
+    bufferDesc.BindFlags = BIND_CONSTANT_BUFFER;
+    bufferDesc.CPUAccessFlags = 0;
+
+    //Create Constant buffer
+    GraphicsManager::instance().createBuffer( bufferDesc, nullptr );
+
+    bufferDesc.ByteWidth = sizeof( CBChangeOnResize );
+    GraphicsManager::instance().createBuffer( bufferDesc, nullptr );
+
+    bufferDesc.ByteWidth = sizeof( CBChangesEveryFrame );
+    GraphicsManager::instance().createBuffer( bufferDesc, nullptr );
+
+    SHADER_RESOURCE_VIEW_DESC bd;
+    memset( &bd, 0, sizeof( bd ) );
+
+    //Load and create shader resource view
+    GraphicsManager::instance().CreateShaderResourceViewFromFile(
+      "Textures\\texturagorda.jpg",
+       bd );
+
+
     SAMPLER_DESCRIPTOR sampDesc;
-    ZeroMemory( &sampDesc, sizeof( sampDesc ) );
+    memset( &sampDesc, 0 ,sizeof( sampDesc ) );
     sampDesc.Filter = FILTER_MIN_MAG_MIP_LINEAR;
     sampDesc.AddressU = TEXTURE_ADDRESS_WRAP;
     sampDesc.AddressY = TEXTURE_ADDRESS_WRAP;
@@ -199,6 +287,7 @@ namespace gzEngineSDK {
     
     m_pSampler = GraphicsManager::instance().createSamplerState( sampDesc );
 
+   
 
 
     return result;

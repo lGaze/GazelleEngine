@@ -17,7 +17,6 @@
 #include <d3dcompiler.h>
 
 
-
 namespace gzEngineSDK {
 
   class Device;

@@ -9,7 +9,7 @@
 
 namespace gzEngineSDK {
 
-  DXShader::DXShader() : m_pTextureRV(nullptr) { }
+  DXShader::DXShader() { }
 
   bool
     DXShader::CompileShaderFromFile( const WString & szFileName,
@@ -54,24 +54,4 @@ namespace gzEngineSDK {
     return true;
   }
 
-
-  bool 
-  DXShader::LoadTexture( ID3D11Device * pDevice, 
-                       LPCWSTR pSrcFile, 
-                       HRESULT * pHResult )
-  {
-    HRESULT result = S_OK;
-
-   /* result = D3DX11CreateShaderResourceViewFromFileW( pDevice,
-                                                      pSrcFile,
-                                                      nullptr,
-                                                      nullptr,
-                                                      &m_pTextureRV, pHResult )*/;
-    
-    if (FAILED(result))
-    {
-      return false;
-    }
-    return true;
-  }
 }

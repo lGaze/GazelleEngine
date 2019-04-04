@@ -102,8 +102,15 @@ class Device
    */
   bool
   CreateSamplerState( const D3D11_SAMPLER_DESC *pSamplerDesc,
-                        ID3D11SamplerState **ppSamplerState );
+                      ID3D11SamplerState **ppSamplerState );
 
+  /**
+   * @brief Creates a ShaderResourceView
+   */
+  bool
+  CreateShaderResourceView( ID3D11Resource * pResource,
+                            D3D11_SHADER_RESOURCE_VIEW_DESC &desc,
+                            ID3D11ShaderResourceView **ppSRView );
 
   /************************************************************************/
   /* Member declarations                                                  */

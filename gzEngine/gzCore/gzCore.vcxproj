@@ -34,6 +34,7 @@
     <ClInclude Include="include\gzVertexShader.h" />
     <ClInclude Include="include\gzViewPort.h" />
     <ClInclude Include="include\gzWindow.h" />
+    <ClInclude Include="include\IDVMath.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\gzBaseApp.cpp" />
@@ -49,6 +50,7 @@
     <ClCompile Include="src\gzViewPort.cpp" />
     <ClCompile Include="src\gzWindow.cpp" />
     <ClCompile Include="src\gzTexture.cpp" />
+    <ClCompile Include="src\IDVMath.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

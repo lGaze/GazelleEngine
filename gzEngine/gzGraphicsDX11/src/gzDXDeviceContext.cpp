@@ -142,9 +142,10 @@ namespace gzEngineSDK {
   }
 
   void 
-  DeviceContext::SetShaderResources( uint32 StartSlot, 
-                                     uint32 NumViews, 
-                                     ID3D11ShaderResourceView * const * ppShaderResourceViews)
+  DeviceContext::SetShaderResources( 
+    uint32 StartSlot, 
+    uint32 NumViews,
+    ID3D11ShaderResourceView * const * ppShaderResourceViews )
   {
     m_pDeviceContext->PSSetShaderResources( StartSlot,
                                             NumViews,

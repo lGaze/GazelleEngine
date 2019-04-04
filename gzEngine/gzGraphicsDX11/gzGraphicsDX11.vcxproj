@@ -34,6 +34,7 @@
     <ClInclude Include="include\gzDXTexture.h" />
     <ClInclude Include="include\gzDXVertexShader.h" />
     <ClInclude Include="include\gzDXViewPort.h" />
+    <ClInclude Include="include\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\gzDXBuffer.cpp" />

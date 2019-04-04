@@ -55,9 +55,9 @@ namespace gzEngineSDK {
   {
     m_ptexture = new DXTexture();
     m_ptexture->create2DTextueDescriptor( textureInfo );
-    m_pdevice->CreateTexture2D( &m_ptexture->gzGetTextureDesc(),
+    m_pdevice->CreateTexture2D( &m_ptexture->getTextureDesc(),
                                 nullptr,
-                                m_ptexture->gzGetTextureInterface() );
+                                m_ptexture->getTextureInterface() );
 
     return reinterpret_cast< Texture* >( m_ptexture );
   }
@@ -71,10 +71,10 @@ namespace gzEngineSDK {
     m_pswapChain->getBuffer( 
       0,
       __uuidof( ID3D11Texture2D ),                          
-      ( LPVOID* ) m_ptexture->gzGetTextureInterface() );
+      ( LPVOID* ) m_ptexture->getTextureInterface() );
 
     m_pdevice->CreateRenderTargetView(
-      *m_ptexture->gzGetTextureInterface(),
+      *m_ptexture->getTextureInterface(),
       nullptr,
       m_prenderTarget->getRenderTargetInterface() );
 
@@ -133,12 +133,12 @@ namespace gzEngineSDK {
     m_ptexture = new DXTexture();
     m_pdepth = new DXDepth();
     m_ptexture->create2DTextueDescriptor( texDesc );
-    m_pdevice->CreateTexture2D( &m_ptexture->gzGetTextureDesc(),
+    m_pdevice->CreateTexture2D( &m_ptexture->getTextureDesc(),
                                 nullptr,
-                                m_ptexture->gzGetTextureInterface() );
+                                m_ptexture->getTextureInterface() );
      
     m_pdepth->CreateDepthStencilViewDesc( desc );
-    m_pdevice->CreateDepthStencilView( *m_ptexture->gzGetTextureInterface(),
+    m_pdevice->CreateDepthStencilView( *m_ptexture->getTextureInterface(),
                                        &m_pdepth->getDepthStencilViewDesc(),
                                        m_pdepth->getDepthStencilViewInterface() );
 
@@ -324,6 +324,116 @@ namespace gzEngineSDK {
       static_cast< D3D_PRIMITIVE_TOPOLOGY >( Topology );
 
     m_pdeviceContext->SetPrimitiveTopology( topology );
+  }
+
+  void 
+  DXGraphicsManager::setVSConstantBuffers( Buffer * buffer, 
+                                           uint32 StartSlot, 
+                                           uint32 NumBuffers )
+  {
+    m_pBuffer = reinterpret_cast< DXBuffer* >( buffer );
+
+    m_pdeviceContext->SetVSConstantBuffers( StartSlot,
+                                            NumBuffers,
+                                            m_pBuffer->getBufferInterface() );
+  }
+
+  void 
+  DXGraphicsManager::setPSConstantBuffers( Buffer * buffer,
+                                           uint32 StartSlot,
+                                           uint32 NumBuffers )
+  {
+    m_pBuffer = reinterpret_cast< DXBuffer* >( buffer );
+
+    m_pdeviceContext->SetPSConstantBuffers( StartSlot,
+                                            NumBuffers,
+                                            m_pBuffer->getBufferInterface() );
+  }
+
+  void 
+  DXGraphicsManager::drawIndexed( uint32 indexCount,
+                                  uint32 StartIndexLocation,
+                                  int32 BaseVertexLocation )
+  {
+    m_pdeviceContext->DrawIndexed( indexCount,
+                                   StartIndexLocation,
+                                   BaseVertexLocation );
+  }
+
+  void 
+  DXGraphicsManager::updateSubresource( Buffer * buffer, const void *pSrcData )
+  {
+    m_pBuffer = reinterpret_cast< DXBuffer* > ( buffer );
+
+    m_pdeviceContext->UpdateSubresource( *m_pBuffer->getBufferInterface(),
+                                         0,
+                                         nullptr,
+                                         pSrcData,
+                                         0,
+                                         0 );
+  }
+
+  Texture * 
+  DXGraphicsManager::LoadTextureFromFile( const String filename, uint32 mipMaps )
+  {
+    m_ptexture = new DXTexture();
+    m_ptexture->LoadTexture( filename );
+
+    m_pdevice->CreateTexture2D( &m_ptexture->getTextureDesc(),
+                                m_ptexture->getInitData(),
+                                m_ptexture->getTextureInterface() );
+
+    return reinterpret_cast< Texture* >( m_ptexture );
+  }
+
+  void 
+  DXGraphicsManager::setShaderResources( Texture*texture, 
+                                         uint32 StartSlot,
+                                         uint32 NumViews )
+  {
+    m_ptexture = reinterpret_cast< DXTexture* >( texture );
+
+    m_pdeviceContext->SetShaderResources(
+      StartSlot,
+      NumViews,
+      m_ptexture->getShaderResourceInterface() );
+  }
+
+  Texture * 
+  DXGraphicsManager::CreateShaderResourceViewFromFile( 
+    const String filenme, 
+    SHADER_RESOURCE_VIEW_DESC & desc )
+  {
+    m_ptexture = new DXTexture();
+    m_ptexture->LoadTexture( filenme );
+
+    m_pdevice->CreateTexture2D( &m_ptexture->getTextureDesc(),
+                                m_ptexture->getInitData(),
+                                m_ptexture->getTextureInterface() );
+
+    m_ptexture->createShaderResurceDescriptor( desc );
+    m_pdevice->CreateShaderResourceView( 
+      *m_ptexture->getTextureInterface(),
+       m_ptexture->getShaderResourceDesc(),
+       m_ptexture->getShaderResourceInterface() );
+
+    return reinterpret_cast< Texture* >( m_ptexture );
+    
+  }
+
+  Texture *
+  DXGraphicsManager::CreateShaderResourceView( Texture * texture, 
+                                               SHADER_RESOURCE_VIEW_DESC & desc )
+  {
+    m_ptexture = reinterpret_cast< DXTexture* >( texture );
+    m_ptexture->createShaderResurceDescriptor( desc );
+
+    m_pdevice->CreateShaderResourceView( 
+      *m_ptexture->getTextureInterface(),
+      m_ptexture->getShaderResourceDesc(),
+      m_ptexture->getShaderResourceInterface() );
+
+    return reinterpret_cast< Texture* >( m_ptexture );
   }
 
 }

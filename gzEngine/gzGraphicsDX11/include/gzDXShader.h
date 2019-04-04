@@ -38,27 +38,10 @@ class DXShader : public Shader
                          const String & szShaderModel,
                          ID3DBlob ** m_pBlob);
 
-  /**
-   * @brief 
-   */
-  bool
-  LoadTexture( ID3D11Device* pDevice,
-               LPCWSTR pSrcFile,
-               HRESULT* pHResult );
 
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 	
- public:
-  
-
-  /**
-   * @brief 
-   */
-  ID3D11ShaderResourceView* m_pTextureRV;
-
-
-
  };
 }

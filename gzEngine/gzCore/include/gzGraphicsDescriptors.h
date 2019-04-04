@@ -32,6 +32,12 @@ struct DEPTH_STENCIL_VIEW_DESCRIPTOR
   uint32 Flags;
 };
 
+struct SHADER_RESOURCE_VIEW_DESC
+{
+  uint32 Format;
+  uint32 ViewDimension;
+};
+
 struct VIEWPORT_DESCRIPTOR
 {
   float TopLeftX;
@@ -202,6 +208,11 @@ enum INPUT_CLASSIFICATION
 {
   INPUT_PER_VERTEX_DATA   = 0,
   INPUT_PER_INSTANCE_DATA = 1
+};
+
+enum MyEnum
+{
+
 };
 
 }
