@@ -154,6 +154,11 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
     */
    PixelShader * m_pPixelShader;
 
+   /**
+    * @brief 
+    */
+   Texture * textGorda;
+
 
  /************************************************************************/
  /*       Test                                                           */
@@ -162,7 +167,8 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    struct SimpleVertex
    {
      XVECTOR3 Pos;
-     XVECTOR3 Tex;
+     XVECTOR2 Tex;
+     XVECTOR3 Normal;
    };
 
    struct CBNeverChanges
@@ -181,6 +187,16 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
      XVECTOR3 vMeshColor;
      XVECTOR3 ViewPosition;
    };
+
+   XMATRIX44 g_World;
+   XMATRIX44 g_View;
+   XMATRIX44 g_Projection;
+
+   XVECTOR3 Eye;
+
+   Buffer * constantNeverChanges;
+   Buffer * constantChangesonResize;
+   Buffer * constantChangesEveryFrame;
 
 };
 

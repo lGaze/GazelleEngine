@@ -144,7 +144,7 @@ namespace gzEngineSDK {
 
     //Compile and Create the pixel shader
     m_pPixelShader = GraphicsManager::instance().createPixelShader(
-      L"Shaders\\Phong.fx",
+      L"Shaders\\Tutorial07.fx",
       "PS",
       "ps_4_0" );
 
@@ -152,35 +152,35 @@ namespace gzEngineSDK {
     // Create vertex buffer
     SimpleVertex vertices[] =
     {
-        { XVECTOR3( -1.0f, 1.0f, -1.0f ), XVECTOR3( 0.0f, 1.0f, 0.0f ) },
-        { XVECTOR3( 1.0f, 1.0f, -1.0f ),  XVECTOR3( 0.0f, 1.0f, 0.0f ) },
-        { XVECTOR3( 1.0f, 1.0f, 1.0f ),   XVECTOR3( 0.0f, 1.0f, 0.0f ) },
-        { XVECTOR3( -1.0f, 1.0f, 1.0f ),  XVECTOR3( 0.0f, 1.0f, 0.0f ) },
-
-        { XVECTOR3( -1.0f, -1.0f, -1.0f ), XVECTOR3( 0.0f, -1.0f, 0.0f ) },
-        { XVECTOR3( 1.0f, -1.0f, -1.0f ),  XVECTOR3( 0.0f, -1.0f, 0.0f ) },
-        { XVECTOR3( 1.0f, -1.0f, 1.0f ),   XVECTOR3( 0.0f, -1.0f, 0.0f ) },
-        { XVECTOR3( -1.0f, -1.0f, 1.0f ),  XVECTOR3( 0.0f, -1.0f, 0.0f ) },
-
-        { XVECTOR3( -1.0f, -1.0f, 1.0f ),  XVECTOR3( -1.0f, 0.0f, 0.0f ) },
-        { XVECTOR3( -1.0f, -1.0f, -1.0f ), XVECTOR3( -1.0f, 0.0f, 0.0f ) },
-        { XVECTOR3( -1.0f, 1.0f, -1.0f ),  XVECTOR3( -1.0f, 0.0f, 0.0f ) },
-        { XVECTOR3( -1.0f, 1.0f, 1.0f ),   XVECTOR3( -1.0f, 0.0f, 0.0f ) },
-
-        { XVECTOR3( 1.0f, -1.0f, 1.0f ),  XVECTOR3( 1.0f, 0.0f, 0.0f ) },
-        { XVECTOR3( 1.0f, -1.0f, -1.0f ), XVECTOR3( 1.0f, 0.0f, 0.0f ) },
-        { XVECTOR3( 1.0f, 1.0f, -1.0f ),  XVECTOR3( 1.0f, 0.0f, 0.0f ) },
-        { XVECTOR3( 1.0f, 1.0f, 1.0f ),   XVECTOR3( 1.0f, 0.0f, 0.0f ) },
-
-        { XVECTOR3( -1.0f, -1.0f, -1.0f ), XVECTOR3( 0.0f, 0.0f, -1.0f ) },
-        { XVECTOR3( 1.0f, -1.0f, -1.0f ),  XVECTOR3( 0.0f, 0.0f, -1.0f ) },
-        { XVECTOR3( 1.0f, 1.0f, -1.0f ),   XVECTOR3( 0.0f, 0.0f, -1.0f ) },
-        { XVECTOR3( -1.0f, 1.0f, -1.0f ),  XVECTOR3( 0.0f, 0.0f, -1.0f ) },
-
-        { XVECTOR3( -1.0f, -1.0f, 1.0f ), XVECTOR3( 0.0f, 0.0f, 1.0f ) },
-        { XVECTOR3( 1.0f, -1.0f, 1.0f ),  XVECTOR3( 0.0f, 0.0f, 1.0f ) },
-        { XVECTOR3( 1.0f, 1.0f, 1.0f ),   XVECTOR3( 0.0f, 0.0f, 1.0f ) },
-        { XVECTOR3( -1.0f, 1.0f, 1.0f ),  XVECTOR3( 0.0f, 0.0f, 1.0f ) },
+        { XVECTOR3( -1.0f, 1.0f, -1.0f ),  /*XVECTOR3( 0.0f, 1.0f, 0.0f ),  */ XVECTOR2( 0.0f, 0.0f ) },
+        { XVECTOR3( 1.0f, 1.0f, -1.0f ),   /*XVECTOR3( 0.0f, 1.0f, 0.0f ),  */ XVECTOR2( 1.0f, 0.0f ) },
+        { XVECTOR3( 1.0f, 1.0f, 1.0f ),    /*XVECTOR3( 0.0f, 1.0f, 0.0f ),  */ XVECTOR2( 1.0f, 1.0f ) },
+        { XVECTOR3( -1.0f, 1.0f, 1.0f ),   /*XVECTOR3( 0.0f, 1.0f, 0.0f ),  */ XVECTOR2( 0.0f, 1.0f ) },
+                                           /*                               */
+        { XVECTOR3( -1.0f, -1.0f, -1.0f ), /*XVECTOR3( 0.0f, -1.0f, 0.0f ), */ XVECTOR2( 0.0f, 0.0f ) },
+        { XVECTOR3( 1.0f, -1.0f, -1.0f ),  /*XVECTOR3( 0.0f, -1.0f, 0.0f ), */ XVECTOR2( 1.0f, 0.0f ) },
+        { XVECTOR3( 1.0f, -1.0f, 1.0f ),   /*XVECTOR3( 0.0f, -1.0f, 0.0f ), */ XVECTOR2( 1.0f, 1.0f ) },
+        { XVECTOR3( -1.0f, -1.0f, 1.0f ),  /*XVECTOR3( 0.0f, -1.0f, 0.0f ), */ XVECTOR2( 0.0f, 1.0f ) },
+                                           /*                               */
+        { XVECTOR3( -1.0f, -1.0f, 1.0f ),  /*XVECTOR3( -1.0f, 0.0f, 0.0f ), */ XVECTOR2( 0.0f, 0.0f ) },
+        { XVECTOR3( -1.0f, -1.0f, -1.0f ), /*XVECTOR3( -1.0f, 0.0f, 0.0f ), */ XVECTOR2( 1.0f, 0.0f ) },
+        { XVECTOR3( -1.0f, 1.0f, -1.0f ),  /*XVECTOR3( -1.0f, 0.0f, 0.0f ), */ XVECTOR2( 1.0f, 1.0f ) },
+        { XVECTOR3( -1.0f, 1.0f, 1.0f ),   /*XVECTOR3( -1.0f, 0.0f, 0.0f ), */ XVECTOR2( 0.0f, 1.0f ) },
+                                           /*                               */
+        { XVECTOR3( 1.0f, -1.0f, 1.0f ),   /*XVECTOR3( 1.0f, 0.0f, 0.0f ),  */ XVECTOR2( 0.0f, 0.0f ) },
+        { XVECTOR3( 1.0f, -1.0f, -1.0f ),  /*XVECTOR3( 1.0f, 0.0f, 0.0f ),  */ XVECTOR2( 1.0f, 0.0f ) },
+        { XVECTOR3( 1.0f, 1.0f, -1.0f ),   /*XVECTOR3( 1.0f, 0.0f, 0.0f ),  */ XVECTOR2( 1.0f, 1.0f ) },
+        { XVECTOR3( 1.0f, 1.0f, 1.0f ),    /*XVECTOR3( 1.0f, 0.0f, 0.0f ),  */ XVECTOR2( 0.0f, 1.0f ) },
+                                           /*                               */
+        { XVECTOR3( -1.0f, -1.0f, -1.0f ), /*XVECTOR3( 0.0f, 0.0f, -1.0f ), */ XVECTOR2( 0.0f, 0.0f )},
+        { XVECTOR3( 1.0f, -1.0f, -1.0f ),  /*XVECTOR3( 0.0f, 0.0f, -1.0f ), */ XVECTOR2( 1.0f, 0.0f ) },
+        { XVECTOR3( 1.0f, 1.0f, -1.0f ),   /*XVECTOR3( 0.0f, 0.0f, -1.0f ), */ XVECTOR2( 1.0f, 1.0f ) },
+        { XVECTOR3( -1.0f, 1.0f, -1.0f ),  /*XVECTOR3( 0.0f, 0.0f, -1.0f ), */ XVECTOR2( 0.0f, 1.0f ) },
+                                           /*                               */
+        { XVECTOR3( -1.0f, -1.0f, 1.0f ),  /*XVECTOR3( 0.0f, 0.0f, 1.0f ),  */ XVECTOR2( 0.0f, 0.0f ) },
+        { XVECTOR3( 1.0f, -1.0f, 1.0f ),   /*XVECTOR3( 0.0f, 0.0f, 1.0f ),  */ XVECTOR2( 1.0f, 0.0f ) },
+        { XVECTOR3( 1.0f, 1.0f, 1.0f ),    /*XVECTOR3( 0.0f, 0.0f, 1.0f ),  */ XVECTOR2( 1.0f, 1.0f ) },
+        { XVECTOR3( -1.0f, 1.0f, 1.0f ),   /*XVECTOR3( 0.0f, 0.0f, 1.0f ),  */ XVECTOR2( 0.0f, 1.0f ) },
     };  
 
     //Vertex buffer desc
@@ -258,19 +258,22 @@ namespace gzEngineSDK {
     bufferDesc.CPUAccessFlags = 0;
 
     //Create Constant buffer
-    GraphicsManager::instance().createBuffer( bufferDesc, nullptr );
+    constantNeverChanges = 
+      GraphicsManager::instance().createBuffer( bufferDesc, nullptr );
 
     bufferDesc.ByteWidth = sizeof( CBChangeOnResize );
-    GraphicsManager::instance().createBuffer( bufferDesc, nullptr );
+    constantChangesonResize =
+     GraphicsManager::instance().createBuffer( bufferDesc, nullptr );
 
     bufferDesc.ByteWidth = sizeof( CBChangesEveryFrame );
-    GraphicsManager::instance().createBuffer( bufferDesc, nullptr );
+    constantChangesEveryFrame =
+      GraphicsManager::instance().createBuffer( bufferDesc, nullptr );
 
     SHADER_RESOURCE_VIEW_DESC bd;
     memset( &bd, 0, sizeof( bd ) );
 
     //Load and create shader resource view
-    GraphicsManager::instance().CreateShaderResourceViewFromFile(
+    textGorda = GraphicsManager::instance().CreateShaderResourceViewFromFile(
       "Textures\\texturagorda.jpg",
        bd );
 
@@ -287,8 +290,32 @@ namespace gzEngineSDK {
     
     m_pSampler = GraphicsManager::instance().createSamplerState( sampDesc );
 
-   
+   //Initialize the matrices
+    g_World.Identity();
 
+    //initialize the view matrix
+    Eye = { 0.0f, 3.0f, -6.0f, 0.0f };
+    XVECTOR3 At = { 0.0f, 1.0f, 0.0f, 0.0f };
+    XVECTOR3 Up = { 0.0f, 1.0f, 0.0f, 0.0f };
+    XMatViewLookAtLH( g_View, Eye, At, Up );
+
+    CBNeverChanges cbNeverChanges;
+    XMatTranspose( g_View, g_View );
+    cbNeverChanges.mView = g_View;
+    GraphicsManager::instance().updateSubresource( constantNeverChanges, 
+                                                   &cbNeverChanges );
+
+    //initialize the prijection matrix
+    XMatPerspectiveLH( g_Projection, 
+                       0.785398163f, 
+                       m_windowWidth / (float)m_windowHeight, 
+                       0.01f, 
+                       100.0f );
+    CBChangeOnResize cbChangesonResize;
+    XMatTranspose( g_Projection, g_Projection );
+    cbChangesonResize.mProjection = g_Projection;
+    GraphicsManager::instance().updateSubresource( constantChangesonResize,
+                                                   &cbChangesonResize );
 
     return result;
 
@@ -297,14 +324,51 @@ namespace gzEngineSDK {
   void 
   BaseApp::render()
   {
+
+
+    //Update our time
+    float t = 0.0f;
+    static DWORD dwTimeStart = 0;
+    DWORD dwTimerCur = GetTickCount();
+    if ( dwTimeStart == 0 )
+    {
+      dwTimeStart = dwTimerCur;
+    }
+    t = ( dwTimerCur - dwTimeStart ) / 1000.0f;
+
+    //rotate mesh 
+    XMatRotationYLH( g_World, t );
+
+    //Clear back buffer
     float ClearColor[4] = { 1.0f, 0.7f, 0.0f, 1.0f };
     GraphicsManager::instance().clearRenderTargetView( ClearColor, m_pBackBuffer);
+
+    //Clear depth Stencil
     GraphicsManager::instance().clearDepthStencilView( CLEAR_DEPTH, 
                                                        1.0f, 
                                                        0, 
                                                        m_pDepthStencilView );
 
+    CBChangesEveryFrame cb;
+    XMatTranspose( g_World, g_World );
+    cb.mWorld = g_World;
+    cb.vMeshColor = { 1.0, 1.0, 1.0 };
+    cb.ViewPosition = Eye;
+    GraphicsManager::instance().updateSubresource( constantChangesEveryFrame,
+                                                   &cb );
+
+    //Render the cube
+
+    GraphicsManager::instance().setVertexShader( m_pVertexShader );
+    GraphicsManager::instance().setVSConstantBuffers( constantNeverChanges, 0, 1 );
+    GraphicsManager::instance().setVSConstantBuffers( constantChangesonResize, 1, 1 );
+    GraphicsManager::instance().setVSConstantBuffers( constantChangesEveryFrame, 2, 1 );
+    GraphicsManager::instance().setPixelShader( m_pPixelShader );
+    GraphicsManager::instance().setPSConstantBuffers( constantChangesEveryFrame, 2, 1 );
+    GraphicsManager::instance().setShaderResources( textGorda, 0, 1 );
     GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
+    GraphicsManager::instance().drawIndexed( 36, 0, 0 );
+
 
     GraphicsManager::instance().present( 0, 0 );
   }
