@@ -8,6 +8,7 @@
 
 #include <gzPrerequisitesUtilities.h>
 #include "gzGraphicsDescriptors.h"
+#include <DirectXMath.h>
 
 
 namespace gzEngineSDK {

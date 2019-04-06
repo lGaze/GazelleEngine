@@ -85,8 +85,17 @@ namespace gzEngineSDK {
       m_windowWidth, 
       m_windowHeight );
 
-    //Creates the Render Target
-    m_pBackBuffer = GraphicsManager::instance().creteRenderTargetFromBackBuffer();
+    //Creates the Render Target texture
+    m_pBackBufferTexture = 
+      GraphicsManager::instance().createTextureFromBackBuffer();
+
+    //Creates the render target 
+    m_pBackBuffer = 
+      GraphicsManager::instance().createRenderTarget(m_pBackBufferTexture);
+
+    m_TestRT = 
+      GraphicsManager::instance().createRenderTarget(m_pBackBufferTexture);
+
 
     //Creates the Depth descriptor
     TEXTURE2D_DESCRIPTOR depthTextureDesc;
@@ -110,10 +119,6 @@ namespace gzEngineSDK {
       GraphicsManager::instance().createDepthStencilView( desc, 
                                                           depthTextureDesc );
 
-    //Sets the Render Target
-    GraphicsManager::instance().setRenderTargets( 1,
-                                                  m_pBackBuffer,
-                                                  m_pDepthStencilView );
 
     //Creates the Viewport Descriptor
     VIEWPORT_DESCRIPTOR vp;
@@ -129,7 +134,7 @@ namespace gzEngineSDK {
 
     //Compile and create the vertex shader
     m_pVertexShader = GraphicsManager::instance().CreateVertexShader( 
-      L"Shaders\\Tutorial07.fx",
+      L"Shaders\\Phong.fx",
       "VS",
       "vs_4_0" );
 
@@ -144,44 +149,45 @@ namespace gzEngineSDK {
 
     //Compile and Create the pixel shader
     m_pPixelShader = GraphicsManager::instance().createPixelShader(
-      L"Shaders\\Tutorial07.fx",
+      L"Shaders\\Phong.fx",
       "PS",
       "ps_4_0" );
+
 
 
     // Create vertex buffer
     SimpleVertex vertices[] =
     {
-        { XVECTOR3( -1.0f, 1.0f, -1.0f ),  /*XVECTOR3( 0.0f, 1.0f, 0.0f ),  */ XVECTOR2( 0.0f, 0.0f ) },
-        { XVECTOR3( 1.0f, 1.0f, -1.0f ),   /*XVECTOR3( 0.0f, 1.0f, 0.0f ),  */ XVECTOR2( 1.0f, 0.0f ) },
-        { XVECTOR3( 1.0f, 1.0f, 1.0f ),    /*XVECTOR3( 0.0f, 1.0f, 0.0f ),  */ XVECTOR2( 1.0f, 1.0f ) },
-        { XVECTOR3( -1.0f, 1.0f, 1.0f ),   /*XVECTOR3( 0.0f, 1.0f, 0.0f ),  */ XVECTOR2( 0.0f, 1.0f ) },
-                                           /*                               */
-        { XVECTOR3( -1.0f, -1.0f, -1.0f ), /*XVECTOR3( 0.0f, -1.0f, 0.0f ), */ XVECTOR2( 0.0f, 0.0f ) },
-        { XVECTOR3( 1.0f, -1.0f, -1.0f ),  /*XVECTOR3( 0.0f, -1.0f, 0.0f ), */ XVECTOR2( 1.0f, 0.0f ) },
-        { XVECTOR3( 1.0f, -1.0f, 1.0f ),   /*XVECTOR3( 0.0f, -1.0f, 0.0f ), */ XVECTOR2( 1.0f, 1.0f ) },
-        { XVECTOR3( -1.0f, -1.0f, 1.0f ),  /*XVECTOR3( 0.0f, -1.0f, 0.0f ), */ XVECTOR2( 0.0f, 1.0f ) },
-                                           /*                               */
-        { XVECTOR3( -1.0f, -1.0f, 1.0f ),  /*XVECTOR3( -1.0f, 0.0f, 0.0f ), */ XVECTOR2( 0.0f, 0.0f ) },
-        { XVECTOR3( -1.0f, -1.0f, -1.0f ), /*XVECTOR3( -1.0f, 0.0f, 0.0f ), */ XVECTOR2( 1.0f, 0.0f ) },
-        { XVECTOR3( -1.0f, 1.0f, -1.0f ),  /*XVECTOR3( -1.0f, 0.0f, 0.0f ), */ XVECTOR2( 1.0f, 1.0f ) },
-        { XVECTOR3( -1.0f, 1.0f, 1.0f ),   /*XVECTOR3( -1.0f, 0.0f, 0.0f ), */ XVECTOR2( 0.0f, 1.0f ) },
-                                           /*                               */
-        { XVECTOR3( 1.0f, -1.0f, 1.0f ),   /*XVECTOR3( 1.0f, 0.0f, 0.0f ),  */ XVECTOR2( 0.0f, 0.0f ) },
-        { XVECTOR3( 1.0f, -1.0f, -1.0f ),  /*XVECTOR3( 1.0f, 0.0f, 0.0f ),  */ XVECTOR2( 1.0f, 0.0f ) },
-        { XVECTOR3( 1.0f, 1.0f, -1.0f ),   /*XVECTOR3( 1.0f, 0.0f, 0.0f ),  */ XVECTOR2( 1.0f, 1.0f ) },
-        { XVECTOR3( 1.0f, 1.0f, 1.0f ),    /*XVECTOR3( 1.0f, 0.0f, 0.0f ),  */ XVECTOR2( 0.0f, 1.0f ) },
-                                           /*                               */
-        { XVECTOR3( -1.0f, -1.0f, -1.0f ), /*XVECTOR3( 0.0f, 0.0f, -1.0f ), */ XVECTOR2( 0.0f, 0.0f )},
-        { XVECTOR3( 1.0f, -1.0f, -1.0f ),  /*XVECTOR3( 0.0f, 0.0f, -1.0f ), */ XVECTOR2( 1.0f, 0.0f ) },
-        { XVECTOR3( 1.0f, 1.0f, -1.0f ),   /*XVECTOR3( 0.0f, 0.0f, -1.0f ), */ XVECTOR2( 1.0f, 1.0f ) },
-        { XVECTOR3( -1.0f, 1.0f, -1.0f ),  /*XVECTOR3( 0.0f, 0.0f, -1.0f ), */ XVECTOR2( 0.0f, 1.0f ) },
-                                           /*                               */
-        { XVECTOR3( -1.0f, -1.0f, 1.0f ),  /*XVECTOR3( 0.0f, 0.0f, 1.0f ),  */ XVECTOR2( 0.0f, 0.0f ) },
-        { XVECTOR3( 1.0f, -1.0f, 1.0f ),   /*XVECTOR3( 0.0f, 0.0f, 1.0f ),  */ XVECTOR2( 1.0f, 0.0f ) },
-        { XVECTOR3( 1.0f, 1.0f, 1.0f ),    /*XVECTOR3( 0.0f, 0.0f, 1.0f ),  */ XVECTOR2( 1.0f, 1.0f ) },
-        { XVECTOR3( -1.0f, 1.0f, 1.0f ),   /*XVECTOR3( 0.0f, 0.0f, 1.0f ),  */ XVECTOR2( 0.0f, 1.0f ) },
-    };  
+     { DirectX::XMFLOAT3( -1.0f, 1.0f, -1.0f ), DirectX::XMFLOAT3( 0.0f, 1.0f, 0.0f ), DirectX::XMFLOAT2( 0.0f, 0.0f ) },
+     { DirectX::XMFLOAT3( 1.0f, 1.0f, -1.0f ),  DirectX::XMFLOAT3( 0.0f, 1.0f, 0.0f ), DirectX::XMFLOAT2( 1.0f, 0.0f ) },
+     { DirectX::XMFLOAT3( 1.0f, 1.0f, 1.0f ),   DirectX::XMFLOAT3( 0.0f, 1.0f, 0.0f ), DirectX::XMFLOAT2( 1.0f, 1.0f ) },
+     { DirectX::XMFLOAT3( -1.0f, 1.0f, 1.0f ),  DirectX::XMFLOAT3( 0.0f, 1.0f, 0.0f ), DirectX::XMFLOAT2( 0.0f, 1.0f ) },
+                                                
+     { DirectX::XMFLOAT3( -1.0f, -1.0f, -1.0f ),DirectX::XMFLOAT3( 0.0f, -1.0f, 0.0f ), DirectX::XMFLOAT2( 0.0f, 0.0f ) },
+     { DirectX::XMFLOAT3( 1.0f, -1.0f, -1.0f ), DirectX::XMFLOAT3( 0.0f, -1.0f, 0.0f ), DirectX::XMFLOAT2( 1.0f, 0.0f ) },
+     { DirectX::XMFLOAT3( 1.0f, -1.0f, 1.0f ),  DirectX::XMFLOAT3( 0.0f, -1.0f, 0.0f ), DirectX::XMFLOAT2( 1.0f, 1.0f ) },
+     { DirectX::XMFLOAT3( -1.0f, -1.0f, 1.0f ), DirectX::XMFLOAT3( 0.0f, -1.0f, 0.0f ), DirectX::XMFLOAT2( 0.0f, 1.0f ) },
+                                                
+     { DirectX::XMFLOAT3( -1.0f, -1.0f, 1.0f ), DirectX::XMFLOAT3( -1.0f, 0.0f, 0.0f ), DirectX::XMFLOAT2( 0.0f, 0.0f ) },
+     { DirectX::XMFLOAT3( -1.0f, -1.0f, -1.0f ),DirectX::XMFLOAT3( -1.0f, 0.0f, 0.0f ), DirectX::XMFLOAT2( 1.0f, 0.0f ) },
+     { DirectX::XMFLOAT3( -1.0f, 1.0f, -1.0f ), DirectX::XMFLOAT3( -1.0f, 0.0f, 0.0f ), DirectX::XMFLOAT2( 1.0f, 1.0f ) },
+     { DirectX::XMFLOAT3( -1.0f, 1.0f, 1.0f ),  DirectX::XMFLOAT3( -1.0f, 0.0f, 0.0f ), DirectX::XMFLOAT2( 0.0f, 1.0f ) },
+                                                
+     { DirectX::XMFLOAT3( 1.0f, -1.0f, 1.0f ),  DirectX::XMFLOAT3( 1.0f, 0.0f, 0.0f ), DirectX::XMFLOAT2( 0.0f, 0.0f ) },
+     { DirectX::XMFLOAT3( 1.0f, -1.0f, -1.0f ), DirectX::XMFLOAT3( 1.0f, 0.0f, 0.0f ), DirectX::XMFLOAT2( 1.0f, 0.0f ) },
+     { DirectX::XMFLOAT3( 1.0f, 1.0f, -1.0f ),  DirectX::XMFLOAT3( 1.0f, 0.0f, 0.0f ), DirectX::XMFLOAT2( 1.0f, 1.0f ) },
+     { DirectX::XMFLOAT3( 1.0f, 1.0f, 1.0f ),   DirectX::XMFLOAT3( 1.0f, 0.0f, 0.0f ), DirectX::XMFLOAT2( 0.0f, 1.0f ) },
+                                                
+     { DirectX::XMFLOAT3( -1.0f, -1.0f, -1.0f ),DirectX::XMFLOAT3( 0.0f, 0.0f, -1.0f ), DirectX::XMFLOAT2( 0.0f, 0.0f ) },
+     { DirectX::XMFLOAT3( 1.0f, -1.0f, -1.0f ), DirectX::XMFLOAT3( 0.0f, 0.0f, -1.0f ), DirectX::XMFLOAT2( 1.0f, 0.0f ) },
+     { DirectX::XMFLOAT3( 1.0f, 1.0f, -1.0f ),  DirectX::XMFLOAT3( 0.0f, 0.0f, -1.0f ), DirectX::XMFLOAT2( 1.0f, 1.0f ) },
+     { DirectX::XMFLOAT3( -1.0f, 1.0f, -1.0f ), DirectX::XMFLOAT3( 0.0f, 0.0f, -1.0f ), DirectX::XMFLOAT2( 0.0f, 1.0f ) },
+                                                
+     { DirectX::XMFLOAT3( -1.0f, -1.0f, 1.0f ), DirectX::XMFLOAT3( 0.0f, 0.0f, 1.0f ), DirectX::XMFLOAT2( 0.0f, 0.0f ) },
+     { DirectX::XMFLOAT3( 1.0f, -1.0f, 1.0f ),  DirectX::XMFLOAT3( 0.0f, 0.0f, 1.0f ), DirectX::XMFLOAT2( 1.0f, 0.0f ) },
+     { DirectX::XMFLOAT3( 1.0f, 1.0f, 1.0f ),   DirectX::XMFLOAT3( 0.0f, 0.0f, 1.0f ), DirectX::XMFLOAT2( 1.0f, 1.0f ) },
+     { DirectX::XMFLOAT3( -1.0f, 1.0f, 1.0f ),  DirectX::XMFLOAT3( 0.0f, 0.0f, 1.0f ), DirectX::XMFLOAT2( 0.0f, 1.0f ) },
+    };                                           
 
     //Vertex buffer desc
 
@@ -200,7 +206,7 @@ namespace gzEngineSDK {
     vertexBuffer = GraphicsManager::instance().createBuffer( bufferDesc, 
                                                              &initData );
 
-    //Sets the index buffer
+    //Sets the vertex buffer
     uint32 stride = sizeof( SimpleVertex );
     uint32 offset = 0;
     GraphicsManager::instance().setVertexBuffers( 0, 
@@ -234,7 +240,7 @@ namespace gzEngineSDK {
     //Index buffer desc
     Buffer * indexBuffer;
     memset( &initData, 0, sizeof( initData ) );
-    memset( &bufferDesc, 0, sizeof( bufferDesc ) );
+    //memset( &bufferDesc, 0, sizeof( bufferDesc ) );
     bufferDesc.Usage = USAGE_DEFAULT;
     bufferDesc.ByteWidth = sizeof( WORD ) * 36;
     bufferDesc.BindFlags = BIND_INDEX_BUFFER;
@@ -291,29 +297,29 @@ namespace gzEngineSDK {
     m_pSampler = GraphicsManager::instance().createSamplerState( sampDesc );
 
    //Initialize the matrices
-    g_World.Identity();
+    g_World = DirectX::XMMatrixIdentity();
 
     //initialize the view matrix
-    Eye = { 0.0f, 3.0f, -6.0f, 0.0f };
-    XVECTOR3 At = { 0.0f, 1.0f, 0.0f, 0.0f };
-    XVECTOR3 Up = { 0.0f, 1.0f, 0.0f, 0.0f };
-    XMatViewLookAtLH( g_View, Eye, At, Up );
+    Eye = DirectX::XMVectorSet( 0.0f, 3.0f, -10.0f, 0.0f );
+    DirectX::XMVECTOR At = DirectX::XMVectorSet( 0.0f, 1.0f, 0.0f, 0.0f );
+    DirectX::XMVECTOR Up = DirectX::XMVectorSet( 0.0f, 1.0f, 0.0f, 0.0f );
+    g_View = DirectX::XMMatrixLookAtLH( Eye, At, Up );
 
     CBNeverChanges cbNeverChanges;
-    XMatTranspose( g_View, g_View );
-    cbNeverChanges.mView = g_View;
+    cbNeverChanges.mView = DirectX::XMMatrixTranspose( g_View );
     GraphicsManager::instance().updateSubresource( constantNeverChanges, 
                                                    &cbNeverChanges );
 
     //initialize the prijection matrix
-    XMatPerspectiveLH( g_Projection, 
-                       0.785398163f, 
-                       m_windowWidth / (float)m_windowHeight, 
-                       0.01f, 
-                       100.0f );
+    g_Projection = DirectX::XMMatrixPerspectiveFovLH( 
+      0.785398163f,
+      m_windowWidth / ( FLOAT ) m_windowHeight,
+      0.001f,
+      500.0f );
+
     CBChangeOnResize cbChangesonResize;
-    XMatTranspose( g_Projection, g_Projection );
-    cbChangesonResize.mProjection = g_Projection;
+   
+    cbChangesonResize.mProjection = DirectX::XMMatrixTranspose( g_Projection );
     GraphicsManager::instance().updateSubresource( constantChangesonResize,
                                                    &cbChangesonResize );
 
@@ -336,11 +342,14 @@ namespace gzEngineSDK {
     }
     t = ( dwTimerCur - dwTimeStart ) / 1000.0f;
 
+
     //rotate mesh 
-    XMatRotationYLH( g_World, t );
+    g_World = DirectX::XMMatrixRotationY( t );
 
     //Clear back buffer
+    float ClearColor2[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
     float ClearColor[4] = { 1.0f, 0.7f, 0.0f, 1.0f };
+    GraphicsManager::instance().clearRenderTargetView( ClearColor2, m_TestRT );
     GraphicsManager::instance().clearRenderTargetView( ClearColor, m_pBackBuffer);
 
     //Clear depth Stencil
@@ -350,14 +359,13 @@ namespace gzEngineSDK {
                                                        m_pDepthStencilView );
 
     CBChangesEveryFrame cb;
-    XMatTranspose( g_World, g_World );
-    cb.mWorld = g_World;
-    cb.vMeshColor = { 1.0, 1.0, 1.0 };
-    cb.ViewPosition = Eye;
+    cb.mWorld = DirectX::XMMatrixTranspose( g_World );
+    cb.vMeshColor = { 0.7f, 0.7f, 0.7f, 1.0f };
+    cb.ViewPosition = DirectX::XMFLOAT4( Eye.m128_f32 );
     GraphicsManager::instance().updateSubresource( constantChangesEveryFrame,
                                                    &cb );
 
-    //Render the cube
+    //Sets the draw call
 
     GraphicsManager::instance().setVertexShader( m_pVertexShader );
     GraphicsManager::instance().setVSConstantBuffers( constantNeverChanges, 0, 1 );

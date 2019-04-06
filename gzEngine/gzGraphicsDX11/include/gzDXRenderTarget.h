@@ -29,7 +29,7 @@ class DXRenderTarget : public RenderTarget
   /************************************************************************/
   /* RenderTarget functions                                               */
   /************************************************************************/
-	
+
   /**
    * @brief Gets the RenderTarget interface
    */
@@ -48,6 +48,7 @@ class DXRenderTarget : public RenderTarget
    * @brief RenderTarget Interface
    */
   ID3D11RenderTargetView * m_prenderTargetView;
+
    
 };
 }

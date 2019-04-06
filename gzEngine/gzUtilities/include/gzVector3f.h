@@ -19,7 +19,7 @@ namespace gzEngineSDK {
     /**
      * @brief
      */
-    FORCEINLINE Vector3f() = default;
+    FORCEINLINE Vector3f();
 
     /**
      * @brief

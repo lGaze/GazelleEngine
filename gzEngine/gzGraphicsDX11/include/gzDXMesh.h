@@ -1,41 +1,37 @@
 /**************************************************************************/
-/* @filename gzRenderTarget.h
+/* @filename gzDXMesh.h
 /* @author Victor Flores 
-/* @date 2019/03/16
+/* @date 2019/04/05
 /* @brief 
 /**************************************************************************/
 
 #pragma once
-
-#include "gzPrerequisitesCore.h"
-
+#include "gzDXPrerequisites.h"
 
 namespace gzEngineSDK {
-class GZ_CORE_EXPORT RenderTarget
+class GZ_CORE_EXPORT DXMesh
 {
  public:
    
   /**
    * @brief default constructor
    */
-  RenderTarget();
+  DXMesh() = default;
 	
   /**
    * @brief default destructor
    */
-  virtual 
-  ~RenderTarget();
+  ~DXMesh() = default;
 	
   /************************************************************************/
-  /* RenderTarget functions                                               */
+  /* DXMesh functions                                                     */
   /************************************************************************/
-
-
+	
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 	
- private:
-
+ public:
+   
  };
 }

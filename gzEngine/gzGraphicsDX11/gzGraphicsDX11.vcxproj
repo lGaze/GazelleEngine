@@ -25,6 +25,7 @@
     <ClInclude Include="include\gzDXDeviceContext.h" />
     <ClInclude Include="include\gzDXGraphicsManager.h" />
     <ClInclude Include="include\gzDXInputLayout.h" />
+    <ClInclude Include="include\gzDXMesh.h" />
     <ClInclude Include="include\gzDXPixelShader.h" />
     <ClInclude Include="include\gzDXPrerequisites.h" />
     <ClInclude Include="include\gzDXRenderTarget.h" />
@@ -43,6 +44,7 @@
     <ClCompile Include="src\gzDXDeviceContext.cpp" />
     <ClCompile Include="src\gzDXGraphicsManager.cpp" />
     <ClCompile Include="src\gzDXInputLayout.cpp" />
+    <ClCompile Include="src\gzDXMesh.cpp" />
     <ClCompile Include="src\gzDXPixelShader.cpp" />
     <ClCompile Include="src\gzDXPlugin.cpp" />
     <ClCompile Include="src\gzDXRenderTarget.cpp" />

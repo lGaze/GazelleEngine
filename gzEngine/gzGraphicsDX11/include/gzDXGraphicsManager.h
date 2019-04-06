@@ -42,16 +42,11 @@ class DXGraphicsManager : public GraphicsManager
   createTexture2D( TEXTURE2D_DESCRIPTOR &textureInfo ) override;
 
 
-
-  virtual RenderTarget* 
-  createRenderTarget( Texture * texture ) override;
-
-
   /**
-   * @brief Creates a RenderTarget from back buffer
+   * @brief 
    */
   virtual RenderTarget* 
-  creteRenderTargetFromBackBuffer() override;
+  createRenderTarget( Texture * texture ) override;
 
 
   /**
@@ -249,6 +244,10 @@ class DXGraphicsManager : public GraphicsManager
   virtual Texture *
   CreateShaderResourceView( Texture * texture, 
                             SHADER_RESOURCE_VIEW_DESC & desc ) override;
+
+
+  virtual Texture * 
+  createTextureFromBackBuffer() override;
 
   /************************************************************************/
   /* Member declarations                                                  */

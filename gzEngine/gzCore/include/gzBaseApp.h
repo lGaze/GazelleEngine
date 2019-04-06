@@ -12,6 +12,7 @@
 #include <gzModule.h>
 #include <gzGraphicsManager.h>
 #include "IDVMath.h"
+#include <gzVector3f.h>
 
 
 namespace gzEngineSDK {
@@ -137,6 +138,11 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
+   RenderTarget * m_TestRT;
+
+   /**
+    * @brief 
+    */
    Depth * m_pDepthStencilView;
 
    /**
@@ -159,40 +165,48 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
     */
    Texture * textGorda;
 
+   /**
+    * @brief 
+    */
+   Texture * m_pBackBufferTexture;
 
  /************************************************************************/
  /*       Test                                                           */
  /************************************************************************/
 
+
    struct SimpleVertex
    {
-     XVECTOR3 Pos;
-     XVECTOR2 Tex;
-     XVECTOR3 Normal;
+     DirectX::XMFLOAT3 Pos;
+     DirectX::XMFLOAT3 Normal;
+     DirectX::XMFLOAT2 Tex;
    };
+
 
    struct CBNeverChanges
    {
-     XMATRIX44 mView;
+     DirectX::XMMATRIX mView;
    };
 
    struct CBChangeOnResize
    {
-     XMATRIX44 mProjection;
+     DirectX::XMMATRIX mProjection;
    };
 
    struct CBChangesEveryFrame
    {
-     XMATRIX44 mWorld;
-     XVECTOR3 vMeshColor;
-     XVECTOR3 ViewPosition;
+     DirectX::XMMATRIX mWorld;
+     DirectX::XMFLOAT4 vMeshColor;
+     DirectX::XMFLOAT4 ViewPosition;
    };
 
-   XMATRIX44 g_World;
-   XMATRIX44 g_View;
-   XMATRIX44 g_Projection;
+ 
 
-   XVECTOR3 Eye;
+   DirectX::XMMATRIX g_World;
+   DirectX::XMMATRIX g_View;
+   DirectX::XMMATRIX g_Projection;
+
+   DirectX::XMVECTOR Eye;
 
    Buffer * constantNeverChanges;
    Buffer * constantChangesonResize;

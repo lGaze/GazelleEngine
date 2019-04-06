@@ -38,6 +38,12 @@ struct SHADER_RESOURCE_VIEW_DESC
   uint32 ViewDimension;
 };
 
+struct RENDER_TARGET_VIEW_DESC
+{
+  uint32 Format;
+  uint32 ViewDimension;
+};
+
 struct VIEWPORT_DESCRIPTOR
 {
   float TopLeftX;

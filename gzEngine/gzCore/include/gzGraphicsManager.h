@@ -50,14 +50,6 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   virtual RenderTarget*
   createRenderTarget( Texture * texture ) = 0;
 
-
-  /**
-   * @brief 
-   */
-  virtual RenderTarget*
-  creteRenderTargetFromBackBuffer() = 0;
-
-
   /**
    * @brief 
    */
@@ -232,7 +224,6 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
                int32 BaseVertexLocation ) = 0;
 
 
-
   /**
    * @brief
    */
@@ -259,6 +250,11 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   CreateShaderResourceView(Texture * texture, 
                             SHADER_RESOURCE_VIEW_DESC & desc) = 0;
 
+  /**
+   * @brief 
+   */
+  virtual Texture *
+  createTextureFromBackBuffer() = 0;
 
   /************************************************************************/
   /* Member declarations                                                  */

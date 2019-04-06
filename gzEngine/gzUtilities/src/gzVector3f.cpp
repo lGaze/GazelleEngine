@@ -10,6 +10,7 @@
 
 namespace gzEngineSDK {
 
+  Vector3f::Vector3f() : x(0.0f), y(0.0f), z(0.0f) {}
   Vector3f::Vector3f(float X, float Y, float Z) : x(X), y(Y), z(Z) {}
 
   FORCEINLINE Vector3f

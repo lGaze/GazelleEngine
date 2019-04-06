@@ -62,34 +62,14 @@ namespace gzEngineSDK {
     return reinterpret_cast< Texture* >( m_ptexture );
   }
 
-
-  RenderTarget* 
-  DXGraphicsManager::creteRenderTargetFromBackBuffer()
-  {
-    m_prenderTarget = new DXRenderTarget();
-    m_ptexture = new DXTexture();
-    m_pswapChain->getBuffer( 
-      0,
-      __uuidof( ID3D11Texture2D ),                          
-      ( LPVOID* ) m_ptexture->getTextureInterface() );
-
-    m_pdevice->CreateRenderTargetView(
-      *m_ptexture->getTextureInterface(),
-      nullptr,
-      m_prenderTarget->getRenderTargetInterface() );
-
-    return reinterpret_cast< RenderTarget* >( m_prenderTarget );
-  }
-
-
   void 
   DXGraphicsManager::setRenderTargets( uint32 NumViews, 
-                                       RenderTarget * renderTarget,
+                                       RenderTarget * renderTargets,
                                        Depth * depth)
   {
 
     m_pdepth = reinterpret_cast< DXDepth* >( depth );
-    m_prenderTarget = reinterpret_cast< DXRenderTarget* > ( renderTarget );
+    m_prenderTarget = reinterpret_cast< DXRenderTarget* > ( renderTargets );
 
     m_pdeviceContext->SetRenderTargets(
       NumViews,
@@ -112,9 +92,13 @@ namespace gzEngineSDK {
   RenderTarget*
   DXGraphicsManager::createRenderTarget( Texture * texture )
   {
-    reinterpret_cast < DXTexture * > ( texture );
+    m_ptexture = reinterpret_cast < DXTexture * > ( texture );
+    m_prenderTarget = new DXRenderTarget();
 
-    //m_pdevice->CreateRenderTargetView()
+    m_pdevice->CreateRenderTargetView( 
+      *m_ptexture->getTextureInterface(),
+      nullptr,
+      m_prenderTarget->getRenderTargetInterface() );
     
     return reinterpret_cast< RenderTarget* > ( m_prenderTarget );
     
@@ -432,6 +416,18 @@ namespace gzEngineSDK {
       *m_ptexture->getTextureInterface(),
       m_ptexture->getShaderResourceDesc(),
       m_ptexture->getShaderResourceInterface() );
+
+    return reinterpret_cast< Texture* >( m_ptexture );
+  }
+
+  Texture * 
+  DXGraphicsManager::createTextureFromBackBuffer()
+  {
+    m_ptexture = new DXTexture();
+    m_pswapChain->getBuffer(
+      0,
+      __uuidof( ID3D11Texture2D ),
+      ( LPVOID* ) m_ptexture->getTextureInterface() );
 
     return reinterpret_cast< Texture* >( m_ptexture );
   }
