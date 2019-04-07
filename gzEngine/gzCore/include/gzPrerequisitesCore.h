@@ -23,6 +23,7 @@ namespace gzEngineSDK {
   class VertexShader;
   class PixelShader;
   class InputLayout;
+  class Mesh;
 
 }
 

@@ -25,7 +25,6 @@
     <ClInclude Include="include\gzDXDeviceContext.h" />
     <ClInclude Include="include\gzDXGraphicsManager.h" />
     <ClInclude Include="include\gzDXInputLayout.h" />
-    <ClInclude Include="include\gzDXMesh.h" />
     <ClInclude Include="include\gzDXPixelShader.h" />
     <ClInclude Include="include\gzDXPrerequisites.h" />
     <ClInclude Include="include\gzDXRenderTarget.h" />
@@ -44,7 +43,6 @@
     <ClCompile Include="src\gzDXDeviceContext.cpp" />
     <ClCompile Include="src\gzDXGraphicsManager.cpp" />
     <ClCompile Include="src\gzDXInputLayout.cpp" />
-    <ClCompile Include="src\gzDXMesh.cpp" />
     <ClCompile Include="src\gzDXPixelShader.cpp" />
     <ClCompile Include="src\gzDXPlugin.cpp" />
     <ClCompile Include="src\gzDXRenderTarget.cpp" />
@@ -132,7 +130,7 @@
       <ConformanceMode>false</ConformanceMode>
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./include/;$(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/;$(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -151,7 +149,7 @@
       <ConformanceMode>false</ConformanceMode>
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./include/;$(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/;$(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -172,7 +170,7 @@
       <ConformanceMode>false</ConformanceMode>
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./include/;$(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/;$(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -182,7 +180,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ImportLibrary>$(SolutionDir)lib/$(PlatformTarget)/$(TargetName).lib</ImportLibrary>
       <AdditionalLibraryDirectories>$(SolutionDir)lib/$(PlatformTarget)/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gzCore.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gzCore.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);C:\Development\assimp-4.1.0\bin\code\Debug\assimp-vc140-mt.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -195,7 +193,7 @@
       <ConformanceMode>false</ConformanceMode>
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./include/;$(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/;$(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -205,7 +203,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ImportLibrary>$(SolutionDir)lib/$(PlatformTarget)/$(TargetName).lib</ImportLibrary>
       <AdditionalLibraryDirectories>$(SolutionDir)lib/$(PlatformTarget)/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gzCore.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gzCore.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);C:\Development\assimp-4.1.0\bin\code\Debug\assimp-vc140-mt.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

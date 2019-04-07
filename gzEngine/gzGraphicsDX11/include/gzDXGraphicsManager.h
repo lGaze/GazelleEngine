@@ -245,9 +245,20 @@ class DXGraphicsManager : public GraphicsManager
   CreateShaderResourceView( Texture * texture, 
                             SHADER_RESOURCE_VIEW_DESC & desc ) override;
 
-
+  /**
+   * @brief 
+   */
   virtual Texture * 
   createTextureFromBackBuffer() override;
+
+  /**
+   * @brief 
+   */
+  virtual void
+  createAndsetVertexAndIndexBufferFromMesh( uint32 Numvetices,
+                                            VERTICES * vertexData,
+                                            uint32 NumIndices,
+                                            uint16 * indexData ) override;
 
   /************************************************************************/
   /* Member declarations                                                  */

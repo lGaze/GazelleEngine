@@ -8,8 +8,18 @@
 #pragma once
 
 #include "gzPrerequisitesCore.h"
+#include <DirectXMath.h>
+
 
 namespace gzEngineSDK {
+
+//TODO: 
+struct VERTICES
+{
+  DirectX::XMFLOAT3 position;
+  DirectX::XMFLOAT3 normals;
+  DirectX::XMFLOAT2 uv;
+};
 
 struct TEXTURE2D_DESCRIPTOR
 {
@@ -104,6 +114,7 @@ enum TEXTURE_FORMATS
 {
   FORMAT_UNKNOWN           = 0,
   FORMAT_R32G32B32_FLOAT   = 6,
+  FORMAT_R16G16B16A16_FLOAT = 10,
   FORMAT_R32G32_FLOAT      = 16,
   FORMAT_D24_UNORM_S8_UINT = 45,
   FORMAT_R16_UINT          = 57,
@@ -120,14 +131,14 @@ enum USAGES
 
 enum BIND_FLAGS
 {
-  BIND_VERTEX_BUFFER    = 1,
-  BIND_INDEX_BUFFER     = 2,
-  BIND_CONSTANT_BUFFER  = 4,
-  BIND_SHADER_RESOURCE  = 8,
-  BIND_STREAM_OUTPUT    = 16,
-  BIND_RENDER_TARGET    = 32,
-  BIND_DEPTH_STENCIL    = 64,
-  BIND_UNORDERED_ACCESS = 128
+  BIND_VERTEX_BUFFER    = 0x1L, 
+  BIND_INDEX_BUFFER     = 0x2L,
+  BIND_CONSTANT_BUFFER  = 0x4L,
+  BIND_SHADER_RESOURCE  = 0x8L,
+  BIND_STREAM_OUTPUT    = 0x10L,
+  BIND_RENDER_TARGET    = 0x20L,
+  BIND_DEPTH_STENCIL    = 0x40L,
+  BIND_UNORDERED_ACCESS = 0x80L
 
 };
 
@@ -214,11 +225,6 @@ enum INPUT_CLASSIFICATION
 {
   INPUT_PER_VERTEX_DATA   = 0,
   INPUT_PER_INSTANCE_DATA = 1
-};
-
-enum MyEnum
-{
-
 };
 
 }

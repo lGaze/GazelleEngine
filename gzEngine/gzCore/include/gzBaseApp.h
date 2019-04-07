@@ -11,8 +11,6 @@
 #include "gzWindow.h"
 #include <gzModule.h>
 #include <gzGraphicsManager.h>
-#include "IDVMath.h"
-#include <gzVector3f.h>
 
 
 namespace gzEngineSDK {
@@ -133,12 +131,22 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
-   RenderTarget * m_pBackBuffer;
+   RenderTarget * m_pBackBuffer;  
+   
+   /**
+    * @brief 
+    */
+   RenderTarget * m_pAlbedoRT;
 
    /**
     * @brief 
     */
-   RenderTarget * m_TestRT;
+   RenderTarget * m_pLuminanceRT;
+
+   /**
+    * @brief 
+    */
+   Texture * renderTarget;
 
    /**
     * @brief 
@@ -153,12 +161,12 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
-   VertexShader * m_pVertexShader;
+   VertexShader * m_pLightVertexShader;
 
    /**
     * @brief 
     */
-   PixelShader * m_pPixelShader;
+   PixelShader * m_pLightPixelShader;
 
    /**
     * @brief 
@@ -168,7 +176,29 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
-   Texture * m_pBackBufferTexture;
+   Texture * m_pBackBufferTex;
+
+   /**
+    * @brief 
+    */
+   Texture * m_pAlbedoTexture;
+
+   /**
+    * @brief 
+    */
+   Texture * m_pLuminanceTexture;
+
+   /**
+    * @brief 
+    */
+   Mesh * quad;
+
+   /**
+    * @brief 
+    */
+   Mesh * cube;
+
+
 
  /************************************************************************/
  /*       Test                                                           */
@@ -203,6 +233,9 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
  
 
    DirectX::XMMATRIX g_World;
+   DirectX::XMMATRIX g_World2;
+   DirectX::XMMATRIX g_World3;
+
    DirectX::XMMATRIX g_View;
    DirectX::XMMATRIX g_Projection;
 

@@ -20,6 +20,8 @@
 #include "gzDXBuffer.h"
 #include "gzDXShader.h"
 
+
+
 namespace gzEngineSDK {
 
   DXGraphicsManager::DXGraphicsManager() : 
@@ -432,4 +434,68 @@ namespace gzEngineSDK {
     return reinterpret_cast< Texture* >( m_ptexture );
   }
 
+
+  void
+  DXGraphicsManager::createAndsetVertexAndIndexBufferFromMesh( 
+    uint32 Numvetices, 
+    VERTICES * vertexData, 
+    uint32 NumIndices, 
+    uint16 * indexData )
+  {
+
+    DXBuffer * tempVBuffer = new DXBuffer();
+    DXBuffer * tempIBuffer = new DXBuffer();
+
+    //Desc Vertex Buffer
+    BUFFER_DESCRIPTOR BufferDesc;
+    memset( &BufferDesc, 0, sizeof( BufferDesc ) );
+    BufferDesc.Usage = USAGE_DEFAULT;
+    BufferDesc.ByteWidth = Numvetices * sizeof( VERTICES );
+    BufferDesc.BindFlags = BIND_VERTEX_BUFFER;
+
+    tempVBuffer->CreateBufferDesc( BufferDesc );
+
+    //Init Data Vertex
+    SUBRESOUCE_DATA initData;
+    memset( &initData, 0, sizeof( initData ) );
+    initData.pSysMem = vertexData;
+    
+    //Create Vertex Buffer
+    m_pdevice->CreateBuffer(
+      &tempVBuffer->getBufferDesc(),
+      reinterpret_cast< D3D11_SUBRESOURCE_DATA* >( &initData ),
+      tempVBuffer->getBufferInterface() );
+
+    //Set Vertex Buffer
+    uint32 stride = sizeof( VERTICES );
+    uint32 offset = 0;
+    m_pdeviceContext->SetVertexBuffers( 0,
+                                        1,
+                                        tempVBuffer->getBufferInterface(),
+                                        &stride,
+                                        &offset );
+
+    //Desc Index Buffer
+    BufferDesc.Usage = USAGE_DEFAULT;
+    BufferDesc.ByteWidth = NumIndices * sizeof( unsigned short );
+    BufferDesc.BindFlags = BIND_INDEX_BUFFER;
+
+
+    tempIBuffer->CreateBufferDesc( BufferDesc );
+
+    //Init Data index
+    initData.pSysMem = indexData;
+
+    //Creates index buffer
+    m_pdevice->CreateBuffer( 
+      &tempIBuffer->getBufferDesc(),
+      reinterpret_cast< D3D11_SUBRESOURCE_DATA* >( &initData ),
+      tempIBuffer->getBufferInterface() );
+
+    //Sets index buffer
+    m_pdeviceContext->SetIndexBuffer( *tempIBuffer->getBufferInterface(), 
+                                      DXGI_FORMAT_R16_UINT, 
+                                      0 );
+
+  }
 }

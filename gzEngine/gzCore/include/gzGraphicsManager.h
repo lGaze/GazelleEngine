@@ -9,9 +9,6 @@
 #include "gzPrerequisitesCore.h"
 #include <gzModule.h>
 
-
-
-
 namespace gzEngineSDK {
 class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
 {
@@ -90,9 +87,12 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
 
   /**
    * @brief 
-   * /
-  virtual bool
-  createVertexAndIndexBufferFromFile( std::string file ) = 0;
+   */
+  virtual void
+  createAndsetVertexAndIndexBufferFromMesh( uint32 Numvetices,
+                                            VERTICES * vertexData,
+                                            uint32 NumIndices,
+                                            uint16 * indexData ) = 0;
 
   /**
    * @brief 

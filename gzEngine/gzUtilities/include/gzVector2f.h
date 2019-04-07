@@ -18,7 +18,7 @@ namespace gzEngineSDK {
      /**
       * @brief 
       */
-    FORCEINLINE Vector2f() = default;
+    FORCEINLINE Vector2f();
 
     /**
      * @brief 

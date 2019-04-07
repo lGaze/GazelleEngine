@@ -8,6 +8,7 @@
 #include "gzVector2f.h"
 
 namespace gzEngineSDK {
+  Vector2f::Vector2f() : x(0), y(0) { }
 
   Vector2f::Vector2f(float X, float Y) : x(X), y(Y) {}
 

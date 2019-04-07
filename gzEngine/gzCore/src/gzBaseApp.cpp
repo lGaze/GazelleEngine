@@ -6,6 +6,8 @@
 /**************************************************************************/
 
 #include "gzBaseApp.h"
+#include "gzMesh.h"
+
 
 namespace gzEngineSDK {
 
@@ -85,17 +87,44 @@ namespace gzEngineSDK {
       m_windowWidth, 
       m_windowHeight );
 
-    //Creates the Render Target texture
-    m_pBackBufferTexture = 
+
+    //Creates the Backbuffer texture
+    m_pBackBufferTex =
       GraphicsManager::instance().createTextureFromBackBuffer();
 
     //Creates the render target 
     m_pBackBuffer = 
-      GraphicsManager::instance().createRenderTarget(m_pBackBufferTexture);
+      GraphicsManager::instance().createRenderTarget(m_pBackBufferTex);
 
-    m_TestRT = 
-      GraphicsManager::instance().createRenderTarget(m_pBackBufferTexture);
 
+    //Albedo Texture
+    TEXTURE2D_DESCRIPTOR renderTexDesc;
+    memset( &renderTexDesc, 0, sizeof( renderTexDesc ) );
+    renderTexDesc.Height = m_windowHeight;
+    renderTexDesc.Width = m_windowWidth;
+    renderTexDesc.MipLevels = 4;
+    renderTexDesc.ArraySize = 1;
+    renderTexDesc.Format = FORMAT_R16G16B16A16_FLOAT;
+    renderTexDesc.Usage = USAGE_DEFAULT;
+    renderTexDesc.BindFlags = BIND_RENDER_TARGET | BIND_SHADER_RESOURCE;
+    renderTexDesc.CPUAccessFlags = 0;
+    renderTexDesc.MiscFlags = 0;
+
+    m_pAlbedoTexture =
+      GraphicsManager::instance().createTexture2D( renderTexDesc );
+
+    //AlbedoRT
+    m_pAlbedoRT = GraphicsManager::instance().createRenderTarget( m_pAlbedoTexture );
+
+
+    //Luminance Texture
+    m_pLuminanceTexture = 
+      GraphicsManager::instance().createTexture2D( renderTexDesc );
+
+    //LuminanceRT
+    m_pLuminanceRT = 
+      GraphicsManager::instance().createRenderTarget( m_pLuminanceTexture );
+   
 
     //Creates the Depth descriptor
     TEXTURE2D_DESCRIPTOR depthTextureDesc;
@@ -133,7 +162,7 @@ namespace gzEngineSDK {
     GraphicsManager::instance().setViewports( 1, vp );
 
     //Compile and create the vertex shader
-    m_pVertexShader = GraphicsManager::instance().CreateVertexShader( 
+    m_pLightVertexShader = GraphicsManager::instance().CreateVertexShader( 
       L"Shaders\\Phong.fx",
       "VS",
       "vs_4_0" );
@@ -142,122 +171,44 @@ namespace gzEngineSDK {
     //Create the InputLayout with the blob
     InputLayout * inputLayout;
     inputLayout = GraphicsManager::instance().createInputLayout(
-      m_pVertexShader);
+      m_pLightVertexShader);
 
     //Set the InputLayout
     GraphicsManager::instance().setInputLayout( inputLayout );
 
     //Compile and Create the pixel shader
-    m_pPixelShader = GraphicsManager::instance().createPixelShader(
+    m_pLightPixelShader = GraphicsManager::instance().createPixelShader(
       L"Shaders\\Phong.fx",
       "PS",
       "ps_4_0" );
 
 
 
-    // Create vertex buffer
-    SimpleVertex vertices[] =
-    {
-     { DirectX::XMFLOAT3( -1.0f, 1.0f, -1.0f ), DirectX::XMFLOAT3( 0.0f, 1.0f, 0.0f ), DirectX::XMFLOAT2( 0.0f, 0.0f ) },
-     { DirectX::XMFLOAT3( 1.0f, 1.0f, -1.0f ),  DirectX::XMFLOAT3( 0.0f, 1.0f, 0.0f ), DirectX::XMFLOAT2( 1.0f, 0.0f ) },
-     { DirectX::XMFLOAT3( 1.0f, 1.0f, 1.0f ),   DirectX::XMFLOAT3( 0.0f, 1.0f, 0.0f ), DirectX::XMFLOAT2( 1.0f, 1.0f ) },
-     { DirectX::XMFLOAT3( -1.0f, 1.0f, 1.0f ),  DirectX::XMFLOAT3( 0.0f, 1.0f, 0.0f ), DirectX::XMFLOAT2( 0.0f, 1.0f ) },
-                                                
-     { DirectX::XMFLOAT3( -1.0f, -1.0f, -1.0f ),DirectX::XMFLOAT3( 0.0f, -1.0f, 0.0f ), DirectX::XMFLOAT2( 0.0f, 0.0f ) },
-     { DirectX::XMFLOAT3( 1.0f, -1.0f, -1.0f ), DirectX::XMFLOAT3( 0.0f, -1.0f, 0.0f ), DirectX::XMFLOAT2( 1.0f, 0.0f ) },
-     { DirectX::XMFLOAT3( 1.0f, -1.0f, 1.0f ),  DirectX::XMFLOAT3( 0.0f, -1.0f, 0.0f ), DirectX::XMFLOAT2( 1.0f, 1.0f ) },
-     { DirectX::XMFLOAT3( -1.0f, -1.0f, 1.0f ), DirectX::XMFLOAT3( 0.0f, -1.0f, 0.0f ), DirectX::XMFLOAT2( 0.0f, 1.0f ) },
-                                                
-     { DirectX::XMFLOAT3( -1.0f, -1.0f, 1.0f ), DirectX::XMFLOAT3( -1.0f, 0.0f, 0.0f ), DirectX::XMFLOAT2( 0.0f, 0.0f ) },
-     { DirectX::XMFLOAT3( -1.0f, -1.0f, -1.0f ),DirectX::XMFLOAT3( -1.0f, 0.0f, 0.0f ), DirectX::XMFLOAT2( 1.0f, 0.0f ) },
-     { DirectX::XMFLOAT3( -1.0f, 1.0f, -1.0f ), DirectX::XMFLOAT3( -1.0f, 0.0f, 0.0f ), DirectX::XMFLOAT2( 1.0f, 1.0f ) },
-     { DirectX::XMFLOAT3( -1.0f, 1.0f, 1.0f ),  DirectX::XMFLOAT3( -1.0f, 0.0f, 0.0f ), DirectX::XMFLOAT2( 0.0f, 1.0f ) },
-                                                
-     { DirectX::XMFLOAT3( 1.0f, -1.0f, 1.0f ),  DirectX::XMFLOAT3( 1.0f, 0.0f, 0.0f ), DirectX::XMFLOAT2( 0.0f, 0.0f ) },
-     { DirectX::XMFLOAT3( 1.0f, -1.0f, -1.0f ), DirectX::XMFLOAT3( 1.0f, 0.0f, 0.0f ), DirectX::XMFLOAT2( 1.0f, 0.0f ) },
-     { DirectX::XMFLOAT3( 1.0f, 1.0f, -1.0f ),  DirectX::XMFLOAT3( 1.0f, 0.0f, 0.0f ), DirectX::XMFLOAT2( 1.0f, 1.0f ) },
-     { DirectX::XMFLOAT3( 1.0f, 1.0f, 1.0f ),   DirectX::XMFLOAT3( 1.0f, 0.0f, 0.0f ), DirectX::XMFLOAT2( 0.0f, 1.0f ) },
-                                                
-     { DirectX::XMFLOAT3( -1.0f, -1.0f, -1.0f ),DirectX::XMFLOAT3( 0.0f, 0.0f, -1.0f ), DirectX::XMFLOAT2( 0.0f, 0.0f ) },
-     { DirectX::XMFLOAT3( 1.0f, -1.0f, -1.0f ), DirectX::XMFLOAT3( 0.0f, 0.0f, -1.0f ), DirectX::XMFLOAT2( 1.0f, 0.0f ) },
-     { DirectX::XMFLOAT3( 1.0f, 1.0f, -1.0f ),  DirectX::XMFLOAT3( 0.0f, 0.0f, -1.0f ), DirectX::XMFLOAT2( 1.0f, 1.0f ) },
-     { DirectX::XMFLOAT3( -1.0f, 1.0f, -1.0f ), DirectX::XMFLOAT3( 0.0f, 0.0f, -1.0f ), DirectX::XMFLOAT2( 0.0f, 1.0f ) },
-                                                
-     { DirectX::XMFLOAT3( -1.0f, -1.0f, 1.0f ), DirectX::XMFLOAT3( 0.0f, 0.0f, 1.0f ), DirectX::XMFLOAT2( 0.0f, 0.0f ) },
-     { DirectX::XMFLOAT3( 1.0f, -1.0f, 1.0f ),  DirectX::XMFLOAT3( 0.0f, 0.0f, 1.0f ), DirectX::XMFLOAT2( 1.0f, 0.0f ) },
-     { DirectX::XMFLOAT3( 1.0f, 1.0f, 1.0f ),   DirectX::XMFLOAT3( 0.0f, 0.0f, 1.0f ), DirectX::XMFLOAT2( 1.0f, 1.0f ) },
-     { DirectX::XMFLOAT3( -1.0f, 1.0f, 1.0f ),  DirectX::XMFLOAT3( 0.0f, 0.0f, 1.0f ), DirectX::XMFLOAT2( 0.0f, 1.0f ) },
-    };                                           
 
-    //Vertex buffer desc
+    //Quad Aligned
+    quad = new Mesh();
+    quad->loadModel( "Meshes\\QuadPerron.obj" );
+    GraphicsManager::instance().createAndsetVertexAndIndexBufferFromMesh(
+      quad->getNumVertices(),
+      quad->getVertexData(),
+      quad->getNumIndices(),
+      quad->getIndexData() );
 
-    Buffer * vertexBuffer;
-    SUBRESOUCE_DATA initData;
-    memset( &initData, 0, sizeof( initData ) );
-    BUFFER_DESCRIPTOR bufferDesc;
-    memset( &bufferDesc, 0, sizeof( bufferDesc ) );
-    bufferDesc.Usage = USAGE_DEFAULT;
-    bufferDesc.ByteWidth = sizeof( SimpleVertex ) * 24;
-    bufferDesc.BindFlags = BIND_VERTEX_BUFFER;
-    bufferDesc.CPUAccessFlags = 0;
-
-    initData.pSysMem = vertices;
-
-    vertexBuffer = GraphicsManager::instance().createBuffer( bufferDesc, 
-                                                             &initData );
-
-    //Sets the vertex buffer
-    uint32 stride = sizeof( SimpleVertex );
-    uint32 offset = 0;
-    GraphicsManager::instance().setVertexBuffers( 0, 
-                                                  1, 
-                                                  vertexBuffer, 
-                                                  &stride, 
-                                                  &offset );
-
-    //Create index buffer       
-    WORD indices[] =
-    {
-        3,1,0,
-        2,1,3,
-
-        6,4,5,
-        7,4,6,
-
-        11,9,8,
-        10,9,11,
-
-        14,12,13,
-        15,12,14,
-
-        19,17,16,
-        18,17,19,
-
-        22,20,21,
-        23,20,22
-    };
-
-    //Index buffer desc
-    Buffer * indexBuffer;
-    memset( &initData, 0, sizeof( initData ) );
-    //memset( &bufferDesc, 0, sizeof( bufferDesc ) );
-    bufferDesc.Usage = USAGE_DEFAULT;
-    bufferDesc.ByteWidth = sizeof( WORD ) * 36;
-    bufferDesc.BindFlags = BIND_INDEX_BUFFER;
-    bufferDesc.CPUAccessFlags = 0;
-    initData.pSysMem = indices;
-    indexBuffer = 
-      GraphicsManager::instance().createBuffer( bufferDesc, &initData );
-
-    //Sets the index buffer
-    GraphicsManager::instance().setIndexBuffer( FORMAT_R16_UINT, 
-                                                indexBuffer, 
-                                                0 );
+    //cube
+    cube = new Mesh();
+    cube->loadModel( "Meshes\\TestBox.obj" );
+    GraphicsManager::instance().createAndsetVertexAndIndexBufferFromMesh(
+      cube->getNumVertices(),
+      cube->getVertexData(),
+      cube->getNumIndices(),
+      cube->getIndexData() );
 
     //Sets primitive topology
     GraphicsManager::instance().setPrimitiveTopology( 4 );
    
     //Create the constant buffers desc
+    BUFFER_DESCRIPTOR bufferDesc;
+    memset( &bufferDesc, 0, sizeof( bufferDesc ) );
     bufferDesc.Usage = USAGE_DEFAULT;
     bufferDesc.ByteWidth = sizeof( CBNeverChanges );
     bufferDesc.BindFlags = BIND_CONSTANT_BUFFER;
@@ -344,13 +295,26 @@ namespace gzEngineSDK {
 
 
     //rotate mesh 
-    g_World = DirectX::XMMatrixRotationY( t );
+   // g_World = DirectX::XMMatrixRotationY( t );
+
+
+
+   
 
     //Clear back buffer
-    float ClearColor2[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
-    float ClearColor[4] = { 1.0f, 0.7f, 0.0f, 1.0f };
-    GraphicsManager::instance().clearRenderTargetView( ClearColor2, m_TestRT );
-    GraphicsManager::instance().clearRenderTargetView( ClearColor, m_pBackBuffer);
+    float ClearColor2[4] = { 0.0f, 0.0f, 1.0f, 0.0f }; //Azul
+    float ClearColor[4] = { 1.0f, 0.0f, 1.0f, 1.0f }; //Rosa
+    float ClearColor3[4] = { 1.0f, 0.0f, 0.0f, 1.0f }; //Rojo
+    GraphicsManager::instance().clearRenderTargetView( ClearColor, 
+                                                       m_pBackBuffer);
+
+    GraphicsManager::instance().clearRenderTargetView( ClearColor2, 
+                                                       m_pAlbedoRT );    
+
+    GraphicsManager::instance().clearRenderTargetView( ClearColor3, 
+                                                       m_pLuminanceRT );
+
+    
 
     //Clear depth Stencil
     GraphicsManager::instance().clearDepthStencilView( CLEAR_DEPTH, 
@@ -365,19 +329,35 @@ namespace gzEngineSDK {
     GraphicsManager::instance().updateSubresource( constantChangesEveryFrame,
                                                    &cb );
 
-    //Sets the draw call
+    
 
-    GraphicsManager::instance().setVertexShader( m_pVertexShader );
+
+    //Main pass
+
+    GraphicsManager::instance().setVertexShader( m_pLightVertexShader );
     GraphicsManager::instance().setVSConstantBuffers( constantNeverChanges, 0, 1 );
     GraphicsManager::instance().setVSConstantBuffers( constantChangesonResize, 1, 1 );
     GraphicsManager::instance().setVSConstantBuffers( constantChangesEveryFrame, 2, 1 );
-    GraphicsManager::instance().setPixelShader( m_pPixelShader );
+    GraphicsManager::instance().setPixelShader( m_pLightPixelShader );
     GraphicsManager::instance().setPSConstantBuffers( constantChangesEveryFrame, 2, 1 );
     GraphicsManager::instance().setShaderResources( textGorda, 0, 1 );
     GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
-    GraphicsManager::instance().drawIndexed( 36, 0, 0 );
+
+    GraphicsManager::instance().setRenderTargets( 1, m_pAlbedoRT,
+                                                  m_pDepthStencilView );
+
+    GraphicsManager::instance().drawIndexed( quad->getNumIndices(), 0, 0 );
+    
+
+    GraphicsManager::instance().setRenderTargets( 0, m_pLuminanceRT, 
+                                                  m_pDepthStencilView );
+
+    GraphicsManager::instance().setShaderResources( m_pAlbedoTexture, 0, 1 );
+
+    GraphicsManager::instance().drawIndexed( quad->getNumIndices(), 0, 0 );
 
 
+   
     GraphicsManager::instance().present( 0, 0 );
   }
 
