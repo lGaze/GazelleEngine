@@ -258,7 +258,22 @@ class DXGraphicsManager : public GraphicsManager
   createAndsetVertexAndIndexBufferFromMesh( uint32 Numvetices,
                                             VERTICES * vertexData,
                                             uint32 NumIndices,
-                                            uint16 * indexData ) override;
+                                            uint16 * indexData,   
+                                            Buffer ** Vbuffer,
+                                            Buffer ** Ibuffer ) override;
+
+  /**
+   * @brief 
+   */
+  virtual 
+  RasterizerState * createRasterizerState(RASTERIZER_DESCRIPTOR desc) override;
+
+
+  /**
+   * @brief 
+   */
+  virtual void
+  setRasterizerState( RasterizerState * rasterizerState ) override;
 
   /************************************************************************/
   /* Member declarations                                                  */
@@ -330,6 +345,11 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   DXBuffer * m_pBuffer;
+
+  /**
+   * @brief 
+   */
+  DXRasterizerState * m_pRasterizerState;
 
  };
 }

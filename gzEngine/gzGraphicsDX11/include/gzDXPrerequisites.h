@@ -31,6 +31,7 @@ namespace gzEngineSDK {
   class DXShader;
   class DXViewPort;
   class DXSamplerState;
+  class DXRasterizerState;
 }
 
 /*

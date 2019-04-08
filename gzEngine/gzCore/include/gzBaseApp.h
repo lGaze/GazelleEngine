@@ -166,7 +166,17 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
+   VertexShader * m_pLuminanceVertexShader;
+
+   /**
+    * @brief 
+    */
    PixelShader * m_pLightPixelShader;
+
+   /**
+    * @brief 
+    */
+   PixelShader * m_pLuminancePixelShader;
 
    /**
     * @brief 
@@ -196,9 +206,42 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
-   Mesh * cube;
+   Mesh * dwarf;
 
+   /**
+    * @brief Input layout for luminance
+    */
+   InputLayout * luminanceInputLayout;
 
+   /**
+    * @brief InputL layout for light
+    */
+   InputLayout * inputLayout;
+
+   /**
+    * @brief 
+    */
+   Buffer * vDwarfBuffer;
+
+   /**
+    * @brief 
+    */
+   Buffer * iDwarfBuffer;
+
+   /**
+    * @brief 
+    */
+   Buffer * vQuadBuffer;
+
+   /**
+    * @brief 
+    */
+   Buffer * iQuadBuffer;
+
+   /**
+    * @brief 
+    */
+   RasterizerState * m_RasterizerState;
 
  /************************************************************************/
  /*       Test                                                           */

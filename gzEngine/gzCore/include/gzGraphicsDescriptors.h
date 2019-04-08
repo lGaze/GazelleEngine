@@ -13,7 +13,7 @@
 
 namespace gzEngineSDK {
 
-//TODO: 
+//TODO: fix this 
 struct VERTICES
 {
   DirectX::XMFLOAT3 position;
@@ -108,6 +108,35 @@ struct INPUT_LAYOUT_DESCRIPTOR
   uint32 InputSlotClass;
   uint32 InstanceDataStepRate;
 
+};
+
+struct RASTERIZER_DESCRIPTOR
+{
+  int32 FillMode;
+  int32 CullMode;
+  bool FrontCounterClockWise;
+  int32 DepthBias;
+  float DepthBiasClamp;
+  float SlopeScaledDepthBias;
+  bool  DepthClipEnable;
+  bool  ScissorEnable;
+  bool  MultisampleEnable;
+  bool  AntialiasedLineEnable;
+
+};
+
+
+enum CULL_MODE
+{
+  CULL_NONE = 1,
+  CULL_FRONT = 2,
+  CULL_BACK = 3
+};
+
+enum FILL_MODE
+{
+  FILL_WIREFRAME = 2,
+  FILL_SOLID = 3
 };
 
 enum TEXTURE_FORMATS

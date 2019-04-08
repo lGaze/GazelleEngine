@@ -92,7 +92,9 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   createAndsetVertexAndIndexBufferFromMesh( uint32 Numvetices,
                                             VERTICES * vertexData,
                                             uint32 NumIndices,
-                                            uint16 * indexData ) = 0;
+                                            uint16 * indexData,
+                                            Buffer ** Vbuffer,
+                                            Buffer ** Ibuffer) = 0;
 
   /**
    * @brief 
@@ -255,6 +257,18 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    */
   virtual Texture *
   createTextureFromBackBuffer() = 0;
+
+  /**
+   * @brief 
+   */
+  virtual RasterizerState *
+  createRasterizerState(RASTERIZER_DESCRIPTOR desc) = 0;
+
+  /**
+   * @brief 
+   */
+  virtual void
+  setRasterizerState( RasterizerState * rasterizerState ) = 0;
 
   /************************************************************************/
   /* Member declarations                                                  */

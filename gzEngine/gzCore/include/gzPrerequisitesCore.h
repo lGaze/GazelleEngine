@@ -24,6 +24,7 @@ namespace gzEngineSDK {
   class PixelShader;
   class InputLayout;
   class Mesh;
+  class RasterizerState;
 
 }
 

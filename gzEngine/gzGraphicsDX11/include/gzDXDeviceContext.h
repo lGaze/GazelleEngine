@@ -158,6 +158,12 @@ class DeviceContext
                 INT BaseVertexLocation );
 
   /**
+   * @brief 
+   */
+  void
+  SetRasterizerState( ID3D11RasterizerState* RasterizerState );
+
+  /**
    * @brief Gets the DeviceContext Interface
    */
   FORCEINLINE ID3D11DeviceContext**

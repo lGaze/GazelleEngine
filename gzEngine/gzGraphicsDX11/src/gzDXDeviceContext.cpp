@@ -171,4 +171,10 @@ namespace gzEngineSDK {
                                    StartIndexLocation,
                                    BaseVertexLocation );
   }
+
+  void 
+  DeviceContext::SetRasterizerState(ID3D11RasterizerState* RasterizerState)
+  {
+    m_pDeviceContext->RSSetState( RasterizerState );
+  }
 }

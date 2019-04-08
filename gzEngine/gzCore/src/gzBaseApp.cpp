@@ -161,7 +161,7 @@ namespace gzEngineSDK {
     //Sets the Viewport
     GraphicsManager::instance().setViewports( 1, vp );
 
-    //Compile and create the vertex shader
+    //Compile and create the vertex shader for light
     m_pLightVertexShader = GraphicsManager::instance().CreateVertexShader( 
       L"Shaders\\Phong.fx",
       "VS",
@@ -169,19 +169,33 @@ namespace gzEngineSDK {
 
 
     //Create the InputLayout with the blob
-    InputLayout * inputLayout;
     inputLayout = GraphicsManager::instance().createInputLayout(
       m_pLightVertexShader);
 
-    //Set the InputLayout
-    GraphicsManager::instance().setInputLayout( inputLayout );
-
-    //Compile and Create the pixel shader
+    //Compile and Create the pixel shader for light
     m_pLightPixelShader = GraphicsManager::instance().createPixelShader(
       L"Shaders\\Phong.fx",
       "PS",
       "ps_4_0" );
 
+
+
+    //Compile and create the vertex shader for luminance
+    m_pLuminanceVertexShader = GraphicsManager::instance().CreateVertexShader(
+      L"Shaders\\Luminance.fx",
+      "VS",
+      "vs_4_0" );
+
+
+    //Create the InputLayout with the blob
+    luminanceInputLayout = GraphicsManager::instance().createInputLayout(
+      m_pLuminanceVertexShader );
+
+    //Compile and Create the pixel shader for luminance
+    m_pLuminancePixelShader = GraphicsManager::instance().createPixelShader(
+      L"Shaders\\Luminance.fx",
+      "PS",
+      "ps_4_0" );
 
 
 
@@ -192,16 +206,32 @@ namespace gzEngineSDK {
       quad->getNumVertices(),
       quad->getVertexData(),
       quad->getNumIndices(),
-      quad->getIndexData() );
+      quad->getIndexData(),
+      &vQuadBuffer,
+      &iQuadBuffer);
 
-    //cube
-    cube = new Mesh();
-    cube->loadModel( "Meshes\\TestBox.obj" );
+
+
+    //Dwarf
+    dwarf = new Mesh();
+    dwarf->loadModel( "Meshes\\Dwarf\\dwarf.x" );
     GraphicsManager::instance().createAndsetVertexAndIndexBufferFromMesh(
-      cube->getNumVertices(),
-      cube->getVertexData(),
-      cube->getNumIndices(),
-      cube->getIndexData() );
+      dwarf->getNumVertices(),
+      dwarf->getVertexData(),
+      dwarf->getNumIndices(),
+      dwarf->getIndexData(),
+      &vDwarfBuffer,
+      &iDwarfBuffer);
+
+    //Create RasterizerState desc
+    RASTERIZER_DESCRIPTOR rasterizerDesc;
+    memset( &rasterizerDesc, 0, sizeof( rasterizerDesc ) );
+    rasterizerDesc.CullMode = CULL_NONE;
+    rasterizerDesc.FillMode = FILL_SOLID;
+
+    //Create RasterizerState
+    m_RasterizerState = 
+      GraphicsManager::instance().createRasterizerState(rasterizerDesc);
 
     //Sets primitive topology
     GraphicsManager::instance().setPrimitiveTopology( 4 );
@@ -231,9 +261,13 @@ namespace gzEngineSDK {
 
     //Load and create shader resource view
     textGorda = GraphicsManager::instance().CreateShaderResourceViewFromFile(
-      "Textures\\texturagorda.jpg",
+      "Meshes\\Dwarf\\dwarf.jpg",
        bd );
 
+    //Shader resource view
+    m_pAlbedoTexture =
+      GraphicsManager::instance().CreateShaderResourceView( m_pAlbedoTexture, 
+                                                            bd );
 
     SAMPLER_DESCRIPTOR sampDesc;
     memset( &sampDesc, 0 ,sizeof( sampDesc ) );
@@ -251,7 +285,7 @@ namespace gzEngineSDK {
     g_World = DirectX::XMMatrixIdentity();
 
     //initialize the view matrix
-    Eye = DirectX::XMVectorSet( 0.0f, 3.0f, -10.0f, 0.0f );
+    Eye = DirectX::XMVectorSet( 0.0f, 3.0f, -175.0f, 0.0f );
     DirectX::XMVECTOR At = DirectX::XMVectorSet( 0.0f, 1.0f, 0.0f, 0.0f );
     DirectX::XMVECTOR Up = DirectX::XMVectorSet( 0.0f, 1.0f, 0.0f, 0.0f );
     g_View = DirectX::XMMatrixLookAtLH( Eye, At, Up );
@@ -295,14 +329,14 @@ namespace gzEngineSDK {
 
 
     //rotate mesh 
-   // g_World = DirectX::XMMatrixRotationY( t );
+    //g_World = DirectX::XMMatrixRotationY( t );
 
 
 
    
 
     //Clear back buffer
-    float ClearColor2[4] = { 0.0f, 0.0f, 1.0f, 0.0f }; //Azul
+    float ClearColor2[4] = { 0.0f, 1.0f, 0.0f, 0.0f }; //Azul
     float ClearColor[4] = { 1.0f, 0.0f, 1.0f, 1.0f }; //Rosa
     float ClearColor3[4] = { 1.0f, 0.0f, 0.0f, 1.0f }; //Rojo
     GraphicsManager::instance().clearRenderTargetView( ClearColor, 
@@ -311,8 +345,8 @@ namespace gzEngineSDK {
     GraphicsManager::instance().clearRenderTargetView( ClearColor2, 
                                                        m_pAlbedoRT );    
 
-    GraphicsManager::instance().clearRenderTargetView( ClearColor3, 
-                                                       m_pLuminanceRT );
+   /* GraphicsManager::instance().clearRenderTargetView( ClearColor3, 
+                                                       m_pLuminanceRT );*/
 
     
 
@@ -332,8 +366,25 @@ namespace gzEngineSDK {
     
 
 
-    //Main pass
+    /************************************************************************/
+    /* Light                                                                */
+    /************************************************************************/
 
+  
+    GraphicsManager::instance().setRenderTargets( 1, m_pAlbedoRT,
+                                                  m_pDepthStencilView );
+
+    uint32 Stride = sizeof( VERTICES );
+    uint32 offset = 0;
+    GraphicsManager::instance().setVertexBuffers( 0, 
+                                                  1, 
+                                                  vDwarfBuffer,
+                                                  &Stride,
+                                                  &offset );
+
+    GraphicsManager::instance().setIndexBuffer( FORMAT_R16_UINT, iDwarfBuffer, 0 );
+
+    GraphicsManager::instance().setInputLayout( inputLayout );
     GraphicsManager::instance().setVertexShader( m_pLightVertexShader );
     GraphicsManager::instance().setVSConstantBuffers( constantNeverChanges, 0, 1 );
     GraphicsManager::instance().setVSConstantBuffers( constantChangesonResize, 1, 1 );
@@ -343,19 +394,39 @@ namespace gzEngineSDK {
     GraphicsManager::instance().setShaderResources( textGorda, 0, 1 );
     GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
 
-    GraphicsManager::instance().setRenderTargets( 1, m_pAlbedoRT,
-                                                  m_pDepthStencilView );
 
-    GraphicsManager::instance().drawIndexed( quad->getNumIndices(), 0, 0 );
+
+    GraphicsManager::instance().drawIndexed( dwarf->getNumIndices(), 0, 0 );
     
 
-    GraphicsManager::instance().setRenderTargets( 0, m_pLuminanceRT, 
-                                                  m_pDepthStencilView );
+    /************************************************************************/
+    /* Luminance                                                            */
+    /************************************************************************/
+  
 
+
+    GraphicsManager::instance().setRenderTargets( 1,
+                                                  m_pLuminanceRT,
+                                                  nullptr );
+
+    GraphicsManager::instance().setRasterizerState( m_RasterizerState );
+    GraphicsManager::instance().setVertexBuffers( 0,
+                                                  1, 
+                                                  vQuadBuffer,
+                                                  &Stride,
+                                                  &offset );
+
+    GraphicsManager::instance().setIndexBuffer( FORMAT_R16_UINT, iQuadBuffer, 0 );
+    GraphicsManager::instance().setInputLayout( luminanceInputLayout );
+    GraphicsManager::instance().setVertexShader( m_pLuminanceVertexShader );
+    GraphicsManager::instance().setPixelShader( m_pLuminancePixelShader );
     GraphicsManager::instance().setShaderResources( m_pAlbedoTexture, 0, 1 );
+    GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
+
+
+
 
     GraphicsManager::instance().drawIndexed( quad->getNumIndices(), 0, 0 );
-
 
    
     GraphicsManager::instance().present( 0, 0 );

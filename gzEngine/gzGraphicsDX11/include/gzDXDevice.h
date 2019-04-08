@@ -112,6 +112,10 @@ class Device
                             D3D11_SHADER_RESOURCE_VIEW_DESC &desc,
                             ID3D11ShaderResourceView **ppSRView );
 
+  bool
+  CreateRasterizerState( D3D11_RASTERIZER_DESC * desc,
+                         ID3D11RasterizerState ** rasterizerState );
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

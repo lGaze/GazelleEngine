@@ -28,6 +28,7 @@
     <ClInclude Include="include\gzMesh.h" />
     <ClInclude Include="include\gzPixelShader.h" />
     <ClInclude Include="include\gzPrerequisitesCore.h" />
+    <ClInclude Include="include\gzRasterizerState.h" />
     <ClInclude Include="include\gzRenderTarget.h" />
     <ClInclude Include="include\gzSamplerState.h" />
     <ClInclude Include="include\gzShader.h" />
@@ -45,6 +46,7 @@
     <ClCompile Include="src\gzInputLayout.cpp" />
     <ClCompile Include="src\gzMesh.cpp" />
     <ClCompile Include="src\gzPixelShader.cpp" />
+    <ClCompile Include="src\gzRasterizerState.cpp" />
     <ClCompile Include="src\gzRenderTarget.cpp" />
     <ClCompile Include="src\gzSamplerState.cpp" />
     <ClCompile Include="src\gzShader.cpp" />

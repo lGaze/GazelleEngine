@@ -226,4 +226,20 @@ namespace gzEngineSDK {
 
   }
 
+  bool
+  Device::CreateRasterizerState( D3D11_RASTERIZER_DESC * desc,
+                                 ID3D11RasterizerState ** rasterizerState )
+  {
+    HRESULT result = S_OK;
+
+    result = m_pDevice->CreateRasterizerState( desc, rasterizerState );
+
+    if (FAILED (result))
+    {
+      return false;
+    }
+
+    return true;
+  }
+
 }

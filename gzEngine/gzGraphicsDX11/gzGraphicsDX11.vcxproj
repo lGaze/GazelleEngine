@@ -27,6 +27,7 @@
     <ClInclude Include="include\gzDXInputLayout.h" />
     <ClInclude Include="include\gzDXPixelShader.h" />
     <ClInclude Include="include\gzDXPrerequisites.h" />
+    <ClInclude Include="include\gzDXRasterizerState.h" />
     <ClInclude Include="include\gzDXRenderTarget.h" />
     <ClInclude Include="include\gzDXSamplerState.h" />
     <ClInclude Include="include\gzDXShader.h" />
@@ -45,6 +46,7 @@
     <ClCompile Include="src\gzDXInputLayout.cpp" />
     <ClCompile Include="src\gzDXPixelShader.cpp" />
     <ClCompile Include="src\gzDXPlugin.cpp" />
+    <ClCompile Include="src\gzDXRasterizerState.cpp" />
     <ClCompile Include="src\gzDXRenderTarget.cpp" />
     <ClCompile Include="src\gzDXSamplerState.cpp" />
     <ClCompile Include="src\gzDXSwapChain.cpp" />
