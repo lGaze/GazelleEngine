@@ -129,19 +129,24 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    uint32 m_windowPosY;
 
    /**
-    * @brief 
+    * @brief BackBuffer RT
     */
    RenderTarget * m_pBackBuffer;  
    
    /**
-    * @brief 
+    * @brief Albedo RT
     */
    RenderTarget * m_pAlbedoRT;
 
    /**
-    * @brief 
+    * @brief Luminance RT
     */
    RenderTarget * m_pLuminanceRT;
+
+   /**
+    * @brief 
+    */
+   RenderTarget * m_pBrightRT;
 
    /**
     * @brief 
@@ -171,12 +176,22 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
+   VertexShader * m_pBrightVertexShader;
+
+   /**
+    * @brief 
+    */
    PixelShader * m_pLightPixelShader;
 
    /**
     * @brief 
     */
    PixelShader * m_pLuminancePixelShader;
+
+   /**
+    * @brief 
+    */
+   PixelShader * m_pBrightPixelShader;
 
    /**
     * @brief 
@@ -189,14 +204,20 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    Texture * m_pBackBufferTex;
 
    /**
-    * @brief 
+    * @brief Texture for Albedo RT
     */
    Texture * m_pAlbedoTexture;
 
    /**
-    * @brief 
+    * @brief Texture for Luminance RT
     */
    Texture * m_pLuminanceTexture;
+
+   /**
+    * @brief Texture for Bright RT
+    */
+   Texture * m_pBrightTexture;
+
 
    /**
     * @brief 
@@ -206,12 +227,17 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
-   Mesh * dwarf;
+   Mesh * cube;
 
    /**
     * @brief Input layout for luminance
     */
    InputLayout * luminanceInputLayout;
+
+   /**
+    * @brief Input layout for bright shader
+    */
+   InputLayout * m_pBrightInputLayout;
 
    /**
     * @brief InputL layout for light
@@ -221,12 +247,12 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
-   Buffer * vDwarfBuffer;
+   Buffer * vCubeBuffer;
 
    /**
     * @brief 
     */
-   Buffer * iDwarfBuffer;
+   Buffer * iCubeBuffer;
 
    /**
     * @brief 

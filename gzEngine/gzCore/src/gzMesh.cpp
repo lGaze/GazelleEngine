@@ -15,7 +15,7 @@ Mesh::Mesh() :
 bool
 Mesh::loadModel( String fileName )
 {
-  int32 flags = aiProcess_Triangulate | aiProcess_FlipUVs;
+  int32 flags = aiProcess_Triangulate | aiProcessPreset_TargetRealtime_MaxQuality;
   m_pModelScene = importer.ReadFile( fileName, flags );
 
   if ( !m_pModelScene )
@@ -140,14 +140,16 @@ bool Mesh::assimpGetMeshData( const aiMesh * mesh )
 
 
   // Get index and fills buffer
-  m_iNumIndices = mesh->mNumFaces * 3;
-
+  m_iNumIndices = 0;
   for ( uint32 f = 0; f < mesh->mNumFaces; f++ )
   {
     face = &mesh->mFaces[f];
-    indexBuff.push_back( face->mIndices[0] + m_IndexIterator );
-    indexBuff.push_back( face->mIndices[1] + m_IndexIterator );
-    indexBuff.push_back( face->mIndices[2] + m_IndexIterator );
+    
+    for ( uint32 g = 0; g < face->mNumIndices; g++ )
+    {
+      indexBuff.push_back( face->mIndices[g]);
+    }
+
   }
   m_IndexIterator = indexBuff.size();
 
