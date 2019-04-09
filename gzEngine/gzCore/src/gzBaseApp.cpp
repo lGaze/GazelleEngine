@@ -110,6 +110,7 @@ namespace gzEngineSDK {
     renderTexDesc.CPUAccessFlags = 0;
     renderTexDesc.MiscFlags = 0;
 
+    //Albedo Texture
     m_pAlbedoTexture =
       GraphicsManager::instance().createTexture2D( renderTexDesc );
 
@@ -118,7 +119,7 @@ namespace gzEngineSDK {
 
 
     //Luminance Texture
-    m_pLuminanceTexture = 
+    m_pLuminanceTexture =
       GraphicsManager::instance().createTexture2D( renderTexDesc );
 
     //LuminanceRT
@@ -133,6 +134,45 @@ namespace gzEngineSDK {
     //BrightRT
     m_pBrightRT = 
       GraphicsManager::instance().createRenderTarget( m_pBrightTexture );
+
+    renderTexDesc.Height = m_windowHeight / 2;
+    renderTexDesc.Width = m_windowWidth / 2;
+
+    //BlurH1Texture
+    m_pBlurH1Texture = 
+      GraphicsManager::instance().createTexture2D( renderTexDesc );
+
+    //BlurH1RT
+    m_pBlurH1RT = 
+      GraphicsManager::instance().createRenderTarget( m_pBlurH1Texture );
+
+    //BlurV1Texture
+    m_pBlurV1Texture = 
+      GraphicsManager::instance().createTexture2D( renderTexDesc );
+
+    //BlurV1RT
+    m_pBlurV1RT = 
+      GraphicsManager::instance().createRenderTarget( m_pBlurV1Texture );
+
+
+    renderTexDesc.Height = m_windowHeight;
+    renderTexDesc.Width = m_windowWidth;
+
+    //AddBright1 texture
+    m_pAddBright1Texture = 
+      GraphicsManager::instance().createTexture2D( renderTexDesc );
+
+    //AddBright1 RT
+    m_pAddBright1RT = 
+      GraphicsManager::instance().createRenderTarget( m_pAddBright1Texture );
+
+    //ToneMap texture
+    m_pToneMapTexture = 
+      GraphicsManager::instance().createTexture2D( renderTexDesc );
+
+    //ToneMap RT
+    m_pToneMapRT = 
+      GraphicsManager::instance().createRenderTarget( m_pToneMapTexture );
 
     //Creates the Depth descriptor
     TEXTURE2D_DESCRIPTOR depthTextureDesc;
@@ -158,16 +198,21 @@ namespace gzEngineSDK {
 
 
     //Creates the Viewport Descriptor
-    VIEWPORT_DESCRIPTOR vp;
     vp.Width = static_cast< float >( m_windowWidth );
     vp.Height = static_cast< float >( m_windowHeight );
     vp.MinDepth = 0.0f;
     vp.MaxDepth = 1.0f;
     vp.TopLeftX = 0;
-    vp.TopLeftY = 0;
+    vp.TopLeftY = 0; 
+    
+    //Creates the Viewport2 Descriptor
+    vp2.Width = static_cast< float >( m_windowWidth /2 );
+    vp2.Height = static_cast< float >( m_windowHeight /2);
+    vp2.MinDepth = 0.0f;
+    vp2.MaxDepth = 1.0f;
+    vp2.TopLeftX = 0;
+    vp2.TopLeftY = 0;
 
-    //Sets the Viewport
-    GraphicsManager::instance().setViewports( 1, vp );
 
     //Compile and create the vertex shader for light
     m_pLightVertexShader = GraphicsManager::instance().CreateVertexShader( 
@@ -209,7 +254,7 @@ namespace gzEngineSDK {
 
     //------------------------------------------------------------------\\
 
-        //Compile and create the vertex shader for luminance
+        //Compile and create the vertex shader for Bright
     m_pBrightVertexShader = GraphicsManager::instance().CreateVertexShader(
       L"Shaders\\Bright.fx",
       "VS",
@@ -220,13 +265,83 @@ namespace gzEngineSDK {
     m_pBrightInputLayout = GraphicsManager::instance().createInputLayout(
       m_pBrightVertexShader );
 
-    //Compile and Create the pixel shader for luminance
+    //Compile and Create the pixel shader for Bright
     m_pBrightPixelShader = GraphicsManager::instance().createPixelShader(
       L"Shaders\\Bright.fx",
       "PS",
       "ps_4_0" );
 
     //----------------------------------------------------------------------\\
+
+    //Compile and create the vertex shader for BlurH1
+    m_pBlurH1VertexShader = GraphicsManager::instance().CreateVertexShader(
+      L"Shaders\\BlurH1.fx",
+      "VS",
+      "vs_4_0" );
+
+    //Create the InputLayout with the blob
+    m_pBlurH1InputLayout = GraphicsManager::instance().createInputLayout(
+      m_pBlurH1VertexShader );
+
+    //Compile and Create the pixel shader for luminance
+    m_pBlurH1PixelShader = GraphicsManager::instance().createPixelShader(
+      L"Shaders\\BlurH1.fx",
+      "PS",
+      "ps_4_0" );
+
+    //----------------------------------------------------------------------\\
+
+    //Compile and create the vertex shader for BlurV1
+    m_pBlurV1VertexShader = GraphicsManager::instance().CreateVertexShader(
+      L"Shaders\\BlurV1.fx",
+      "VS",
+      "vs_4_0" );
+
+    //Create the InputLayout with the blob
+    m_pBlurV1InputLayout = GraphicsManager::instance().createInputLayout(
+      m_pBlurV1VertexShader );
+
+    //Compile and Create the pixel shader for luminance
+    m_pBlurV1PixelShader = GraphicsManager::instance().createPixelShader(
+      L"Shaders\\BlurV1.fx",
+      "PS",
+      "ps_4_0" );
+
+    //----------------------------------------------------------------------\\
+
+    //Compile and create the vertex shader for BlurV1
+    m_pAddBright1VertexShader = GraphicsManager::instance().CreateVertexShader(
+      L"Shaders\\AddBright1.fx",
+      "VS",
+      "vs_4_0" );
+
+    //Create the InputLayout with the blob
+    m_pAddBright1InputLayout = GraphicsManager::instance().createInputLayout(
+      m_pAddBright1VertexShader );
+
+    //Compile and Create the pixel shader for luminance
+    m_pAddBright1PixelShader = GraphicsManager::instance().createPixelShader(
+      L"Shaders\\AddBright1.fx",
+      "PS",
+      "ps_4_0" );
+
+    //----------------------------------------------------------------------\\
+
+    //Compile and create the vertex shader for BlurV1
+    m_pToneMapVertexShader = GraphicsManager::instance().CreateVertexShader(
+      L"Shaders\\ToneMap.fx",
+      "VS",
+      "vs_4_0" );
+
+    //Create the InputLayout with the blob
+    m_pToneMapInputLayout = GraphicsManager::instance().createInputLayout(
+      m_pToneMapVertexShader );
+
+    //Compile and Create the pixel shader for luminance
+    m_pToneMapPixelShader = GraphicsManager::instance().createPixelShader(
+      L"Shaders\\ToneMap.fx",
+      "PS",
+      "ps_4_0" );
 
 
     //Quad Aligned
@@ -256,7 +371,7 @@ namespace gzEngineSDK {
 
     //Cube
     cube = new Mesh();
-    cube->loadModel( "Meshes\\TestBox.obj" );
+    cube->loadModel( "Meshes\\ninjaHead.obj" );
     GraphicsManager::instance().createAndsetVertexAndIndexBufferFromMesh(
       cube->getNumVertices(),
       cube->getVertexData(),
@@ -304,7 +419,7 @@ namespace gzEngineSDK {
 
     //Load and create shader resource view
     textGorda = GraphicsManager::instance().CreateShaderResourceViewFromFile(
-      "Textures\\texturagorda.jpg",
+      "Textures\\normal.jpg",
        bd );
 
     //Shader resource view for albedoTex
@@ -323,10 +438,36 @@ namespace gzEngineSDK {
         m_pBrightTexture, 
         bd );
 
+    //Shader resource view for Blurh1
+    m_pBlurH1Texture = 
+      GraphicsManager::instance().CreateShaderResourceView(
+      m_pBlurH1Texture,
+      bd );
+
+    //Shader resource view for BlurV1
+    m_pBlurV1Texture = 
+      GraphicsManager::instance().CreateShaderResourceView(
+      m_pBlurV1Texture,
+      bd );
+
+    //Shader resource view for AddBright1
+    m_pAddBright1Texture = 
+      GraphicsManager::instance().CreateShaderResourceView(
+      m_pAddBright1Texture,
+      bd );  
+    
+    //Shader resource view for AddBright1
+    m_pToneMapTexture = 
+      GraphicsManager::instance().CreateShaderResourceView(
+      m_pToneMapTexture,
+      bd );
+
+
+
 
     SAMPLER_DESCRIPTOR sampDesc;
     memset( &sampDesc, 0 ,sizeof( sampDesc ) );
-    sampDesc.Filter = FILTER_MIN_MAG_MIP_LINEAR;
+    sampDesc.Filter = FILTER_MIN_MAG_MIP_POINT;
     sampDesc.AddressU = TEXTURE_ADDRESS_WRAP;
     sampDesc.AddressY = TEXTURE_ADDRESS_WRAP;
     sampDesc.AddressW = TEXTURE_ADDRESS_WRAP;
@@ -340,7 +481,7 @@ namespace gzEngineSDK {
     g_World = DirectX::XMMatrixIdentity();
 
     //initialize the view matrix
-    Eye = DirectX::XMVectorSet( 0.0f, 3.0f, -6.0f, 0.0f );
+    Eye = DirectX::XMVectorSet( 0.0f, 3.0f, -175.0f, 0.0f );
     DirectX::XMVECTOR At = DirectX::XMVectorSet( 0.0f, 1.0f, 0.0f, 0.0f );
     DirectX::XMVECTOR Up = DirectX::XMVectorSet( 0.0f, 1.0f, 0.0f, 0.0f );
     g_View = DirectX::XMMatrixLookAtLH( Eye, At, Up );
@@ -382,9 +523,9 @@ namespace gzEngineSDK {
     }
     t = ( dwTimerCur - dwTimeStart ) / 1000.0f;
 
-
     //rotate mesh 
     //g_World = DirectX::XMMatrixRotationY( t );
+
 
 
 
@@ -426,6 +567,8 @@ namespace gzEngineSDK {
   
     GraphicsManager::instance().setRenderTargets( 1, m_pAlbedoRT,
                                                   m_pDepthStencilView );
+    //Sets the Viewport
+    GraphicsManager::instance().setViewports( 1, vp );
 
     uint32 Stride = sizeof( VERTICES );
     uint32 offset = 0;
@@ -460,7 +603,8 @@ namespace gzEngineSDK {
     GraphicsManager::instance().setRenderTargets( 1,
                                                   m_pLuminanceRT,
                                                   nullptr );
-
+    //Sets the Viewport
+    GraphicsManager::instance().setViewports( 1, vp );
     GraphicsManager::instance().setRasterizerState( m_RasterizerState );
     GraphicsManager::instance().setVertexBuffers( 0,
                                                   1, 
@@ -486,8 +630,10 @@ namespace gzEngineSDK {
     GraphicsManager::instance().setRenderTargets( 1,
                                                   m_pBrightRT,
                                                   nullptr );
-
+    //Sets the Viewport
+    GraphicsManager::instance().setViewports( 1, vp );
     GraphicsManager::instance().setRasterizerState( m_RasterizerState );
+
     GraphicsManager::instance().setVertexBuffers( 0,
                                                   1,
                                                   vQuadBuffer,
@@ -505,9 +651,107 @@ namespace gzEngineSDK {
 
 
     /************************************************************************/
-    /* BlurH                                                                */
+    /* BlurH1                                                               */
     /************************************************************************/
 
+    GraphicsManager::instance().setRenderTargets( 1,
+                                                  m_pBlurH1RT,
+                                                  nullptr );
+    //Sets the Viewport
+    GraphicsManager::instance().setViewports( 1, vp2 );
+    GraphicsManager::instance().setRasterizerState( m_RasterizerState );
+    GraphicsManager::instance().setVertexBuffers( 0,
+                                                  1,
+                                                  vQuadBuffer,
+                                                  &Stride,
+                                                  &offset );
+
+    GraphicsManager::instance().setIndexBuffer( FORMAT_R16_UINT, iQuadBuffer, 0 );
+    GraphicsManager::instance().setInputLayout( m_pBlurH1InputLayout );
+    GraphicsManager::instance().setVertexShader( m_pBlurH1VertexShader );
+    GraphicsManager::instance().setPixelShader( m_pBlurH1PixelShader );
+    GraphicsManager::instance().setShaderResources( m_pBrightTexture, 0, 1 );
+    GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
+
+    GraphicsManager::instance().drawIndexed( quad->getNumIndices(), 0, 0 );
+
+    /************************************************************************/
+    /* BlurV1                                                               */
+    /************************************************************************/
+
+    GraphicsManager::instance().setRenderTargets( 1,
+                                                  m_pBlurV1RT,
+                                                  nullptr );
+    //Sets the Viewport
+    GraphicsManager::instance().setViewports( 1, vp2 );
+    GraphicsManager::instance().setRasterizerState( m_RasterizerState );
+    GraphicsManager::instance().setVertexBuffers( 0,
+                                                  1,
+                                                  vQuadBuffer,
+                                                  &Stride,
+                                                  &offset );
+
+    GraphicsManager::instance().setIndexBuffer( FORMAT_R16_UINT, iQuadBuffer, 0 );
+    GraphicsManager::instance().setInputLayout( m_pBlurV1InputLayout );
+    GraphicsManager::instance().setVertexShader( m_pBlurV1VertexShader );
+    GraphicsManager::instance().setPixelShader( m_pBlurV1PixelShader );
+    GraphicsManager::instance().setShaderResources( m_pBrightTexture, 0, 1 );
+    GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
+
+    GraphicsManager::instance().drawIndexed( quad->getNumIndices(), 0, 0 );
+
+    /************************************************************************/
+    /* AddBright1                                                           */
+    /************************************************************************/
+
+    GraphicsManager::instance().setRenderTargets( 1,
+                                                  m_pAddBright1RT,
+                                                  nullptr );
+    //Sets the Viewport
+    GraphicsManager::instance().setViewports( 1, vp );
+    GraphicsManager::instance().setRasterizerState( m_RasterizerState );
+    GraphicsManager::instance().setVertexBuffers( 0,
+                                                  1,
+                                                  vQuadBuffer,
+                                                  &Stride,
+                                                  &offset );
+
+    GraphicsManager::instance().setIndexBuffer( FORMAT_R16_UINT, iQuadBuffer, 0 );
+    GraphicsManager::instance().setInputLayout( m_pAddBright1InputLayout );
+    GraphicsManager::instance().setVertexShader( m_pAddBright1VertexShader );
+    GraphicsManager::instance().setPixelShader( m_pAddBright1PixelShader );
+    GraphicsManager::instance().setShaderResources( m_pBrightTexture, 0, 1 );
+    GraphicsManager::instance().setShaderResources( m_pBlurH1Texture, 1, 1 );
+    GraphicsManager::instance().setShaderResources( m_pBlurV1Texture, 2, 1 );
+    GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
+
+    GraphicsManager::instance().drawIndexed( quad->getNumIndices(), 0, 0 );
+
+    /************************************************************************/
+    /* ToneMap                                                          */
+    /************************************************************************/
+
+    GraphicsManager::instance().setRenderTargets( 1,
+                                                  m_pToneMapRT,
+                                                  nullptr );
+    //Sets the Viewport
+    GraphicsManager::instance().setViewports( 1, vp );
+    GraphicsManager::instance().setRasterizerState( m_RasterizerState );
+    GraphicsManager::instance().setVertexBuffers( 0,
+                                                  1,
+                                                  vQuadBuffer,
+                                                  &Stride,
+                                                  &offset );
+
+    GraphicsManager::instance().setIndexBuffer( FORMAT_R16_UINT, iQuadBuffer, 0 );
+    GraphicsManager::instance().setInputLayout( m_pToneMapInputLayout );
+    GraphicsManager::instance().setVertexShader( m_pToneMapVertexShader );
+    GraphicsManager::instance().setPixelShader( m_pToneMapPixelShader );
+    GraphicsManager::instance().setShaderResources( m_pAlbedoTexture, 0, 1 );
+    GraphicsManager::instance().setShaderResources( m_pAddBright1Texture, 1, 1 );
+    GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
+
+    GraphicsManager::instance().drawIndexed( quad->getNumIndices(), 0, 0 );
    
     GraphicsManager::instance().present( 0, 0 );
   }

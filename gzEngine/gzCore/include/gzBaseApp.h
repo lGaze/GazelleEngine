@@ -144,9 +144,29 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    RenderTarget * m_pLuminanceRT;
 
    /**
-    * @brief 
+    * @brief BlurH1 RT
+    */
+   RenderTarget * m_pBlurH1RT;
+
+   /**
+    * @brief BlurV1 RT
+    */
+   RenderTarget * m_pBlurV1RT;
+
+   /**
+    * @brief Bright RT
     */
    RenderTarget * m_pBrightRT;
+
+   /**
+    * @brief AddBright1 RT
+    */
+   RenderTarget * m_pAddBright1RT; 
+   
+   /**
+    * @brief ToneMap RT
+    */
+   RenderTarget * m_pToneMapRT;
 
    /**
     * @brief 
@@ -181,6 +201,26 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
+   VertexShader * m_pBlurH1VertexShader; 
+   
+   /**
+    * @brief 
+    */
+   VertexShader * m_pBlurV1VertexShader;
+
+   /**
+    * @brief 
+    */
+   VertexShader * m_pAddBright1VertexShader;
+
+   /**
+    * @brief 
+    */
+   VertexShader * m_pToneMapVertexShader;
+
+   /**
+    * @brief 
+    */
    PixelShader * m_pLightPixelShader;
 
    /**
@@ -196,10 +236,30 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
-   Texture * textGorda;
+   PixelShader * m_pBlurH1PixelShader;
 
    /**
     * @brief 
+    */
+   PixelShader * m_pBlurV1PixelShader;
+
+   /**
+    * @brief 
+    */
+   PixelShader * m_pAddBright1PixelShader;
+
+   /**
+    * @brief 
+    */
+   PixelShader * m_pToneMapPixelShader;
+
+   /**
+    * @brief 
+    */
+   Texture * textGorda;
+
+   /**
+    * @brief BackBuffer texture 
     */
    Texture * m_pBackBufferTex;
 
@@ -218,6 +278,25 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
     */
    Texture * m_pBrightTexture;
 
+   /**
+    * @brief Texture for Blurh1
+    */
+   Texture * m_pBlurH1Texture;
+
+   /**
+    * @brief Texture for BlurV1
+    */
+   Texture * m_pBlurV1Texture;
+
+   /**
+    * @brief Texture for AddBright1
+    */
+   Texture * m_pAddBright1Texture;
+   
+   /**
+    * @brief Texture for AddBright1
+    */
+   Texture * m_pToneMapTexture;
 
    /**
     * @brief 
@@ -245,6 +324,26 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    InputLayout * inputLayout;
 
    /**
+    * @brief Input Layout for BlurH1
+    */
+   InputLayout * m_pBlurH1InputLayout;
+
+   /**
+    * @brief Input Layout for BlurV1
+    */
+   InputLayout * m_pBlurV1InputLayout;
+
+   /**
+    * @brief Input Layout for AddBright1
+    */
+   InputLayout * m_pAddBright1InputLayout; 
+   
+   /**
+    * @brief Input Layout for AddBright1
+    */
+   InputLayout * m_pToneMapInputLayout;
+
+   /**
     * @brief 
     */
    Buffer * vCubeBuffer;
@@ -268,6 +367,18 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
     * @brief 
     */
    RasterizerState * m_RasterizerState;
+
+
+   /**
+    * @brief normal viewport
+    */
+   VIEWPORT_DESCRIPTOR vp;
+
+   /**
+    * @brief normal viewport / 2
+    */
+   VIEWPORT_DESCRIPTOR vp2;
+
 
  /************************************************************************/
  /*       Test                                                           */
