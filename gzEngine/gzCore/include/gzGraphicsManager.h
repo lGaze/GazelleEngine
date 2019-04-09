@@ -236,21 +236,19 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief 
    */
   virtual Texture *
-  LoadTextureFromFile( const String filename, uint32 mipMaps ) = 0;
+  LoadTextureFromFile( const String filename ) = 0;
 
   /**
    * @brief 
    */
   virtual Texture *
-  CreateShaderResourceViewFromFile( const String filenme, 
-                                    SHADER_RESOURCE_VIEW_DESC & desc ) = 0;
+  CreateShaderResourceViewFromFile( const String filenme ) = 0;
 
   /**
    * @brief 
    */
   virtual Texture *
-  CreateShaderResourceView(Texture * texture, 
-                            SHADER_RESOURCE_VIEW_DESC & desc) = 0;
+  CreateShaderResourceView(Texture * texture ) = 0;
 
   /**
    * @brief 

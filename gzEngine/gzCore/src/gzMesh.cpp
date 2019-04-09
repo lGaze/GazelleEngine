@@ -34,7 +34,7 @@ Mesh::loadModel( String fileName )
 
 bool Mesh::readTextures()
 {
-  for ( int32 i = 0; i < m_pModelScene->mNumMeshes; i++ )
+  for ( uint32 i = 0; i < m_pModelScene->mNumMeshes; i++ )
   {
     aiString Path;
 
@@ -147,7 +147,7 @@ bool Mesh::assimpGetMeshData( const aiMesh * mesh )
     
     for ( uint32 g = 0; g < face->mNumIndices; g++ )
     {
-      indexBuff.push_back( face->mIndices[g]);
+      indexBuff.push_back( static_cast<uint16>(face->mIndices[g]));
     }
 
   }

@@ -221,7 +221,7 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   virtual Texture * 
-  LoadTextureFromFile( const String filename, uint32 mipMaps ) override;
+  LoadTextureFromFile( const String filename) override;
 
   /**
    * @brief 
@@ -235,15 +235,13 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   virtual Texture * 
-  CreateShaderResourceViewFromFile( const String filenme,
-                                    SHADER_RESOURCE_VIEW_DESC & desc ) override;
+  CreateShaderResourceViewFromFile( const String filenme ) override;
 
   /**
    * @brief 
    */
   virtual Texture *
-  CreateShaderResourceView( Texture * texture, 
-                            SHADER_RESOURCE_VIEW_DESC & desc ) override;
+  CreateShaderResourceView( Texture * texture ) override;
 
   /**
    * @brief 

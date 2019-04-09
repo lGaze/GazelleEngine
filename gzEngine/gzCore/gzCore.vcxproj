@@ -36,7 +36,6 @@
     <ClInclude Include="include\gzVertexShader.h" />
     <ClInclude Include="include\gzViewPort.h" />
     <ClInclude Include="include\gzWindow.h" />
-    <ClInclude Include="include\IDVMath.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\gzBaseApp.cpp" />
@@ -54,7 +53,6 @@
     <ClCompile Include="src\gzViewPort.cpp" />
     <ClCompile Include="src\gzWindow.cpp" />
     <ClCompile Include="src\gzTexture.cpp" />
-    <ClCompile Include="src\IDVMath.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -179,7 +177,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ImportLibrary>$(SolutionDir)lib/$(PlatformTarget)/$(TargetName).lib</ImportLibrary>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib/$(PlatformTarget)/;C:/Development/assimp-4.1.0/bin/$(Configuration);C:/Development/assimp-4.1.0/bin/;$(SolutionDir)gzCore\externals\assimp\include\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib/$(PlatformTarget)/;$(SolutionDir)gzCore\externals\assimp\include\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>gzUtilitiesd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -201,7 +199,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ImportLibrary>$(SolutionDir)lib/$(PlatformTarget)/$(TargetName).lib</ImportLibrary>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib/$(PlatformTarget)/;C:/Development/assimp-4.1.0/bin/$(Configuration);C:/Development/assimp-4.1.0/bin/;$(SolutionDir)gzCore\externals\assimp\include\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib/$(PlatformTarget)/;$(SolutionDir)gzCore\externals\assimp\include\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>gzUtilitiesd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

@@ -60,7 +60,8 @@ namespace gzEngineSDK {
   {
     m_ptexture = new DXTexture();
     m_ptexture->create2DTextueDescriptor( textureInfo );
-    m_pdevice->CreateTexture2D( &m_ptexture->getTextureDesc(),
+    D3D11_TEXTURE2D_DESC texDesc = m_ptexture->getTextureDesc();
+    m_pdevice->CreateTexture2D( &texDesc,
                                 nullptr,
                                 m_ptexture->getTextureInterface() );
 
@@ -133,13 +134,18 @@ namespace gzEngineSDK {
     m_ptexture = new DXTexture();
     m_pdepth = new DXDepth();
     m_ptexture->create2DTextueDescriptor( texDesc );
-    m_pdevice->CreateTexture2D( &m_ptexture->getTextureDesc(),
+
+    D3D11_TEXTURE2D_DESC temptexDesc = m_ptexture->getTextureDesc();
+    m_pdevice->CreateTexture2D( &temptexDesc,
                                 nullptr,
                                 m_ptexture->getTextureInterface() );
 
     m_pdepth->CreateDepthStencilViewDesc( desc );
+
+    D3D11_DEPTH_STENCIL_VIEW_DESC tempDepthDesc =
+      m_pdepth->getDepthStencilViewDesc();
     m_pdevice->CreateDepthStencilView( *m_ptexture->getTextureInterface(),
-                                       &m_pdepth->getDepthStencilViewDesc(),
+                                       &tempDepthDesc,
                                        m_pdepth->getDepthStencilViewInterface() );
 
     return reinterpret_cast< Depth* >( m_pdepth );
@@ -165,8 +171,9 @@ namespace gzEngineSDK {
                                      VIEWPORT_DESCRIPTOR &viewportDesc )
   {
     m_pviewPort->SetViewPort( viewportDesc );
+    D3D11_VIEWPORT tempViewPortDesc = m_pviewPort->getVewPortDesc();
     m_pdeviceContext->SetViewports( NumViewports,
-                                    &m_pviewPort->getVewPortDesc() );
+                                    &tempViewPortDesc );
   }
 
   Buffer*
@@ -177,8 +184,10 @@ namespace gzEngineSDK {
     m_pBuffer = new DXBuffer();
     m_pBuffer->CreateBufferDesc( bufferDesc );
 
+    D3D11_BUFFER_DESC tempBufferDesc = m_pBuffer->getBufferDesc();
+
     m_pdevice->CreateBuffer(
-      &m_pBuffer->getBufferDesc(),
+      &tempBufferDesc,
       reinterpret_cast< const D3D11_SUBRESOURCE_DATA * >( pInitialData ),
       m_pBuffer->getBufferInterface() );
 
@@ -215,7 +224,8 @@ namespace gzEngineSDK {
   {
     m_psamplerState = new DXSamplerState();
     m_psamplerState->CreateSamplerDesc( samplerDesc );
-    m_pdevice->CreateSamplerState( &m_psamplerState->getSamplerDesc(),
+    D3D11_SAMPLER_DESC tempSamplerDesc = m_psamplerState->getSamplerDesc();
+    m_pdevice->CreateSamplerState( &tempSamplerDesc,
                                    m_psamplerState->getSamplerInterface() );
 
     return reinterpret_cast< SamplerState* >( m_psamplerState );
@@ -374,12 +384,13 @@ namespace gzEngineSDK {
   }
 
   Texture *
-    DXGraphicsManager::LoadTextureFromFile( const String filename, uint32 mipMaps )
+    DXGraphicsManager::LoadTextureFromFile( const String filename )
   {
     m_ptexture = new DXTexture();
     m_ptexture->LoadTexture( filename );
 
-    m_pdevice->CreateTexture2D( &m_ptexture->getTextureDesc(),
+    D3D11_TEXTURE2D_DESC tempTexDesc = m_ptexture->getTextureDesc();
+    m_pdevice->CreateTexture2D( &tempTexDesc,
                                 m_ptexture->getInitData(),
                                 m_ptexture->getTextureInterface() );
 
@@ -401,20 +412,18 @@ namespace gzEngineSDK {
 
   Texture *
     DXGraphicsManager::CreateShaderResourceViewFromFile(
-      const String filenme,
-      SHADER_RESOURCE_VIEW_DESC & desc )
+      const String filenme )
   {
     m_ptexture = new DXTexture();
     m_ptexture->LoadTexture( filenme );
 
-    m_pdevice->CreateTexture2D( &m_ptexture->getTextureDesc(),
+    D3D11_TEXTURE2D_DESC tempTextureDesc = m_ptexture->getTextureDesc();
+    m_pdevice->CreateTexture2D( &tempTextureDesc,
                                 m_ptexture->getInitData(),
                                 m_ptexture->getTextureInterface() );
 
-    m_ptexture->createShaderResurceDescriptor( desc );
     m_pdevice->CreateShaderResourceView(
       *m_ptexture->getTextureInterface(),
-      m_ptexture->getShaderResourceDesc(),
       m_ptexture->getShaderResourceInterface() );
 
     return reinterpret_cast< Texture* >( m_ptexture );
@@ -422,15 +431,12 @@ namespace gzEngineSDK {
   }
 
   Texture *
-    DXGraphicsManager::CreateShaderResourceView( Texture * texture,
-                                                 SHADER_RESOURCE_VIEW_DESC & desc )
+    DXGraphicsManager::CreateShaderResourceView( Texture * texture  )
   {
     m_ptexture = reinterpret_cast< DXTexture* >( texture );
-    m_ptexture->createShaderResurceDescriptor( desc );
 
     m_pdevice->CreateShaderResourceView(
       *m_ptexture->getTextureInterface(),
-      m_ptexture->getShaderResourceDesc(),
       m_ptexture->getShaderResourceInterface() );
 
     return reinterpret_cast< Texture* >( m_ptexture );
@@ -476,9 +482,10 @@ namespace gzEngineSDK {
     memset( &initData, 0, sizeof( initData ) );
     initData.pSysMem = vertexData;
 
+    D3D11_BUFFER_DESC tempVBufferDesc = tempVBuffer->getBufferDesc();
     //Create Vertex Buffer
     m_pdevice->CreateBuffer(
-      &tempVBuffer->getBufferDesc(),
+      &tempVBufferDesc,
       reinterpret_cast< D3D11_SUBRESOURCE_DATA* >( &initData ),
       tempVBuffer->getBufferInterface() );
 
@@ -494,9 +501,10 @@ namespace gzEngineSDK {
     //Init Data index
     initData.pSysMem = indexData;
 
+    D3D11_BUFFER_DESC tempIBufferDesc = tempIBuffer->getBufferDesc();
     //Creates index buffer
     m_pdevice->CreateBuffer(
-      &tempIBuffer->getBufferDesc(),
+      &tempIBufferDesc,
       reinterpret_cast< D3D11_SUBRESOURCE_DATA* >( &initData ),
       tempIBuffer->getBufferInterface() );
 
@@ -511,8 +519,11 @@ namespace gzEngineSDK {
 
     m_pRasterizerState->createRasterizerStateDesc( desc );
 
+    D3D11_RASTERIZER_DESC tempRasterizerDesc = 
+      m_pRasterizerState->getRasterizerStateDesc();
+
     m_pdevice->CreateRasterizerState(
-      &m_pRasterizerState->getRasterizerStateDesc(),
+      &tempRasterizerDesc,
       m_pRasterizerState->getRasterizerStateInterface() );
 
     return reinterpret_cast< RasterizerState* >( m_pRasterizerState );

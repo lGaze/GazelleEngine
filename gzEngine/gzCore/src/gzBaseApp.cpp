@@ -414,54 +414,47 @@ namespace gzEngineSDK {
     constantChangesEveryFrame =
       GraphicsManager::instance().createBuffer( bufferDesc, nullptr );
 
+/*
     SHADER_RESOURCE_VIEW_DESC bd;
-    memset( &bd, 0, sizeof( bd ) );
+    memset( &bd, 0, sizeof( bd ) );*/
 
     //Load and create shader resource view
     textGorda = GraphicsManager::instance().CreateShaderResourceViewFromFile(
-      "Textures\\normal.jpg",
-       bd );
+      "Textures\\normal.jpg" );
 
     //Shader resource view for albedoTex
     m_pAlbedoTexture =
-      GraphicsManager::instance().CreateShaderResourceView( m_pAlbedoTexture, 
-                                                            bd );
+      GraphicsManager::instance().CreateShaderResourceView( m_pAlbedoTexture );
+
     //Shader resource view for luminance
     m_pLuminanceTexture = 
       GraphicsManager::instance().CreateShaderResourceView( 
-        m_pLuminanceTexture, 
-        bd );
+        m_pLuminanceTexture );
 
     //Shader resource view for Bright
     m_pBrightTexture = 
       GraphicsManager::instance().CreateShaderResourceView( 
-        m_pBrightTexture, 
-        bd );
+        m_pBrightTexture );
 
     //Shader resource view for Blurh1
     m_pBlurH1Texture = 
       GraphicsManager::instance().CreateShaderResourceView(
-      m_pBlurH1Texture,
-      bd );
+      m_pBlurH1Texture );
 
     //Shader resource view for BlurV1
-    m_pBlurV1Texture = 
-      GraphicsManager::instance().CreateShaderResourceView(
-      m_pBlurV1Texture,
-      bd );
+    m_pBlurV1Texture =
+     GraphicsManager::instance().CreateShaderResourceView(
+     m_pBlurV1Texture );
 
     //Shader resource view for AddBright1
     m_pAddBright1Texture = 
       GraphicsManager::instance().CreateShaderResourceView(
-      m_pAddBright1Texture,
-      bd );  
+      m_pAddBright1Texture );  
     
     //Shader resource view for AddBright1
     m_pToneMapTexture = 
       GraphicsManager::instance().CreateShaderResourceView(
-      m_pToneMapTexture,
-      bd );
-
+      m_pToneMapTexture );
 
 
 
@@ -732,7 +725,7 @@ namespace gzEngineSDK {
     /************************************************************************/
 
     GraphicsManager::instance().setRenderTargets( 1,
-                                                  m_pToneMapRT,
+                                                  m_pBackBuffer,
                                                   nullptr );
     //Sets the Viewport
     GraphicsManager::instance().setViewports( 1, vp );

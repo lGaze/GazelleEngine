@@ -379,6 +379,35 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
     */
    VIEWPORT_DESCRIPTOR vp2;
 
+  /************************************************************************/
+  /* Variables for HDR                                                    */
+  /************************************************************************/
+
+   /**
+    * @brief BlurH2 RT
+    */
+   RenderTarget * m_pBlurH2RT;
+
+   /**
+    * @brief Texture for Blurh2
+    */
+   Texture * m_pBlurH2Texture;
+
+   /**
+    * @brief VertexShader for Blurh2
+    */
+   VertexShader * m_pBlurH2VertexShader;
+
+   /**
+    * @brief PixelShader for Blurh2
+    */
+   PixelShader * m_pBlurH2PixelShader;
+
+   /**
+    * @brief Input Layout for BlurH2
+    */
+   InputLayout * m_pBlurH2InputLayout;
+
 
  /************************************************************************/
  /*       Test                                                           */

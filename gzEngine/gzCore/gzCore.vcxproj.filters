@@ -60,9 +60,6 @@
     <ClInclude Include="include\gzInputLayout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\IDVMath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\gzMesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -108,9 +105,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gzInputLayout.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IDVMath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gzMesh.cpp">

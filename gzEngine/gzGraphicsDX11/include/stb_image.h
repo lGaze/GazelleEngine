@@ -831,7 +831,7 @@ static int      stbi__pic_info(stbi__context *s, int *x, int *y, int *comp);
 
 #ifndef STBI_NO_GIF
 static int      stbi__gif_test(stbi__context *s);
-static void    *stbi__gif_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri);
+static void    *stbi__gif_load(stbi__context *s, int *x, int *y, int *comp, int req_comp /*stbi__result_info *ri*/);
 static void    *stbi__load_gif_main(stbi__context *s, int **delays, int *x, int *y, int *z, int *comp, int req_comp);
 static int      stbi__gif_info(stbi__context *s, int *x, int *y, int *comp);
 #endif
@@ -988,7 +988,7 @@ static void *stbi__load_main(stbi__context *s, int *x, int *y, int *comp, int re
     if (stbi__bmp_test(s))  return stbi__bmp_load(s, x, y, comp, req_comp, ri);
 #endif
 #ifndef STBI_NO_GIF
-    if (stbi__gif_test(s))  return stbi__gif_load(s, x, y, comp, req_comp, ri);
+    if (stbi__gif_test(s))  return stbi__gif_load(s, x, y, comp, req_comp/* ri*/);
 #endif
 #ifndef STBI_NO_PSD
     if (stbi__psd_test(s))  return stbi__psd_load(s, x, y, comp, req_comp, ri, bpc);
@@ -6431,7 +6431,7 @@ static stbi_uc *stbi__process_gif_raster(stbi__context *s, stbi__gif *g)
 
 // this function is designed to support animated gifs, although stb_image doesn't support it
 // two back is the image from two frames ago, used for a very specific disposal format
-static stbi_uc *stbi__gif_load_next(stbi__context *s, stbi__gif *g, int *comp, int req_comp, stbi_uc *two_back)
+static stbi_uc *stbi__gif_load_next(stbi__context *s, stbi__gif *g, int *comp, /* int req_comp,*/ stbi_uc *two_back)
 {
     int dispose;
     int first_frame;
@@ -6616,7 +6616,7 @@ static void *stbi__load_gif_main(stbi__context *s, int **delays, int *x, int *y,
         }
 
         do {
-            u = stbi__gif_load_next(s, &g, comp, req_comp, two_back);
+            u = stbi__gif_load_next(s, &g, comp, /*req_comp,*/ two_back);
             if (u == (stbi_uc *)s) u = 0;  // end of animated gif marker
 
             if (u) {
@@ -6665,13 +6665,13 @@ static void *stbi__load_gif_main(stbi__context *s, int **delays, int *x, int *y,
     }
 }
 
-static void *stbi__gif_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri)
+static void *stbi__gif_load(stbi__context *s, int *x, int *y, int *comp, int req_comp /*stbi__result_info *ri*/)
 {
     stbi_uc *u = 0;
     stbi__gif g;
     memset(&g, 0, sizeof(g));
 
-    u = stbi__gif_load_next(s, &g, comp, req_comp, 0);
+    u = stbi__gif_load_next(s, &g, comp, /*req_comp,*/ 0);
     if (u == (stbi_uc *)s) u = 0;  // end of animated gif marker
     if (u) {
         *x = g.w;

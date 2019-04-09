@@ -109,7 +109,6 @@ class Device
    */
   bool
   CreateShaderResourceView( ID3D11Resource * pResource,
-                            D3D11_SHADER_RESOURCE_VIEW_DESC &desc,
                             ID3D11ShaderResourceView **ppSRView );
 
   bool

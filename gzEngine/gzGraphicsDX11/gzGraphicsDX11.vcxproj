@@ -182,7 +182,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ImportLibrary>$(SolutionDir)lib/$(PlatformTarget)/$(TargetName).lib</ImportLibrary>
       <AdditionalLibraryDirectories>$(SolutionDir)lib/$(PlatformTarget)/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gzCore.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);C:\Development\assimp-4.1.0\bin\code\Debug\assimp-vc140-mt.lib</AdditionalDependencies>
+      <AdditionalDependencies>gzCore.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -205,7 +205,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ImportLibrary>$(SolutionDir)lib/$(PlatformTarget)/$(TargetName).lib</ImportLibrary>
       <AdditionalLibraryDirectories>$(SolutionDir)lib/$(PlatformTarget)/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gzCore.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);C:\Development\assimp-4.1.0\bin\code\Debug\assimp-vc140-mt.lib</AdditionalDependencies>
+      <AdditionalDependencies>gzCore.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

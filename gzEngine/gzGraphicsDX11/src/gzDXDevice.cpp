@@ -209,7 +209,6 @@ namespace gzEngineSDK {
   }
 
   bool Device::CreateShaderResourceView( ID3D11Resource * pResource,
-                                         D3D11_SHADER_RESOURCE_VIEW_DESC &desc,
                                          ID3D11ShaderResourceView **ppSRView )
   {
     HRESULT result = S_OK;
