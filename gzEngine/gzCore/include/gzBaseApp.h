@@ -414,14 +414,6 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
  /************************************************************************/
 
 
-   struct SimpleVertex
-   {
-     DirectX::XMFLOAT3 Pos;
-     DirectX::XMFLOAT3 Normal;
-     DirectX::XMFLOAT2 Tex;
-   };
-
-
    struct CBNeverChanges
    {
      DirectX::XMMATRIX mView;
@@ -435,15 +427,11 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    struct CBChangesEveryFrame
    {
      DirectX::XMMATRIX mWorld;
-     DirectX::XMFLOAT4 vMeshColor;
+     Vector4f vMeshColor;
      DirectX::XMFLOAT4 ViewPosition;
    };
 
- 
-
    DirectX::XMMATRIX g_World;
-   DirectX::XMMATRIX g_World2;
-   DirectX::XMMATRIX g_World3;
 
    DirectX::XMMATRIX g_View;
    DirectX::XMMATRIX g_Projection;

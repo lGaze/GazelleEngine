@@ -414,9 +414,6 @@ namespace gzEngineSDK {
     constantChangesEveryFrame =
       GraphicsManager::instance().createBuffer( bufferDesc, nullptr );
 
-/*
-    SHADER_RESOURCE_VIEW_DESC bd;
-    memset( &bd, 0, sizeof( bd ) );*/
 
     //Load and create shader resource view
     textGorda = GraphicsManager::instance().CreateShaderResourceViewFromFile(
@@ -455,7 +452,6 @@ namespace gzEngineSDK {
     m_pToneMapTexture = 
       GraphicsManager::instance().CreateShaderResourceView(
       m_pToneMapTexture );
-
 
 
     SAMPLER_DESCRIPTOR sampDesc;
@@ -545,7 +541,7 @@ namespace gzEngineSDK {
 
     CBChangesEveryFrame cb;
     cb.mWorld = DirectX::XMMatrixTranspose( g_World );
-    cb.vMeshColor = { 0.7f, 0.7f, 0.7f, 1.0f };
+    cb.vMeshColor = Vector4f( 0.7f, 0.7f, 0.7f, 1.0f );
     cb.ViewPosition = DirectX::XMFLOAT4( Eye.m128_f32 );
     GraphicsManager::instance().updateSubresource( constantChangesEveryFrame,
                                                    &cb );
@@ -637,7 +633,7 @@ namespace gzEngineSDK {
     GraphicsManager::instance().setInputLayout( m_pBrightInputLayout );
     GraphicsManager::instance().setVertexShader( m_pBrightVertexShader );
     GraphicsManager::instance().setPixelShader( m_pBrightPixelShader );
-    GraphicsManager::instance().setShaderResources( m_pLuminanceTexture, 0, 1 );
+    GraphicsManager::instance().setShaderResources( m_pAlbedoTexture, 0, 1 );
     GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
 
     GraphicsManager::instance().drawIndexed( quad->getNumIndices(), 0, 0 );
@@ -688,7 +684,7 @@ namespace gzEngineSDK {
     GraphicsManager::instance().setInputLayout( m_pBlurV1InputLayout );
     GraphicsManager::instance().setVertexShader( m_pBlurV1VertexShader );
     GraphicsManager::instance().setPixelShader( m_pBlurV1PixelShader );
-    GraphicsManager::instance().setShaderResources( m_pBrightTexture, 0, 1 );
+    GraphicsManager::instance().setShaderResources( m_pBlurH1Texture, 0, 1 );
     GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
 
     GraphicsManager::instance().drawIndexed( quad->getNumIndices(), 0, 0 );

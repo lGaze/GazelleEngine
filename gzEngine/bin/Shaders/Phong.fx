@@ -54,10 +54,10 @@ PS_INPUT VS(VS_INPUT input)
   float kDiffuse = float(1.0f);
   float kSpecular = float(.8f);
   float SpecularPower = float(16.0f);
-  float3 DiffuseColor = float3(.20f, 0.0f, 1.0f);
+  float3 DiffuseColor = float3(.20f, .50f, 1.0f);
   float4 SpecularColor = float4(1.0f, 0.0f, 0.0f, 1.0f);
-  float4 LightDir = float4(0.0f, 0.0f, -1.0f, 1.0f);
-  float3 AmbientColor = float3(1.0f, 1.0f, 0.0f);
+  float4 LightDir = float4(1.0f, 1.0f, 1.0f, 1.0f);
+  float3 AmbientColor = float3(0.0f, 0.5f, 0.5f);
   float kAmbient = float(0.2f);
 
   /************************************************************************/

@@ -25,6 +25,22 @@ TEST( gzUtilities, BasicTypeSize )
 
 }
 
+TEST( gzUtilities, Matrix4Test )
+{
+  Matrix4 a( 0, 0, 0, 0,
+             0, 0, 0, 0,
+             0, 0, 0, 0,
+             0, 0, 0, 0 );
+
+  a.identity();
+
+  EXPECT_EQ( a, Matrix4( 1, 0, 0, 0,
+                         0, 1, 0, 0,
+                         0, 0, 1, 0,
+                         0, 0, 0, 1 ) );
+  
+}
+
 int main( int32 argc, char** argv )
 {
   int32 stop;

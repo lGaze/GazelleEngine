@@ -84,6 +84,12 @@ namespace gzEngineSDK {
     Matrix4&
     operator*=(const Matrix4& Matrix);
 
+    /**
+     * @brief 
+     */
+    Matrix4&
+    operator==( const Matrix4& Matrix );
+
     /************************************************************************/
     /* Matrix functions                                                     */
     /************************************************************************/

@@ -8,17 +8,18 @@
 #pragma once
 
 #include "gzPrerequisitesCore.h"
-#include <DirectXMath.h>
+#include <gzVector3f.h>
+#include <gzVector2f.h>
+#include <gzVector4f.h>
 
 
 namespace gzEngineSDK {
 
-//TODO: fix this 
 struct VERTICES
 {
-  DirectX::XMFLOAT3 position;
-  DirectX::XMFLOAT3 normals;
-  DirectX::XMFLOAT2 uv;
+  Vector3f position;
+  Vector3f normals;
+  Vector2f uv;
 };
 
 struct TEXTURE2D_DESCRIPTOR

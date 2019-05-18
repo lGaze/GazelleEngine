@@ -15,7 +15,9 @@ Mesh::Mesh() :
 bool
 Mesh::loadModel( String fileName )
 {
-  int32 flags = aiProcess_Triangulate | aiProcessPreset_TargetRealtime_MaxQuality;
+  int32 
+  flags = aiProcess_Triangulate | aiProcessPreset_TargetRealtime_MaxQuality;
+
   m_pModelScene = importer.ReadFile( fileName, flags );
 
   if ( !m_pModelScene )
@@ -38,7 +40,8 @@ bool Mesh::readTextures()
   {
     aiString Path;
 
-    const aiMaterial* Material =
+    const aiMaterial*
+    Material =
       m_pModelScene->mMaterials[m_pModelScene->mMeshes[i]->mMaterialIndex];
 
     if ( Material->GetTexture(
@@ -59,7 +62,9 @@ bool Mesh::readTextures()
 
 bool Mesh::processData()
 {
-  bool repeat = true;
+  bool 
+  repeat = true;
+
   m_pVecNodeBuff.push_back( m_pModelScene->mRootNode );
 
 
@@ -70,7 +75,7 @@ bool Mesh::processData()
       m_pModelNode = m_pVecNodeBuff.at( i );
       if ( m_pModelNode->mNumChildren > 0 )
       {
-        for ( unsigned int j = 0; j < m_pModelNode->mNumChildren; j++ )
+        for ( uint32 j = 0; j < m_pModelNode->mNumChildren; j++ )
         {
           m_pVecNodeBuff.push_back( m_pModelNode->mChildren[j] );
         }
@@ -100,39 +105,42 @@ bool Mesh::processData()
 
 bool Mesh::assimpGetMeshData( const aiMesh * mesh )
 {
-  aiFace *face;
+  aiFace*
+  face;
+
   m_iNumVertices = mesh->mNumVertices;
-  VERTICES temp;
+
+  VERTICES 
+  temp;
 
   for ( uint32 i = 0; i < mesh->mNumVertices; i++ )
   {
 
-    temp.position = DirectX::XMFLOAT3(
-      mesh->mVertices[i].x,
-      mesh->mVertices[i].y,
-      mesh->mVertices[i].z );
+    temp.position = Vector3f( mesh->mVertices[i].x,
+                         mesh->mVertices[i].y,
+                         mesh->mVertices[i].z );
 
 
     if ( mesh->HasNormals() )
     {
-      temp.normals = DirectX::XMFLOAT3(
+      temp.normals = Vector3f(
         mesh->mNormals[i].x,
         mesh->mNormals[i].y,
         mesh->mNormals[i].z );
     }
     else
     {
-      temp.normals = DirectX::XMFLOAT3( 0, 0, 0 );
+      temp.normals = Vector3f( 0, 0, 0 );
     }
 
     if ( mesh->HasTextureCoords( 0 ) )
     {
-      temp.uv = { mesh->mTextureCoords[0][i].x,
-                     mesh->mTextureCoords[0][i].y };
+      temp.uv = Vector2f( mesh->mTextureCoords[0][i].x,
+                          mesh->mTextureCoords[0][i].y );
     }
     else
     {
-      temp.uv = { 0,0 };
+      temp.uv = Vector2f( 0,0 );
     }
 
     m_vecVert.push_back( temp );

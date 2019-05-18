@@ -144,6 +144,18 @@ namespace gzEngineSDK {
     return *this;
   }
 
+  Matrix4& 
+  Matrix4::operator==( const Matrix4 & Matrix )
+  {
+    for ( int32 i = 0; i < 4; i++ )
+    {
+      for ( int32 j = 0; j < 4; j++ )
+      {
+
+      }
+    }
+  }
+
   void
   Matrix4::identity() {
 
