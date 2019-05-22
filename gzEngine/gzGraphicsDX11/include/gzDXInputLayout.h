@@ -28,15 +28,6 @@ class DXInputLayout : public InputLayout
   /* InputLayout functions                                                */
   /************************************************************************/
 
-/*
-  
-  / **
-   * @brief Pushes the description to te vector of descriptions
-   * /
-  void
-  AddToLayout( INPUT_LAYOUT_DESCRIPTOR &inputLayoutDesc );*/
-
-
   /**
    * @brief 
    */
@@ -67,6 +58,7 @@ class DXInputLayout : public InputLayout
   getnumElem() {
     return m_numElem;
   }
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
@@ -87,13 +79,6 @@ class DXInputLayout : public InputLayout
    * @brief 
    */
   uint32 m_numElem;
-
-/*
- public:
-  / **
-   * @brief Vector with all the descriptions of the InputLayout
-   * /
-  std::vector<D3D11_INPUT_ELEMENT_DESC> m_vLayout;*/
    
  };
 }

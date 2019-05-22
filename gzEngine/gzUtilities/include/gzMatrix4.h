@@ -19,7 +19,7 @@ namespace gzEngineSDK {
     /**
      * @brief 
      */
-    FORCEINLINE Matrix4() = default;
+    FORCEINLINE Matrix4();
 
     /**
      * @brief 
@@ -39,7 +39,10 @@ namespace gzEngineSDK {
     /**
      * @brief 
      */
-    Matrix4(Vector4f VectorA, Vector4f VectorB, Vector4f VectorC, Vector4f VectorD);
+    Matrix4( Vector4f VectorA,
+             Vector4f VectorB,
+             Vector4f VectorC,
+             Vector4f VectorD );
 
    /************************************************************************/
    /* Overloaded operators                                                 */
@@ -87,15 +90,21 @@ namespace gzEngineSDK {
     /**
      * @brief 
      */
-    Matrix4&
-    operator==( const Matrix4& Matrix );
+    bool
+    operator==( const Matrix4& Matrix ) const;
+
+    /**
+     * @brief
+     */
+    bool
+    operator!=( const Matrix4& Matrix ) const;
 
     /************************************************************************/
     /* Matrix functions                                                     */
     /************************************************************************/
 
     /**
-     * @brief 
+     * @brief This function sets the Matrix to an identity Matrix 
      */
     void
     identity();
@@ -104,8 +113,30 @@ namespace gzEngineSDK {
      * @brief 
      */
     void
-    transposed();
+    transpose();
 
+    /**
+     * @brief This function sets all the elements of the matrix to 0
+     */
+    void
+    zeroMatrix();
+
+    /**
+     * @brief 
+     */
+    Matrix4&
+    matrixLookAtLH( Vector3f eyePosition,
+                    Vector3f focusPosition,
+                    Vector3f upDirection ); 
+
+    /**
+     * @brief 
+     */
+    Matrix4&
+    matrixLookToLH( Vector3f eyePosition,
+                    Vector3f eyeDirection,
+                    Vector3f upDirection );
+    
     /************************************************************************/
     /* Member declaration                                                   */
     /************************************************************************/

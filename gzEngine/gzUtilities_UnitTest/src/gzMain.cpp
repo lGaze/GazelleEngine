@@ -27,10 +27,9 @@ TEST( gzUtilities, BasicTypeSize )
 
 TEST( gzUtilities, Matrix4Test )
 {
-  Matrix4 a( 0, 0, 0, 0,
-             0, 0, 0, 0,
-             0, 0, 0, 0,
-             0, 0, 0, 0 );
+
+  Matrix4 a;
+  Matrix4 b;
 
   a.identity();
 
@@ -38,6 +37,34 @@ TEST( gzUtilities, Matrix4Test )
                          0, 1, 0, 0,
                          0, 0, 1, 0,
                          0, 0, 0, 1 ) );
+ 
+  a = Matrix4( 1, 5, 9, 13,
+               2, 6, 10, 14,
+               3, 7, 11, 15,
+               4, 8, 12, 16 );
+  
+  a.transpose();
+
+  EXPECT_EQ( a, Matrix4( 1, 2, 3, 4,
+                         5, 6, 7, 8,
+                         9, 10, 11, 12,
+                         13, 14, 15, 16 ) );
+
+  a.zeroMatrix();
+
+  a = Matrix4( 2, 2, 2, 2,
+               2, 2, 2, 2,
+               2, 2, 2, 2,
+               2, 2, 2, 2 );
+
+  b = Matrix4( 1, 1, 1, 1,
+               1, 1, 1, 1,
+               1, 1, 1, 1,
+               1, 1, 1, 1 );
+  
+  b *= a;
+  EXPECT_EQ( a, b ) ;
+
   
 }
 

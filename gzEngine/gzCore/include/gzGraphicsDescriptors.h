@@ -15,48 +15,41 @@
 
 namespace gzEngineSDK {
 
-struct VERTICES
-{
+struct VERTICES {
   Vector3f position;
   Vector3f normals;
   Vector2f uv;
 };
 
-struct TEXTURE2D_DESCRIPTOR
-{
+struct TEXTURE2D_DESCRIPTOR {
   uint32 Width;
   uint32 Height;
   uint32 MipLevels;
   uint32 ArraySize;
   uint32 Format;
-  //DXGI_SAMPLE_DESC SampleDesc;
   uint32 Usage;
   uint32 BindFlags;
   uint32 CPUAccessFlags;
   uint32 MiscFlags;
 };
 
-struct DEPTH_STENCIL_VIEW_DESCRIPTOR
-{
+struct DEPTH_STENCIL_VIEW_DESCRIPTOR {
   uint32 Format;
   uint32 ViewDimension;
   uint32 Flags;
 };
 
-struct SHADER_RESOURCE_VIEW_DESC
-{
+struct SHADER_RESOURCE_VIEW_DESC {
   uint32 Format;
   uint32 ViewDimension;
 };
 
-struct RENDER_TARGET_VIEW_DESC
-{
+struct RENDER_TARGET_VIEW_DESC {
   uint32 Format;
   uint32 ViewDimension;
 };
 
-struct VIEWPORT_DESCRIPTOR
-{
+struct VIEWPORT_DESCRIPTOR {
   float TopLeftX;
   float TopLeftY;
   float Width;
@@ -65,27 +58,22 @@ struct VIEWPORT_DESCRIPTOR
   float MaxDepth;
 };
 
-struct BUFFER_DESCRIPTOR
-{
+struct BUFFER_DESCRIPTOR {
   uint32 ByteWidth;
   uint32 Usage;
   uint32 BindFlags;
   uint32 CPUAccessFlags;
   uint32 MiscFlags;
   uint32 StructureByteStride;
-
 };
 
-struct SUBRESOUCE_DATA
-{
+struct SUBRESOUCE_DATA {
   const void *pSysMem;
   uint32 SysMemPitch;
   uint32 SysMemSlicePitch;
-
 };
 
-struct SAMPLER_DESCRIPTOR
-{
+struct SAMPLER_DESCRIPTOR {
   uint32 Filter;
   uint32 AddressU;
   uint32 AddressY;
@@ -96,11 +84,9 @@ struct SAMPLER_DESCRIPTOR
   float BorderColor[4];
   float MinLOD;
   float MaxLOD;
-
 };
 
-struct INPUT_LAYOUT_DESCRIPTOR
-{
+struct INPUT_LAYOUT_DESCRIPTOR {
   String * SemanticName;
   uint32 SemanticIndex;
   uint32 Format;
@@ -108,11 +94,9 @@ struct INPUT_LAYOUT_DESCRIPTOR
   uint32 AlignedByteOffset;
   uint32 InputSlotClass;
   uint32 InstanceDataStepRate;
-
 };
 
-struct RASTERIZER_DESCRIPTOR
-{
+struct RASTERIZER_DESCRIPTOR {
   int32 FillMode;
   int32 CullMode;
   bool FrontCounterClockWise;
@@ -123,7 +107,6 @@ struct RASTERIZER_DESCRIPTOR
   bool  ScissorEnable;
   bool  MultisampleEnable;
   bool  AntialiasedLineEnable;
-
 };
 
 

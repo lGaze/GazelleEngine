@@ -8,8 +8,11 @@
 #include "gzMatrix4.h"
 
 namespace gzEngineSDK {
-  
-  //TODO fix the constructors
+
+  Matrix4::Matrix4()
+  {
+    this->zeroMatrix();
+  }
 
   Matrix4::Matrix4(
     float m00, float m01, float m02, float m03,
@@ -144,16 +147,29 @@ namespace gzEngineSDK {
     return *this;
   }
 
-  Matrix4& 
-  Matrix4::operator==( const Matrix4 & Matrix )
+  bool 
+  Matrix4::operator==( const Matrix4 & Matrix ) const
   {
-    for ( int32 i = 0; i < 4; i++ )
-    {
-      for ( int32 j = 0; j < 4; j++ )
-      {
-
+    for ( int32 i = 0; i < 4; i++ ) {
+      for ( int32 j = 0; j < 4; j++ ) {
+        if ( m[i][j] != Matrix.m[i][j] ) {
+          return false;
+        }
       }
     }
+    return true;
+  }
+
+  bool Matrix4::operator!=( const Matrix4& Matrix ) const
+  {
+    for ( int32 i = 0; i < 4; i++ ) {
+      for ( int32 j = 0; j < 4; j++ ) {
+        if ( m[i][j] == Matrix.m[i][j] ) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   void
@@ -187,7 +203,7 @@ namespace gzEngineSDK {
   }
 
   void
-  Matrix4::transposed() {
+  Matrix4::transpose() {
     Matrix4 temporal = *this;
     for (int32 i = 0; i < 4; i++) {
       for (int32 j = 0; j < 4; j++) {
@@ -196,5 +212,46 @@ namespace gzEngineSDK {
     }
   }
 
+  void 
+  Matrix4::zeroMatrix() {
+    matrix.m00 = 0;
+    matrix.m01 = 0;
+    matrix.m02 = 0;
+    matrix.m03 = 0;
+
+    matrix.m10 = 0;
+    matrix.m11 = 0;
+    matrix.m12 = 0;
+    matrix.m13 = 0;
+
+    matrix.m20 = 0;
+    matrix.m21 = 0;
+    matrix.m22 = 0;
+    matrix.m23 = 0;
+
+    matrix.m30 = 0;
+    matrix.m31 = 0;
+    matrix.m32 = 0;
+    matrix.m33 = 0;
+  }
+
   
+  Matrix4& 
+  Matrix4::matrixLookAtLH( Vector3f eyePosition, 
+                           Vector3f focusPosition, 
+                           Vector3f upDirection )
+  {
+    Vector3f eyeDirection = focusPosition - eyePosition;
+    return matrixLookToLH( eyePosition, eyeDirection, upDirection );
+  }
+
+  Matrix4&
+  Matrix4::matrixLookToLH( Vector3f eyePosition, 
+                           Vector3f eyeDirection, 
+                           Vector3f upDirection )
+  {
+    eyeDirection.normalize();
+
+  }
+
 }
