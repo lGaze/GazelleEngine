@@ -122,20 +122,21 @@ namespace gzEngineSDK {
     zeroMatrix();
 
     /**
-     * @brief 
+     * @brief This function builds a left handed
      */
     Matrix4&
     matrixLookAtLH( Vector3f eyePosition,
-                    Vector3f focusPosition,
+                    Vector3f atPosition,
                     Vector3f upDirection ); 
 
     /**
-     * @brief 
+     * @brief This function builds a left handed perspective projection matrix.
      */
     Matrix4&
-    matrixLookToLH( Vector3f eyePosition,
-                    Vector3f eyeDirection,
-                    Vector3f upDirection );
+    matrixPerspectiveFovLH( float fovy,
+                            float aspect,
+                            float znear,
+                            float zfar );
     
     /************************************************************************/
     /* Member declaration                                                   */

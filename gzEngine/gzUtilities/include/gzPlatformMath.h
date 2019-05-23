@@ -137,6 +137,16 @@ namespace gzEngineSDK {
     }
 
     /**
+     * @brief Cotangent function
+     * @param Float value to get the cotangent
+     * @return Cotangent of the value
+     */
+    static FORCEINLINE float
+    cot(float value) {
+      return 1 / tan( value );
+    }
+
+    /**
      * @brief Exponential function
      * @param Float value of the exponent
      * @return Exponential value of the value

@@ -238,19 +238,60 @@ namespace gzEngineSDK {
   
   Matrix4& 
   Matrix4::matrixLookAtLH( Vector3f eyePosition, 
-                           Vector3f focusPosition, 
+                           Vector3f atPosition, 
                            Vector3f upDirection )
   {
-    Vector3f eyeDirection = focusPosition - eyePosition;
-    return matrixLookToLH( eyePosition, eyeDirection, upDirection );
+    Vector3f Xaxis;
+    Vector3f Yaxis;
+    Vector3f Zaxis;
+
+    Zaxis = (atPosition - eyePosition).getNormalized();
+    Xaxis = ( upDirection.crossProduct( Zaxis ) ).getNormalized();
+    Yaxis = Zaxis.crossProduct( Xaxis );
+
+    Matrix4 lookAt;
+    lookAt.identity();
+
+    lookAt.matrix.m00 = Xaxis.x; 
+    lookAt.matrix.m10 = Xaxis.y; 
+    lookAt.matrix.m20 = Xaxis.z; 
+
+    lookAt.matrix.m01 = Yaxis.x;
+    lookAt.matrix.m11 = Yaxis.y;
+    lookAt.matrix.m21 = Yaxis.z;
+
+    lookAt.matrix.m02 = Zaxis.x;
+    lookAt.matrix.m12 = Zaxis.y;
+    lookAt.matrix.m22 = Zaxis.z;
+
+    lookAt.matrix.m30 = -(Xaxis.dot( eyePosition ));
+    lookAt.matrix.m31 = -(Yaxis.dot( eyePosition ));
+    lookAt.matrix.m32 = -(Zaxis.dot( eyePosition ));
+
+    return lookAt;
+    
   }
 
   Matrix4&
-  Matrix4::matrixLookToLH( Vector3f eyePosition, 
-                           Vector3f eyeDirection, 
-                           Vector3f upDirection )
+  Matrix4::matrixPerspectiveFovLH( float fovy, 
+                                   float aspect, 
+                                   float znear, 
+                                   float zfar )
   {
-    eyeDirection.normalize();
+    float YScale = Math::cot( fovy / 2 );
+    float XScale = YScale / aspect;
+
+    Matrix4 matrixPerspective;
+
+    matrixPerspective.matrix.m00 = XScale;
+    matrixPerspective.matrix.m11 = YScale;
+    matrixPerspective.matrix.m22 = zfar / ( zfar - znear);
+
+    matrixPerspective.matrix.m32 = -( znear * zfar / ( zfar - znear ) );
+
+    matrixPerspective.matrix.m23 = 1;
+
+    return matrixPerspective;
 
   }
 

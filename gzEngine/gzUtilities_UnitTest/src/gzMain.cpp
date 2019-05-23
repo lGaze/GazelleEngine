@@ -65,6 +65,18 @@ TEST( gzUtilities, Matrix4Test )
   b *= a;
   EXPECT_EQ( a, b ) ;
 
+  Vector3f Eye( 0.0f, 3.0f, -175.0f );
+  Vector3f At( 0.0f, 1.0f, 0.0f );
+  Vector3f Up( 0.0f, 1.0f, 0.0f );
+
+  Matrix4 lookAt;
+  lookAt = lookAt.matrixLookAtLH( Eye, At, Up );
+
+  Matrix4 perspective;
+  perspective = perspective.matrixPerspectiveFovLH( 0.785398163f,
+                                                    600.0f /  (float)480.0f,
+                                                    0.001f,
+                                                    500.0f );
   
 }
 
