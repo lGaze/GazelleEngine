@@ -467,29 +467,31 @@ namespace gzEngineSDK {
     m_pSampler = GraphicsManager::instance().createSamplerState( sampDesc );
 
    //Initialize the matrices
-    g_World = DirectX::XMMatrixIdentity();
+    g_World.identity();
 
     //initialize the view matrix
-    Eye = DirectX::XMVectorSet( 0.0f, 3.0f, -175.0f, 0.0f );
-    DirectX::XMVECTOR At = DirectX::XMVectorSet( 0.0f, 1.0f, 0.0f, 0.0f );
-    DirectX::XMVECTOR Up = DirectX::XMVectorSet( 0.0f, 1.0f, 0.0f, 0.0f );
-    g_View = DirectX::XMMatrixLookAtLH( Eye, At, Up );
+    Eye = Vector3f( 0.0f, 3.0f, -175.0f);
+    Vector3f At = Vector3f( 0.0f, 1.0f, 0.0f);
+    Vector3f Up = Vector3f( 0.0f, 1.0f, 0.0f );
+    g_View = g_View.matrixLookAtLH( Eye, At, Up );
+    g_View.transpose();
 
     CBNeverChanges cbNeverChanges;
-    cbNeverChanges.mView = DirectX::XMMatrixTranspose( g_View );
+    cbNeverChanges.mView = g_View;
     GraphicsManager::instance().updateSubresource( constantNeverChanges, 
                                                    &cbNeverChanges );
 
     //initialize the prijection matrix
-    g_Projection = DirectX::XMMatrixPerspectiveFovLH( 
+    g_Projection = g_Projection.matrixPerspectiveFovLH( 
       0.785398163f,
-      m_windowWidth / ( FLOAT ) m_windowHeight,
+      static_cast< float >(m_windowWidth) / static_cast<float>(m_windowHeight),
       0.001f,
       500.0f );
+    g_Projection.transpose();
 
     CBChangeOnResize cbChangesonResize;
    
-    cbChangesonResize.mProjection = DirectX::XMMatrixTranspose( g_Projection );
+    cbChangesonResize.mProjection = g_Projection;
     GraphicsManager::instance().updateSubresource( constantChangesonResize,
                                                    &cbChangesonResize );
 
@@ -539,10 +541,11 @@ namespace gzEngineSDK {
                                                        0, 
                                                        m_pDepthStencilView );
 
+    g_World.transpose();
     CBChangesEveryFrame cb;
-    cb.mWorld = DirectX::XMMatrixTranspose( g_World );
+    cb.mWorld = g_World;
     cb.vMeshColor = Vector4f( 0.7f, 0.7f, 0.7f, 1.0f );
-    cb.ViewPosition = DirectX::XMFLOAT4( Eye.m128_f32 );
+    cb.ViewPosition = Vector4f(Eye.x, Eye.y, Eye.z, 0.0f);
     GraphicsManager::instance().updateSubresource( constantChangesEveryFrame,
                                                    &cb );
 

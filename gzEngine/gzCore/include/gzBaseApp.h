@@ -413,30 +413,28 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
  /*       Test                                                           */
  /************************************************************************/
 
-
    struct CBNeverChanges
    {
-     DirectX::XMMATRIX mView;
+     Matrix4 mView;
    };
 
    struct CBChangeOnResize
    {
-     DirectX::XMMATRIX mProjection;
+     Matrix4 mProjection;
    };
 
    struct CBChangesEveryFrame
    {
-     DirectX::XMMATRIX mWorld;
+     Matrix4 mWorld;
      Vector4f vMeshColor;
-     DirectX::XMFLOAT4 ViewPosition;
+     Vector4f ViewPosition;
    };
 
-   DirectX::XMMATRIX g_World;
+   Matrix4 g_World;
+   Matrix4 g_View;
+   Matrix4 g_Projection;
 
-   DirectX::XMMATRIX g_View;
-   DirectX::XMMATRIX g_Projection;
-
-   DirectX::XMVECTOR Eye;
+   Vector3f Eye;
 
    Buffer * constantNeverChanges;
    Buffer * constantChangesonResize;
