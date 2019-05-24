@@ -456,13 +456,8 @@ namespace gzEngineSDK {
 
 
   void
-    DXGraphicsManager::createAndsetVertexAndIndexBufferFromMesh(
-      uint32 Numvetices,
-      VERTICES * vertexData,
-      uint32 NumIndices,
-      uint16 * indexData,
-      Buffer ** Vbuffer,
-      Buffer ** Ibuffer )
+    DXGraphicsManager::createAndsetVertexAndIndexBufferFromMesh( 
+      MESH_DATA * Mesh )
   {
 
     DXBuffer * tempVBuffer = new DXBuffer();
@@ -472,7 +467,7 @@ namespace gzEngineSDK {
     BUFFER_DESCRIPTOR BufferDesc;
     memset( &BufferDesc, 0, sizeof( BufferDesc ) );
     BufferDesc.Usage = USAGE_DEFAULT;
-    BufferDesc.ByteWidth = Numvetices * sizeof( VERTICES );
+    BufferDesc.ByteWidth = Mesh->VertexData.size() * sizeof( VERTICES );
     BufferDesc.BindFlags = BIND_VERTEX_BUFFER;
 
     tempVBuffer->CreateBufferDesc( BufferDesc );
@@ -480,7 +475,7 @@ namespace gzEngineSDK {
     //Init Data Vertex
     SUBRESOUCE_DATA initData;
     memset( &initData, 0, sizeof( initData ) );
-    initData.pSysMem = vertexData;
+    initData.pSysMem = &Mesh->VertexData[0];
 
     D3D11_BUFFER_DESC tempVBufferDesc = tempVBuffer->getBufferDesc();
     //Create Vertex Buffer
@@ -492,14 +487,14 @@ namespace gzEngineSDK {
 
     //Desc Index Buffer
     BufferDesc.Usage = USAGE_DEFAULT;
-    BufferDesc.ByteWidth = NumIndices * sizeof( unsigned short );
+    BufferDesc.ByteWidth = Mesh->IndexData.size() * sizeof( unsigned short );
     BufferDesc.BindFlags = BIND_INDEX_BUFFER;
 
 
     tempIBuffer->CreateBufferDesc( BufferDesc );
 
     //Init Data index
-    initData.pSysMem = indexData;
+    initData.pSysMem = &Mesh->IndexData[0];
 
     D3D11_BUFFER_DESC tempIBufferDesc = tempIBuffer->getBufferDesc();
     //Creates index buffer
@@ -508,8 +503,8 @@ namespace gzEngineSDK {
       reinterpret_cast< D3D11_SUBRESOURCE_DATA* >( &initData ),
       tempIBuffer->getBufferInterface() );
 
-    *Vbuffer = reinterpret_cast< Buffer* >( tempVBuffer );
-    *Ibuffer = reinterpret_cast< Buffer* >( tempIBuffer );
+    Mesh->VertexBuffer = reinterpret_cast< Buffer* >( tempVBuffer );
+    Mesh->IndexBuffer = reinterpret_cast< Buffer* >( tempIBuffer );
   }
 
   RasterizerState *

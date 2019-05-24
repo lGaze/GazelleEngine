@@ -14,11 +14,18 @@
 
 
 namespace gzEngineSDK {
-
+ 
 struct VERTICES {
   Vector3f position;
   Vector3f normals;
   Vector2f uv;
+};
+
+struct MESH_DATA {
+  Vector<VERTICES> VertexData;
+  Vector<uint16> IndexData;
+  void * VertexBuffer;
+  void * IndexBuffer;
 };
 
 struct TEXTURE2D_DESCRIPTOR {

@@ -52,40 +52,48 @@ class GZ_CORE_EXPORT Mesh
   bool
   processData();
 
-  /**
+ /* / **
    * @brief
-   */
+   * /
   FORCEINLINE VERTICES *
     getVertexData()
   {
     return &m_vecVert[0];
   }
 
-  /**
+  / **
    * @brief
-   */
+   * /
   FORCEINLINE uint16 *
     getIndexData()
   {
     return &indexBuff[0];
   }
 
-  /**
+  / **
    * @brief
-   */
+   * /
   FORCEINLINE uint32
     getNumVertices()
   {
     return m_vecVert.size();
   }
 
-  /**
+  / **
    * @brief
-   */
+   * /
   FORCEINLINE uint32
     getNumIndices()
   {
     return indexBuff.size();
+  }*/
+
+  /**
+   * @brief 
+   */
+  FORCEINLINE MESH_DATA *
+  getMeshData() { 
+    return &m_meshData[0];
   }
 
  private:
@@ -108,7 +116,9 @@ class GZ_CORE_EXPORT Mesh
 
  private:
 
-  Vector<VERTICES> m_vecVert;
+
+  Vector<MESH_DATA> m_meshData;
+  //Vector<VERTICES> m_vecVert;
   VERTICES * m_pVertices;
 
   int32 m_IndexIterator;
@@ -122,7 +132,7 @@ class GZ_CORE_EXPORT Mesh
   uint32 m_iNumNodeBuff;
   Vector<Buffer*> Meshes;
 
-  Vector<uint16> indexBuff;
+ // Vector<uint16> indexBuff;
   Vector<float> vertexBuff;
 
   int32 m_iNumVertices;

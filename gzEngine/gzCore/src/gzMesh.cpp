@@ -8,7 +8,6 @@ Mesh::Mesh() :
   m_pModelNode(nullptr),
   m_pModelMesh(nullptr),
   m_pModelFace(nullptr),
-  m_IndexIterator(0),
   m_iNumVertices(0)
 {}
 
@@ -40,8 +39,7 @@ bool Mesh::readTextures()
   {
     aiString Path;
 
-    const aiMaterial*
-    Material =
+    const aiMaterial* Material =
       m_pModelScene->mMaterials[m_pModelScene->mMeshes[i]->mMaterialIndex];
 
     if ( Material->GetTexture(
@@ -62,8 +60,7 @@ bool Mesh::readTextures()
 
 bool Mesh::processData()
 {
-  bool 
-  repeat = true;
+  bool repeat = true;
 
   m_pVecNodeBuff.push_back( m_pModelScene->mRootNode );
 
@@ -105,17 +102,16 @@ bool Mesh::processData()
 
 bool Mesh::assimpGetMeshData( const aiMesh * mesh )
 {
-  aiFace*
-  face;
+  aiFace* face;
 
   m_iNumVertices = mesh->mNumVertices;
 
-  VERTICES 
-  temp;
+  VERTICES  temp;
+
+  MESH_DATA tempMeshData;
 
   for ( uint32 i = 0; i < mesh->mNumVertices; i++ )
   {
-
     temp.position = Vector3f( mesh->mVertices[i].x,
                          mesh->mVertices[i].y,
                          mesh->mVertices[i].z );
@@ -143,7 +139,7 @@ bool Mesh::assimpGetMeshData( const aiMesh * mesh )
       temp.uv = Vector2f( 0,0 );
     }
 
-    m_vecVert.push_back( temp );
+    tempMeshData.VertexData.push_back(temp);
   }
 
 
@@ -155,11 +151,12 @@ bool Mesh::assimpGetMeshData( const aiMesh * mesh )
     
     for ( uint32 g = 0; g < face->mNumIndices; g++ )
     {
-      indexBuff.push_back( static_cast<uint16>(face->mIndices[g]));
+      tempMeshData.IndexData.push_back( static_cast<uint16>(face->mIndices[g]));
     }
 
   }
-  m_IndexIterator = indexBuff.size();
+
+  m_meshData.push_back( tempMeshData );
 
   return true;
 }

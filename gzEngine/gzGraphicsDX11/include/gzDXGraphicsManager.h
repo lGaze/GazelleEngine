@@ -253,12 +253,7 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   virtual void
-  createAndsetVertexAndIndexBufferFromMesh( uint32 Numvetices,
-                                            VERTICES * vertexData,
-                                            uint32 NumIndices,
-                                            uint16 * indexData,   
-                                            Buffer ** Vbuffer,
-                                            Buffer ** Ibuffer ) override;
+  createAndsetVertexAndIndexBufferFromMesh( MESH_DATA * Mesh ) override;
 
   /**
    * @brief 

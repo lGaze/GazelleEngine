@@ -8,7 +8,6 @@
 
 #include <gzPrerequisitesUtilities.h>
 #include "gzGraphicsDescriptors.h"
-#include <DirectXMath.h>
 #include <gzMatrix4.h>
 
 

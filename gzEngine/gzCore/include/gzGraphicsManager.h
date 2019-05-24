@@ -89,12 +89,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief 
    */
   virtual void
-  createAndsetVertexAndIndexBufferFromMesh( uint32 Numvetices,
-                                            VERTICES * vertexData,
-                                            uint32 NumIndices,
-                                            uint16 * indexData,
-                                            Buffer ** Vbuffer,
-                                            Buffer ** Ibuffer) = 0;
+  createAndsetVertexAndIndexBufferFromMesh( MESH_DATA * Mesh ) = 0;
 
   /**
    * @brief 
