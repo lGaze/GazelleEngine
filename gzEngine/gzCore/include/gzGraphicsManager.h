@@ -55,7 +55,6 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
                           TEXTURE2D_DESCRIPTOR &texDesc ) = 0;
 
 
-
   /**
    * @brief 
    */
@@ -69,6 +68,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    */
   virtual InputLayout*
   createInputLayout( VertexShader * vertexShader ) = 0;
+
 
   /**
    * @brief 
@@ -89,7 +89,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief 
    */
   virtual void
-  createAndsetVertexAndIndexBufferFromMesh( MESH_DATA * Mesh ) = 0;
+  createVertexAndIndexBufferFromMesh( MESH_DATA * Mesh, int32 numMeshes ) = 0;
 
   /**
    * @brief 

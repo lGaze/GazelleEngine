@@ -347,10 +347,8 @@ namespace gzEngineSDK {
     //Quad Aligned
     quad = new Mesh();
     quad->loadModel( "Meshes\\QuadPerron.obj" );
-    GraphicsManager::instance().createAndsetVertexAndIndexBufferFromMesh( 
-      quad->getMeshData());
-
-
+    GraphicsManager::instance().createVertexAndIndexBufferFromMesh( 
+      quad->getMeshData(), quad->getNumMeshes());
 
 /*
     //Dwarf
@@ -366,11 +364,12 @@ namespace gzEngineSDK {
 
     //Cube
     cube = new Mesh();
-    cube->loadModel( "Meshes\\ninjaHead.obj" );
-    GraphicsManager::instance().createAndsetVertexAndIndexBufferFromMesh( 
-      cube->getMeshData());
-
-
+   // cube->loadModel( "Meshes\\ninjaHead.obj" );
+    //cube->loadModel( "Meshes\\Claire\\claireredfieldout.obj" );
+    cube->loadModel( "Meshes\\Dwarf\\dwarf.x" );
+    GraphicsManager::instance().createVertexAndIndexBufferFromMesh( 
+      cube->getMeshData(), cube->getNumMeshes());
+   
     //Create RasterizerState desc
     RASTERIZER_DESCRIPTOR rasterizerDesc;
     memset( &rasterizerDesc, 0, sizeof( rasterizerDesc ) );
@@ -493,6 +492,7 @@ namespace gzEngineSDK {
   BaseApp::render()
   {
 
+    MESH_DATA * dwarf = cube->getMeshData();
 
     //Update our time
     float t = 0.0f;
@@ -508,8 +508,6 @@ namespace gzEngineSDK {
     //g_World = DirectX::XMMatrixRotationY( t );
 
 
-
-
     //Clear back buffer
     float ClearColor2[4] = { 0.0f, 1.0f, 0.0f, 0.0f }; //Azul
     float ClearColor[4] = { 1.0f, 0.0f, 1.0f, 1.0f }; //Rosa
@@ -523,7 +521,6 @@ namespace gzEngineSDK {
    /* GraphicsManager::instance().clearRenderTargetView( ClearColor3, 
                                                        m_pLuminanceRT );*/
 
-    
 
     //Clear depth Stencil
     GraphicsManager::instance().clearDepthStencilView( CLEAR_DEPTH, 
@@ -539,8 +536,6 @@ namespace gzEngineSDK {
     GraphicsManager::instance().updateSubresource( constantChangesEveryFrame,
                                                    &cb );
 
-    
-
 
     /************************************************************************/
     /* Light                                                                */
@@ -554,33 +549,38 @@ namespace gzEngineSDK {
 
     uint32 Stride = sizeof( VERTICES );
     uint32 offset = 0;
-    GraphicsManager::instance().setVertexBuffers(
-      0,
-      1,
-      reinterpret_cast< Buffer* >( cube->getMeshData()->VertexBuffer ),
-      &Stride,
-      &offset );
-
-    GraphicsManager::instance().setIndexBuffer( 
-      FORMAT_R16_UINT,
-      reinterpret_cast<Buffer*>(cube->getMeshData()->IndexBuffer),
-      0 );
-
-    GraphicsManager::instance().setInputLayout( inputLayout );
-    GraphicsManager::instance().setVertexShader( m_pLightVertexShader );
-    GraphicsManager::instance().setVSConstantBuffers( constantNeverChanges, 0, 1 );
-    GraphicsManager::instance().setVSConstantBuffers( constantChangesonResize, 1, 1 );
-    GraphicsManager::instance().setVSConstantBuffers( constantChangesEveryFrame, 2, 1 );
-    GraphicsManager::instance().setPixelShader( m_pLightPixelShader );
-    GraphicsManager::instance().setPSConstantBuffers( constantChangesEveryFrame, 2, 1 );
-    GraphicsManager::instance().setShaderResources( textGorda, 0, 1 );
-    GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
+     
 
 
-    GraphicsManager::instance().drawIndexed( cube->getMeshData()->IndexData.size(),
-                                             0,
-                                             0 );
-    
+    for (int32 i = 0; i< cube->getNumMeshes(); i++)
+    {
+      GraphicsManager::instance().setVertexBuffers(
+        0,
+        1,
+        reinterpret_cast< Buffer* >( dwarf[i].VertexBuffer ),
+        &Stride,
+        &offset );
+
+      GraphicsManager::instance().setIndexBuffer( 
+        FORMAT_R16_UINT,
+        reinterpret_cast<Buffer*>( dwarf[i].IndexBuffer ),
+        0 );
+
+      GraphicsManager::instance().setInputLayout( inputLayout );
+      GraphicsManager::instance().setVertexShader( m_pLightVertexShader );
+      GraphicsManager::instance().setVSConstantBuffers( constantNeverChanges, 0, 1 );
+      GraphicsManager::instance().setVSConstantBuffers( constantChangesonResize, 1, 1 );
+      GraphicsManager::instance().setVSConstantBuffers( constantChangesEveryFrame, 2, 1 );
+      GraphicsManager::instance().setPixelShader( m_pLightPixelShader );
+      GraphicsManager::instance().setPSConstantBuffers( constantChangesEveryFrame, 2, 1 );
+      GraphicsManager::instance().setShaderResources( textGorda, 0, 1 );
+      GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
+
+      GraphicsManager::instance().drawIndexed( dwarf[i].IndexData.size(),
+                                               0,
+                                               0 );
+    }
+
 
     /************************************************************************/
     /* Luminance                                                            */
@@ -600,7 +600,7 @@ namespace gzEngineSDK {
       reinterpret_cast< Buffer* >( quad->getMeshData()->VertexBuffer ),
       &Stride,
       &offset );
-
+   
     GraphicsManager::instance().setIndexBuffer(
       FORMAT_R16_UINT,
       reinterpret_cast< Buffer* >( quad->getMeshData()->IndexBuffer ),
@@ -610,31 +610,31 @@ namespace gzEngineSDK {
     GraphicsManager::instance().setPixelShader( m_pLuminancePixelShader );
     GraphicsManager::instance().setShaderResources( m_pAlbedoTexture, 0, 1 );
     GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
-
-
+   
+   
     GraphicsManager::instance().drawIndexed( quad->getMeshData()->IndexData.size(),
                                              0,
                                              0 );
-
-
+   
+   
     /************************************************************************/
     /* Bright                                                               */
     /************************************************************************/
-
+   
     GraphicsManager::instance().setRenderTargets( 1,
                                                   m_pBrightRT,
                                                   nullptr );
     //Sets the Viewport
     GraphicsManager::instance().setViewports( 1, vp );
     GraphicsManager::instance().setRasterizerState( m_RasterizerState );
-
+   
     GraphicsManager::instance().setVertexBuffers(
       0,
       1,
       reinterpret_cast< Buffer* >( quad->getMeshData()->VertexBuffer ),
       &Stride,
       &offset );
-
+   
     GraphicsManager::instance().setIndexBuffer(
       FORMAT_R16_UINT,
       reinterpret_cast< Buffer* >( quad->getMeshData()->IndexBuffer ),
@@ -644,16 +644,16 @@ namespace gzEngineSDK {
     GraphicsManager::instance().setPixelShader( m_pBrightPixelShader );
     GraphicsManager::instance().setShaderResources( m_pAlbedoTexture, 0, 1 );
     GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
-
+   
     GraphicsManager::instance().drawIndexed( quad->getMeshData()->IndexData.size(),
                                              0,
                                              0 );
-
-
+   
+   
     /************************************************************************/
     /* BlurH1                                                               */
     /************************************************************************/
-
+   
     GraphicsManager::instance().setRenderTargets( 1,
                                                   m_pBlurH1RT,
                                                   nullptr );
@@ -666,7 +666,7 @@ namespace gzEngineSDK {
       reinterpret_cast< Buffer* >( quad->getMeshData()->VertexBuffer ),
       &Stride,
       &offset );
-
+   
     GraphicsManager::instance().setIndexBuffer(
       FORMAT_R16_UINT,
       reinterpret_cast< Buffer* >( quad->getMeshData()->IndexBuffer ),
@@ -676,15 +676,15 @@ namespace gzEngineSDK {
     GraphicsManager::instance().setPixelShader( m_pBlurH1PixelShader );
     GraphicsManager::instance().setShaderResources( m_pBrightTexture, 0, 1 );
     GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
-
+   
     GraphicsManager::instance().drawIndexed( quad->getMeshData()->IndexData.size(),
                                              0,
                                              0 );
-
+   
     /************************************************************************/
     /* BlurV1                                                               */
     /************************************************************************/
-
+   
     GraphicsManager::instance().setRenderTargets( 1,
                                                   m_pBlurV1RT,
                                                   nullptr );
@@ -697,7 +697,7 @@ namespace gzEngineSDK {
       reinterpret_cast< Buffer* >( quad->getMeshData()->VertexBuffer ),
       &Stride,
       &offset );
-
+   
     GraphicsManager::instance().setIndexBuffer(
       FORMAT_R16_UINT,
       reinterpret_cast< Buffer* >( quad->getMeshData()->IndexBuffer ),
@@ -707,15 +707,15 @@ namespace gzEngineSDK {
     GraphicsManager::instance().setPixelShader( m_pBlurV1PixelShader );
     GraphicsManager::instance().setShaderResources( m_pBlurH1Texture, 0, 1 );
     GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
-
+   
     GraphicsManager::instance().drawIndexed( quad->getMeshData()->IndexData.size(),
                                              0,
                                              0 );
-
+   
     /************************************************************************/
     /* AddBright1                                                           */
     /************************************************************************/
-
+   
     GraphicsManager::instance().setRenderTargets( 1,
                                                   m_pAddBright1RT,
                                                   nullptr );
@@ -728,7 +728,7 @@ namespace gzEngineSDK {
       reinterpret_cast< Buffer* >( quad->getMeshData()->VertexBuffer ),
       &Stride,
       &offset );
-
+   
     GraphicsManager::instance().setIndexBuffer(
       FORMAT_R16_UINT,
       reinterpret_cast< Buffer* >( quad->getMeshData()->IndexBuffer ),
@@ -740,15 +740,15 @@ namespace gzEngineSDK {
     GraphicsManager::instance().setShaderResources( m_pBlurH1Texture, 1, 1 );
     GraphicsManager::instance().setShaderResources( m_pBlurV1Texture, 2, 1 );
     GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
-
+   
     GraphicsManager::instance().drawIndexed( quad->getMeshData()->IndexData.size(),
                                              0,
                                              0 );
-
+   
     /************************************************************************/
     /* ToneMap                                                          */
     /************************************************************************/
-
+   
     GraphicsManager::instance().setRenderTargets( 1,
                                                   m_pBackBuffer,
                                                   nullptr );
@@ -761,7 +761,7 @@ namespace gzEngineSDK {
       reinterpret_cast< Buffer* >( quad->getMeshData()->VertexBuffer),
                                    &Stride,
                                    &offset );
-
+   
     GraphicsManager::instance().setIndexBuffer(
       FORMAT_R16_UINT,
       reinterpret_cast< Buffer* >( quad->getMeshData()->IndexBuffer ),
@@ -772,7 +772,7 @@ namespace gzEngineSDK {
     GraphicsManager::instance().setShaderResources( m_pAlbedoTexture, 0, 1 );
     GraphicsManager::instance().setShaderResources( m_pAddBright1Texture, 1, 1 );
     GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
-
+   
     GraphicsManager::instance().drawIndexed( quad->getMeshData()->IndexData.size(),
                                              0,
                                              0 );

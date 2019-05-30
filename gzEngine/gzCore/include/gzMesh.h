@@ -96,6 +96,14 @@ class GZ_CORE_EXPORT Mesh
     return &m_meshData[0];
   }
 
+  /**
+   * @brief 
+   */
+  FORCEINLINE int32
+  getNumMeshes() {
+    return m_meshData.size();
+  }
+
  private:
 
   /**

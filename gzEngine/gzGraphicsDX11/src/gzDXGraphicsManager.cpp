@@ -37,7 +37,7 @@ namespace gzEngineSDK {
 
 
   bool
-    DXGraphicsManager::initGraphicsManager( void* hWnd,
+  DXGraphicsManager::initGraphicsManager( void* hWnd,
                                             int32 width,
                                             int32 height )
   {
@@ -56,7 +56,7 @@ namespace gzEngineSDK {
   }
 
   Texture*
-    DXGraphicsManager::createTexture2D( TEXTURE2D_DESCRIPTOR &textureInfo )
+  DXGraphicsManager::createTexture2D( TEXTURE2D_DESCRIPTOR &textureInfo )
   {
     m_ptexture = new DXTexture();
     m_ptexture->create2DTextueDescriptor( textureInfo );
@@ -69,7 +69,7 @@ namespace gzEngineSDK {
   }
 
   void
-    DXGraphicsManager::setRenderTargets( uint32 NumViews,
+  DXGraphicsManager::setRenderTargets( uint32 NumViews,
                                          RenderTarget * renderTargets,
                                          Depth * depth )
   {
@@ -96,7 +96,7 @@ namespace gzEngineSDK {
   }
 
   void
-    DXGraphicsManager::clearRenderTargetView( const float ColorRGBA[4],
+  DXGraphicsManager::clearRenderTargetView( const float ColorRGBA[4],
                                               RenderTarget * renderTarget )
   {
     m_prenderTarget = reinterpret_cast< DXRenderTarget* > ( renderTarget );
@@ -107,7 +107,7 @@ namespace gzEngineSDK {
   }
 
   RenderTarget*
-    DXGraphicsManager::createRenderTarget( Texture * texture )
+  DXGraphicsManager::createRenderTarget( Texture * texture )
   {
     m_ptexture = reinterpret_cast < DXTexture * > ( texture );
     m_prenderTarget = new DXRenderTarget();
@@ -122,13 +122,13 @@ namespace gzEngineSDK {
   }
 
   bool
-    DXGraphicsManager::present( uint32 SyncInterval, uint32 Flags )
+  DXGraphicsManager::present( uint32 SyncInterval, uint32 Flags )
   {
     return m_pswapChain->Present( SyncInterval, Flags );
   }
 
   Depth*
-    DXGraphicsManager::createDepthStencilView( DEPTH_STENCIL_VIEW_DESCRIPTOR &desc,
+  DXGraphicsManager::createDepthStencilView( DEPTH_STENCIL_VIEW_DESCRIPTOR &desc,
                                                TEXTURE2D_DESCRIPTOR &texDesc )
   {
     m_ptexture = new DXTexture();
@@ -153,7 +153,7 @@ namespace gzEngineSDK {
   }
 
   void
-    DXGraphicsManager::clearDepthStencilView( uint32 ClearFlags,
+  DXGraphicsManager::clearDepthStencilView( uint32 ClearFlags,
                                               float Depthf,
                                               uint8 Stencil,
                                               Depth * depth )
@@ -167,7 +167,7 @@ namespace gzEngineSDK {
   }
 
   void
-    DXGraphicsManager::setViewports( uint32 NumViewports,
+  DXGraphicsManager::setViewports( uint32 NumViewports,
                                      VIEWPORT_DESCRIPTOR &viewportDesc )
   {
     m_pviewPort->SetViewPort( viewportDesc );
@@ -177,7 +177,7 @@ namespace gzEngineSDK {
   }
 
   Buffer*
-    DXGraphicsManager::createBuffer( BUFFER_DESCRIPTOR &bufferDesc,
+  DXGraphicsManager::createBuffer( BUFFER_DESCRIPTOR &bufferDesc,
                                      const SUBRESOUCE_DATA * pInitialData )
   {
 
@@ -196,7 +196,7 @@ namespace gzEngineSDK {
   }
 
   void
-    DXGraphicsManager::setVertexBuffers( uint32 StartSlot,
+  DXGraphicsManager::setVertexBuffers( uint32 StartSlot,
                                          uint32 NumBuffers,
                                          Buffer * buffer,
                                          const uint32 *pStrides,
@@ -211,7 +211,7 @@ namespace gzEngineSDK {
   }
 
   void
-    DXGraphicsManager::setIndexBuffer( int32 Format, Buffer * buffer, uint32 Offset )
+  DXGraphicsManager::setIndexBuffer( int32 Format, Buffer * buffer, uint32 Offset )
   {
     m_pBuffer = reinterpret_cast< DXBuffer* >( buffer );
     m_pdeviceContext->SetIndexBuffer( *m_pBuffer->getBufferInterface(),
@@ -220,7 +220,7 @@ namespace gzEngineSDK {
   }
 
   SamplerState*
-    DXGraphicsManager::createSamplerState( SAMPLER_DESCRIPTOR &samplerDesc )
+  DXGraphicsManager::createSamplerState( SAMPLER_DESCRIPTOR &samplerDesc )
   {
     m_psamplerState = new DXSamplerState();
     m_psamplerState->CreateSamplerDesc( samplerDesc );
@@ -233,7 +233,7 @@ namespace gzEngineSDK {
   }
 
   void
-    DXGraphicsManager::setSamplerState( uint32 startSlot,
+  DXGraphicsManager::setSamplerState( uint32 startSlot,
                                         SamplerState* sampler,
                                         uint32 numSamplers )
   {
@@ -244,7 +244,7 @@ namespace gzEngineSDK {
   }
 
   VertexShader*
-    DXGraphicsManager::CreateVertexShader( const WString & fileName,
+  DXGraphicsManager::CreateVertexShader( const WString & fileName,
                                            const String & EntryPoint,
                                            const String & ShaderModel )
   {
@@ -264,7 +264,7 @@ namespace gzEngineSDK {
   }
 
   void
-    DXGraphicsManager::setVertexShader( VertexShader * vertexShader )
+  DXGraphicsManager::setVertexShader( VertexShader * vertexShader )
   {
     m_pvertexShader = reinterpret_cast< DXVertexShader* >( vertexShader );
     m_pdeviceContext->SetVertexShader(
@@ -274,7 +274,7 @@ namespace gzEngineSDK {
   }
 
   PixelShader*
-    DXGraphicsManager::createPixelShader( const WString & fileName,
+  DXGraphicsManager::createPixelShader( const WString & fileName,
                                           const String & EntryPoint,
                                           const String & ShaderModel )
   {
@@ -293,7 +293,7 @@ namespace gzEngineSDK {
   }
 
   void
-    DXGraphicsManager::setPixelShader( PixelShader * pixelShader )
+  DXGraphicsManager::setPixelShader( PixelShader * pixelShader )
   {
     m_ppixelShader = reinterpret_cast < DXPixelShader* > ( pixelShader );
     m_pdeviceContext->SetPixelShader( *m_ppixelShader->getPixelShaderInterface(),
@@ -302,7 +302,7 @@ namespace gzEngineSDK {
   }
 
   InputLayout*
-    DXGraphicsManager::createInputLayout( VertexShader * vertexShader )
+  DXGraphicsManager::createInputLayout( VertexShader * vertexShader )
   {
     m_pinputLayout = new DXInputLayout();
     m_pvertexShader = reinterpret_cast< DXVertexShader* >( vertexShader );
@@ -320,7 +320,7 @@ namespace gzEngineSDK {
   }
 
   void
-    DXGraphicsManager::setInputLayout( InputLayout * inputLayout )
+  DXGraphicsManager::setInputLayout( InputLayout * inputLayout )
   {
     m_pinputLayout = reinterpret_cast< DXInputLayout* >( inputLayout );
     m_pdeviceContext->SetInputLayout(
@@ -328,7 +328,7 @@ namespace gzEngineSDK {
   }
 
   void
-    DXGraphicsManager::setPrimitiveTopology( uint32 Topology )
+  DXGraphicsManager::setPrimitiveTopology( uint32 Topology )
   {
     D3D_PRIMITIVE_TOPOLOGY topology =
       static_cast< D3D_PRIMITIVE_TOPOLOGY >( Topology );
@@ -337,7 +337,7 @@ namespace gzEngineSDK {
   }
 
   void
-    DXGraphicsManager::setVSConstantBuffers( Buffer * buffer,
+  DXGraphicsManager::setVSConstantBuffers( Buffer * buffer,
                                              uint32 StartSlot,
                                              uint32 NumBuffers )
   {
@@ -349,7 +349,7 @@ namespace gzEngineSDK {
   }
 
   void
-    DXGraphicsManager::setPSConstantBuffers( Buffer * buffer,
+  DXGraphicsManager::setPSConstantBuffers( Buffer * buffer,
                                              uint32 StartSlot,
                                              uint32 NumBuffers )
   {
@@ -361,7 +361,7 @@ namespace gzEngineSDK {
   }
 
   void
-    DXGraphicsManager::drawIndexed( uint32 indexCount,
+  DXGraphicsManager::drawIndexed( uint32 indexCount,
                                     uint32 StartIndexLocation,
                                     int32 BaseVertexLocation )
   {
@@ -371,7 +371,7 @@ namespace gzEngineSDK {
   }
 
   void
-    DXGraphicsManager::updateSubresource( Buffer * buffer, const void *pSrcData )
+  DXGraphicsManager::updateSubresource( Buffer * buffer, const void *pSrcData )
   {
     m_pBuffer = reinterpret_cast< DXBuffer* > ( buffer );
 
@@ -384,7 +384,7 @@ namespace gzEngineSDK {
   }
 
   Texture *
-    DXGraphicsManager::LoadTextureFromFile( const String filename )
+  DXGraphicsManager::LoadTextureFromFile( const String filename )
   {
     m_ptexture = new DXTexture();
     m_ptexture->LoadTexture( filename );
@@ -398,7 +398,7 @@ namespace gzEngineSDK {
   }
 
   void
-    DXGraphicsManager::setShaderResources( Texture*texture,
+  DXGraphicsManager::setShaderResources( Texture*texture,
                                            uint32 StartSlot,
                                            uint32 NumViews )
   {
@@ -411,7 +411,7 @@ namespace gzEngineSDK {
   }
 
   Texture *
-    DXGraphicsManager::CreateShaderResourceViewFromFile(
+  DXGraphicsManager::CreateShaderResourceViewFromFile(
       const String filenme )
   {
     m_ptexture = new DXTexture();
@@ -431,7 +431,7 @@ namespace gzEngineSDK {
   }
 
   Texture *
-    DXGraphicsManager::CreateShaderResourceView( Texture * texture  )
+  DXGraphicsManager::CreateShaderResourceView( Texture * texture  )
   {
     m_ptexture = reinterpret_cast< DXTexture* >( texture );
 
@@ -443,7 +443,7 @@ namespace gzEngineSDK {
   }
 
   Texture *
-    DXGraphicsManager::createTextureFromBackBuffer()
+  DXGraphicsManager::createTextureFromBackBuffer()
   {
     m_ptexture = new DXTexture();
     m_pswapChain->getBuffer(
@@ -456,59 +456,68 @@ namespace gzEngineSDK {
 
 
   void
-    DXGraphicsManager::createAndsetVertexAndIndexBufferFromMesh( 
-      MESH_DATA * Mesh )
+  DXGraphicsManager::createVertexAndIndexBufferFromMesh( 
+    MESH_DATA * Mesh,
+    int32 numMeshes )
   {
 
-    DXBuffer * tempVBuffer = new DXBuffer();
-    DXBuffer * tempIBuffer = new DXBuffer();
+
 
     //Desc Vertex Buffer
     BUFFER_DESCRIPTOR BufferDesc;
-    memset( &BufferDesc, 0, sizeof( BufferDesc ) );
-    BufferDesc.Usage = USAGE_DEFAULT;
-    BufferDesc.ByteWidth = Mesh->VertexData.size() * sizeof( VERTICES );
-    BufferDesc.BindFlags = BIND_VERTEX_BUFFER;
-
-    tempVBuffer->CreateBufferDesc( BufferDesc );
 
     //Init Data Vertex
     SUBRESOUCE_DATA initData;
-    memset( &initData, 0, sizeof( initData ) );
-    initData.pSysMem = &Mesh->VertexData[0];
 
-    D3D11_BUFFER_DESC tempVBufferDesc = tempVBuffer->getBufferDesc();
-    //Create Vertex Buffer
-    m_pdevice->CreateBuffer(
-      &tempVBufferDesc,
-      reinterpret_cast< D3D11_SUBRESOURCE_DATA* >( &initData ),
-      tempVBuffer->getBufferInterface() );
+    for (int32 i = 0; i< numMeshes; i++)
+    {
+          DXBuffer * tempVBuffer = new DXBuffer();
+    DXBuffer * tempIBuffer = new DXBuffer();
+       memset( &BufferDesc, 0, sizeof( BufferDesc ) );
+       BufferDesc.Usage = USAGE_DEFAULT;
+       BufferDesc.ByteWidth = Mesh[i].VertexData.size() * sizeof( VERTICES );
+       BufferDesc.BindFlags = BIND_VERTEX_BUFFER;
+
+       tempVBuffer->CreateBufferDesc( BufferDesc );
+
+       memset( &initData, 0, sizeof( initData ) );
+       initData.pSysMem = &Mesh[i].VertexData[0];
+
+       D3D11_BUFFER_DESC tempVBufferDesc = tempVBuffer->getBufferDesc();
+
+       //Create Vertex Buffer
+       m_pdevice->CreateBuffer(
+         &tempVBufferDesc,
+         reinterpret_cast< D3D11_SUBRESOURCE_DATA* >( &initData ),
+         tempVBuffer->getBufferInterface() );
 
 
-    //Desc Index Buffer
-    BufferDesc.Usage = USAGE_DEFAULT;
-    BufferDesc.ByteWidth = Mesh->IndexData.size() * sizeof( unsigned short );
-    BufferDesc.BindFlags = BIND_INDEX_BUFFER;
+       //Desc Index Buffer
+       BufferDesc.Usage = USAGE_DEFAULT;
+       BufferDesc.ByteWidth = Mesh[i].IndexData.size() * sizeof( unsigned short );
+       BufferDesc.BindFlags = BIND_INDEX_BUFFER;
 
 
-    tempIBuffer->CreateBufferDesc( BufferDesc );
+       tempIBuffer->CreateBufferDesc( BufferDesc );
 
-    //Init Data index
-    initData.pSysMem = &Mesh->IndexData[0];
+       //Init Data index
+       initData.pSysMem = &Mesh[i].IndexData[0];
 
-    D3D11_BUFFER_DESC tempIBufferDesc = tempIBuffer->getBufferDesc();
-    //Creates index buffer
-    m_pdevice->CreateBuffer(
-      &tempIBufferDesc,
-      reinterpret_cast< D3D11_SUBRESOURCE_DATA* >( &initData ),
-      tempIBuffer->getBufferInterface() );
+       D3D11_BUFFER_DESC tempIBufferDesc = tempIBuffer->getBufferDesc();
+       //Creates index buffer
+       m_pdevice->CreateBuffer(
+         &tempIBufferDesc,
+         reinterpret_cast< D3D11_SUBRESOURCE_DATA* >( &initData ),
+         tempIBuffer->getBufferInterface() );
 
-    Mesh->VertexBuffer = reinterpret_cast< Buffer* >( tempVBuffer );
-    Mesh->IndexBuffer = reinterpret_cast< Buffer* >( tempIBuffer );
+       Mesh[i].VertexBuffer = reinterpret_cast< Buffer* >( tempVBuffer );
+       Mesh[i].IndexBuffer = reinterpret_cast< Buffer* >( tempIBuffer );
+    }
+
   }
 
   RasterizerState *
-    DXGraphicsManager::createRasterizerState( RASTERIZER_DESCRIPTOR desc )
+  DXGraphicsManager::createRasterizerState( RASTERIZER_DESCRIPTOR desc )
   {
     m_pRasterizerState = new DXRasterizerState();
 

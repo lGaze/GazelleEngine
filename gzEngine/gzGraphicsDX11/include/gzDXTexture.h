@@ -20,12 +20,12 @@ class DXTexture : public Texture
    * @brief default constructor
    */
   DXTexture();
-	
+
   /**
    * @brief default destructor
    */
   ~DXTexture() = default;
-	
+
   /************************************************************************/
   /* Texture functions                                                    */
   /************************************************************************/
