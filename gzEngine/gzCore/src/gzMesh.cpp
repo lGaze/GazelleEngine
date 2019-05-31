@@ -83,7 +83,8 @@ bool Mesh::processData()
       }
     }
   }
-
+  
+  int k = 0;
   for ( uint32 i = 0; i < m_pVecNodeBuff.size(); i++ )
   {
     m_pModelNode = m_pVecNodeBuff.at( i );
@@ -93,8 +94,9 @@ bool Mesh::processData()
     {
       for ( uint32 j = 0; j < m_pModelNode->mNumMeshes; j++ )
       {
-        assimpGetMeshData( m_pModelScene->mMeshes[j] );
+        assimpGetMeshData( m_pModelScene->mMeshes[k] );
       }
+      k++;
     }
   }
   return true;

@@ -365,8 +365,8 @@ namespace gzEngineSDK {
     //Cube
     cube = new Mesh();
    // cube->loadModel( "Meshes\\ninjaHead.obj" );
-    //cube->loadModel( "Meshes\\Claire\\claireredfieldout.obj" );
-    cube->loadModel( "Meshes\\Dwarf\\dwarf.x" );
+    cube->loadModel( "Meshes\\Claire\\claireredfieldout.obj" );
+    //cube->loadModel( "Meshes\\Dwarf\\dwarf.x" );
     GraphicsManager::instance().createVertexAndIndexBufferFromMesh( 
       cube->getMeshData(), cube->getNumMeshes());
    
@@ -459,7 +459,7 @@ namespace gzEngineSDK {
     g_World.identity();
 
     //initialize the view matrix
-    Eye = Vector3f( 0.0f, 3.0f, -175.0f);
+    Eye = Vector3f( 0.0f, 1.5f, -3.0f);
     Vector3f At = Vector3f( 0.0f, 1.0f, 0.0f);
     Vector3f Up = Vector3f( 0.0f, 1.0f, 0.0f );
     g_View = g_View.matrixLookAtLH( Eye, At, Up );
@@ -527,6 +527,7 @@ namespace gzEngineSDK {
                                                        1.0f, 
                                                        0, 
                                                        m_pDepthStencilView );
+  
 
     g_World.transpose();
     CBChangesEveryFrame cb;
