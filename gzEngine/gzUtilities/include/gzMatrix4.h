@@ -137,6 +137,11 @@ namespace gzEngineSDK {
                             float aspect,
                             float znear,
                             float zfar );
+    /**
+     * @brief Builds a matrix that rotates around the y-axis.
+     */
+    void
+    matrixRotationY( float angle );
     
     /************************************************************************/
     /* Member declaration                                                   */

@@ -8,10 +8,10 @@
 #pragma once
 #include "gzPrerequisitesCore.h"
 
-
 #include <assimp/postprocess.h>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
+#include <gzGraphicsManager.h>
 
 namespace gzEngineSDK {
 class GZ_CORE_EXPORT Mesh
@@ -40,53 +40,12 @@ class GZ_CORE_EXPORT Mesh
   bool
   loadModel( String fileName );
 
-  /**
-   * @brief
-   */
-  bool
-  readTextures();
 
   /**
    * @brief
    */
   bool
   processData();
-
- /* / **
-   * @brief
-   * /
-  FORCEINLINE VERTICES *
-    getVertexData()
-  {
-    return &m_vecVert[0];
-  }
-
-  / **
-   * @brief
-   * /
-  FORCEINLINE uint16 *
-    getIndexData()
-  {
-    return &indexBuff[0];
-  }
-
-  / **
-   * @brief
-   * /
-  FORCEINLINE uint32
-    getNumVertices()
-  {
-    return m_vecVert.size();
-  }
-
-  / **
-   * @brief
-   * /
-  FORCEINLINE uint32
-    getNumIndices()
-  {
-    return indexBuff.size();
-  }*/
 
   /**
    * @brief 
@@ -113,20 +72,27 @@ class GZ_CORE_EXPORT Mesh
   assimpGetMeshData( const aiMesh * mesh );
 
   /**
-   * @brief Vector that stores all the texture paths of the Mesh
+   * @brief This function loads and stores the textures of the mesh
    */
-  Vector<String>TexturePaths;
-
+  bool
+  loadTextures();
 
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 
+ public:
+
+  /**
+   * @brief Vector that stores all the texture paths of the Mesh
+   */
+  Vector<Texture*>MeshTextures;
+
  private:
 
 
   Vector<MESH_DATA> m_meshData;
-  //Vector<VERTICES> m_vecVert;
+
   VERTICES * m_pVertices;
 
   int32 m_IndexIterator;
@@ -140,11 +106,9 @@ class GZ_CORE_EXPORT Mesh
   uint32 m_iNumNodeBuff;
   Vector<Buffer*> Meshes;
 
- // Vector<uint16> indexBuff;
   Vector<float> vertexBuff;
 
-  int32 m_iNumVertices;
-  uint32 m_iNumIndices;
+  String filePath;
 
  };
 }

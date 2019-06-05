@@ -7,6 +7,7 @@
 
 #include "gzBaseApp.h"
 #include "gzMesh.h"
+#include "gzTexture.h"
 
 
 namespace gzEngineSDK {
@@ -96,84 +97,6 @@ namespace gzEngineSDK {
     m_pBackBuffer = 
       GraphicsManager::instance().createRenderTarget(m_pBackBufferTex);
 
-
-    //Albedo Texture
-    TEXTURE2D_DESCRIPTOR renderTexDesc;
-    memset( &renderTexDesc, 0, sizeof( renderTexDesc ) );
-    renderTexDesc.Height = m_windowHeight;
-    renderTexDesc.Width = m_windowWidth;
-    renderTexDesc.MipLevels = 4;
-    renderTexDesc.ArraySize = 1;
-    renderTexDesc.Format = FORMAT_R16G16B16A16_FLOAT;
-    renderTexDesc.Usage = USAGE_DEFAULT;
-    renderTexDesc.BindFlags = BIND_RENDER_TARGET | BIND_SHADER_RESOURCE;
-    renderTexDesc.CPUAccessFlags = 0;
-    renderTexDesc.MiscFlags = 0;
-
-    //Albedo Texture
-    m_pAlbedoTexture =
-      GraphicsManager::instance().createTexture2D( renderTexDesc );
-
-    //AlbedoRT
-    m_pAlbedoRT = GraphicsManager::instance().createRenderTarget( m_pAlbedoTexture );
-
-
-    //Luminance Texture
-    m_pLuminanceTexture =
-      GraphicsManager::instance().createTexture2D( renderTexDesc );
-
-    //LuminanceRT
-    m_pLuminanceRT = 
-      GraphicsManager::instance().createRenderTarget( m_pLuminanceTexture );
-   
-
-    //Bright Texture
-    m_pBrightTexture = 
-      GraphicsManager::instance().createTexture2D( renderTexDesc );
-
-    //BrightRT
-    m_pBrightRT = 
-      GraphicsManager::instance().createRenderTarget( m_pBrightTexture );
-
-    renderTexDesc.Height = m_windowHeight / 2;
-    renderTexDesc.Width = m_windowWidth / 2;
-
-    //BlurH1Texture
-    m_pBlurH1Texture = 
-      GraphicsManager::instance().createTexture2D( renderTexDesc );
-
-    //BlurH1RT
-    m_pBlurH1RT = 
-      GraphicsManager::instance().createRenderTarget( m_pBlurH1Texture );
-
-    //BlurV1Texture
-    m_pBlurV1Texture = 
-      GraphicsManager::instance().createTexture2D( renderTexDesc );
-
-    //BlurV1RT
-    m_pBlurV1RT = 
-      GraphicsManager::instance().createRenderTarget( m_pBlurV1Texture );
-
-
-    renderTexDesc.Height = m_windowHeight;
-    renderTexDesc.Width = m_windowWidth;
-
-    //AddBright1 texture
-    m_pAddBright1Texture = 
-      GraphicsManager::instance().createTexture2D( renderTexDesc );
-
-    //AddBright1 RT
-    m_pAddBright1RT = 
-      GraphicsManager::instance().createRenderTarget( m_pAddBright1Texture );
-
-    //ToneMap texture
-    m_pToneMapTexture = 
-      GraphicsManager::instance().createTexture2D( renderTexDesc );
-
-    //ToneMap RT
-    m_pToneMapRT = 
-      GraphicsManager::instance().createRenderTarget( m_pToneMapTexture );
-
     //Creates the Depth descriptor
     TEXTURE2D_DESCRIPTOR depthTextureDesc;
     depthTextureDesc.Width = m_windowWidth;
@@ -204,14 +127,6 @@ namespace gzEngineSDK {
     vp.MaxDepth = 1.0f;
     vp.TopLeftX = 0;
     vp.TopLeftY = 0; 
-    
-    //Creates the Viewport2 Descriptor
-    vp2.Width = static_cast< float >( m_windowWidth /2 );
-    vp2.Height = static_cast< float >( m_windowHeight /2);
-    vp2.MinDepth = 0.0f;
-    vp2.MaxDepth = 1.0f;
-    vp2.TopLeftX = 0;
-    vp2.TopLeftY = 0;
 
 
     //Compile and create the vertex shader for light
@@ -232,117 +147,6 @@ namespace gzEngineSDK {
       "PS",
       "ps_4_0" );
 
-    //------------------------------------------------------------------\\
-  
-
-    //Compile and create the vertex shader for luminance
-    m_pLuminanceVertexShader = GraphicsManager::instance().CreateVertexShader(
-      L"Shaders\\Luminance.fx",
-      "VS",
-      "vs_4_0" );
-
-
-    //Create the InputLayout with the blob
-    luminanceInputLayout = GraphicsManager::instance().createInputLayout(
-      m_pLuminanceVertexShader );
-
-    //Compile and Create the pixel shader for luminance
-    m_pLuminancePixelShader = GraphicsManager::instance().createPixelShader(
-      L"Shaders\\Luminance.fx",
-      "PS",
-      "ps_4_0" );
-
-    //------------------------------------------------------------------\\
-
-    //Compile and create the vertex shader for Bright
-    m_pBrightVertexShader = GraphicsManager::instance().CreateVertexShader(
-      L"Shaders\\Bright.fx",
-      "VS",
-      "vs_4_0" );
-
-
-    //Create the InputLayout with the blob
-    m_pBrightInputLayout = GraphicsManager::instance().createInputLayout(
-      m_pBrightVertexShader );
-
-    //Compile and Create the pixel shader for Bright
-    m_pBrightPixelShader = GraphicsManager::instance().createPixelShader(
-      L"Shaders\\Bright.fx",
-      "PS",
-      "ps_4_0" );
-
-    //----------------------------------------------------------------------\\
-
-    //Compile and create the vertex shader for BlurH1
-    m_pBlurH1VertexShader = GraphicsManager::instance().CreateVertexShader(
-      L"Shaders\\BlurH1.fx",
-      "VS",
-      "vs_4_0" );
-
-    //Create the InputLayout with the blob
-    m_pBlurH1InputLayout = GraphicsManager::instance().createInputLayout(
-      m_pBlurH1VertexShader );
-
-    //Compile and Create the pixel shader for luminance
-    m_pBlurH1PixelShader = GraphicsManager::instance().createPixelShader(
-      L"Shaders\\BlurH1.fx",
-      "PS",
-      "ps_4_0" );
-
-    //----------------------------------------------------------------------\\
-
-    //Compile and create the vertex shader for BlurV1
-    m_pBlurV1VertexShader = GraphicsManager::instance().CreateVertexShader(
-      L"Shaders\\BlurV1.fx",
-      "VS",
-      "vs_4_0" );
-
-    //Create the InputLayout with the blob
-    m_pBlurV1InputLayout = GraphicsManager::instance().createInputLayout(
-      m_pBlurV1VertexShader );
-
-    //Compile and Create the pixel shader for luminance
-    m_pBlurV1PixelShader = GraphicsManager::instance().createPixelShader(
-      L"Shaders\\BlurV1.fx",
-      "PS",
-      "ps_4_0" );
-
-    //----------------------------------------------------------------------\\
-
-    //Compile and create the vertex shader for BlurV1
-    m_pAddBright1VertexShader = GraphicsManager::instance().CreateVertexShader(
-      L"Shaders\\AddBright1.fx",
-      "VS",
-      "vs_4_0" );
-
-    //Create the InputLayout with the blob
-    m_pAddBright1InputLayout = GraphicsManager::instance().createInputLayout(
-      m_pAddBright1VertexShader );
-
-    //Compile and Create the pixel shader for luminance
-    m_pAddBright1PixelShader = GraphicsManager::instance().createPixelShader(
-      L"Shaders\\AddBright1.fx",
-      "PS",
-      "ps_4_0" );
-
-    //----------------------------------------------------------------------\\
-
-    //Compile and create the vertex shader for BlurV1
-    m_pToneMapVertexShader = GraphicsManager::instance().CreateVertexShader(
-      L"Shaders\\ToneMap.fx",
-      "VS",
-      "vs_4_0" );
-
-    //Create the InputLayout with the blob
-    m_pToneMapInputLayout = GraphicsManager::instance().createInputLayout(
-      m_pToneMapVertexShader );
-
-    //Compile and Create the pixel shader for luminance
-    m_pToneMapPixelShader = GraphicsManager::instance().createPixelShader(
-      L"Shaders\\ToneMap.fx",
-      "PS",
-      "ps_4_0" );
-
 
     //Quad Aligned
     quad = new Mesh();
@@ -350,26 +154,13 @@ namespace gzEngineSDK {
     GraphicsManager::instance().createVertexAndIndexBufferFromMesh( 
       quad->getMeshData(), quad->getNumMeshes());
 
-/*
-    //Dwarf
-    dwarf = new Mesh();
-    dwarf->loadModel( "Meshes\\Dwarf\\dwarf.x" );
-    GraphicsManager::instance().createAndsetVertexAndIndexBufferFromMesh(
-      dwarf->getNumVertices(),
-      dwarf->getVertexData(),
-      dwarf->getNumIndices(),
-      dwarf->getIndexData(),
-      &vDwarfBuffer,
-      &iDwarfBuffer);*/
-
     //Cube
-    cube = new Mesh();
-   // cube->loadModel( "Meshes\\ninjaHead.obj" );
-    cube->loadModel( "Meshes\\Claire\\claireredfieldout.obj" );
-    //cube->loadModel( "Meshes\\Dwarf\\dwarf.x" );
+    Model = new Mesh();
+   // Model->loadModel( "Meshes\\claireredfieldout.obj" );
+    Model->loadModel( "Meshes\\dwarf.x" );
     GraphicsManager::instance().createVertexAndIndexBufferFromMesh( 
-      cube->getMeshData(), cube->getNumMeshes());
-   
+      Model->getMeshData(), Model->getNumMeshes());
+
     //Create RasterizerState desc
     RASTERIZER_DESCRIPTOR rasterizerDesc;
     memset( &rasterizerDesc, 0, sizeof( rasterizerDesc ) );
@@ -387,60 +178,13 @@ namespace gzEngineSDK {
     BUFFER_DESCRIPTOR bufferDesc;
     memset( &bufferDesc, 0, sizeof( bufferDesc ) );
     bufferDesc.Usage = USAGE_DEFAULT;
-    bufferDesc.ByteWidth = sizeof( CBNeverChanges );
+    bufferDesc.ByteWidth = sizeof( cbMatrix );
     bufferDesc.BindFlags = BIND_CONSTANT_BUFFER;
     bufferDesc.CPUAccessFlags = 0;
 
     //Create Constant buffer
-    constantNeverChanges = 
-      GraphicsManager::instance().createBuffer( bufferDesc, nullptr );
-
-    bufferDesc.ByteWidth = sizeof( CBChangeOnResize );
-    constantChangesonResize =
+    constantMatrix = 
      GraphicsManager::instance().createBuffer( bufferDesc, nullptr );
-
-    bufferDesc.ByteWidth = sizeof( CBChangesEveryFrame );
-    constantChangesEveryFrame =
-      GraphicsManager::instance().createBuffer( bufferDesc, nullptr );
-
-
-    //Load and create shader resource view
-    textGorda = GraphicsManager::instance().CreateShaderResourceViewFromFile(
-      "Textures\\normal.jpg" );
-
-    //Shader resource view for albedoTex
-    m_pAlbedoTexture =
-      GraphicsManager::instance().CreateShaderResourceView( m_pAlbedoTexture );
-
-    //Shader resource view for luminance
-    m_pLuminanceTexture = 
-      GraphicsManager::instance().CreateShaderResourceView( 
-        m_pLuminanceTexture );
-
-    //Shader resource view for Bright
-    m_pBrightTexture = 
-      GraphicsManager::instance().CreateShaderResourceView( 
-        m_pBrightTexture );
-
-    //Shader resource view for Blurh1
-    m_pBlurH1Texture = 
-      GraphicsManager::instance().CreateShaderResourceView(
-      m_pBlurH1Texture );
-
-    //Shader resource view for BlurV1
-    m_pBlurV1Texture =
-     GraphicsManager::instance().CreateShaderResourceView(
-     m_pBlurV1Texture );
-
-    //Shader resource view for AddBright1
-    m_pAddBright1Texture = 
-      GraphicsManager::instance().CreateShaderResourceView(
-      m_pAddBright1Texture );  
-    
-    //Shader resource view for AddBright1
-    m_pToneMapTexture = 
-      GraphicsManager::instance().CreateShaderResourceView(
-      m_pToneMapTexture );
 
 
     SAMPLER_DESCRIPTOR sampDesc;
@@ -459,30 +203,25 @@ namespace gzEngineSDK {
     g_World.identity();
 
     //initialize the view matrix
-    Eye = Vector3f( 0.0f, 1.5f, -3.0f);
+    Eye = Vector3f( 0.0f, 1.5f, -175.0f);
     Vector3f At = Vector3f( 0.0f, 1.0f, 0.0f);
     Vector3f Up = Vector3f( 0.0f, 1.0f, 0.0f );
     g_View = g_View.matrixLookAtLH( Eye, At, Up );
     g_View.transpose();
 
-    CBNeverChanges cbNeverChanges;
-    cbNeverChanges.mView = g_View;
-    GraphicsManager::instance().updateSubresource( constantNeverChanges, 
-                                                   &cbNeverChanges );
+    cbMatrixbuffer.view = g_View;
 
     //initialize the prijection matrix
-    g_Projection = g_Projection.matrixPerspectiveFovLH( 
+    g_Projection = g_Projection.matrixPerspectiveFovLH(  
       0.785398163f,
       static_cast< float >(m_windowWidth) / static_cast<float>(m_windowHeight),
       0.001f,
       500.0f );
     g_Projection.transpose();
-
-    CBChangeOnResize cbChangesonResize;
    
-    cbChangesonResize.mProjection = g_Projection;
-    GraphicsManager::instance().updateSubresource( constantChangesonResize,
-                                                   &cbChangesonResize );
+    cbMatrixbuffer.projection = g_Projection;
+    GraphicsManager::instance().updateSubresource( constantMatrix,
+                                                   &cbMatrixbuffer );
 
     return result;
 
@@ -492,7 +231,7 @@ namespace gzEngineSDK {
   BaseApp::render()
   {
 
-    MESH_DATA * dwarf = cube->getMeshData();
+    MESH_DATA * dwarf = Model->getMeshData();
 
     //Update our time
     float t = 0.0f;
@@ -505,21 +244,13 @@ namespace gzEngineSDK {
     t = ( dwTimerCur - dwTimeStart ) / 1000.0f;
 
     //rotate mesh 
-    //g_World = DirectX::XMMatrixRotationY( t );
+    g_World.matrixRotationY( t );
 
 
     //Clear back buffer
-    float ClearColor2[4] = { 0.0f, 1.0f, 0.0f, 0.0f }; //Azul
-    float ClearColor[4] = { 1.0f, 0.0f, 1.0f, 1.0f }; //Rosa
-    float ClearColor3[4] = { 1.0f, 0.0f, 0.0f, 1.0f }; //Rojo
+    float ClearColor[4] = { 0.7f, 0.7f, 0.7f, 1.0f }; //Gris
     GraphicsManager::instance().clearRenderTargetView( ClearColor, 
                                                        m_pBackBuffer);
-
-    GraphicsManager::instance().clearRenderTargetView( ClearColor2, 
-                                                       m_pAlbedoRT );    
-
-   /* GraphicsManager::instance().clearRenderTargetView( ClearColor3, 
-                                                       m_pLuminanceRT );*/
 
 
     //Clear depth Stencil
@@ -527,15 +258,20 @@ namespace gzEngineSDK {
                                                        1.0f, 
                                                        0, 
                                                        m_pDepthStencilView );
-  
+/*
+
+    cbLightbuffer.m_posLight = Vector3f( 0.0f, 0.0f, 0.0f );
+    cbLightbuffer.diffuseColor = Vector4f( 1.0f, 1.0f, 1.0f, 1.0f );
+    cbLightbuffer.vViewPosition = Vector4f( Eye.x, Eye.y, Eye.z, 1.0f );
+    GraphicsManager::instance().updateSubresource( constantLight,
+                                                   &cbLightbuffer );*/
 
     g_World.transpose();
-    CBChangesEveryFrame cb;
-    cb.mWorld = g_World;
-    cb.vMeshColor = Vector4f( 0.7f, 0.7f, 0.7f, 1.0f );
-    cb.ViewPosition = Vector4f(Eye.x, Eye.y, Eye.z, 0.0f);
-    GraphicsManager::instance().updateSubresource( constantChangesEveryFrame,
-                                                   &cb );
+    cbMatrixbuffer.world = g_World;
+    cbMatrixbuffer.ViewPosition = Vector4f( Eye.x, Eye.y, Eye.z, 1.0f );
+   
+    GraphicsManager::instance().updateSubresource( constantMatrix,
+                                                   &cbMatrixbuffer );
 
 
     /************************************************************************/
@@ -543,17 +279,16 @@ namespace gzEngineSDK {
     /************************************************************************/
 
   
-    GraphicsManager::instance().setRenderTargets( 1, m_pAlbedoRT,
+    GraphicsManager::instance().setRenderTargets( 1, m_pBackBuffer,
                                                   m_pDepthStencilView );
     //Sets the Viewport
     GraphicsManager::instance().setViewports( 1, vp );
 
     uint32 Stride = sizeof( VERTICES );
     uint32 offset = 0;
-     
 
 
-    for (int32 i = 0; i< cube->getNumMeshes(); i++)
+    for (int32 i = 0; i< Model->getNumMeshes(); i++)
     {
       GraphicsManager::instance().setVertexBuffers(
         0,
@@ -566,15 +301,12 @@ namespace gzEngineSDK {
         FORMAT_R16_UINT,
         reinterpret_cast<Buffer*>( dwarf[i].IndexBuffer ),
         0 );
-
+      GraphicsManager::instance().setRasterizerState( m_RasterizerState );
       GraphicsManager::instance().setInputLayout( inputLayout );
       GraphicsManager::instance().setVertexShader( m_pLightVertexShader );
-      GraphicsManager::instance().setVSConstantBuffers( constantNeverChanges, 0, 1 );
-      GraphicsManager::instance().setVSConstantBuffers( constantChangesonResize, 1, 1 );
-      GraphicsManager::instance().setVSConstantBuffers( constantChangesEveryFrame, 2, 1 );
+      GraphicsManager::instance().setVSConstantBuffers( constantMatrix, 0, 1 );
       GraphicsManager::instance().setPixelShader( m_pLightPixelShader );
-      GraphicsManager::instance().setPSConstantBuffers( constantChangesEveryFrame, 2, 1 );
-      GraphicsManager::instance().setShaderResources( textGorda, 0, 1 );
+      GraphicsManager::instance().setShaderResources( Model->MeshTextures[i], 0, 1 );
       GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
 
       GraphicsManager::instance().drawIndexed( dwarf[i].IndexData.size(),
@@ -582,203 +314,8 @@ namespace gzEngineSDK {
                                                0 );
     }
 
-
-    /************************************************************************/
-    /* Luminance                                                            */
-    /************************************************************************/
-  
-
-
-    GraphicsManager::instance().setRenderTargets( 1,
-                                                  m_pLuminanceRT,
-                                                  nullptr );
-    //Sets the Viewport
-    GraphicsManager::instance().setViewports( 1, vp );
-    GraphicsManager::instance().setRasterizerState( m_RasterizerState );
-    GraphicsManager::instance().setVertexBuffers(
-      0,
-      1,
-      reinterpret_cast< Buffer* >( quad->getMeshData()->VertexBuffer ),
-      &Stride,
-      &offset );
-   
-    GraphicsManager::instance().setIndexBuffer(
-      FORMAT_R16_UINT,
-      reinterpret_cast< Buffer* >( quad->getMeshData()->IndexBuffer ),
-      0 );
-    GraphicsManager::instance().setInputLayout( luminanceInputLayout );
-    GraphicsManager::instance().setVertexShader( m_pLuminanceVertexShader );
-    GraphicsManager::instance().setPixelShader( m_pLuminancePixelShader );
-    GraphicsManager::instance().setShaderResources( m_pAlbedoTexture, 0, 1 );
-    GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
-   
-   
-    GraphicsManager::instance().drawIndexed( quad->getMeshData()->IndexData.size(),
-                                             0,
-                                             0 );
-   
-   
-    /************************************************************************/
-    /* Bright                                                               */
-    /************************************************************************/
-   
-    GraphicsManager::instance().setRenderTargets( 1,
-                                                  m_pBrightRT,
-                                                  nullptr );
-    //Sets the Viewport
-    GraphicsManager::instance().setViewports( 1, vp );
-    GraphicsManager::instance().setRasterizerState( m_RasterizerState );
-   
-    GraphicsManager::instance().setVertexBuffers(
-      0,
-      1,
-      reinterpret_cast< Buffer* >( quad->getMeshData()->VertexBuffer ),
-      &Stride,
-      &offset );
-   
-    GraphicsManager::instance().setIndexBuffer(
-      FORMAT_R16_UINT,
-      reinterpret_cast< Buffer* >( quad->getMeshData()->IndexBuffer ),
-      0 );
-    GraphicsManager::instance().setInputLayout( m_pBrightInputLayout );
-    GraphicsManager::instance().setVertexShader( m_pBrightVertexShader );
-    GraphicsManager::instance().setPixelShader( m_pBrightPixelShader );
-    GraphicsManager::instance().setShaderResources( m_pAlbedoTexture, 0, 1 );
-    GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
-   
-    GraphicsManager::instance().drawIndexed( quad->getMeshData()->IndexData.size(),
-                                             0,
-                                             0 );
-   
-   
-    /************************************************************************/
-    /* BlurH1                                                               */
-    /************************************************************************/
-   
-    GraphicsManager::instance().setRenderTargets( 1,
-                                                  m_pBlurH1RT,
-                                                  nullptr );
-    //Sets the Viewport
-    GraphicsManager::instance().setViewports( 1, vp2 );
-    GraphicsManager::instance().setRasterizerState( m_RasterizerState );
-    GraphicsManager::instance().setVertexBuffers(
-      0,
-      1,
-      reinterpret_cast< Buffer* >( quad->getMeshData()->VertexBuffer ),
-      &Stride,
-      &offset );
-   
-    GraphicsManager::instance().setIndexBuffer(
-      FORMAT_R16_UINT,
-      reinterpret_cast< Buffer* >( quad->getMeshData()->IndexBuffer ),
-      0 );
-    GraphicsManager::instance().setInputLayout( m_pBlurH1InputLayout );
-    GraphicsManager::instance().setVertexShader( m_pBlurH1VertexShader );
-    GraphicsManager::instance().setPixelShader( m_pBlurH1PixelShader );
-    GraphicsManager::instance().setShaderResources( m_pBrightTexture, 0, 1 );
-    GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
-   
-    GraphicsManager::instance().drawIndexed( quad->getMeshData()->IndexData.size(),
-                                             0,
-                                             0 );
-   
-    /************************************************************************/
-    /* BlurV1                                                               */
-    /************************************************************************/
-   
-    GraphicsManager::instance().setRenderTargets( 1,
-                                                  m_pBlurV1RT,
-                                                  nullptr );
-    //Sets the Viewport
-    GraphicsManager::instance().setViewports( 1, vp2 );
-    GraphicsManager::instance().setRasterizerState( m_RasterizerState );
-    GraphicsManager::instance().setVertexBuffers(
-      0,
-      1,
-      reinterpret_cast< Buffer* >( quad->getMeshData()->VertexBuffer ),
-      &Stride,
-      &offset );
-   
-    GraphicsManager::instance().setIndexBuffer(
-      FORMAT_R16_UINT,
-      reinterpret_cast< Buffer* >( quad->getMeshData()->IndexBuffer ),
-      0 );
-    GraphicsManager::instance().setInputLayout( m_pBlurV1InputLayout );
-    GraphicsManager::instance().setVertexShader( m_pBlurV1VertexShader );
-    GraphicsManager::instance().setPixelShader( m_pBlurV1PixelShader );
-    GraphicsManager::instance().setShaderResources( m_pBlurH1Texture, 0, 1 );
-    GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
-   
-    GraphicsManager::instance().drawIndexed( quad->getMeshData()->IndexData.size(),
-                                             0,
-                                             0 );
-   
-    /************************************************************************/
-    /* AddBright1                                                           */
-    /************************************************************************/
-   
-    GraphicsManager::instance().setRenderTargets( 1,
-                                                  m_pAddBright1RT,
-                                                  nullptr );
-    //Sets the Viewport
-    GraphicsManager::instance().setViewports( 1, vp );
-    GraphicsManager::instance().setRasterizerState( m_RasterizerState );
-    GraphicsManager::instance().setVertexBuffers(
-      0,
-      1,
-      reinterpret_cast< Buffer* >( quad->getMeshData()->VertexBuffer ),
-      &Stride,
-      &offset );
-   
-    GraphicsManager::instance().setIndexBuffer(
-      FORMAT_R16_UINT,
-      reinterpret_cast< Buffer* >( quad->getMeshData()->IndexBuffer ),
-      0 );
-    GraphicsManager::instance().setInputLayout( m_pAddBright1InputLayout );
-    GraphicsManager::instance().setVertexShader( m_pAddBright1VertexShader );
-    GraphicsManager::instance().setPixelShader( m_pAddBright1PixelShader );
-    GraphicsManager::instance().setShaderResources( m_pBrightTexture, 0, 1 );
-    GraphicsManager::instance().setShaderResources( m_pBlurH1Texture, 1, 1 );
-    GraphicsManager::instance().setShaderResources( m_pBlurV1Texture, 2, 1 );
-    GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
-   
-    GraphicsManager::instance().drawIndexed( quad->getMeshData()->IndexData.size(),
-                                             0,
-                                             0 );
-   
-    /************************************************************************/
-    /* ToneMap                                                          */
-    /************************************************************************/
-   
-    GraphicsManager::instance().setRenderTargets( 1,
-                                                  m_pBackBuffer,
-                                                  nullptr );
-    //Sets the Viewport
-    GraphicsManager::instance().setViewports( 1, vp );
-    GraphicsManager::instance().setRasterizerState( m_RasterizerState );
-    GraphicsManager::instance().setVertexBuffers(
-      0,
-      1,
-      reinterpret_cast< Buffer* >( quad->getMeshData()->VertexBuffer),
-                                   &Stride,
-                                   &offset );
-   
-    GraphicsManager::instance().setIndexBuffer(
-      FORMAT_R16_UINT,
-      reinterpret_cast< Buffer* >( quad->getMeshData()->IndexBuffer ),
-      0 );
-    GraphicsManager::instance().setInputLayout( m_pToneMapInputLayout );
-    GraphicsManager::instance().setVertexShader( m_pToneMapVertexShader );
-    GraphicsManager::instance().setPixelShader( m_pToneMapPixelShader );
-    GraphicsManager::instance().setShaderResources( m_pAlbedoTexture, 0, 1 );
-    GraphicsManager::instance().setShaderResources( m_pAddBright1Texture, 1, 1 );
-    GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
-   
-    GraphicsManager::instance().drawIndexed( quad->getMeshData()->IndexData.size(),
-                                             0,
-                                             0 );
-   
     GraphicsManager::instance().present( 0, 0 );
+
   }
 
   void 

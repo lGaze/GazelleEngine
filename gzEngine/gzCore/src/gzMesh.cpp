@@ -1,5 +1,6 @@
 #include "..\include\gzMesh.h"
 #include "gzPrerequisitesCore.h"
+#include "gzTexture.h"
 
 namespace gzEngineSDK {
 
@@ -8,14 +9,17 @@ Mesh::Mesh() :
   m_pModelNode(nullptr),
   m_pModelMesh(nullptr),
   m_pModelFace(nullptr),
-  m_iNumVertices(0)
+  filePath("Textures\\")
 {}
 
 bool
 Mesh::loadModel( String fileName )
 {
+
   int32 
-  flags = aiProcess_Triangulate | aiProcessPreset_TargetRealtime_MaxQuality;
+  flags = aiProcess_Triangulate |
+    aiProcessPreset_TargetRealtime_MaxQuality | 
+    aiProcess_FlipUVs;
 
   m_pModelScene = importer.ReadFile( fileName, flags );
 
@@ -28,12 +32,12 @@ Mesh::loadModel( String fileName )
     processData();
   }
 
-  readTextures();
+  loadTextures();
 
   return true;
 }
 
-bool Mesh::readTextures()
+bool Mesh::loadTextures()
 {
   for ( uint32 i = 0; i < m_pModelScene->mNumMeshes; i++ )
   {
@@ -52,7 +56,10 @@ bool Mesh::readTextures()
       nullptr,
       nullptr ) == AI_SUCCESS )
     {
-      TexturePaths.push_back( static_cast< std::string >( Path.data ) );
+      Texture * tmpTex = new Texture();
+      tmpTex = GraphicsManager::instance().CreateShaderResourceViewFromFile(
+        filePath + static_cast< std::string >( Path.data ) );
+      MeshTextures.push_back( tmpTex );
     }
   }
   return true;
@@ -95,8 +102,8 @@ bool Mesh::processData()
       for ( uint32 j = 0; j < m_pModelNode->mNumMeshes; j++ )
       {
         assimpGetMeshData( m_pModelScene->mMeshes[k] );
+        k++;
       }
-      k++;
     }
   }
   return true;
@@ -105,8 +112,6 @@ bool Mesh::processData()
 bool Mesh::assimpGetMeshData( const aiMesh * mesh )
 {
   aiFace* face;
-
-  m_iNumVertices = mesh->mNumVertices;
 
   VERTICES  temp;
 
@@ -146,7 +151,7 @@ bool Mesh::assimpGetMeshData( const aiMesh * mesh )
 
 
   // Get index and fills buffer
-  m_iNumIndices = 0;
+  
   for ( uint32 f = 0; f < mesh->mNumFaces; f++ )
   {
     face = &mesh->mFaces[f];

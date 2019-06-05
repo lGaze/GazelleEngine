@@ -295,4 +295,17 @@ namespace gzEngineSDK {
 
   }
 
+  void 
+  Matrix4::matrixRotationY( float angle )
+  {
+    float CosT = cosf( angle );
+    float SinT = sinf( angle );
+
+    //CMatrix4 Result = CMatrix4::Identity;
+    m[0][0] = CosT;
+    m[0][2] = SinT;
+    m[2][0] = -SinT;
+    m[2][2] = CosT;
+  }
+
 }

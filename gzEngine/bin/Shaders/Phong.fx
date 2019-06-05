@@ -4,22 +4,13 @@
 Texture2D txDiffuse : register(t0);
 SamplerState samLinear : register(s0);
 
-cbuffer cbNeverChanges : register(b0)
+cbuffer cbMatrix
 {
   matrix View;
-};
-
-cbuffer cbChangeOnResize : register(b1)
-{
   matrix Projection;
-};
-
-cbuffer cbChangesEveryFrame : register(b2)
-{
   matrix World;
-  float4 vMeshColor;
   float4 ViewPosition;
-};
+}; 
 
 
 //--------------------------------------------------------------------------------------
@@ -46,19 +37,19 @@ PS_INPUT VS(VS_INPUT input)
   PS_INPUT output = (PS_INPUT)0;
 
   float kDiffuse = float(1.0f);
-  float kSpecular = float(.8f);
+  float kSpecular = float(.10f);
   float SpecularPower = float(16.0f);
-  float3 DiffuseColor = float3(.20f, .50f, 1.0f);
-  float4 SpecularColor = float4(1.0f, 0.0f, 0.0f, 1.0f);
-  float4 LightDir = float4(1.0f, 1.0f, 1.0f, 1.0f);
-  float3 AmbientColor = float3(0.0f, 0.5f, 0.5f);
+  float3 DiffuseColor = float3(1.0f, 1.0f, 1.0f);
+  float4 SpecularColor = float4(1.0f, 0.0f, 1.0f, 1.0f);
+  float4 LightDir = float4(0.0f, 0.0f, 1.0f, 1.0f);
+  float3 AmbientColor = float3(1.0f, 0.5f, 0.0f);
   float kAmbient = float(0.2f);
 
   /************************************************************************/
   /* World Space
   /************************************************************************/
   float4 wsPos = mul( float4( input.Pos.xyz, 1.0f ), World);
-  float3 wsNormal = mul(float4(normalize(input.Normal.xyz), 0), World).xyz;
+  float3 wsNormal = mul(float4(normalize(input.Normal.xyz), 0.0), World).xyz;
   float3 wsViewDir = -normalize(wsPos.xyz - ViewPosition.xyz);
   float3 wsLightDir = -normalize(LightDir); //LightDir
 
@@ -109,5 +100,5 @@ PS_INPUT VS(VS_INPUT input)
 float4 PS(PS_INPUT input) : SV_Target
 {
     float4 tex = txDiffuse.Sample(samLinear, input.Tex);
-    return float4(tex.xyz * input.Light1.xyz, 1);
+    return float4(tex.xyz, 1);
 }
