@@ -29,6 +29,7 @@ struct PS_INPUT
 };
 
 
+
 //--------------------------------------------------------------------------------------
 // Vertex Shader
 //--------------------------------------------------------------------------------------
@@ -36,13 +37,13 @@ PS_INPUT VS(VS_INPUT input)
 {
   PS_INPUT output = (PS_INPUT)0;
 
-  float kDiffuse = float(1.0f);
-  float kSpecular = float(.10f);
-  float SpecularPower = float(16.0f);
-  float3 DiffuseColor = float3(1.0f, 1.0f, 1.0f);
-  float4 SpecularColor = float4(1.0f, 0.0f, 1.0f, 1.0f);
-  float4 LightDir = float4(0.0f, 0.0f, 1.0f, 1.0f);
-  float3 AmbientColor = float3(1.0f, 0.5f, 0.0f);
+  float kDiffuse = float(.5f);
+  float kSpecular = float(.8f);
+  float SpecularPower = float(5.0f);
+  float3 DiffuseColor = float3(0.0f, 0.0f, 1.0f);
+  float4 SpecularColor = float4(1.0f, 1.0f, 1.0f, 1.0f);
+  float4 LightDir = float4(-1.0f, 1.0f, 1.0f, 1.0f);
+  float3 AmbientColor = float3(1.0f, 0.5f, 1.0f);
   float kAmbient = float(0.2f);
 
   /************************************************************************/
@@ -100,5 +101,5 @@ PS_INPUT VS(VS_INPUT input)
 float4 PS(PS_INPUT input) : SV_Target
 {
     float4 tex = txDiffuse.Sample(samLinear, input.Tex);
-    return float4(tex.xyz, 1);
+    return float4(tex.xyz * input.Light1,  1);
 }

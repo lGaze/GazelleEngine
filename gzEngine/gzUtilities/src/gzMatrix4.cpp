@@ -236,7 +236,7 @@ namespace gzEngineSDK {
   }
 
   
-  Matrix4& 
+  Matrix4
   Matrix4::matrixLookAtLH( Vector3f eyePosition, 
                            Vector3f atPosition, 
                            Vector3f upDirection )
@@ -272,7 +272,7 @@ namespace gzEngineSDK {
     
   }
 
-  Matrix4&
+  Matrix4
   Matrix4::matrixPerspectiveFovLH( float fovy, 
                                    float aspect, 
                                    float znear, 

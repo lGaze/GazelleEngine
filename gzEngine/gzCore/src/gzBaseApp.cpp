@@ -156,7 +156,7 @@ namespace gzEngineSDK {
 
     //Cube
     Model = new Mesh();
-   // Model->loadModel( "Meshes\\claireredfieldout.obj" );
+    // Model->loadModel( "Meshes\\claireredfieldout.obj" );
     Model->loadModel( "Meshes\\dwarf.x" );
     GraphicsManager::instance().createVertexAndIndexBufferFromMesh( 
       Model->getMeshData(), Model->getNumMeshes());
@@ -215,8 +215,8 @@ namespace gzEngineSDK {
     g_Projection = g_Projection.matrixPerspectiveFovLH(  
       0.785398163f,
       static_cast< float >(m_windowWidth) / static_cast<float>(m_windowHeight),
-      0.001f,
-      500.0f );
+      3.0f,
+      1000.0f );
     g_Projection.transpose();
    
     cbMatrixbuffer.projection = g_Projection;
@@ -248,7 +248,7 @@ namespace gzEngineSDK {
 
 
     //Clear back buffer
-    float ClearColor[4] = { 0.7f, 0.7f, 0.7f, 1.0f }; //Gris
+    float ClearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f }; //Gris
     GraphicsManager::instance().clearRenderTargetView( ClearColor, 
                                                        m_pBackBuffer);
 
