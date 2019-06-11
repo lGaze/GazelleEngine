@@ -61,27 +61,27 @@ class DXTexture : public Texture
    * @brief 
    */
   FORCEINLINE ID3D11ShaderResourceView**
-  getShaderResourceInterface()
+  getShaderResourceViewInterface()
   {
-    return &m_pTextureRV;
+    return &m_pShaderResourceView;
   }
-
-  /**
-   * @brief Gets the texture Descriptor
-   */
-  FORCEINLINE D3D11_TEXTURE2D_DESC  
-  getTextureDesc()
-  {
-    return m_texDesc;
-  };
 
   /**
    * @brief 
    */
-  FORCEINLINE D3D11_SHADER_RESOURCE_VIEW_DESC
-  getShaderResourceDesc()
+  FORCEINLINE ID3D11DepthStencilView**
+  getDepthStencilViewInterface()
   {
-    return m_srvDesc;
+    return &m_pDepthStencilView;
+  }
+
+  /**
+   * @brief 
+   */
+  FORCEINLINE ID3D11RenderTargetView**
+  getRenderTargetViewInterface()
+  {
+    return &m_pRenderTargetView;
   }
 
   /**
@@ -90,7 +90,7 @@ class DXTexture : public Texture
   FORCEINLINE D3D11_SUBRESOURCE_DATA *
   getInitData()
   {
-    return &initBuffer;
+    return &m_initBuffer;
   }
 
   /************************************************************************/
@@ -105,24 +105,23 @@ class DXTexture : public Texture
    ID3D11Texture2D* m_ptex;
 
    /**
+    * @brief Shader Resource View interface
+    */
+   ID3D11ShaderResourceView*  m_pShaderResourceView;
+
+   /**
+    * @brief Depth Stencil View
+    */
+   ID3D11DepthStencilView* m_pDepthStencilView;
+
+   /**
+    * @brief Render Target View
+    */
+   ID3D11RenderTargetView * m_pRenderTargetView;
+
+   /**
     * @brief 
     */
-   ID3D11ShaderResourceView*  m_pTextureRV;
-
-   /**
-    * @brief Texture Description
-    */
-   D3D11_TEXTURE2D_DESC m_texDesc;
-
-   /**
-    * @brief Sader Resource Description
-    */
-   D3D11_SHADER_RESOURCE_VIEW_DESC m_srvDesc;
-
-   /**
-    * @brief Init data of the texture
-    */
-   D3D11_SUBRESOURCE_DATA initBuffer;
-   
+   D3D11_SUBRESOURCE_DATA m_initBuffer;
 };
 }

@@ -59,11 +59,56 @@ namespace gzEngineSDK {
   DXGraphicsManager::createTexture2D( TEXTURE2D_DESCRIPTOR &textureInfo )
   {
     m_ptexture = new DXTexture();
-    m_ptexture->create2DTextueDescriptor( textureInfo );
-    D3D11_TEXTURE2D_DESC texDesc = m_ptexture->getTextureDesc();
-    m_pdevice->CreateTexture2D( &texDesc,
+
+    D3D11_TEXTURE2D_DESC tempTexDesc;
+    memset( &tempTexDesc, 0, sizeof( tempTexDesc ) );
+    tempTexDesc.Width = textureInfo.Width;
+    tempTexDesc.Height = textureInfo.Height;
+    tempTexDesc.MipLevels = textureInfo.MipLevels;
+    tempTexDesc.ArraySize = textureInfo.ArraySize;
+    tempTexDesc.Format = static_cast< DXGI_FORMAT >( textureInfo.Format );
+    tempTexDesc.SampleDesc.Count = 1;
+    tempTexDesc.SampleDesc.Quality = 0;
+    tempTexDesc.Usage = static_cast< D3D11_USAGE >( textureInfo.Usage );
+    tempTexDesc.BindFlags = static_cast < D3D11_BIND_FLAG > ( textureInfo.BindFlags );
+    tempTexDesc.CPUAccessFlags = textureInfo.CPUAccessFlags;
+    tempTexDesc.MiscFlags = textureInfo.MiscFlags;
+
+    m_pdevice->CreateTexture2D( &tempTexDesc,
                                 nullptr,
                                 m_ptexture->getTextureInterface() );
+
+    if ( tempTexDesc.BindFlags == D3D11_BIND_SHADER_RESOURCE )
+    {
+      m_pdevice->CreateShaderResourceView( 
+        *m_ptexture->getTextureInterface(),
+        m_ptexture->getShaderResourceViewInterface() );
+    }
+
+    if ( tempTexDesc.BindFlags == D3D11_BIND_DEPTH_STENCIL )
+    {
+      D3D11_DEPTH_STENCIL_VIEW_DESC tempDesc;
+      memset( &tempDesc, 0, sizeof( tempDesc ) );
+      tempDesc.Format = tempTexDesc.Format;
+      tempDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+
+      m_pdevice->CreateDepthStencilView( 
+        *m_ptexture->getTextureInterface(),
+        &tempDesc,
+        m_ptexture->getDepthStencilViewInterface() );
+    }
+
+    if ( tempTexDesc.BindFlags == D3D11_BIND_RENDER_TARGET )
+    {
+      D3D11_RENDER_TARGET_VIEW_DESC tempDesc;
+      memset( &tempDesc, 0, sizeof( tempDesc ) );
+      tempDesc.Format = tempTexDesc.Format;
+      tempDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+      m_pdevice->CreateRenderTargetView(
+        *m_ptexture->getTextureInterface(),
+        &tempDesc,
+        m_ptexture->getRenderTargetViewInterface() );
+    }
 
     return reinterpret_cast< Texture* >( m_ptexture );
   }
@@ -129,7 +174,7 @@ namespace gzEngineSDK {
 
   Depth*
   DXGraphicsManager::createDepthStencilView( DEPTH_STENCIL_VIEW_DESCRIPTOR &desc,
-                                               TEXTURE2D_DESCRIPTOR &texDesc )
+                                             TEXTURE2D_DESCRIPTOR &texDesc )
   {
     m_ptexture = new DXTexture();
     m_pdepth = new DXDepth();
@@ -388,10 +433,28 @@ namespace gzEngineSDK {
   {
     m_ptexture = new DXTexture();
     m_ptexture->LoadTexture( filename );
+    
+    D3D11_TEXTURE2D_DESC tempTexDesc;
+    memset( &tempTexDesc, 0, sizeof( tempTexDesc ) );
+    tempTexDesc.Width = m_ptexture->getWidth();
+    tempTexDesc.Height = m_ptexture->getHeight();
+    tempTexDesc.MipLevels = 1;
+    tempTexDesc.ArraySize = 1;
+    tempTexDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    tempTexDesc.SampleDesc.Count = 1;
+    tempTexDesc.SampleDesc.Quality = 0;
+    tempTexDesc.Usage = D3D11_USAGE_DEFAULT;
+    tempTexDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+    tempTexDesc.CPUAccessFlags = 0;
+    tempTexDesc.MiscFlags = 0;
 
-    D3D11_TEXTURE2D_DESC tempTexDesc = m_ptexture->getTextureDesc();
+    D3D11_SUBRESOURCE_DATA m_initBuffer;
+    memset( &m_initBuffer, 0, sizeof( m_initBuffer ) );
+    m_initBuffer.pSysMem = m_ptexture->getTextureInfo();
+    m_initBuffer.SysMemPitch = m_ptexture->getWidth() * 4;
+
     m_pdevice->CreateTexture2D( &tempTexDesc,
-                                m_ptexture->getInitData(),
+                                &m_initBuffer,
                                 m_ptexture->getTextureInterface() );
 
     return reinterpret_cast< Texture* >( m_ptexture );
@@ -407,7 +470,7 @@ namespace gzEngineSDK {
     m_pdeviceContext->SetShaderResources(
       StartSlot,
       NumViews,
-      m_ptexture->getShaderResourceInterface() );
+      m_ptexture->getShaderResourceViewInterface() );
   }
 
   Texture *
@@ -417,14 +480,15 @@ namespace gzEngineSDK {
     m_ptexture = new DXTexture();
     m_ptexture->LoadTexture( filenme );
 
-    D3D11_TEXTURE2D_DESC tempTextureDesc = m_ptexture->getTextureDesc();
+    D3D11_TEXTURE2D_DESC tempTextureDesc;
+
     m_pdevice->CreateTexture2D( &tempTextureDesc,
                                 m_ptexture->getInitData(),
                                 m_ptexture->getTextureInterface() );
 
     m_pdevice->CreateShaderResourceView(
       *m_ptexture->getTextureInterface(),
-      m_ptexture->getShaderResourceInterface() );
+      m_ptexture->getShaderResourceViewInterface() );
 
     return reinterpret_cast< Texture* >( m_ptexture );
 
@@ -437,7 +501,7 @@ namespace gzEngineSDK {
 
     m_pdevice->CreateShaderResourceView(
       *m_ptexture->getTextureInterface(),
-      m_ptexture->getShaderResourceInterface() );
+      m_ptexture->getShaderResourceViewInterface() );
 
     return reinterpret_cast< Texture* >( m_ptexture );
   }

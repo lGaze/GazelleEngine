@@ -36,6 +36,7 @@
     <ClInclude Include="include\gzVertexShader.h" />
     <ClInclude Include="include\gzViewPort.h" />
     <ClInclude Include="include\gzWindow.h" />
+    <ClInclude Include="include\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\gzBaseApp.cpp" />

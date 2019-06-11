@@ -8,70 +8,38 @@
 #include "gzDXPrerequisites.h"
 #include "..\include\gzDXTexture.h"
 #include "gzGraphicsManager.h"
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
 
 namespace gzEngineSDK {
 
-  DXTexture::DXTexture() : m_ptex(nullptr), m_pTextureRV(nullptr) { }
-
-  void 
-  DXTexture::create2DTextueDescriptor( TEXTURE2D_DESCRIPTOR &desc )
+  DXTexture::DXTexture() : m_ptex( nullptr ),
+    m_pShaderResourceView( nullptr ),
+    m_pDepthStencilView( nullptr ),
+    m_pRenderTargetView( nullptr ) 
   {
-    ZeroMemory( &m_texDesc, sizeof( m_texDesc ) );
-    m_texDesc.Width = desc.Width;
-    m_texDesc.Height = desc.Height;
-    m_texDesc.MipLevels = desc.MipLevels;
-    m_texDesc.ArraySize = desc.ArraySize;
-    m_texDesc.Format = static_cast< DXGI_FORMAT >( desc.Format );
-    m_texDesc.SampleDesc.Count = 1;
-    m_texDesc.SampleDesc.Quality = 0;
-    m_texDesc.Usage = static_cast< D3D11_USAGE >( desc.Usage );                                  
-    m_texDesc.BindFlags = static_cast < D3D11_BIND_FLAG > ( desc.BindFlags );
-    m_texDesc.CPUAccessFlags = desc.CPUAccessFlags;
-    m_texDesc.MiscFlags = desc.MiscFlags;
-
-  }
-
-  void 
-  DXTexture::createShaderResurceDescriptor( SHADER_RESOURCE_VIEW_DESC & desc )
-  {
-    memset( &m_srvDesc, 0, sizeof( m_srvDesc ) );
-
-    m_srvDesc.Format = static_cast< DXGI_FORMAT>(desc.Format);
-    m_srvDesc.ViewDimension = static_cast< D3D11_SRV_DIMENSION >( desc.ViewDimension );
-    
+    memset( &m_initBuffer, 0, sizeof( m_initBuffer ) );
   }
 
   void
   DXTexture::LoadTexture( const String filename )
   {
-    ZeroMemory( &m_texDesc, sizeof( m_texDesc ) );
+    Texture::loadTextureFromFile( filename );
 
-    int32 Width = 0;
-    int32 Height = 0;
-    int32 Channels = 0;
-    
-    unsigned char * tempInfo = stbi_load( filename.c_str(), 
-                                          &Width, 
-                                          &Height, 
-                                          &Channels, 4 );
+    D3D11_TEXTURE2D_DESC tempTexDesc;
+    tempTexDesc.Width = m_Width;
+    tempTexDesc.Height = m_Height;
+    tempTexDesc.MipLevels = 1;
+    tempTexDesc.ArraySize = 1;
+    tempTexDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    tempTexDesc.SampleDesc.Count = 1;
+    tempTexDesc.SampleDesc.Quality = 0;
+    tempTexDesc.Usage = D3D11_USAGE_DEFAULT;
+    tempTexDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+    tempTexDesc.CPUAccessFlags = 0;
+    tempTexDesc.MiscFlags = 0;
 
-    m_texDesc.Width = Width;
-    m_texDesc.Height = Height;
-    m_texDesc.MipLevels = 1;
-    m_texDesc.ArraySize = 1;
-    m_texDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-    m_texDesc.SampleDesc.Count = 1;
-    m_texDesc.SampleDesc.Quality = 0;
-    m_texDesc.Usage = D3D11_USAGE_DEFAULT;
-    m_texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-    m_texDesc.CPUAccessFlags = 0;
-    m_texDesc.MiscFlags = 0;
-
-    memset( &initBuffer, 0, sizeof( initBuffer ) );
-    initBuffer.pSysMem = tempInfo;
-    initBuffer.SysMemPitch = Width * 4;
+    memset( &m_initBuffer, 0, sizeof( m_initBuffer ) );
+    m_initBuffer.pSysMem = &m_textureInfo;
+    m_initBuffer.SysMemPitch = m_Width * 4;
 
   }
 
