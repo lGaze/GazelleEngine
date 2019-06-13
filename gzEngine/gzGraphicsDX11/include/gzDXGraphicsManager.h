@@ -41,21 +41,13 @@ class DXGraphicsManager : public GraphicsManager
   virtual Texture* 
   createTexture2D( TEXTURE2D_DESCRIPTOR &textureInfo ) override;
 
-
-  /**
-   * @brief 
-   */
-  virtual RenderTarget* 
-  createRenderTarget( Texture * texture ) override;
-
-
   /**
    * @brief Sets the render target with the given render taget
    */
   virtual void
   setRenderTargets( uint32 NumViews,
-                    RenderTarget * renderTarget, 
-                    Depth * depth ) override;
+                    Texture * renderTarget, 
+                    Texture * depth ) override;
 
 
   /**
@@ -63,21 +55,13 @@ class DXGraphicsManager : public GraphicsManager
    */
   virtual void 
   clearRenderTargetView( const float ColorRGBA[4], 
-                         RenderTarget * renderTarget ) override;
+                         Texture * renderTarget ) override;
 
   /**
    * @brief 
    */
   virtual bool 
   present( uint32 SyncInterval, uint32 Flags ) override;
-
-
-  /**
-   * @brief Creates a DepthStencil with the given descriptor
-   */
-  virtual Depth* 
-  createDepthStencilView( DEPTH_STENCIL_VIEW_DESCRIPTOR &desc,
-                          TEXTURE2D_DESCRIPTOR &texDesc ) override;
 
   /**
    * @brief 
@@ -86,7 +70,7 @@ class DXGraphicsManager : public GraphicsManager
   clearDepthStencilView( uint32 ClearFlags, 
                          float Depthf, 
                          uint8 Stencil, 
-                         Depth * depth ) override;
+                         Texture * depth ) override;
 
   /**
    * @brief 
@@ -235,18 +219,6 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   virtual Texture * 
-  CreateShaderResourceViewFromFile( const String filenme ) override;
-
-  /**
-   * @brief 
-   */
-  virtual Texture *
-  CreateShaderResourceView( Texture * texture ) override;
-
-  /**
-   * @brief 
-   */
-  virtual Texture * 
   createTextureFromBackBuffer() override;
 
   /**
@@ -290,19 +262,19 @@ class DXGraphicsManager : public GraphicsManager
   SwapChain * m_pswapChain;
 
   /**
-   * @brief Pointer to the RenderTarget Class
-   */
-  DXRenderTarget * m_prenderTarget;
-
-  /**
    * @brief Pointer to the Texture Class
    */
   DXTexture * m_ptexture;
 
   /**
-   * @brief Pointer to the Depth Class
+   * @brief 
    */
-  DXDepth * m_pdepth;
+  DXTexture * m_pdepth;
+
+  /**
+   * @brief 
+   */
+  DXTexture * m_prenderTarget;
 
   /**
    * @brief Pointer to the InputLayput Class

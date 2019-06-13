@@ -57,7 +57,7 @@ bool Mesh::loadTextures()
       nullptr ) == AI_SUCCESS )
     {
       Texture * tmpTex = new Texture();
-      tmpTex = GraphicsManager::instance().CreateShaderResourceViewFromFile(
+      tmpTex = GraphicsManager::instance().LoadTextureFromFile(
         filePath + static_cast< std::string >( Path.data ) );
       MeshTextures.push_back( tmpTex );
     }

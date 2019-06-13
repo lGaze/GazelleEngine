@@ -29,18 +29,6 @@ class DXTexture : public Texture
   /************************************************************************/
   /* Texture functions                                                    */
   /************************************************************************/
-  
-  /**
-   * @brief Creates a Directx Descriptor of a Core 2D Texture Descriptor
-   */
-  void 
-  create2DTextueDescriptor( TEXTURE2D_DESCRIPTOR &desc );
-
-  /**
-   * @brief Creates a Shader Descriptor with a given descriptor
-   */
-  void
-  createShaderResurceDescriptor( SHADER_RESOURCE_VIEW_DESC &desc );
 
   /**
    * @brief
@@ -84,15 +72,6 @@ class DXTexture : public Texture
     return &m_pRenderTargetView;
   }
 
-  /**
-   * @brief 
-   */
-  FORCEINLINE D3D11_SUBRESOURCE_DATA *
-  getInitData()
-  {
-    return &m_initBuffer;
-  }
-
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
@@ -119,9 +98,5 @@ class DXTexture : public Texture
     */
    ID3D11RenderTargetView * m_pRenderTargetView;
 
-   /**
-    * @brief 
-    */
-   D3D11_SUBRESOURCE_DATA m_initBuffer;
 };
 }

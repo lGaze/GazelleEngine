@@ -44,20 +44,6 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   /**
    * @brief 
    */
-  virtual RenderTarget*
-  createRenderTarget( Texture * texture ) = 0;
-
-  /**
-   * @brief 
-   */
-  virtual Depth*
-  createDepthStencilView( DEPTH_STENCIL_VIEW_DESCRIPTOR &desc,
-                          TEXTURE2D_DESCRIPTOR &texDesc ) = 0;
-
-
-  /**
-   * @brief 
-   */
   virtual VertexShader*
   CreateVertexShader( const WString & fileName,
                       const String & EntryPoint,
@@ -102,8 +88,8 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    */
   virtual void
   setRenderTargets( uint32 NumViews, 
-                    RenderTarget * renderTarget, 
-                    Depth * depth ) = 0;
+                    Texture * renderTarget, 
+                    Texture * depth ) = 0;
 
   /**
    * @brief This function sets the viewport
@@ -153,7 +139,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    */
   virtual void 
   clearRenderTargetView( const float ColorRGBA[4],
-                         RenderTarget * renderTarget ) = 0;
+                         Texture * renderTarget ) = 0;
 
   /**
    * @brief
@@ -162,7 +148,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   clearDepthStencilView( uint32 ClearFlags,
                          float Depthf,
                          uint8 Stencil,
-                         Depth * depth) = 0;
+                         Texture * depth) = 0;
 
 
   /**
@@ -220,7 +206,6 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
                uint32 StartIndexLocation,
                int32 BaseVertexLocation ) = 0;
 
-
   /**
    * @brief
    */
@@ -232,18 +217,6 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    */
   virtual Texture *
   LoadTextureFromFile( const String filename ) = 0;
-
-  /**
-   * @brief 
-   */
-  virtual Texture *
-  CreateShaderResourceViewFromFile( const String filenme ) = 0;
-
-  /**
-   * @brief 
-   */
-  virtual Texture *
-  CreateShaderResourceView(Texture * texture ) = 0;
 
   /**
    * @brief 

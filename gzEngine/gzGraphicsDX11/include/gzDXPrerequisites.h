@@ -21,10 +21,8 @@ namespace gzEngineSDK {
   class Device;
   class DeviceContext;
   class SwapChain;
-  class DXRenderTarget;
   class DXTexture;
   class DXBuffer;
-  class DXDepth;
   class DXInputLayout;
   class DXPixelShader;
   class DXVertexShader;

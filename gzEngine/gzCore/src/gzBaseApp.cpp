@@ -93,10 +93,6 @@ namespace gzEngineSDK {
     m_pBackBufferTex =
       GraphicsManager::instance().createTextureFromBackBuffer();
 
-    //Creates the render target 
-    m_pBackBuffer = 
-      GraphicsManager::instance().createRenderTarget(m_pBackBufferTex);
-
     //Creates the Depth descriptor
     TEXTURE2D_DESCRIPTOR depthTextureDesc;
     depthTextureDesc.Width = m_windowWidth;
@@ -109,15 +105,9 @@ namespace gzEngineSDK {
     depthTextureDesc.CPUAccessFlags = 0;
     depthTextureDesc.MiscFlags = 0;
 
-    //Creates the Depth Stencil descriptor
-    DEPTH_STENCIL_VIEW_DESCRIPTOR desc;
-    desc.Format = FORMAT_D24_UNORM_S8_UINT;
-    desc.ViewDimension = DSV_DIMENSION_TEXTURE2D;
-
     //Creates the DepthStencil View
     m_pDepthStencilView =
-      GraphicsManager::instance().createDepthStencilView( desc, 
-                                                          depthTextureDesc );
+      GraphicsManager::instance().createTexture2D( depthTextureDesc );
 
 
     //Creates the Viewport Descriptor
@@ -250,7 +240,7 @@ namespace gzEngineSDK {
     //Clear back buffer
     float ClearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f }; //Gris
     GraphicsManager::instance().clearRenderTargetView( ClearColor, 
-                                                       m_pBackBuffer);
+                                                       m_pBackBufferTex);
 
 
     //Clear depth Stencil
@@ -258,13 +248,6 @@ namespace gzEngineSDK {
                                                        1.0f, 
                                                        0, 
                                                        m_pDepthStencilView );
-/*
-
-    cbLightbuffer.m_posLight = Vector3f( 0.0f, 0.0f, 0.0f );
-    cbLightbuffer.diffuseColor = Vector4f( 1.0f, 1.0f, 1.0f, 1.0f );
-    cbLightbuffer.vViewPosition = Vector4f( Eye.x, Eye.y, Eye.z, 1.0f );
-    GraphicsManager::instance().updateSubresource( constantLight,
-                                                   &cbLightbuffer );*/
 
     g_World.transpose();
     cbMatrixbuffer.world = g_World;
@@ -279,7 +262,7 @@ namespace gzEngineSDK {
     /************************************************************************/
 
   
-    GraphicsManager::instance().setRenderTargets( 1, m_pBackBuffer,
+    GraphicsManager::instance().setRenderTargets( 1, m_pBackBufferTex,
                                                   m_pDepthStencilView );
     //Sets the Viewport
     GraphicsManager::instance().setViewports( 1, vp );

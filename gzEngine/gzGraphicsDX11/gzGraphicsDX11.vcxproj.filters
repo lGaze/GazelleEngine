@@ -30,13 +30,7 @@
     <ClInclude Include="include\gzDXSwapChain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\gzDXRenderTarget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\gzDXTexture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gzDXDepth.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\gzDXViewPort.h">
@@ -77,13 +71,7 @@
     <ClCompile Include="src\gzDXSwapChain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gzDXRenderTarget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\gzDXTexture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gzDXDepth.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gzDXViewPort.cpp">

@@ -126,12 +126,7 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
-   uint32 m_windowPosY;
-
-   /**
-    * @brief BackBuffer RT
-    */
-   RenderTarget * m_pBackBuffer;  
+   uint32 m_windowPosY; 
 
    /**
     * @brief 
@@ -141,7 +136,7 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
-   Depth * m_pDepthStencilView;
+   Texture * m_pDepthStencilView;
 
    /**
     * @brief 
