@@ -185,7 +185,7 @@ namespace gzEngineSDK {
 
   Buffer*
   DXGraphicsManager::createBuffer( BUFFER_DESCRIPTOR &bufferDesc,
-                                     const SUBRESOUCE_DATA * pInitialData )
+                                   const SUBRESOUCE_DATA * pInitialData )
   {
 
     m_pBuffer = new DXBuffer();
@@ -193,11 +193,20 @@ namespace gzEngineSDK {
 
     D3D11_BUFFER_DESC tempBufferDesc = m_pBuffer->getBufferDesc();
 
-    m_pdevice->CreateBuffer(
-      &tempBufferDesc,
-      reinterpret_cast< const D3D11_SUBRESOURCE_DATA * >( pInitialData ),
-      m_pBuffer->getBufferInterface() );
-
+    if (pInitialData == nullptr)
+    {
+      m_pdevice->CreateBuffer(
+        &tempBufferDesc,
+        nullptr,
+        m_pBuffer->getBufferInterface() );
+    }
+    else
+    {
+      m_pdevice->CreateBuffer(
+        &tempBufferDesc,
+        reinterpret_cast< const D3D11_SUBRESOURCE_DATA * >( pInitialData ),
+        m_pBuffer->getBufferInterface() );
+    }
     return reinterpret_cast< Buffer* >( m_pBuffer );
 
   }
@@ -386,7 +395,7 @@ namespace gzEngineSDK {
                                          0,
                                          nullptr,
                                          pSrcData,
-                                         0,
+                                         12,
                                          0 );
   }
 

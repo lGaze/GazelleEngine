@@ -21,13 +21,15 @@ namespace gzEngineSDK {
     m_Height = 0;
     m_Channels = 0;
 
-    auto textureInfo = stbi_load( filepath.c_str(),
+    auto* textureInfo = stbi_load( filepath.c_str(),
                                   &m_Width,
                                   &m_Height,
                                   &m_Channels,
                                   4 );
+    m_textureInfo.resize( m_Width*m_Height * 4 );
+    memcpy( &m_textureInfo[0], &textureInfo[0], m_Width*m_Height * 4 );
 
-    m_textureInfo.push_back( textureInfo );
+    //m_textureInfo.push_back( textureInfo );
 
   }
 

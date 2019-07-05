@@ -38,9 +38,9 @@ class GZ_CORE_EXPORT Texture
   /**
    * @brief 
    */
-  FORCEINLINE unsigned char *
+  FORCEINLINE unsigned char*
   getTextureInfo() {
-    return m_textureInfo[0];
+    return &m_textureInfo[0];
   }
 
   /**
@@ -72,7 +72,7 @@ class GZ_CORE_EXPORT Texture
   /************************************************************************/
  protected:
 
- Vector<unsigned char*> m_textureInfo;
+ Vector<unsigned char> m_textureInfo;
  int32 m_Width;
  int32 m_Height;
  int32 m_Channels;

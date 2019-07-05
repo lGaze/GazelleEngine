@@ -186,6 +186,7 @@ namespace gzEngineSDK {
     
     if (FAILED(result))
     {
+      result = m_pDevice->GetDeviceRemovedReason();
       return false;
     }
     return true;

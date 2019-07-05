@@ -137,6 +137,18 @@ namespace gzEngineSDK {
       "PS",
       "ps_4_0" );
 
+        //Create the constant buffers desc
+    BUFFER_DESCRIPTOR bufferDesc;
+    memset( &bufferDesc, 0, sizeof( bufferDesc ) );
+    bufferDesc.Usage = USAGE_DEFAULT;
+    bufferDesc.ByteWidth = sizeof( cbMatrix );
+    bufferDesc.BindFlags = BIND_CONSTANT_BUFFER;
+    bufferDesc.CPUAccessFlags = 0;
+
+    //Create Constant buffer
+    constantMatrix =
+      GraphicsManager::instance().createBuffer( bufferDesc, nullptr );
+
 
     //Quad Aligned
     quad = new Mesh();
@@ -147,7 +159,7 @@ namespace gzEngineSDK {
     //Cube
     Model = new Mesh();
     // Model->loadModel( "Meshes\\claireredfieldout.obj" );
-    Model->loadModel( "Meshes\\dwarf.x" );
+    Model->loadModel( "Meshes\\spider.obj" );
     GraphicsManager::instance().createVertexAndIndexBufferFromMesh( 
       Model->getMeshData(), Model->getNumMeshes());
 
@@ -164,17 +176,7 @@ namespace gzEngineSDK {
     //Sets primitive topology
     GraphicsManager::instance().setPrimitiveTopology( 4 );
    
-    //Create the constant buffers desc
-    BUFFER_DESCRIPTOR bufferDesc;
-    memset( &bufferDesc, 0, sizeof( bufferDesc ) );
-    bufferDesc.Usage = USAGE_DEFAULT;
-    bufferDesc.ByteWidth = sizeof( cbMatrix );
-    bufferDesc.BindFlags = BIND_CONSTANT_BUFFER;
-    bufferDesc.CPUAccessFlags = 0;
 
-    //Create Constant buffer
-    constantMatrix = 
-     GraphicsManager::instance().createBuffer( bufferDesc, nullptr );
 
 
     SAMPLER_DESCRIPTOR sampDesc;
@@ -193,7 +195,7 @@ namespace gzEngineSDK {
     g_World.identity();
 
     //initialize the view matrix
-    Eye = Vector3f( 0.0f, 1.5f, -175.0f);
+    Eye = Vector3f( 0.0f, 0.0f, -175.0f);
     Vector3f At = Vector3f( 0.0f, 1.0f, 0.0f);
     Vector3f Up = Vector3f( 0.0f, 1.0f, 0.0f );
     g_View = g_View.matrixLookAtLH( Eye, At, Up );
