@@ -18,13 +18,13 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief default constructor
    */
   GraphicsManager();
-	
+
   /**
    * @brief default destructor
    */
   virtual 
   ~GraphicsManager();
-	
+
   /************************************************************************/
   /* GraphicsManager functions                                            */
   /************************************************************************/
@@ -71,11 +71,12 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   createBuffer( BUFFER_DESCRIPTOR &bufferDesc,
                 const SUBRESOUCE_DATA * pInitialData ) = 0;
 
-  /**
+/*
+  / **
    * @brief 
-   */
+   * /
   virtual void
-  createVertexAndIndexBufferFromMesh( MESH_DATA * Mesh, int32 numMeshes ) = 0;
+  createVertexAndIndexBufferFromMesh( MESH_DATA * Mesh, int32 numMeshes ) = 0;*/
 
   /**
    * @brief 
@@ -239,8 +240,10 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-	
+
  public:
+
+
    
  };
 

@@ -14,8 +14,6 @@
 namespace gzEngineSDK {
 
   class Texture;
-  class RenderTarget;
-  class Depth;
   class ViewPort;
   class Buffer;
   class SamplerState;
@@ -23,8 +21,8 @@ namespace gzEngineSDK {
   class VertexShader;
   class PixelShader;
   class InputLayout;
-  class Mesh;
   class RasterizerState;
+  class Model;
 
 }
 

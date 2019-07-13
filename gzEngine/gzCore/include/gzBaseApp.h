@@ -161,12 +161,12 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
-   Mesh * quad;
+   Model *  quad;
 
    /**
     * @brief 
     */
-   Mesh * Model;
+   Model  * m_model;
 
    /**
     * @brief InputL layout for light

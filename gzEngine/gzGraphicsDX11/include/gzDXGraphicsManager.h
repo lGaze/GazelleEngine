@@ -221,11 +221,12 @@ class DXGraphicsManager : public GraphicsManager
   virtual Texture * 
   createTextureFromBackBuffer() override;
 
-  /**
+/*
+  / **
    * @brief 
-   */
+   * /
   virtual void
-  createVertexAndIndexBufferFromMesh( MESH_DATA * Mesh, int32 nunMeshes ) override;
+  createVertexAndIndexBufferFromMesh( MESH_DATA * Mesh, int32 nunMeshes ) override;*/
 
   /**
    * @brief 

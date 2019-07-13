@@ -29,8 +29,6 @@ namespace gzEngineSDK {
     m_textureInfo.resize( m_Width*m_Height * 4 );
     memcpy( &m_textureInfo[0], &textureInfo[0], m_Width*m_Height * 4 );
 
-    //m_textureInfo.push_back( textureInfo );
-
   }
 
 }

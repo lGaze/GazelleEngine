@@ -54,13 +54,13 @@
     <ClInclude Include="include\gzInputLayout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\gzMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\gzRasterizerState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gzModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -98,10 +98,10 @@
     <ClCompile Include="src\gzInputLayout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gzMesh.cpp">
+    <ClCompile Include="src\gzRasterizerState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gzRasterizerState.cpp">
+    <ClCompile Include="src\gzModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

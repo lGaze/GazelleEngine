@@ -477,6 +477,7 @@ namespace gzEngineSDK {
   }
 
 
+/*
   void
   DXGraphicsManager::createVertexAndIndexBufferFromMesh( 
     MESH_DATA * Mesh,
@@ -536,7 +537,7 @@ namespace gzEngineSDK {
        Mesh[i].IndexBuffer = reinterpret_cast< Buffer* >( tempIBuffer );
     }
 
-  }
+  }*/
 
   RasterizerState *
   DXGraphicsManager::createRasterizerState( RASTERIZER_DESCRIPTOR desc )

@@ -6,7 +6,7 @@
 /**************************************************************************/
 
 #include "gzBaseApp.h"
-#include "gzMesh.h"
+#include "gzModel.h"
 #include "gzTexture.h"
 
 
@@ -151,17 +151,18 @@ namespace gzEngineSDK {
 
 
     //Quad Aligned
-    quad = new Mesh();
-    quad->loadModel( "Meshes\\QuadPerron.obj" );
+    //quad->Load( "Meshes\\QuadPerron.obj" );
+/*
     GraphicsManager::instance().createVertexAndIndexBufferFromMesh( 
-      quad->getMeshData(), quad->getNumMeshes());
+      quad->getMeshData(), quad->getNumMeshes());*/
 
     //Cube
-    Model = new Mesh();
     // Model->loadModel( "Meshes\\claireredfieldout.obj" );
-    Model->loadModel( "Meshes\\spider.obj" );
+    m_model = new Model();
+    m_model->Load( "Meshes\\sponza.obj" );
+/*
     GraphicsManager::instance().createVertexAndIndexBufferFromMesh( 
-      Model->getMeshData(), Model->getNumMeshes());
+      Model->getMeshData(), Model->getNumMeshes());*/
 
     //Create RasterizerState desc
     RASTERIZER_DESCRIPTOR rasterizerDesc;
@@ -223,7 +224,7 @@ namespace gzEngineSDK {
   BaseApp::render()
   {
 
-    MESH_DATA * dwarf = Model->getMeshData();
+  /*  MESH_DATA * dwarf = Model->getMeshData();*/
 
     //Update our time
     float t = 0.0f;
@@ -269,9 +270,10 @@ namespace gzEngineSDK {
     //Sets the Viewport
     GraphicsManager::instance().setViewports( 1, vp );
 
-    uint32 Stride = sizeof( VERTICES );
+    uint32 Stride = sizeof( VERTEX );
     uint32 offset = 0;
 
+/*
 
     for (int32 i = 0; i< Model->getNumMeshes(); i++)
     {
@@ -297,7 +299,7 @@ namespace gzEngineSDK {
       GraphicsManager::instance().drawIndexed( dwarf[i].IndexData.size(),
                                                0,
                                                0 );
-    }
+    }*/
 
     GraphicsManager::instance().present( 0, 0 );
 
