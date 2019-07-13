@@ -21,5 +21,4 @@ namespace gzEngineSDK {
   {
     Texture::loadTextureFromFile( filename );
   }
-
 }

@@ -56,7 +56,6 @@ namespace gzEngineSDK {
         aiMaterial * material =
           pScene->mMaterials[pScene->mMeshes[i]->mMaterialIndex];
         m_mesh[i].textures.push_back(LoadTextures(material));
-
       }
 
     }
@@ -96,24 +95,69 @@ namespace gzEngineSDK {
         for (uint32 k = 0; k < it->mFaces[j].mNumIndices; ++k)
         {
           m_indices[m_mesh[i].indexBase + j * it->mFaces[j].mNumIndices + k] =
-            it->mFaces[j].mNumIndices + m_mesh[i].vertexBase;
+            it->mFaces[j].mIndices[k] + m_mesh[i].vertexBase;
         }
       }
     }
+
+    BUFFER_DESCRIPTOR tempDesc;
+    memset(&tempDesc, 0, sizeof(tempDesc));
+    tempDesc.BindFlags = BIND_VERTEX_BUFFER;
+    tempDesc.Usage = USAGE_DEFAULT;
+    tempDesc.ByteWidth = numOfVertices * sizeof(VERTEX);
+    
+    SUBRESOUCE_DATA initData;
+    memset(&initData, 0, sizeof(initData));
+    initData.pSysMem = &m_vertices[0];
+    initData.SysMemPitch = m_vertices.size();
+
+    m_vertexBuffer = 
+      GraphicsManager::instance().createBuffer(tempDesc, &initData);
+    
+    tempDesc.BindFlags = BIND_INDEX_BUFFER;
+    tempDesc.Usage = USAGE_DEFAULT;
+    tempDesc.ByteWidth = numOfIndices * sizeof(uint32);
+
+    memset(&initData, 0, sizeof(initData));
+    initData.pSysMem = &m_indices[0];
+    initData.SysMemPitch = m_indices.size();
+
+    m_indexBuffer = 
+      GraphicsManager::instance().createBuffer(tempDesc, &initData);
+
     return true;
   }
 
   void 
   Model::Draw()
   {
-/*
-    for (int32 i = 0; i < m_meshes.size(); i++)
+    uint32 stride = sizeof(VERTEX);
+    uint32 offset = 0;
+
+    GraphicsManager::instance().setVertexBuffers(0, 
+                                                 1, 
+                                                 m_vertexBuffer,
+                                                 &stride, 
+                                                 &offset);
+
+    GraphicsManager::instance().setIndexBuffer(FORMAT_R32_UINT, 
+                                               m_indexBuffer, 
+                                               offset);
+
+    for (int32 i = 0; i < m_mesh.size(); i++)
     {
-      m_meshes[i].Draw();
-    }*/
+      GraphicsManager::instance().setShaderResources(m_mesh[i].textures[0],
+                                                     0, 
+                                                     1);
+
+      GraphicsManager::instance().drawIndexed(m_mesh[i].numIndex, 
+                                              m_mesh[i].indexBase, 
+                                              0);
+    }
   }
 
-  Texture * Model::LoadTextures(aiMaterial * material)
+  Texture * 
+  Model::LoadTextures(aiMaterial * material)
   {
     aiString str;
     uint32 diff = 0;
@@ -125,9 +169,8 @@ namespace gzEngineSDK {
       material->GetTexture(aiTextureType_DIFFUSE, 0, &str);
       String filename = str.C_Str();
       //TODO: just do that for spider, don´t use it for other shit
-      //filename.erase(0, 2);
+      filename.erase(0, 2);
       filename = m_directoryPath + filename;
-
       return GraphicsManager::instance().LoadTextureFromFile(filename);
     }
   }

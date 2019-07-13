@@ -77,6 +77,9 @@ class GZ_CORE_EXPORT Model
    Vector<Mesh> m_mesh;
 
    String m_directoryPath;
- 
+
+   Buffer * m_vertexBuffer;
+
+   Buffer * m_indexBuffer;
  };
 }

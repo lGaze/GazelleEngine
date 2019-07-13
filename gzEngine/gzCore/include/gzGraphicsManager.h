@@ -241,10 +241,10 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   /* Member declarations                                                  */
   /************************************************************************/
 
- public:
+  protected:
 
-
-   
+   Map<String, Texture *> m_textureMap;
+  
  };
 
 /*

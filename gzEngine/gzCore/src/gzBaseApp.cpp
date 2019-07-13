@@ -12,11 +12,11 @@
 
 namespace gzEngineSDK {
 
-  BaseApp::BaseApp(uint32 windowWidth, 
-                   uint32 windowHeight, 
+  BaseApp::BaseApp(uint32 windowWidth,
+                   uint32 windowHeight,
                    String windowName,
                    uint32 posX,
-                   uint32 posY) : 
+                   uint32 posY) :
     m_windowWidth(windowWidth),
     m_windowHeight(windowHeight),
     m_windowName(windowName),
@@ -24,16 +24,16 @@ namespace gzEngineSDK {
     m_windowPosY(posY) { }
 
   int32
-  BaseApp::runMainLoop()
+    BaseApp::runMainLoop()
   {
     m_mainLoop = true;
 
-    if ( !initApp() )
+    if (!initApp())
     {
       std::cout << "Init App Failed" << std::endl;
     }
 
-    while(m_mainLoop)
+    while (m_mainLoop)
     {
 
       m_pwindow->messageHandler();
@@ -48,15 +48,15 @@ namespace gzEngineSDK {
     return 0;
   }
 
-  bool 
-  BaseApp::initApp()
+  bool
+    BaseApp::initApp()
   {
     m_pwindow = new Window();
-    if (!m_pwindow->initWindow( m_windowWidth, 
-                                m_windowHeight, 
-                                m_windowName,
-                                m_windowPosX,
-                                m_windowPosY ))
+    if (!m_pwindow->initWindow(m_windowWidth,
+                               m_windowHeight,
+                               m_windowName,
+                               m_windowPosX,
+                               m_windowPosY))
     {
       std::cout << "Init Window failed" << std::endl;
       return false;
@@ -77,16 +77,16 @@ namespace gzEngineSDK {
     return true;
   }
 
-  bool 
-  BaseApp::postInit()
+  bool
+    BaseApp::postInit()
   {
     bool result = true;
 
     //Creates the Device, Context and SwapChain
     result = GraphicsManager::instance().initGraphicsManager(
-      static_cast< void* >( m_pwindow->getHWND() ), 
-      m_windowWidth, 
-      m_windowHeight );
+      static_cast<void*>(m_pwindow->getHWND()),
+      m_windowWidth,
+      m_windowHeight);
 
 
     //Creates the Backbuffer texture
@@ -107,23 +107,23 @@ namespace gzEngineSDK {
 
     //Creates the DepthStencil View
     m_pDepthStencilView =
-      GraphicsManager::instance().createTexture2D( depthTextureDesc );
+      GraphicsManager::instance().createTexture2D(depthTextureDesc);
 
 
     //Creates the Viewport Descriptor
-    vp.Width = static_cast< float >( m_windowWidth );
-    vp.Height = static_cast< float >( m_windowHeight );
+    vp.Width = static_cast<float>(m_windowWidth);
+    vp.Height = static_cast<float>(m_windowHeight);
     vp.MinDepth = 0.0f;
     vp.MaxDepth = 1.0f;
     vp.TopLeftX = 0;
-    vp.TopLeftY = 0; 
+    vp.TopLeftY = 0;
 
 
     //Compile and create the vertex shader for light
-    m_pLightVertexShader = GraphicsManager::instance().CreateVertexShader( 
+    m_pLightVertexShader = GraphicsManager::instance().CreateVertexShader(
       L"Shaders\\Phong.fx",
       "VS",
-      "vs_4_0" );
+      "vs_4_0");
 
 
     //Create the InputLayout with the blob
@@ -135,53 +135,50 @@ namespace gzEngineSDK {
     m_pLightPixelShader = GraphicsManager::instance().createPixelShader(
       L"Shaders\\Phong.fx",
       "PS",
-      "ps_4_0" );
+      "ps_4_0");
 
-        //Create the constant buffers desc
+    //Create the constant buffers desc
     BUFFER_DESCRIPTOR bufferDesc;
-    memset( &bufferDesc, 0, sizeof( bufferDesc ) );
+    memset(&bufferDesc, 0, sizeof(bufferDesc));
     bufferDesc.Usage = USAGE_DEFAULT;
-    bufferDesc.ByteWidth = sizeof( cbMatrix );
+    bufferDesc.ByteWidth = sizeof(cbMatrix);
     bufferDesc.BindFlags = BIND_CONSTANT_BUFFER;
     bufferDesc.CPUAccessFlags = 0;
 
     //Create Constant buffer
     constantMatrix =
-      GraphicsManager::instance().createBuffer( bufferDesc, nullptr );
+      GraphicsManager::instance().createBuffer(bufferDesc, nullptr);
 
 
     //Quad Aligned
     //quad->Load( "Meshes\\QuadPerron.obj" );
 /*
-    GraphicsManager::instance().createVertexAndIndexBufferFromMesh( 
+    GraphicsManager::instance().createVertexAndIndexBufferFromMesh(
       quad->getMeshData(), quad->getNumMeshes());*/
 
-    //Cube
-    // Model->loadModel( "Meshes\\claireredfieldout.obj" );
+      //Cube
+      // Model->loadModel( "Meshes\\claireredfieldout.obj" );
     m_model = new Model();
-    m_model->Load( "Meshes\\sponza.obj" );
-/*
-    GraphicsManager::instance().createVertexAndIndexBufferFromMesh( 
-      Model->getMeshData(), Model->getNumMeshes());*/
+    m_model->Load("Meshes\\spider.obj");
 
     //Create RasterizerState desc
     RASTERIZER_DESCRIPTOR rasterizerDesc;
-    memset( &rasterizerDesc, 0, sizeof( rasterizerDesc ) );
+    memset(&rasterizerDesc, 0, sizeof(rasterizerDesc));
     rasterizerDesc.CullMode = CULL_NONE;
     rasterizerDesc.FillMode = FILL_SOLID;
 
     //Create RasterizerState
-    m_RasterizerState = 
+    m_RasterizerState =
       GraphicsManager::instance().createRasterizerState(rasterizerDesc);
 
     //Sets primitive topology
-    GraphicsManager::instance().setPrimitiveTopology( 4 );
-   
+    GraphicsManager::instance().setPrimitiveTopology(4);
+
 
 
 
     SAMPLER_DESCRIPTOR sampDesc;
-    memset( &sampDesc, 0 ,sizeof( sampDesc ) );
+    memset(&sampDesc, 0, sizeof(sampDesc));
     sampDesc.Filter = FILTER_MIN_MAG_MIP_POINT;
     sampDesc.AddressU = TEXTURE_ADDRESS_WRAP;
     sampDesc.AddressY = TEXTURE_ADDRESS_WRAP;
@@ -189,120 +186,95 @@ namespace gzEngineSDK {
     sampDesc.ComparisonFunc = COMPARISON_NEVER;
     sampDesc.MinLOD = 0;
     sampDesc.MaxLOD = 3.402823466e+38f;
-    
-    m_pSampler = GraphicsManager::instance().createSamplerState( sampDesc );
 
-   //Initialize the matrices
+    m_pSampler = GraphicsManager::instance().createSamplerState(sampDesc);
+
+    //Initialize the matrices
     g_World.identity();
 
     //initialize the view matrix
-    Eye = Vector3f( 0.0f, 0.0f, -175.0f);
-    Vector3f At = Vector3f( 0.0f, 1.0f, 0.0f);
-    Vector3f Up = Vector3f( 0.0f, 1.0f, 0.0f );
-    g_View = g_View.matrixLookAtLH( Eye, At, Up );
+    Eye = Vector3f(0.0f, 0.0f, 175.0f);
+    Vector3f At = Vector3f(0.0f, 1.0f, 0.0f);
+    Vector3f Up = Vector3f(0.0f, 1.0f, 0.0f);
+    g_View = g_View.matrixLookAtLH(Eye, At, Up);
     g_View.transpose();
 
     cbMatrixbuffer.view = g_View;
 
     //initialize the prijection matrix
-    g_Projection = g_Projection.matrixPerspectiveFovLH(  
+    g_Projection = g_Projection.matrixPerspectiveFovLH(
       0.785398163f,
-      static_cast< float >(m_windowWidth) / static_cast<float>(m_windowHeight),
+      static_cast<float>(m_windowWidth) / static_cast<float>(m_windowHeight),
       3.0f,
-      1000.0f );
+      1000.0f);
     g_Projection.transpose();
-   
+
     cbMatrixbuffer.projection = g_Projection;
-    GraphicsManager::instance().updateSubresource( constantMatrix,
-                                                   &cbMatrixbuffer );
+    GraphicsManager::instance().updateSubresource(constantMatrix,
+                                                  &cbMatrixbuffer);
 
     return result;
 
   }
 
-  void 
-  BaseApp::render()
+  void
+    BaseApp::render()
   {
 
-  /*  MESH_DATA * dwarf = Model->getMeshData();*/
+    /*  MESH_DATA * dwarf = Model->getMeshData();*/
 
-    //Update our time
+      //Update our time
     float t = 0.0f;
     static DWORD dwTimeStart = 0;
     DWORD dwTimerCur = GetTickCount();
-    if ( dwTimeStart == 0 )
+    if (dwTimeStart == 0)
     {
       dwTimeStart = dwTimerCur;
     }
-    t = ( dwTimerCur - dwTimeStart ) / 1000.0f;
+    t = (dwTimerCur - dwTimeStart) / 1000.0f;
 
     //rotate mesh 
-    g_World.matrixRotationY( t );
-
+    g_World.matrixRotationY(t);
 
     //Clear back buffer
-    float ClearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f }; //Gris
-    GraphicsManager::instance().clearRenderTargetView( ClearColor, 
-                                                       m_pBackBufferTex);
+    float ClearColor[4] = { 1.0f, 0.0f, 0.0f, 1.0f }; //Gris
+    GraphicsManager::instance().clearRenderTargetView(ClearColor,
+                                                      m_pBackBufferTex);
 
 
     //Clear depth Stencil
-    GraphicsManager::instance().clearDepthStencilView( CLEAR_DEPTH, 
-                                                       1.0f, 
-                                                       0, 
-                                                       m_pDepthStencilView );
+    GraphicsManager::instance().clearDepthStencilView(CLEAR_DEPTH,
+                                                      1.0f,
+                                                      0,
+                                                      m_pDepthStencilView);
 
     g_World.transpose();
     cbMatrixbuffer.world = g_World;
-    cbMatrixbuffer.ViewPosition = Vector4f( Eye.x, Eye.y, Eye.z, 1.0f );
-   
-    GraphicsManager::instance().updateSubresource( constantMatrix,
-                                                   &cbMatrixbuffer );
+    cbMatrixbuffer.ViewPosition = Vector4f(Eye.x, Eye.y, Eye.z, 1.0f);
+
+    GraphicsManager::instance().updateSubresource(constantMatrix,
+                                                  &cbMatrixbuffer);
 
 
     /************************************************************************/
     /* Light                                                                */
     /************************************************************************/
 
-  
-    GraphicsManager::instance().setRenderTargets( 1, m_pBackBufferTex,
-                                                  m_pDepthStencilView );
     //Sets the Viewport
-    GraphicsManager::instance().setViewports( 1, vp );
+    GraphicsManager::instance().setViewports(1, vp);
 
-    uint32 Stride = sizeof( VERTEX );
-    uint32 offset = 0;
+    GraphicsManager::instance().setRenderTargets(1, m_pBackBufferTex,
+                                                 m_pDepthStencilView);
 
-/*
+    GraphicsManager::instance().setRasterizerState(m_RasterizerState);
+    GraphicsManager::instance().setInputLayout(inputLayout);
+    GraphicsManager::instance().setVertexShader(m_pLightVertexShader);
+    GraphicsManager::instance().setVSConstantBuffers(constantMatrix, 0, 1);
+    GraphicsManager::instance().setPixelShader(m_pLightPixelShader);
+    GraphicsManager::instance().setSamplerState(0, m_pSampler, 1);
+    m_model->Draw();
 
-    for (int32 i = 0; i< Model->getNumMeshes(); i++)
-    {
-      GraphicsManager::instance().setVertexBuffers(
-        0,
-        1,
-        reinterpret_cast< Buffer* >( dwarf[i].VertexBuffer ),
-        &Stride,
-        &offset );
-
-      GraphicsManager::instance().setIndexBuffer( 
-        FORMAT_R16_UINT,
-        reinterpret_cast<Buffer*>( dwarf[i].IndexBuffer ),
-        0 );
-      GraphicsManager::instance().setRasterizerState( m_RasterizerState );
-      GraphicsManager::instance().setInputLayout( inputLayout );
-      GraphicsManager::instance().setVertexShader( m_pLightVertexShader );
-      GraphicsManager::instance().setVSConstantBuffers( constantMatrix, 0, 1 );
-      GraphicsManager::instance().setPixelShader( m_pLightPixelShader );
-      GraphicsManager::instance().setShaderResources( Model->MeshTextures[i], 0, 1 );
-      GraphicsManager::instance().setSamplerState( 0, m_pSampler, 1 );
-
-      GraphicsManager::instance().drawIndexed( dwarf[i].IndexData.size(),
-                                               0,
-                                               0 );
-    }*/
-
-    GraphicsManager::instance().present( 0, 0 );
-
+    GraphicsManager::instance().present(0, 0);
   }
 
   void 

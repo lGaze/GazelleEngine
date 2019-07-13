@@ -62,8 +62,8 @@ struct BUFFER_DESCRIPTOR {
   uint32 ByteWidth;
   uint32 Usage;
   uint32 BindFlags;
-  uint32 CPUAccessFlags;
-  uint32 MiscFlags;
+  uint32 CPUAccessFlags = 0;
+  uint32 MiscFlags = 0;
   uint32 StructureByteStride;
 };
 
@@ -123,14 +123,14 @@ enum FILL_MODE
   FILL_SOLID = 3
 };
 
-enum TEXTURE_FORMATS
+enum FORMATS
 {
   FORMAT_UNKNOWN           = 0,
   FORMAT_R32G32B32_FLOAT   = 6,
   FORMAT_R16G16B16A16_FLOAT = 10,
   FORMAT_R32G32_FLOAT      = 16,
   FORMAT_D24_UNORM_S8_UINT = 45,
-  FORMAT_R16_UINT          = 57,
+  FORMAT_R32_UINT          = 42,
 };
 
 enum USAGES

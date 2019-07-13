@@ -402,6 +402,13 @@ namespace gzEngineSDK {
   Texture *
   DXGraphicsManager::LoadTextureFromFile( const String filename )
   {
+    auto mapfilename = m_textureMap.find(filename);
+
+    if (mapfilename != m_textureMap.end())
+    {
+      return mapfilename->second;
+    }
+     
     m_ptexture = new DXTexture();
     m_ptexture->LoadTexture( filename );
     
@@ -433,7 +440,9 @@ namespace gzEngineSDK {
       nullptr,
       m_ptexture->getShaderResourceViewInterface() );
 
-    return reinterpret_cast< Texture* >( m_ptexture );
+    auto * ret = reinterpret_cast<Texture*>(m_ptexture);
+    m_textureMap.insert(std::pair < String, Texture*>(filename, ret));
+    return ret;
   }
 
   void
