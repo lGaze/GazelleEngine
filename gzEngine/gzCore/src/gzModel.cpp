@@ -146,10 +146,12 @@ namespace gzEngineSDK {
 
     for (int32 i = 0; i < m_mesh.size(); i++)
     {
-      GraphicsManager::instance().setShaderResources(m_mesh[i].textures[0],
-                                                     0, 
-                                                     1);
-
+      if (nullptr != m_mesh[i].textures[0])
+      {
+        GraphicsManager::instance().setShaderResources(m_mesh[i].textures[0],
+                                                       0,
+                                                       1);
+      }
       GraphicsManager::instance().drawIndexed(m_mesh[i].numIndex, 
                                               m_mesh[i].indexBase, 
                                               0);
@@ -169,7 +171,7 @@ namespace gzEngineSDK {
       material->GetTexture(aiTextureType_DIFFUSE, 0, &str);
       String filename = str.C_Str();
       //TODO: just do that for spider, don´t use it for other shit
-      filename.erase(0, 2);
+      //filename.erase(0, 2);
       filename = m_directoryPath + filename;
       return GraphicsManager::instance().LoadTextureFromFile(filename);
     }

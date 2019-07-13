@@ -159,7 +159,7 @@ namespace gzEngineSDK {
       //Cube
       // Model->loadModel( "Meshes\\claireredfieldout.obj" );
     m_model = new Model();
-    m_model->Load("Meshes\\spider.obj");
+    m_model->Load("Meshes\\sponza.obj");
 
     //Create RasterizerState desc
     RASTERIZER_DESCRIPTOR rasterizerDesc;
@@ -237,7 +237,7 @@ namespace gzEngineSDK {
     g_World.matrixRotationY(t);
 
     //Clear back buffer
-    float ClearColor[4] = { 1.0f, 0.0f, 0.0f, 1.0f }; //Gris
+    float ClearColor[4] = { .5f, 0.5f, 0.5f, 1.0f }; //Gris
     GraphicsManager::instance().clearRenderTargetView(ClearColor,
                                                       m_pBackBufferTex);
 
