@@ -8,10 +8,6 @@
 #pragma once
 
 #include "gzPrerequisitesCore.h"
-#include <gzVector3f.h>
-#include <gzVector2f.h>
-#include <gzVector4f.h>
-
 
 namespace gzEngineSDK {
 
