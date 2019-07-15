@@ -63,6 +63,15 @@
     <ClInclude Include="include\gzModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\gzComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gzGameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gzTransform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\gzBaseApp.cpp">

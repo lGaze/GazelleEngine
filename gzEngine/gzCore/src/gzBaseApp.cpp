@@ -8,6 +8,8 @@
 #include "gzBaseApp.h"
 #include "gzModel.h"
 #include "gzTexture.h"
+#include "gzGameObject.h"
+#include "gzMeshComponent.h"
 
 
 namespace gzEngineSDK {

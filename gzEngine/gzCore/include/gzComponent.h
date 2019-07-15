@@ -10,31 +10,56 @@
 #include "gzPrerequisitesCore.h"
 
 namespace gzEngineSDK {
-class GZ_CORE_EXPORT Component
-{
- public:
-   
-  /**
-   * @brief default constructor
-   */
-  Component() = default;
 
-  /**
-   * @brief default destructor
-   */
-  ~Component() = default;
+  namespace COMPONENT_TYPE
+  {
+    enum E
+    {
+      kMeshComponent = 0,
+    };
+  }
+
+  class GZ_CORE_EXPORT Component
+  {
+   public:
+
+    /**
+     * @brief default constructor
+     */
+    Component() = default;
+
+    /**
+     * @brief default destructor
+     */
+    ~Component() = default;
 
 
-  /************************************************************************/
-  /* Component functions                                                  */
-  /************************************************************************/
+    /************************************************************************/
+    /* Component functions                                                  */
+    /************************************************************************/
 
+   public:
 
-  /************************************************************************/
-  /* Member declarations                                                  */
-  /************************************************************************/
+/*
+    / **
+     * @brief Function that updates the components
+     * /
+    virtual void
+    update() = 0;*/
 
- public:
-   
+    /**
+     * @brief 
+     */
+    COMPONENT_TYPE::E
+    getComponentType();
+
+    /************************************************************************/
+    /* Member declarations                                                  */
+    /************************************************************************/
+
+   private:
+
+    COMPONENT_TYPE::E m_type;
+
  };
 }

@@ -8,6 +8,8 @@
 #pragma once
 
 #include "gzPrerequisitesCore.h"
+#include "gzTransform.h"
+#include "gzMeshComponent.h"
 
 namespace gzEngineSDK {
 class GZ_CORE_EXPORT GameObject
@@ -17,7 +19,7 @@ class GZ_CORE_EXPORT GameObject
   /**
    * @brief default constructor
    */
-  GameObject() = default;
+  GameObject();
 
   /**
    * @brief default destructor
@@ -28,11 +30,42 @@ class GZ_CORE_EXPORT GameObject
   /* GameObject functions                                                 */
   /************************************************************************/
 
+  /**
+   * @brief This function adds a component to the vector of components
+   */
+  void
+  addComponent(Component * newComponent);
+
+  /**
+   * @brief This function remove a component of the components vector
+   */
+  void
+  removeComponent();
+
+  /**
+   * @brief 
+   */
+  Component &
+  getComponent(COMPONENT_TYPE::E componentType);
+
+  /**
+   * @brief 
+   */
+  void
+  createComponent(COMPONENT_TYPE::E componentType);
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 
  public:
+
+ private:
+
+  Vector<Component* > m_components;
+  Transform m_transform;
+  String m_objectName;
+  bool m_isEneabled;
    
  };
 }

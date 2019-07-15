@@ -27,6 +27,8 @@ namespace gzEngineSDK {
   class InputLayout;
   class RasterizerState;
   class Model;
+  class Component;
+  class GameObject;
 
 }
 
