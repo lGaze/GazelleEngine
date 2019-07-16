@@ -26,11 +26,13 @@
     <ClInclude Include="include\gzGraphicsDescriptors.h" />
     <ClInclude Include="include\gzGraphicsManager.h" />
     <ClInclude Include="include\gzInputLayout.h" />
+    <ClInclude Include="include\gzMeshComponent.h" />
     <ClInclude Include="include\gzModel.h" />
     <ClInclude Include="include\gzPixelShader.h" />
     <ClInclude Include="include\gzPrerequisitesCore.h" />
     <ClInclude Include="include\gzRasterizerState.h" />
     <ClInclude Include="include\gzSamplerState.h" />
+    <ClInclude Include="include\gzSceneGraph.h" />
     <ClInclude Include="include\gzShader.h" />
     <ClInclude Include="include\gzTexture.h" />
     <ClInclude Include="include\gzTransform.h" />
@@ -42,12 +44,16 @@
   <ItemGroup>
     <ClCompile Include="src\gzBaseApp.cpp" />
     <ClCompile Include="src\gzBuffer.cpp" />
+    <ClCompile Include="src\gzComponent.cpp" />
+    <ClCompile Include="src\gzGameObject.cpp" />
     <ClCompile Include="src\gzGraphicsManager.cpp" />
     <ClCompile Include="src\gzInputLayout.cpp" />
+    <ClCompile Include="src\gzMeshComponent.cpp" />
     <ClCompile Include="src\gzModel.cpp" />
     <ClCompile Include="src\gzPixelShader.cpp" />
     <ClCompile Include="src\gzRasterizerState.cpp" />
     <ClCompile Include="src\gzSamplerState.cpp" />
+    <ClCompile Include="src\gzSceneGraph.cpp" />
     <ClCompile Include="src\gzShader.cpp" />
     <ClCompile Include="src\gzVertexShader.cpp" />
     <ClCompile Include="src\gzViewPort.cpp" />

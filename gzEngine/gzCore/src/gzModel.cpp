@@ -102,8 +102,8 @@ namespace gzEngineSDK {
 
     BUFFER_DESCRIPTOR tempDesc;
     memset(&tempDesc, 0, sizeof(tempDesc));
-    tempDesc.BindFlags = BIND_VERTEX_BUFFER;
-    tempDesc.Usage = USAGE_DEFAULT;
+    tempDesc.BindFlags = BIND_FLAGS::E::BIND_VERTEX_BUFFER;
+    tempDesc.Usage = USAGES::E::USAGE_DEFAULT;
     tempDesc.ByteWidth = numOfVertices * sizeof(VERTEX);
     
     SUBRESOUCE_DATA initData;
@@ -114,8 +114,8 @@ namespace gzEngineSDK {
     m_vertexBuffer = 
       GraphicsManager::instance().createBuffer(tempDesc, &initData);
     
-    tempDesc.BindFlags = BIND_INDEX_BUFFER;
-    tempDesc.Usage = USAGE_DEFAULT;
+    tempDesc.BindFlags = BIND_FLAGS::E::BIND_INDEX_BUFFER;
+    tempDesc.Usage = USAGES::E::USAGE_DEFAULT;
     tempDesc.ByteWidth = numOfIndices * sizeof(uint32);
 
     memset(&initData, 0, sizeof(initData));
@@ -140,7 +140,7 @@ namespace gzEngineSDK {
                                                  &stride, 
                                                  &offset);
 
-    GraphicsManager::instance().setIndexBuffer(FORMAT_R32_UINT, 
+    GraphicsManager::instance().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
                                                m_indexBuffer, 
                                                offset);
 

@@ -101,9 +101,9 @@ namespace gzEngineSDK {
     depthTextureDesc.Height = m_windowHeight;
     depthTextureDesc.MipLevels = 1;
     depthTextureDesc.ArraySize = 1;
-    depthTextureDesc.Format = FORMAT_D24_UNORM_S8_UINT;
-    depthTextureDesc.Usage = USAGE_DEFAULT;
-    depthTextureDesc.BindFlags = BIND_DEPTH_STENCIL;
+    depthTextureDesc.Format = FORMATS::E::FORMAT_D24_UNORM_S8_UINT;
+    depthTextureDesc.Usage = USAGES::E::USAGE_DEFAULT;
+    depthTextureDesc.BindFlags = BIND_FLAGS::E::BIND_DEPTH_STENCIL;
     depthTextureDesc.CPUAccessFlags = 0;
     depthTextureDesc.MiscFlags = 0;
 
@@ -142,9 +142,9 @@ namespace gzEngineSDK {
     //Create the constant buffers desc
     BUFFER_DESCRIPTOR bufferDesc;
     memset(&bufferDesc, 0, sizeof(bufferDesc));
-    bufferDesc.Usage = USAGE_DEFAULT;
+    bufferDesc.Usage = USAGES::E::USAGE_DEFAULT;
     bufferDesc.ByteWidth = sizeof(cbMatrix);
-    bufferDesc.BindFlags = BIND_CONSTANT_BUFFER;
+    bufferDesc.BindFlags = BIND_FLAGS::E::BIND_CONSTANT_BUFFER;
     bufferDesc.CPUAccessFlags = 0;
 
     //Create Constant buffer
@@ -161,13 +161,13 @@ namespace gzEngineSDK {
       //Cube
       // Model->loadModel( "Meshes\\claireredfieldout.obj" );
     m_model = new Model();
-    m_model->Load("Meshes\\sponza.obj");
+    m_model->Load("Meshes\\spider.obj");
 
     //Create RasterizerState desc
     RASTERIZER_DESCRIPTOR rasterizerDesc;
     memset(&rasterizerDesc, 0, sizeof(rasterizerDesc));
-    rasterizerDesc.CullMode = CULL_NONE;
-    rasterizerDesc.FillMode = FILL_SOLID;
+    rasterizerDesc.CullMode = CULL_MODE::E::CULL_NONE;
+    rasterizerDesc.FillMode = FILL_MODE::E::FILL_SOLID;
 
     //Create RasterizerState
     m_RasterizerState =
@@ -181,11 +181,11 @@ namespace gzEngineSDK {
 
     SAMPLER_DESCRIPTOR sampDesc;
     memset(&sampDesc, 0, sizeof(sampDesc));
-    sampDesc.Filter = FILTER_MIN_MAG_MIP_POINT;
-    sampDesc.AddressU = TEXTURE_ADDRESS_WRAP;
-    sampDesc.AddressY = TEXTURE_ADDRESS_WRAP;
-    sampDesc.AddressW = TEXTURE_ADDRESS_WRAP;
-    sampDesc.ComparisonFunc = COMPARISON_NEVER;
+    sampDesc.Filter = FILTER::E::FILTER_MIN_MAG_MIP_POINT;
+    sampDesc.AddressU = ADDRESS_MODE::E::TEXTURE_ADDRESS_WRAP;
+    sampDesc.AddressY = ADDRESS_MODE::E::TEXTURE_ADDRESS_WRAP;
+    sampDesc.AddressW = ADDRESS_MODE::E::TEXTURE_ADDRESS_WRAP;
+    sampDesc.ComparisonFunc = COMPARISON_FUNC::E::COMPARISON_NEVER;
     sampDesc.MinLOD = 0;
     sampDesc.MaxLOD = 3.402823466e+38f;
 
@@ -245,10 +245,11 @@ namespace gzEngineSDK {
 
 
     //Clear depth Stencil
-    GraphicsManager::instance().clearDepthStencilView(CLEAR_DEPTH,
-                                                      1.0f,
-                                                      0,
-                                                      m_pDepthStencilView);
+    GraphicsManager::instance().clearDepthStencilView(
+      CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
+      1.0f,
+      0,
+      m_pDepthStencilView);
 
     g_World.transpose();
     cbMatrixbuffer.world = g_World;
