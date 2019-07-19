@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="include\gzBaseApp.h" />
     <ClInclude Include="include\gzBuffer.h" />
+    <ClInclude Include="include\gzCamera.h" />
     <ClInclude Include="include\gzComponent.h" />
     <ClInclude Include="include\gzGameObject.h" />
     <ClInclude Include="include\gzGraphicsDescriptors.h" />
@@ -44,6 +45,7 @@
   <ItemGroup>
     <ClCompile Include="src\gzBaseApp.cpp" />
     <ClCompile Include="src\gzBuffer.cpp" />
+    <ClCompile Include="src\gzCamera.cpp" />
     <ClCompile Include="src\gzComponent.cpp" />
     <ClCompile Include="src\gzGameObject.cpp" />
     <ClCompile Include="src\gzGraphicsManager.cpp" />

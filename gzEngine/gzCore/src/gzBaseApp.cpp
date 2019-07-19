@@ -10,6 +10,7 @@
 #include "gzTexture.h"
 #include "gzGameObject.h"
 #include "gzMeshComponent.h"
+#include "gzCamera.h"
 
 
 namespace gzEngineSDK {
@@ -154,12 +155,7 @@ namespace gzEngineSDK {
 
     //Quad Aligned
     //quad->Load( "Meshes\\QuadPerron.obj" );
-/*
-    GraphicsManager::instance().createVertexAndIndexBufferFromMesh(
-      quad->getMeshData(), quad->getNumMeshes());*/
 
-      //Cube
-      // Model->loadModel( "Meshes\\claireredfieldout.obj" );
     m_model = new Model();
     m_model->Load("Meshes\\spider.obj");
 
@@ -177,8 +173,6 @@ namespace gzEngineSDK {
     GraphicsManager::instance().setPrimitiveTopology(4);
 
 
-
-
     SAMPLER_DESCRIPTOR sampDesc;
     memset(&sampDesc, 0, sizeof(sampDesc));
     sampDesc.Filter = FILTER::E::FILTER_MIN_MAG_MIP_POINT;
@@ -194,24 +188,13 @@ namespace gzEngineSDK {
     //Initialize the matrices
     g_World.identity();
 
-    //initialize the view matrix
-    Eye = Vector3f(0.0f, 0.0f, 175.0f);
-    Vector3f At = Vector3f(0.0f, 1.0f, 0.0f);
-    Vector3f Up = Vector3f(0.0f, 1.0f, 0.0f);
-    g_View = g_View.matrixLookAtLH(Eye, At, Up);
-    g_View.transpose();
+    //Initialize the camera
 
-    cbMatrixbuffer.view = g_View;
+    m_camera = new Camera(m_windowWidth, m_windowHeight);
 
-    //initialize the prijection matrix
-    g_Projection = g_Projection.matrixPerspectiveFovLH(
-      0.785398163f,
-      static_cast<float>(m_windowWidth) / static_cast<float>(m_windowHeight),
-      3.0f,
-      1000.0f);
-    g_Projection.transpose();
-
-    cbMatrixbuffer.projection = g_Projection;
+    m_camera->setPosition(Vector3f(0.0, 0.0, -175));
+    cbMatrixbuffer.view = m_camera->getViewMatrix();
+    cbMatrixbuffer.projection = m_camera->getProjectionMatrix();
     GraphicsManager::instance().updateSubresource(constantMatrix,
                                                   &cbMatrixbuffer);
 
@@ -283,7 +266,11 @@ namespace gzEngineSDK {
   void 
   BaseApp::update()
   {
-    //Update
+   
+    m_camera->Move(Vector3f(0.0, 0.0, 0.0), 0.5);
+    cbMatrixbuffer.view = m_camera->getViewMatrix();
+    GraphicsManager::instance().updateSubresource(constantMatrix,
+                                                  &cbMatrixbuffer);
   }
 
   bool 

@@ -29,7 +29,7 @@ namespace gzEngineSDK {
   class Model;
   class Component;
   class GameObject;
-
+  class Camera;
 }
 
 //DLL export

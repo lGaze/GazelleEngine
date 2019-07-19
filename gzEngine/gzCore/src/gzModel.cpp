@@ -144,7 +144,7 @@ namespace gzEngineSDK {
                                                m_indexBuffer, 
                                                offset);
 
-    for (int32 i = 0; i < m_mesh.size(); i++)
+    for (uint32 i = 0; i < m_mesh.size(); i++)
     {
       if (nullptr != m_mesh[i].textures[0])
       {
@@ -175,6 +175,8 @@ namespace gzEngineSDK {
       filename = m_directoryPath + filename;
       return GraphicsManager::instance().LoadTextureFromFile(filename);
     }
+
+    return nullptr;
   }
 
 }

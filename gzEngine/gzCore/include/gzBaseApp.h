@@ -198,6 +198,11 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
     */
    RasterizerState * m_RasterizerState;
 
+   /**
+    * @brief
+    */
+   Camera * m_camera;
+
 
    /**
     * @brief normal viewport
@@ -219,8 +224,6 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    cbMatrix cbMatrixbuffer;
 
    Matrix4 g_World;
-   Matrix4 g_View;
-   Matrix4 g_Projection;
 
    Vector3f Eye;
 
