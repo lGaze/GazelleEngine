@@ -31,6 +31,7 @@ namespace gzEngineSDK {
     /**
      * @brief default destructor
      */
+    virtual
     ~Component() = default;
 
 

@@ -1,40 +1,50 @@
 /**************************************************************************/
-/* @filename gzResource.h
+/* @filename gzResourceHandle.h
 /* @author Victor Flores 
-/* @date 2019/07/19
+/* @date 2019/07/20
 /* @brief 
 /**************************************************************************/
-#pragma once
 
+#pragma once
 #include "gzPrerequisitesCore.h"
 
 namespace gzEngineSDK {
-class GZ_CORE_EXPORT Resource
+
+template<class T>
+class GZ_CORE_EXPORT ResourceHandle
 {
  public:
    
   /**
    * @brief default constructor
    */
-  Resource() = default;
+  ResourceHandle() = default;
 
   /**
    * @brief default destructor
    */
-  virtual
-  ~Resource() = default;
+  ~ResourceHandle() = default;
 
   /************************************************************************/
-  /* Resource functions                                                   */
+  /* ResourceHandle functions                                             */
   /************************************************************************/
+
+ public:
+
+  /**
+   * @brief This function returns the handle
+   */
+  int64
+  getHandle();
+
 
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 
- public:
+ private:
 
-   String name;
-   
+  int64 m_handle;
+
  };
 }
