@@ -46,7 +46,6 @@ class GZ_CORE_EXPORT ResourceManager : public Module<ResourceManager>
   ResourceHandle<class T>
   loadModelFromFile(const String filename);
 
-
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

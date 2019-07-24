@@ -32,6 +32,9 @@
     <ClInclude Include="include\gzPixelShader.h" />
     <ClInclude Include="include\gzPrerequisitesCore.h" />
     <ClInclude Include="include\gzRasterizerState.h" />
+    <ClInclude Include="include\gzResource.h" />
+    <ClInclude Include="include\gzResourceHandle.h" />
+    <ClInclude Include="include\gzResourceManager.h" />
     <ClInclude Include="include\gzSamplerState.h" />
     <ClInclude Include="include\gzSceneGraph.h" />
     <ClInclude Include="include\gzShader.h" />
@@ -54,6 +57,8 @@
     <ClCompile Include="src\gzModel.cpp" />
     <ClCompile Include="src\gzPixelShader.cpp" />
     <ClCompile Include="src\gzRasterizerState.cpp" />
+    <ClCompile Include="src\gzResourceHandle.cpp" />
+    <ClCompile Include="src\gzResourceManager.cpp" />
     <ClCompile Include="src\gzSamplerState.cpp" />
     <ClCompile Include="src\gzSceneGraph.cpp" />
     <ClCompile Include="src\gzShader.cpp" />
