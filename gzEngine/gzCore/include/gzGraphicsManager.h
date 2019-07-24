@@ -71,13 +71,6 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   createBuffer( BUFFER_DESCRIPTOR &bufferDesc,
                 const SUBRESOUCE_DATA * pInitialData ) = 0;
 
-/*
-  / **
-   * @brief 
-   * /
-  virtual void
-  createVertexAndIndexBufferFromMesh( MESH_DATA * Mesh, int32 numMeshes ) = 0;*/
-
   /**
    * @brief 
    */
@@ -133,7 +126,6 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    */
   virtual void
   updateSubresource( Buffer * buffer, const void *pSrcData ) = 0;
-
 
   /**
    * @brief

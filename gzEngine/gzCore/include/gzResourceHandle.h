@@ -34,8 +34,10 @@ class GZ_CORE_EXPORT ResourceHandle
   /**
    * @brief This function returns the handle
    */
-  int64
-  getHandle();
+  FORCEINLINE int64
+  getHandle() {
+    return m_handle;
+  }
 
 
   /************************************************************************/
@@ -46,5 +48,6 @@ class GZ_CORE_EXPORT ResourceHandle
 
   int64 m_handle;
 
- };
+};
+
 }

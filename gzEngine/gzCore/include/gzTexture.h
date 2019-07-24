@@ -8,9 +8,10 @@
 #pragma once
 
 #include "gzPrerequisitesCore.h"
+#include "gzResource.h"
 
 namespace gzEngineSDK {
-class GZ_CORE_EXPORT Texture
+class GZ_CORE_EXPORT Texture : public Resource
 {
  public:
    

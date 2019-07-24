@@ -13,6 +13,7 @@
 
 #include "gzPrerequisitesCore.h"
 #include "gzTexture.h"
+#include "gzResource.h"
 
 namespace gzEngineSDK {
 
@@ -24,7 +25,7 @@ struct Mesh {
     Vector<Texture*> textures;
 };
 
-class GZ_CORE_EXPORT Model
+class GZ_CORE_EXPORT Model : public Resource
 {
  public:
    
