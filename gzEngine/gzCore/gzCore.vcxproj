@@ -22,6 +22,7 @@
     <ClInclude Include="include\gzBaseApp.h" />
     <ClInclude Include="include\gzBuffer.h" />
     <ClInclude Include="include\gzCamera.h" />
+    <ClInclude Include="include\gzCameraManager.h" />
     <ClInclude Include="include\gzComponent.h" />
     <ClInclude Include="include\gzGameObject.h" />
     <ClInclude Include="include\gzGraphicsDescriptors.h" />
