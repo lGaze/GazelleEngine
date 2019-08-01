@@ -6,25 +6,43 @@
 /**************************************************************************/
 
 #include "gzResourceManager.h"
+#include "gzGraphicsManager.h"
 #include "gzResourceHandle.h"
+#include "gzTexture.h"
+#include "gzModel.h"
 
 namespace gzEngineSDK {
 
-  ResourceHandle<class T>
+  ResourceHandle<class Texture>
   ResourceManager::createTexture2D(TEXTURE2D_DESCRIPTOR & textureInfo)
   {
-    return ResourceHandle();
+    Texture * tempTex = new Texture();
+    tempTex = GraphicsManager::instance().createTexture2D(textureInfo);
+
+    ResourceHandle<Texture> handle;
+    handle.setHandle(tempTex);
+    return handle;
   }
 
-  ResourceHandle<class T> 
+  ResourceHandle<class Texture> 
   ResourceManager::loadTextureFromFile(const String filename)
   {
-    return ResourceHandle();
+    Texture * tempTex = new Texture();
+    tempTex = GraphicsManager::instance().LoadTextureFromFile(filename);
+
+    ResourceHandle<Texture> handle;
+    handle.setHandle(tempTex);
+    return handle;
   }
 
-  ResourceHandle<class T> 
+  ResourceHandle<Model> 
   ResourceManager::loadModelFromFile(const String filename)
   {
-    return ResourceHandle();
+    Model * tempModel = new Model();
+    tempModel->Load(filename);
+
+    ResourceHandle<Model> handle;
+    handle.setHandle(tempModel);
+    return handle;
   }
 }

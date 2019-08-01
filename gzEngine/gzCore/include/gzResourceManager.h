@@ -31,19 +31,19 @@ class GZ_CORE_EXPORT ResourceManager : public Module<ResourceManager>
   /**
    * @brief Function that creates a texture 2D
    */
-  ResourceHandle<class T>
+  ResourceHandle<Texture>
   createTexture2D(TEXTURE2D_DESCRIPTOR &textureInfo);
 
   /**
    * @brief Function that creates a texture from the given file
    */
-  ResourceHandle<class T>
+  ResourceHandle<class Texture>
   loadTextureFromFile(const String filename);
 
   /**
    * @brief Function that creates a texture from the given file
    */
-  ResourceHandle<class T>
+  ResourceHandle<class Model>
   loadModelFromFile(const String filename);
 
   /************************************************************************/
