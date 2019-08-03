@@ -23,7 +23,7 @@ namespace gzEngineSDK {
     return handle;
   }
 
-  ResourceHandle<class Texture> 
+  ResourceHandle<Texture> 
   ResourceManager::loadTextureFromFile(const String filename)
   {
     Texture * tempTex = new Texture();

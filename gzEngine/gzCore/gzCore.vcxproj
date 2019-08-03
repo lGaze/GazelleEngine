@@ -36,7 +36,9 @@
     <ClInclude Include="include\gzResourceHandle.h" />
     <ClInclude Include="include\gzResourceManager.h" />
     <ClInclude Include="include\gzSamplerState.h" />
+    <ClInclude Include="include\gzScene.h" />
     <ClInclude Include="include\gzSceneGraph.h" />
+    <ClInclude Include="include\gzSceneManager.h" />
     <ClInclude Include="include\gzShader.h" />
     <ClInclude Include="include\gzTexture.h" />
     <ClInclude Include="include\gzTransform.h" />

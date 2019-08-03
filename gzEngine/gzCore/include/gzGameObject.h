@@ -62,7 +62,8 @@ class GZ_CORE_EXPORT GameObject
 
  private:
 
-  Vector<Component* > m_components;
+  Vector<Component*> m_components;
+  Vector<GameObject*> m_children;
   Transform m_transform;
   String m_objectName;
   bool m_isEneabled;

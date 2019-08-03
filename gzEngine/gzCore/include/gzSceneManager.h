@@ -1,46 +1,36 @@
 /**************************************************************************/
-/* @filename gzMeshComponent.h
+/* @filename gzSceneManager.h
 /* @author Victor Flores 
-/* @date 2019/07/14
-/* @brief Class for the components of Mesh type
+/* @date 2019/08/03
+/* @brief 
 /**************************************************************************/
 #pragma once
 #include "gzPrerequisitesCore.h"
-#include "gzComponent.h"
 
 namespace gzEngineSDK {
-class GZ_CORE_EXPORT MeshComponent : public Component
+class GZ_CORE_EXPORT SceneManager
 {
  public:
    
   /**
    * @brief default constructor
    */
-  MeshComponent();
-
+  SceneManager() = default;
+	
   /**
    * @brief default destructor
    */
-  ~MeshComponent() = default;
-
+  ~SceneManager() = default;
+	
   /************************************************************************/
-  /* MeshComponent functions                                              */
+  /* SceneManager functions                                               */
   /************************************************************************/
-
-  /**
-   * @brief Functions that returns the type of this component
-   */
-  COMPONENT_TYPE::E
-  getComponentType();
-
+	
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-
- private:
-
-  ResourceHandle<Texture> resource;
-  COMPONENT_TYPE::E m_type;
+	
+ public:
    
  };
 }

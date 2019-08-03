@@ -8,6 +8,7 @@
 #pragma once
 
 #include "gzPrerequisitesCore.h"
+#include "gzResourceHandle.h"
 
 namespace gzEngineSDK {
 
