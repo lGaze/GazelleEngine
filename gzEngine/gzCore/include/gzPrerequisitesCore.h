@@ -30,7 +30,6 @@ namespace gzEngineSDK {
   class Component;
   class GameObject;
   class Camera;
-  class ResourceHandle;
   class Resource;
 }
 

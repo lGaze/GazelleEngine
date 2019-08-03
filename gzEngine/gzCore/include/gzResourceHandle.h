@@ -39,13 +39,19 @@ class GZ_CORE_EXPORT ResourceHandle
     return m_handle;
   }
 
+ protected:
+
+  friend class ResourceManager;
+
   /**
    * @brief This function sets the data into the resource handle
    */
   FORCEINLINE void
   setHandle(T * resource){
-    m_handle = reinterpret_cast<resource>(int64);
+    m_handle = reinterpret_cast<resource>(&int64);
   }
+
+ 
 
   /************************************************************************/
   /* Member declarations                                                  */

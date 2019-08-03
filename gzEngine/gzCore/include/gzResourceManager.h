@@ -8,6 +8,8 @@
 
 #include "gzPrerequisitesCore.h"
 #include <gzModule.h>
+#include "gzResourceHandle.h"
+
 
 namespace gzEngineSDK {
 class GZ_CORE_EXPORT ResourceManager : public Module<ResourceManager>
@@ -37,13 +39,13 @@ class GZ_CORE_EXPORT ResourceManager : public Module<ResourceManager>
   /**
    * @brief Function that creates a texture from the given file
    */
-  ResourceHandle<class Texture>
+  ResourceHandle<Texture>
   loadTextureFromFile(const String filename);
 
   /**
    * @brief Function that creates a texture from the given file
    */
-  ResourceHandle<class Model>
+  ResourceHandle<Model>
   loadModelFromFile(const String filename);
 
   /************************************************************************/
@@ -51,6 +53,6 @@ class GZ_CORE_EXPORT ResourceManager : public Module<ResourceManager>
   /************************************************************************/
 
  public:
-   
+
  };
 }

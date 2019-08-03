@@ -7,13 +7,12 @@
 
 #include "gzResourceManager.h"
 #include "gzGraphicsManager.h"
-#include "gzResourceHandle.h"
 #include "gzTexture.h"
 #include "gzModel.h"
 
 namespace gzEngineSDK {
 
-  ResourceHandle<class Texture>
+  ResourceHandle<Texture>
   ResourceManager::createTexture2D(TEXTURE2D_DESCRIPTOR & textureInfo)
   {
     Texture * tempTex = new Texture();
