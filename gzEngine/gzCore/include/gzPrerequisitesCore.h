@@ -31,6 +31,9 @@ namespace gzEngineSDK {
   class GameObject;
   class Camera;
   class Resource;
+  class SceneManager;
+  class Scene;
+  class SceneGraph;
 }
 
 //DLL export

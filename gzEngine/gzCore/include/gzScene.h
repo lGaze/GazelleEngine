@@ -15,7 +15,7 @@ class GZ_CORE_EXPORT Scene
   /**
    * @brief default constructor
    */
-  Scene() = default;
+  Scene();
 
   /**
    * @brief default destructor
@@ -25,14 +25,37 @@ class GZ_CORE_EXPORT Scene
   /************************************************************************/
   /* Scene functions                                                      */
   /************************************************************************/
-
   
+  /**
+   * @brief Adds a GameObject into the Scene
+   */
+  void
+  addGameObject();
+
+  /**
+   * @brief Removes a GameObject from the scene
+   */
+  void
+  removeGameObject();
+
+  /**
+   * @brief Gets the Scene Name
+   */
+  String
+  getSceneName();
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 
  public:
-   
+
+  String m_name;
+
+ private:
+
+  GameObject * m_root;
+
  };
 }
 
