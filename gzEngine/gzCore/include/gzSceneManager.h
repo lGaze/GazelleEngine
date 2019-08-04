@@ -16,7 +16,7 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
   /**
    * @brief default constructor
    */
-  SceneManager() = default;
+  SceneManager();
 
   /**
    * @brief default destructor
@@ -36,7 +36,7 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
   /**
    * @brief Gets the active Scene
    */
-  Scene
+  Scene *
   getActiveScene();
 
   /**
@@ -54,14 +54,14 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
   /**
    * @brief Creates a empty game object
    */
-  GameObject
+  GameObject &
   createEmptyGameObject();
 
   /**
    * @brief Adds a Scene to the active scene
    */
   void
-  addGameObjectToScene();
+  addGameObjectToScene(GameObject & gameObject);
 
   /************************************************************************/
   /* Member declarations                                                  */

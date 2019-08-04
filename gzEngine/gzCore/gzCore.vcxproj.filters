@@ -75,9 +75,6 @@
     <ClInclude Include="include\gzMeshComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\gzSceneGraph.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\gzCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -156,6 +153,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gzResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gzSceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gzScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

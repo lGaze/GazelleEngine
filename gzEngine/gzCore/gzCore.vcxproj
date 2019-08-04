@@ -37,7 +37,6 @@
     <ClInclude Include="include\gzResourceManager.h" />
     <ClInclude Include="include\gzSamplerState.h" />
     <ClInclude Include="include\gzScene.h" />
-    <ClInclude Include="include\gzSceneGraph.h" />
     <ClInclude Include="include\gzSceneManager.h" />
     <ClInclude Include="include\gzShader.h" />
     <ClInclude Include="include\gzTexture.h" />
@@ -62,7 +61,9 @@
     <ClCompile Include="src\gzResourceHandle.cpp" />
     <ClCompile Include="src\gzResourceManager.cpp" />
     <ClCompile Include="src\gzSamplerState.cpp" />
+    <ClCompile Include="src\gzScene.cpp" />
     <ClCompile Include="src\gzSceneGraph.cpp" />
+    <ClCompile Include="src\gzSceneManager.cpp" />
     <ClCompile Include="src\gzShader.cpp" />
     <ClCompile Include="src\gzVertexShader.cpp" />
     <ClCompile Include="src\gzViewPort.cpp" />

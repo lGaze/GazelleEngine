@@ -46,4 +46,23 @@ namespace gzEngineSDK {
       m_components.push_back(model);
     }
   }
+
+  void 
+  GameObject::addChildren(GameObject & gameObject)
+  {
+    m_children.push_back(&gameObject);
+  }
+
+  GameObject *
+  GameObject::findChildrenbyName(String gameObjectName)
+  {
+    for (int i = 0; i < m_children.size(); i++)
+    {
+      if (m_children[i]->m_objectName == gameObjectName)
+      {
+        return m_children[i];
+      }
+    }
+    return nullptr;
+  }
 }

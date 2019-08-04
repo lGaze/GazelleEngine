@@ -16,7 +16,6 @@ namespace gzEngineSDK {
   MeshComponent::MeshComponent()
   {
     m_type = kMeshComponent;
-    m_model = new Model();
   }
 
   COMPONENT_TYPE::E 

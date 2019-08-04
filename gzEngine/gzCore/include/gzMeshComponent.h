@@ -39,7 +39,7 @@ class GZ_CORE_EXPORT MeshComponent : public Component
 
  private:
 
-  ResourceHandle<Texture> resource;
+  ResourceHandle<Model> m_resource;
   COMPONENT_TYPE::E m_type;
    
  };

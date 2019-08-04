@@ -54,19 +54,32 @@ class GZ_CORE_EXPORT GameObject
   void
   createComponent(COMPONENT_TYPE::E componentType);
 
+  /**
+   * @brief Adds a children to the game object
+   */
+  void
+  addChildren(GameObject & gameObject);
+
+  /**
+   * @brief Search the given name in the children of this game object
+   */
+  GameObject *
+  findChildrenbyName(String gameObjectName);
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 
  public:
 
- private:
+  bool m_isEneabled;
+  Transform m_transform;
+  String m_objectName;
+ 
+private:
 
   Vector<Component*> m_components;
   Vector<GameObject*> m_children;
-  Transform m_transform;
-  String m_objectName;
-  bool m_isEneabled;
    
  };
 }

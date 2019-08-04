@@ -30,7 +30,7 @@ class GZ_CORE_EXPORT Scene
    * @brief Adds a GameObject into the Scene
    */
   void
-  addGameObject();
+  addGameObject(GameObject & gameObject);
 
   /**
    * @brief Removes a GameObject from the scene
