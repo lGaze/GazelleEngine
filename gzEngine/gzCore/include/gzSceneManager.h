@@ -54,7 +54,7 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
   /**
    * @brief Creates a empty game object
    */
-  GameObject &
+  GameObject *
   createEmptyGameObject();
 
   /**
@@ -62,6 +62,12 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
    */
   void
   addGameObjectToScene(GameObject & gameObject);
+
+  /**
+   * @brief 
+   */
+  void
+  update();
 
   /************************************************************************/
   /* Member declarations                                                  */
@@ -71,6 +77,5 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
 
    Vector<Scene *> m_scenes;
    Scene * m_activeScene;
-   
  };
 }

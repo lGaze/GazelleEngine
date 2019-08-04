@@ -143,9 +143,6 @@
     <ClCompile Include="src\gzMeshComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gzSceneGraph.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\gzCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

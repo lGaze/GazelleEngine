@@ -7,6 +7,7 @@
 
 #include "gzMeshComponent.h"
 #include "gzModel.h"
+#include "gzResourceManager.h"
 
 
 namespace gzEngineSDK {
@@ -22,5 +23,17 @@ namespace gzEngineSDK {
   MeshComponent::getComponentType()
   {
     return m_type;
+  }
+
+  void
+  MeshComponent::loadMesh(String path)
+  {
+    m_resource = ResourceManager::instance().loadModelFromFile(path);
+  }
+
+  void 
+  MeshComponent::update()
+  {
+    ResourceManager::instance().drawModel(m_resource);
   }
 }

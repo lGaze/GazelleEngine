@@ -62,7 +62,6 @@
     <ClCompile Include="src\gzResourceManager.cpp" />
     <ClCompile Include="src\gzSamplerState.cpp" />
     <ClCompile Include="src\gzScene.cpp" />
-    <ClCompile Include="src\gzSceneGraph.cpp" />
     <ClCompile Include="src\gzSceneManager.cpp" />
     <ClCompile Include="src\gzShader.cpp" />
     <ClCompile Include="src\gzVertexShader.cpp" />

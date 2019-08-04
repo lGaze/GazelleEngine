@@ -35,4 +35,11 @@ namespace gzEngineSDK {
   {
     return String();
   }
+
+  void 
+  Scene::update()
+  {
+    m_root->update();
+  }
+
 }

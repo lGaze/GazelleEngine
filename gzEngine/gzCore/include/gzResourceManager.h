@@ -48,6 +48,13 @@ class GZ_CORE_EXPORT ResourceManager : public Module<ResourceManager>
   ResourceHandle<Model>
   loadModelFromFile(const String filename);
 
+  /**
+   * @brief 
+   */
+  void
+  drawModel(ResourceHandle<Model> model);
+
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

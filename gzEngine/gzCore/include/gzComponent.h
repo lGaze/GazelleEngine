@@ -42,12 +42,11 @@ namespace gzEngineSDK {
 
    public:
 
-/*
-    / **
+    /**
      * @brief Function that updates the components
-     * /
+     */
     virtual void
-    update() = 0;*/
+    update(){};
 
     /**
      * @brief 

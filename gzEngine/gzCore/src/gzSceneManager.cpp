@@ -31,16 +31,22 @@ namespace gzEngineSDK {
     m_scenes.push_back(newScene);
   }
 
-  GameObject &
+  GameObject *
   SceneManager::createEmptyGameObject()
   {
     GameObject * newGameObject = new GameObject();
-    return *newGameObject;
+    return newGameObject;
   }
 
   void
   SceneManager::addGameObjectToScene(GameObject & gameObject)
   {
     m_activeScene->addGameObject(gameObject);
+  }
+
+  void 
+  SceneManager::update()
+  {
+    m_activeScene->update();
   }
 }

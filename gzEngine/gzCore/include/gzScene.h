@@ -44,6 +44,12 @@ class GZ_CORE_EXPORT Scene
   String
   getSceneName();
 
+  /**
+   * @brief Updates the scene
+   */
+  void
+  update();
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

@@ -11,6 +11,8 @@
 #include "gzGameObject.h"
 #include "gzMeshComponent.h"
 #include "gzCamera.h"
+#include "gzSceneManager.h"
+#include "gzResourceManager.h"
 
 
 namespace gzEngineSDK {
@@ -52,7 +54,7 @@ namespace gzEngineSDK {
   }
 
   bool
-    BaseApp::initApp()
+  BaseApp::initApp()
   {
     m_pwindow = new Window();
     if (!m_pwindow->initWindow(m_windowWidth,
@@ -77,11 +79,14 @@ namespace gzEngineSDK {
       return false;
     }
 
+    SceneManager::startUp();
+    ResourceManager::startUp();
+
     return true;
   }
 
   bool
-    BaseApp::postInit()
+  BaseApp::postInit()
   {
     bool result = true;
 
@@ -120,7 +125,6 @@ namespace gzEngineSDK {
     vp.MaxDepth = 1.0f;
     vp.TopLeftX = 0;
     vp.TopLeftY = 0;
-
 
     //Compile and create the vertex shader for light
     m_pLightVertexShader = GraphicsManager::instance().CreateVertexShader(
@@ -203,7 +207,7 @@ namespace gzEngineSDK {
   }
 
   void
-    BaseApp::render()
+  BaseApp::render()
   {
 
     /*  MESH_DATA * dwarf = Model->getMeshData();*/

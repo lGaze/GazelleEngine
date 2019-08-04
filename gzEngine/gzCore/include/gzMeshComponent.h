@@ -33,6 +33,20 @@ class GZ_CORE_EXPORT MeshComponent : public Component
   COMPONENT_TYPE::E
   getComponentType();
 
+  /**/
+
+  /**
+   * @brief Loads a mesh into the component
+   */
+  void
+  loadMesh(String path);
+
+  /**
+   * @brief 
+   */
+  void
+  update() override;
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

@@ -44,4 +44,11 @@ namespace gzEngineSDK {
     handle.setHandle(tempModel);
     return handle;
   }
+
+  void 
+  ResourceManager::drawModel(ResourceHandle<Model> model)
+  {
+    Model * tempModel = reinterpret_cast<Model*>(model.getHandle());
+    tempModel->Draw();
+  }
 }

@@ -56,13 +56,21 @@ namespace gzEngineSDK {
   GameObject *
   GameObject::findChildrenbyName(String gameObjectName)
   {
-    for (int i = 0; i < m_children.size(); i++)
+    for (auto it : m_children )
     {
-      if (m_children[i]->m_objectName == gameObjectName)
+      if ( it->m_objectName == gameObjectName)
       {
-        return m_children[i];
+        return it;
       }
     }
     return nullptr;
+  }
+  void 
+  GameObject::update()
+  {
+    for (auto it : m_components)
+    {
+      it->update();
+    }
   }
 }

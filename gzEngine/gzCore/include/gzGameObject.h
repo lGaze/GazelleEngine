@@ -14,12 +14,16 @@
 namespace gzEngineSDK {
 class GZ_CORE_EXPORT GameObject
 {
- public:
-   
+ 
+ private:
   /**
    * @brief default constructor
    */
   GameObject();
+
+  friend class SceneManager;
+
+ public:
 
   /**
    * @brief default destructor
@@ -65,6 +69,9 @@ class GZ_CORE_EXPORT GameObject
    */
   GameObject *
   findChildrenbyName(String gameObjectName);
+
+  void
+  update();
 
   /************************************************************************/
   /* Member declarations                                                  */
