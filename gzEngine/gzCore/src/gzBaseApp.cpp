@@ -14,7 +14,6 @@
 #include "gzSceneManager.h"
 #include "gzResourceManager.h"
 
-
 namespace gzEngineSDK {
 
   BaseApp::BaseApp(uint32 windowWidth,
@@ -73,15 +72,14 @@ namespace gzEngineSDK {
       return false;
     }
 
+    SceneManager::startUp();
+    ResourceManager::startUp();
+
     if (!postInit())
     {
       std::cout << "Failed to Initialize" << std::endl;
       return false;
     }
-
-    SceneManager::startUp();
-    ResourceManager::startUp();
-
     return true;
   }
 
@@ -160,8 +158,18 @@ namespace gzEngineSDK {
     //Quad Aligned
     //quad->Load( "Meshes\\QuadPerron.obj" );
 
+/*
     m_model = new Model();
-    m_model->Load("Meshes\\spider.obj");
+    m_model->Load("Meshes\\spider.obj");*/
+
+    SceneManager::instance().createScene();
+    SceneManager::instance().setActiveScene();
+   
+    a = SceneManager::instance().createEmptyGameObject();
+    MeshComponent * testModel = new MeshComponent();
+    testModel->loadMesh("Meshes\\spider.obj");
+    a->addComponent(testModel);
+    SceneManager::instance().addGameObjectToScene(*a);
 
     //Create RasterizerState desc
     RASTERIZER_DESCRIPTOR rasterizerDesc;
@@ -193,7 +201,6 @@ namespace gzEngineSDK {
     g_World.identity();
 
     //Initialize the camera
-
     m_camera = new Camera(m_windowWidth, m_windowHeight);
 
     m_camera->setPosition(Vector3f(0.0, 0.0, -175));
@@ -212,7 +219,7 @@ namespace gzEngineSDK {
 
     /*  MESH_DATA * dwarf = Model->getMeshData();*/
 
-      //Update our time
+   //Update our time
     float t = 0.0f;
     static DWORD dwTimeStart = 0;
     DWORD dwTimerCur = GetTickCount();
@@ -252,18 +259,15 @@ namespace gzEngineSDK {
 
     //Sets the Viewport
     GraphicsManager::instance().setViewports(1, vp);
-
     GraphicsManager::instance().setRenderTargets(1, m_pBackBufferTex,
                                                  m_pDepthStencilView);
-
     GraphicsManager::instance().setRasterizerState(m_RasterizerState);
     GraphicsManager::instance().setInputLayout(inputLayout);
     GraphicsManager::instance().setVertexShader(m_pLightVertexShader);
     GraphicsManager::instance().setVSConstantBuffers(constantMatrix, 0, 1);
     GraphicsManager::instance().setPixelShader(m_pLightPixelShader);
     GraphicsManager::instance().setSamplerState(0, m_pSampler, 1);
-    m_model->Draw();
-
+    SceneManager::instance().update();
     GraphicsManager::instance().present(0, 0);
   }
 

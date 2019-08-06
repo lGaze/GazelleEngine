@@ -7,10 +7,14 @@
 
 #include "gzScene.h"
 #include "gzGameObject.h"
+#include "gzSceneManager.h"
 
 namespace gzEngineSDK {
   
-  Scene::Scene() : m_root(nullptr) {}
+  Scene::Scene() : m_name("NewScene")
+  {
+    m_root = nullptr;
+  }
 
   void 
   Scene::addGameObject(GameObject & gameObject)

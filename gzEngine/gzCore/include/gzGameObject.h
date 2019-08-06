@@ -15,7 +15,7 @@ namespace gzEngineSDK {
 class GZ_CORE_EXPORT GameObject
 {
  
- private:
+ protected:
   /**
    * @brief default constructor
    */

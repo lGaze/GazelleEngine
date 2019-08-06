@@ -48,10 +48,8 @@ class GZ_CORE_EXPORT ResourceHandle
    */
   FORCEINLINE void
   setHandle(Resource * resource){
-    m_handle = reinterpret_cast<int64>(&resource);
+    m_handle = reinterpret_cast<int64>(resource);
   }
-
- 
 
   /************************************************************************/
   /* Member declarations                                                  */

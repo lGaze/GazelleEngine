@@ -10,12 +10,15 @@
 
 namespace gzEngineSDK {
 
-  SceneManager::SceneManager() : m_activeScene(nullptr){}
+  SceneManager::SceneManager() 
+  {
+    m_activeScene = nullptr;
+  }
 
   void 
   SceneManager::setActiveScene()
   {
-
+    m_activeScene = m_scenes[0];
   }
 
   Scene * 

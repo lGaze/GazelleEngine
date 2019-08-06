@@ -37,18 +37,29 @@ namespace gzEngineSDK {
   ResourceHandle<Model> 
   ResourceManager::loadModelFromFile(const String filename)
   {
-    Model * tempModel = new Model();
-    tempModel->Load(filename);
-
     ResourceHandle<Model> handle;
-    handle.setHandle(tempModel);
+
+    auto mapfilename = m_modelMap.find(filename);
+
+    if (mapfilename != m_modelMap.end())
+    {
+      handle.setHandle(mapfilename->second);
+      return handle;
+    }
+
+    Model * model = new Model();
+    model->Load(filename);
+    handle.setHandle(model);
+    
+    m_modelMap.insert(std::pair<String,Model*>(filename, model));
+
     return handle;
   }
 
   void 
   ResourceManager::drawModel(ResourceHandle<Model> model)
   {
-    Model * tempModel = reinterpret_cast<Model*>(model.getHandle());
-    tempModel->Draw();
+    Model * a = reinterpret_cast<Model*>(model.getHandle());
+    a->Draw();
   }
 }

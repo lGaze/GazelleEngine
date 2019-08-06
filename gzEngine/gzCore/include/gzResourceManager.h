@@ -59,7 +59,9 @@ class GZ_CORE_EXPORT ResourceManager : public Module<ResourceManager>
   /* Member declarations                                                  */
   /************************************************************************/
 
- public:
+  protected:
+
+  Map<String, Model*> m_modelMap;
 
  };
 }

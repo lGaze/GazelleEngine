@@ -566,7 +566,6 @@ namespace gzEngineSDK {
 
   }
 
-
   void
   DXGraphicsManager::setRasterizerState( RasterizerState * rasterizerState )
   {

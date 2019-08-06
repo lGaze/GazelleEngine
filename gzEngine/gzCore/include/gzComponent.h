@@ -14,7 +14,7 @@ namespace gzEngineSDK {
 
   namespace COMPONENT_TYPE
   {
-    enum E
+    enum GZ_CORE_EXPORT E
     {
       kMeshComponent = 0,
     };

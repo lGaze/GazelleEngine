@@ -233,6 +233,8 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    Vector<Texture*>ClaireNormalTextures;
    Vector<Texture*>ClaireSpecularTextures;
 
+   GameObject * a;
+
 };
 
 BaseApp&

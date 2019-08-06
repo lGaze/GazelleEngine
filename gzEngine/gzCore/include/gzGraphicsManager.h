@@ -235,6 +235,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
 
   protected:
 
+  //TODO: Move this to the resource manager
    Map<String, Texture *> m_textureMap;
   
  };
