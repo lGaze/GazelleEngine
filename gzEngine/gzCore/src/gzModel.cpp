@@ -7,6 +7,7 @@
 
 #include "gzModel.h"
 #include "gzGraphicsManager.h"
+#include "gzMaterial.h"
 
 namespace gzEngineSDK {
   
@@ -55,7 +56,7 @@ namespace gzEngineSDK {
       {
         aiMaterial * material =
           pScene->mMaterials[pScene->mMeshes[i]->mMaterialIndex];
-        m_mesh[i].textures.push_back(LoadTextures(material));
+        m_mesh[i].material = createMaterial(material);
       }
 
     }
@@ -146,9 +147,9 @@ namespace gzEngineSDK {
 
     for (uint32 i = 0; i < m_mesh.size(); i++)
     {
-      if (nullptr != m_mesh[i].textures[0])
+      if (nullptr != m_mesh[i].material)
       {
-        GraphicsManager::instance().setShaderResources(m_mesh[i].textures[0],
+        GraphicsManager::instance().setShaderResources(&m_mesh[i].material->getAlbedoTexture(),
                                                        0,
                                                        1);
       }
@@ -158,13 +159,22 @@ namespace gzEngineSDK {
     }
   }
 
-  Texture * 
-  Model::LoadTextures(aiMaterial * material)
+  Material * 
+  Model::createMaterial(aiMaterial * material)
   {
     aiString str;
     uint32 diff = 0;
+    uint32 specular = 0;
+    uint32 normals = 0;
+    uint32 emissive = 0;
+    Material * tempMaterial = new Material();
+    Texture * tempTexture = new Texture();
 
     diff = material->GetTextureCount(aiTextureType_DIFFUSE);
+    specular = material->GetTextureCount(aiTextureType_SPECULAR);
+    normals = material->GetTextureCount(aiTextureType_NORMALS);
+    emissive = material->GetTextureCount(aiTextureType_EMISSIVE);
+
 
     if (diff > 0)
     {
@@ -173,10 +183,44 @@ namespace gzEngineSDK {
       //TODO: just do that for spider, don´t use it for other shit
       //filename.erase(0, 2);
       filename = m_directoryPath + filename;
-      return GraphicsManager::instance().LoadTextureFromFile(filename);
+      tempTexture = GraphicsManager::instance().LoadTextureFromFile(filename);
+      tempMaterial->setAlbedoTexture(*tempTexture);
     }
 
-    return nullptr;
+    if (specular > 0)
+    {
+      material->GetTexture(aiTextureType_DIFFUSE, 0, &str);
+      String filename = str.C_Str();
+      //TODO: just do that for spider, don´t use it for other shit
+      //filename.erase(0, 2);
+      filename = m_directoryPath + filename;
+      tempTexture = GraphicsManager::instance().LoadTextureFromFile(filename);
+      tempMaterial->setSpecularTexture(*tempTexture);
+    }
+
+    if (normals > 0)
+    {
+      material->GetTexture(aiTextureType_NORMALS, 0, &str);
+      String filename = str.C_Str();
+      //TODO: just do that for spider, don´t use it for other shit
+      //filename.erase(0, 2);
+      filename = m_directoryPath + filename;
+      tempTexture = GraphicsManager::instance().LoadTextureFromFile(filename);
+      tempMaterial->setSpecularTexture(*tempTexture);
+    }
+
+    if ( emissive > 0)
+    {
+      material->GetTexture(aiTextureType_EMISSIVE, 0, &str);
+      String filename = str.C_Str();
+      //TODO: just do that for spider, don´t use it for other shit
+      //filename.erase(0, 2);
+      filename = m_directoryPath + filename;
+      tempTexture = GraphicsManager::instance().LoadTextureFromFile(filename);
+      tempMaterial->setSpecularTexture(*tempTexture);
+    }
+
+    return tempMaterial;
   }
 
 }

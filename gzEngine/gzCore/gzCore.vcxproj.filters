@@ -93,6 +93,9 @@
     <ClInclude Include="include\gzSceneManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\gzMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\gzBaseApp.cpp">

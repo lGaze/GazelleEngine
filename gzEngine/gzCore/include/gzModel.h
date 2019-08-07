@@ -22,7 +22,7 @@ struct Mesh {
     uint32 indexBase;
     uint32 numVertex;
     uint32 numIndex;
-    Vector<Texture*> textures;
+    Material * material;
 };
 
 class GZ_CORE_EXPORT Model : public Resource
@@ -62,8 +62,8 @@ class GZ_CORE_EXPORT Model : public Resource
    /**
     * @brief 
     */
-   Texture *
-   LoadTextures(aiMaterial* material);
+   Material *
+   createMaterial(aiMaterial* material);
 
   /************************************************************************/
   /* Member functions                                                     */
