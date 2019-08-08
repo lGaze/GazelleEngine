@@ -2,7 +2,7 @@
 /* @filename gzMaterial.h
 /* @author Victor Flores 
 /* @date 2019/08/06
-/* @brief 
+/* @brief Material header file 
 /**************************************************************************/
 #pragma once
 

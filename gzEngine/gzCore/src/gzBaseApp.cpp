@@ -310,7 +310,7 @@ namespace gzEngineSDK {
     m_graphicsFunc = (createGraphicsManager)GetProcAddress(hCGDll,
                                                            funcName.c_str());
     m_graphicsFunc();
-    return true;                                                     
+    return true;
   }
 
   BaseApp&
