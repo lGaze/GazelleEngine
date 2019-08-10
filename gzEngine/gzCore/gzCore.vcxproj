@@ -35,15 +35,10 @@
     <ClInclude Include="include\gzPixelShader.h" />
     <ClInclude Include="include\gzPrerequisitesCore.h" />
     <ClInclude Include="include\gzRasterizerState.h" />
-<<<<<<< HEAD
     <ClInclude Include="include\gzRenderer.h" />
     <ClInclude Include="include\gzResource.h" />
     <ClInclude Include="include\gzResourceHandle.h" />
     <ClInclude Include="include\gzResourceManager.h" />
-=======
-    <ClInclude Include="include\gzResourceManager.h" />
-    <ClInclude Include="include\gzResource.h" />
->>>>>>> Develop_Camera
     <ClInclude Include="include\gzSamplerState.h" />
     <ClInclude Include="include\gzScene.h" />
     <ClInclude Include="include\gzSceneManager.h" />
