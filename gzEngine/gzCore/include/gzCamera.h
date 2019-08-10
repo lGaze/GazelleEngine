@@ -70,6 +70,12 @@ class GZ_CORE_EXPORT Camera
     return m_projectionMatrix;
   }
 
+  /**
+   * @brief
+   */
+  void
+  UpdateCamera();
+
  private:
 
   /**
@@ -78,6 +84,11 @@ class GZ_CORE_EXPORT Camera
   void
   UpdateViewMatrix();
 
+  /**
+   * @brief 
+   */
+  void
+  UpdateProjectionMatrix();
 
   /************************************************************************/
   /* Member declarations                                                  */
@@ -97,6 +108,7 @@ class GZ_CORE_EXPORT Camera
   Matrix4 m_viewMatrix; //View matrix
   Matrix4 m_projectionMatrix; //Projection matrix
 
+  bool m_dirty;
 
  };
 }

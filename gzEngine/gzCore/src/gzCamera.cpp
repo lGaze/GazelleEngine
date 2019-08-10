@@ -12,19 +12,16 @@ namespace gzEngineSDK {
   Camera::Camera(int width, int height)
   {
     m_eye = Vector3f(0.0f, 0.0f, -1.0);
-    m_at = Vector3f(0.0f, 0.0f, 0.0f);
+    m_at = Vector3f(0.0f, 1.0f, 0.0f);
     m_up = m_eye + Vector3f(0.0, 1.0, 0.0);
-    UpdateViewMatrix();
 
     m_fovy = 0.785398163f;
     m_aspect =
       static_cast<float>(width) / static_cast<float>(height);
     m_zNear = 3.0f;
     m_zFar = 1000.0f;
-    m_projectionMatrix = m_projectionMatrix.matrixPerspectiveFovLH(m_fovy,
-                                                                   m_aspect,
-                                                                   m_zNear,
-                                                                   m_zFar);
+
+    m_dirty = true;
   }
 
   void 
@@ -32,7 +29,7 @@ namespace gzEngineSDK {
   {
     m_eye += direction * cameraSpeed;
     m_at = m_eye + Vector3f(0.0, 0.0, 1.0);
-    UpdateViewMatrix();
+    m_dirty = true;
   }
 
   void 
@@ -44,7 +41,7 @@ namespace gzEngineSDK {
   Camera::setPosition(Vector3f position)
   {
     m_eye = position;
-    UpdateViewMatrix();
+    m_dirty = true;
   }
 
   void 
@@ -56,5 +53,26 @@ namespace gzEngineSDK {
   Camera::UpdateViewMatrix()
   {
     m_viewMatrix = m_viewMatrix.matrixLookAtLH(m_eye, m_at, m_up);
+  }
+
+  void 
+  Camera::UpdateProjectionMatrix()
+  {
+    m_projectionMatrix = m_projectionMatrix =
+      m_projectionMatrix.matrixPerspectiveFovLH(m_fovy,
+                                                m_aspect,
+                                                m_zNear,
+                                                m_zFar);
+  }
+
+  void 
+  Camera::UpdateCamera()
+  {
+    if (!m_dirty) {
+      return;
+    }
+    UpdateViewMatrix();
+    UpdateProjectionMatrix();
+    m_dirty = false;
   }
 }

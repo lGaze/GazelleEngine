@@ -204,6 +204,7 @@ namespace gzEngineSDK {
     m_camera = new Camera(m_windowWidth, m_windowHeight);
 
     m_camera->setPosition(Vector3f(0.0, 0.0, -175));
+    m_camera->UpdateCamera();
     cbMatrixbuffer.view = m_camera->getViewMatrix();
     cbMatrixbuffer.projection = m_camera->getProjectionMatrix();
     GraphicsManager::instance().updateSubresource(constantMatrix,
@@ -275,7 +276,8 @@ namespace gzEngineSDK {
   BaseApp::update()
   {
    
-    m_camera->Move(Vector3f(0.0, 0.0, 0.0), 0.5);
+    m_camera->Move(Vector3f(0.0, 0.0, -1.0), 0.5);
+    m_camera->UpdateCamera();
     cbMatrixbuffer.view = m_camera->getViewMatrix();
     GraphicsManager::instance().updateSubresource(constantMatrix,
                                                   &cbMatrixbuffer);
