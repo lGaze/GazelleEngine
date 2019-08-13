@@ -77,10 +77,14 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    * @returns Bool value wich indicates if the library could be loaded or not
    */
   bool
-  loadLibrary(String libraryName, String funcName);
+  loadGraphicsLibrary(String libraryName, String funcName);
+
+  bool
+  loadRendererLibrary(String libraryName, String funcName);
   
 
   using createGraphicsManager = void*(*)();
+  using createRenderer = void*(*)();
 
   /************************************************************************/
   /* Member declarations                                                  */
@@ -102,6 +106,11 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
     * @brief 
     */
    createGraphicsManager m_graphicsFunc;
+   
+   /**
+    * @brief 
+    */
+   createRenderer m_rendererFunc;
 
    /**
     * @brief 
@@ -131,27 +140,7 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
-   Texture * renderTarget;
-
-   /**
-    * @brief 
-    */
    Texture * m_pDepthStencilView;
-
-   /**
-    * @brief 
-    */
-   SamplerState * m_pSampler;
-
-   /**
-    * @brief 
-    */
-   VertexShader * m_pLightVertexShader;
-
-   /**
-    * @brief 
-    */
-   PixelShader * m_pLightPixelShader;
 
    /**
     * @brief BackBuffer texture 
@@ -159,50 +148,9 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    Texture * m_pBackBufferTex;
 
    /**
-    * @brief 
-    */
-   Model *  quad;
-
-   /**
-    * @brief 
-    */
-   Model  * m_model;
-
-   /**
-    * @brief InputL layout for light
-    */
-   InputLayout * inputLayout;
-
-   /**
-    * @brief 
-    */
-   Buffer * vCubeBuffer;
-
-   /**
-    * @brief 
-    */
-   Buffer * iCubeBuffer;
-
-   /**
-    * @brief 
-    */
-   Buffer * vQuadBuffer;
-
-   /**
-    * @brief 
-    */
-   Buffer * iQuadBuffer;
-
-   /**
-    * @brief 
-    */
-   RasterizerState * m_RasterizerState;
-
-   /**
     * @brief
     */
    Camera * m_camera;
-
 
    /**
     * @brief normal viewport

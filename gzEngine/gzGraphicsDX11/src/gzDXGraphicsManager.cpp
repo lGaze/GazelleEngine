@@ -28,13 +28,15 @@ namespace gzEngineSDK {
     m_pdeviceContext( new DeviceContext() ),
     m_pswapChain( new SwapChain() ),
     m_pviewPort( new DXViewPort() ),
-    m_pShader( new DXShader() ) {}
+    m_pShader( new DXShader() ),
+    m_pbackBuffer( new Texture() ),
+    m_pdepthStencilView( new Texture() ) {}
 
 
   bool
   DXGraphicsManager::initGraphicsManager( void* hWnd,
-                                            int32 width,
-                                            int32 height )
+                                          int32 width,
+                                          int32 height )
   {
     bool restult = true;
 
@@ -46,6 +48,36 @@ namespace gzEngineSDK {
       m_pswapChain->getSwapChainInterface(),
       m_pdeviceContext->getDeviceContextInterface() );
 
+    //BackBuffer
+    m_pbackBuffer = createTextureFromBackBuffer();
+
+    //Depth Stencil
+    //Creates the Depth descriptor
+    TEXTURE2D_DESCRIPTOR depthTextureDesc;
+    depthTextureDesc.Width = width;
+    depthTextureDesc.Height = height;
+    depthTextureDesc.MipLevels = 1;
+    depthTextureDesc.ArraySize = 1;
+    depthTextureDesc.Format = FORMATS::E::FORMAT_D24_UNORM_S8_UINT;
+    depthTextureDesc.Usage = USAGES::E::USAGE_DEFAULT;
+    depthTextureDesc.BindFlags = BIND_FLAGS::E::BIND_DEPTH_STENCIL;
+    depthTextureDesc.CPUAccessFlags = 0;
+    depthTextureDesc.MiscFlags = 0;
+
+    //Creates the DepthStencil View
+    m_pdepthStencilView = createTexture2D(depthTextureDesc);
+
+    //Creates the Viewport Descriptor
+    memset(&m_viewPort, 0, sizeof(m_viewPort));
+    m_viewPort.Width = static_cast<float>(width);
+    m_viewPort.Height = static_cast<float>(height);
+    m_viewPort.MinDepth = 0.0f;
+    m_viewPort.MaxDepth = 1.0f;
+    m_viewPort.TopLeftX = 0;
+    m_viewPort.TopLeftY = 0;
+
+    m_viewportDimensions = Vector2f(static_cast<float>(width), 
+                                    static_cast<float>(height));
 
     return restult;
   }
@@ -73,16 +105,19 @@ namespace gzEngineSDK {
                                 nullptr,
                                 m_ptexture->getTextureInterface() );
 
-    if ( tempTexDesc.BindFlags == D3D11_BIND_SHADER_RESOURCE )
+    if ( tempTexDesc.BindFlags == D3D11_BIND_SHADER_RESOURCE ||
+        tempTexDesc.BindFlags == 40 )
     {
+/*
       D3D11_SHADER_RESOURCE_VIEW_DESC tempDesc;
       memset( &tempDesc, 0, sizeof( tempDesc ) );
       tempDesc.Format = tempTexDesc.Format;
       tempDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+*/
 
       m_pdevice->CreateShaderResourceView(
         *m_ptexture->getTextureInterface(),
-        &tempDesc,
+        nullptr,
         m_ptexture->getShaderResourceViewInterface() );
     }
 
@@ -96,10 +131,12 @@ namespace gzEngineSDK {
       m_pdevice->CreateDepthStencilView( 
         *m_ptexture->getTextureInterface(),
         &tempDesc,
+
         m_ptexture->getDepthStencilViewInterface() );
     }
 
-    if ( tempTexDesc.BindFlags == D3D11_BIND_RENDER_TARGET )
+    if ( tempTexDesc.BindFlags == D3D11_BIND_RENDER_TARGET || 
+        tempTexDesc.BindFlags == 40)
     {
       D3D11_RENDER_TARGET_VIEW_DESC tempDesc;
       memset( &tempDesc, 0, sizeof( tempDesc ) );
@@ -116,30 +153,34 @@ namespace gzEngineSDK {
   }
 
   void
-  DXGraphicsManager::setRenderTargets( uint32 NumViews,
-                                       Texture * renderTargets,
-                                       Texture * depth )
+  DXGraphicsManager::setRenderTarget( Texture * renderTargets)
   {
-
-    m_pdepth = reinterpret_cast< DXTexture* >( depth );
+    m_pdepth = reinterpret_cast<DXTexture *> (m_pdepthStencilView);
     m_prenderTarget = reinterpret_cast< DXTexture* > ( renderTargets );
 
-    if ( m_pdepth == nullptr )
+    m_pdeviceContext->SetRenderTargets(
+      1,
+      m_prenderTarget->getRenderTargetViewInterface(),
+      *m_pdepth->getDepthStencilViewInterface());
+
+  }
+
+  void 
+  DXGraphicsManager::setRenderTargets(Vector<Texture *> renderTargets)
+  {
+    m_pdepth = reinterpret_cast<DXTexture *> (m_pdepthStencilView);
+    Vector<ID3D11RenderTargetView *> renderTextures;
+    for (auto it : renderTargets)
     {
-      m_pdeviceContext->SetRenderTargets(
-        NumViews,
-        m_prenderTarget->getRenderTargetViewInterface(),
-        nullptr );
-    }
-    else
-    {
-      m_pdeviceContext->SetRenderTargets(
-        NumViews,
-        m_prenderTarget->getRenderTargetViewInterface(),
-        *m_pdepth->getDepthStencilViewInterface() );
+      m_prenderTarget = reinterpret_cast<DXTexture*> (it);
+      renderTextures.push_back(*m_prenderTarget->getRenderTargetViewInterface());
     }
 
-
+    m_pdeviceContext->SetRenderTargets(
+      renderTargets.size(),
+      &renderTextures[0],
+      *m_pdepth->getDepthStencilViewInterface());
+    
   }
 
   void
@@ -162,10 +203,9 @@ namespace gzEngineSDK {
   void
   DXGraphicsManager::clearDepthStencilView( uint32 ClearFlags,
                                               float Depthf,
-                                              uint8 Stencil,
-                                              Texture * depth )
+                                              uint8 Stencil )
   {
-    m_pdepth = reinterpret_cast< DXTexture* >( depth );
+    m_pdepth = reinterpret_cast< DXTexture* >( m_pdepthStencilView );
     m_pdeviceContext->ClearDepthStencilView(
       *m_pdepth->getDepthStencilViewInterface(),
       ClearFlags,
@@ -575,6 +615,30 @@ namespace gzEngineSDK {
     m_pdeviceContext->SetRasterizerState(
       *m_pRasterizerState->getRasterizerStateInterface() );
 
+  }
+
+  Texture * 
+  DXGraphicsManager::getBackBufferTex()
+  {
+    return m_pbackBuffer;
+  }
+
+  Texture * 
+  DXGraphicsManager::getDepthStencilView()
+  {
+    return m_pdepthStencilView;
+  }
+
+  VIEWPORT_DESCRIPTOR 
+  DXGraphicsManager::getViewport()
+  {
+    return m_viewPort;
+  }
+
+  Vector2f 
+  DXGraphicsManager::getViewportDimensions()
+  {
+    return m_viewportDimensions;
   }
 
 }

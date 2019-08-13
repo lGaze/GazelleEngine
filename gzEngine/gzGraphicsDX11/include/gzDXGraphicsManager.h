@@ -23,7 +23,8 @@ class DXGraphicsManager : public GraphicsManager
   /**
    * @brief default destructor
    */
-  virtual ~DXGraphicsManager() {} 
+  virtual 
+  ~DXGraphicsManager() {} 
 	
   /************************************************************************/
   /* DXGraphicsmanager functions                                          */
@@ -45,9 +46,7 @@ class DXGraphicsManager : public GraphicsManager
    * @brief Sets the render target with the given render taget
    */
   virtual void
-  setRenderTargets( uint32 NumViews,
-                    Texture * renderTarget, 
-                    Texture * depth ) override;
+  setRenderTarget( Texture * renderTarget ) override;
 
 
   /**
@@ -69,8 +68,7 @@ class DXGraphicsManager : public GraphicsManager
   virtual void 
   clearDepthStencilView( uint32 ClearFlags, 
                          float Depthf, 
-                         uint8 Stencil, 
-                         Texture * depth ) override;
+                         uint8 Stencil ) override;
 
   /**
    * @brief 
@@ -241,6 +239,36 @@ class DXGraphicsManager : public GraphicsManager
   virtual void
   setRasterizerState( RasterizerState * rasterizerState ) override;
 
+  /**
+   * @brief Gets the BackBuffer Texture
+   */
+  virtual Texture * 
+  getBackBufferTex() override;
+
+  /**
+   * @brief Gets the DephtStencil Texture
+   */
+  virtual Texture * 
+  getDepthStencilView() override;
+
+  /**
+   * @brief Gets the Viewport descriptor
+   */
+  virtual VIEWPORT_DESCRIPTOR 
+  getViewport() override;
+
+  /**
+   * @brief Gets the Viewport dimentions
+   */
+  virtual Vector2f 
+  getViewportDimensions() override;
+
+  /**
+   * @brief Sets multiple Render Targets at once
+   */
+  virtual void 
+  setRenderTargets(Vector<Texture *> renderTargets) override;
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
@@ -271,6 +299,21 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   DXTexture * m_pdepth;
+
+  /**
+   * @brief Pointer of the BackBuffer Tex
+   */
+  Texture * m_pbackBuffer;
+
+  /**
+   * @brief 
+   */
+  Texture * m_pdepthStencilView;
+
+  /**
+   * @brief 
+   */
+  VIEWPORT_DESCRIPTOR m_viewPort;
 
   /**
    * @brief 
@@ -316,6 +359,11 @@ class DXGraphicsManager : public GraphicsManager
    * @brief 
    */
   DXRasterizerState * m_pRasterizerState;
+
+  /**
+   * @brief 
+   */
+  Vector2f m_viewportDimensions;
 
  };
 }

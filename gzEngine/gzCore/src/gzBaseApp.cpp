@@ -1,3 +1,4 @@
+
 /**************************************************************************/
 /* @filename gzBaseApp.cpp
 /* @author Victor Flores 
@@ -13,6 +14,8 @@
 #include "gzCamera.h"
 #include "gzSceneManager.h"
 #include "gzResourceManager.h"
+#include "gzRenderer.h"
+#include "gzMaterial.h"
 
 namespace gzEngineSDK {
 
@@ -66,7 +69,7 @@ namespace gzEngineSDK {
       return false;
     }
 
-    if (!loadLibrary("gzGraphicsDX11d.dll", "CreateManagerObject"))
+    if (!loadGraphicsLibrary("gzGraphicsDX11d.dll", "CreateManagerObject"))
     {
       std::cout << "Failed to load the library " << std::endl;
       return false;
@@ -80,11 +83,18 @@ namespace gzEngineSDK {
       std::cout << "Failed to Initialize" << std::endl;
       return false;
     }
+
+    if (!loadRendererLibrary("gzPBRRendererd.dll", "CreateManagerObject"))
+    {
+      std::cout << "Failed to load the library " << std::endl;
+      return false;
+    }
+
     return true;
   }
 
   bool
-  BaseApp::postInit()
+    BaseApp::postInit()
   {
     bool result = true;
 
@@ -94,53 +104,9 @@ namespace gzEngineSDK {
       m_windowWidth,
       m_windowHeight);
 
+    m_pBackBufferTex = GraphicsManager::instance().getBackBufferTex();
 
-    //Creates the Backbuffer texture
-    m_pBackBufferTex =
-      GraphicsManager::instance().createTextureFromBackBuffer();
-
-    //Creates the Depth descriptor
-    TEXTURE2D_DESCRIPTOR depthTextureDesc;
-    depthTextureDesc.Width = m_windowWidth;
-    depthTextureDesc.Height = m_windowHeight;
-    depthTextureDesc.MipLevels = 1;
-    depthTextureDesc.ArraySize = 1;
-    depthTextureDesc.Format = FORMATS::E::FORMAT_D24_UNORM_S8_UINT;
-    depthTextureDesc.Usage = USAGES::E::USAGE_DEFAULT;
-    depthTextureDesc.BindFlags = BIND_FLAGS::E::BIND_DEPTH_STENCIL;
-    depthTextureDesc.CPUAccessFlags = 0;
-    depthTextureDesc.MiscFlags = 0;
-
-    //Creates the DepthStencil View
-    m_pDepthStencilView =
-      GraphicsManager::instance().createTexture2D(depthTextureDesc);
-
-
-    //Creates the Viewport Descriptor
-    vp.Width = static_cast<float>(m_windowWidth);
-    vp.Height = static_cast<float>(m_windowHeight);
-    vp.MinDepth = 0.0f;
-    vp.MaxDepth = 1.0f;
-    vp.TopLeftX = 0;
-    vp.TopLeftY = 0;
-
-    //Compile and create the vertex shader for light
-    m_pLightVertexShader = GraphicsManager::instance().CreateVertexShader(
-      L"Shaders\\Phong.fx",
-      "VS",
-      "vs_4_0");
-
-
-    //Create the InputLayout with the blob
-    inputLayout = GraphicsManager::instance().createInputLayout(
-      m_pLightVertexShader);
-
-
-    //Compile and Create the pixel shader for light
-    m_pLightPixelShader = GraphicsManager::instance().createPixelShader(
-      L"Shaders\\Phong.fx",
-      "PS",
-      "ps_4_0");
+    vp = GraphicsManager::instance().getViewport();
 
     //Create the constant buffers desc
     BUFFER_DESCRIPTOR bufferDesc;
@@ -154,48 +120,176 @@ namespace gzEngineSDK {
     constantMatrix =
       GraphicsManager::instance().createBuffer(bufferDesc, nullptr);
 
-
-    //Quad Aligned
-    //quad->Load( "Meshes\\QuadPerron.obj" );
-
-/*
-    m_model = new Model();
-    m_model->Load("Meshes\\spider.obj");*/
-
     SceneManager::instance().createScene();
     SceneManager::instance().setActiveScene();
    
     a = SceneManager::instance().createEmptyGameObject();
+
     MeshComponent * testModel = new MeshComponent();
-    testModel->loadMesh("Meshes\\spider.obj");
+    MeshComponent * testModel1 = new MeshComponent();
+    MeshComponent * testModel2 = new MeshComponent();
+    MeshComponent * testModel3 = new MeshComponent();
+    MeshComponent * testModel4 = new MeshComponent();
+    MeshComponent * testModel5 = new MeshComponent();
+
+    testModel->loadMesh("Meshes\\Vela\\Vela_Mat_1.x");
+    //testModel1->loadMesh("Meshes\\Vela\\Vela_Mat_2.x");
+    //testModel2->loadMesh("Meshes\\Vela\\Vela_Mat_3.x");
+    //testModel3->loadMesh("Meshes\\Vela\\Vela_Mat_4.x");
+    //testModel4->loadMesh("Meshes\\Vela\\Vela_Mat_5.x");
+    //testModel5->loadMesh("Meshes\\Vela\\Vela_Mat_6.x");
+
+    Material * tempMaterial = new Material();
+    Material * tempMaterial1 = new Material();
+    Material * tempMaterial2= new Material();
+    Material * tempMaterial3 = new Material();
+    Material * tempMaterial4 = new Material();
+    Material * tempMaterial5 = new Material();
+
+    Texture * tempTex = new Texture;
+
+     //Guns Material
+    //-------------------------------------------------------------------------------------//
+    tempTex = 
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Gun_BaseColor.tga");
+    tempMaterial->setAlbedoTexture(*tempTex);
+    
+    tempTex = 
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Gun_Metallic.tga");
+    tempMaterial->setMetallicTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Gun_Normal.tga");
+    tempMaterial->setNormalTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Gun_Roughness.tga");
+    tempMaterial->setRoughnessTexture(*tempTex);
+
+    testModel->changeMaterial(*tempMaterial);
+
+/*
+     //Legs Material
+    //-------------------------------------------------------------------------------------//
+    tempTex = 
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Legs_BaseColor.tga");
+    tempMaterial1->setAlbedoTexture(*tempTex);
+    
+    tempTex = 
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Legs_Metallic.tga");
+    tempMaterial1->setMetallicTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Legs_Normal.tga");
+    tempMaterial1->setNormalTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Legs_Roughness.tga");
+    tempMaterial1->setRoughnessTexture(*tempTex);
+
+    testModel1->changeMaterial(*tempMaterial1);*/
+
+   /*  //Mechanic Material
+    //-------------------------------------------------------------------------------------//
+    tempTex = 
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Mechanical_BaseColor.tga");
+    tempMaterial2->setAlbedoTexture(*tempTex);
+    
+    tempTex = 
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Mechanical_Metallic.tga");
+    tempMaterial2->setMetallicTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Mechanical_Normal.tga");
+    tempMaterial2->setNormalTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Mechanical_Roughness.tga");
+    tempMaterial2->setRoughnessTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Mechanical_Emissive.tga");
+    tempMaterial2->setEmissiveTexture(*tempTex);
+
+    testModel2->changeMaterial(*tempMaterial2);
+
+     //Char Material
+    //-------------------------------------------------------------------------------------//
+    tempTex = 
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Char_BaseColor.tga");
+    tempMaterial3->setAlbedoTexture(*tempTex);
+    
+    tempTex = 
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Char_Metallic.tga");
+    tempMaterial3->setMetallicTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Char_Normal.tga");
+    tempMaterial3->setNormalTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Char_Roughness.tga");
+    tempMaterial3->setRoughnessTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Char_Emissive.tga");
+    tempMaterial3->setEmissiveTexture(*tempTex);
+
+    testModel3->changeMaterial(*tempMaterial3);
+
+     //Plate Material
+    //-------------------------------------------------------------------------------------//
+    tempTex = 
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Plate_BaseColor.tga");
+    tempMaterial4->setAlbedoTexture(*tempTex);
+    
+    tempTex = 
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Plate_Metallic.tga");
+    tempMaterial4->setMetallicTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Plate_Normal.tga");
+    tempMaterial4->setNormalTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Plate_Roughness.tga");
+    tempMaterial4->setRoughnessTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Plate_Emissive.tga");
+    tempMaterial4->setEmissiveTexture(*tempTex);
+
+    testModel4->changeMaterial(*tempMaterial4);
+
+     //Eyes Material
+    //-------------------------------------------------------------------------------------//
+    tempTex = 
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_EyeCornea_BaseColor.tga");
+    tempMaterial5->setAlbedoTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_EyeCornea_Normal.tga");
+    tempMaterial5->setNormalTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_EyeCornea_Roughness.tga");
+    tempMaterial5->setRoughnessTexture(*tempTex);
+
+    testModel5->changeMaterial(*tempMaterial5);*/
+
+
+
     a->addComponent(testModel);
+    //a->addComponent(testModel1);
+    //a->addComponent(testModel2);
+    //a->addComponent(testModel3);
+    //a->addComponent(testModel4);
+    //a->addComponent(testModel5);
+
     SceneManager::instance().addGameObjectToScene(*a);
-
-    //Create RasterizerState desc
-    RASTERIZER_DESCRIPTOR rasterizerDesc;
-    memset(&rasterizerDesc, 0, sizeof(rasterizerDesc));
-    rasterizerDesc.CullMode = CULL_MODE::E::CULL_NONE;
-    rasterizerDesc.FillMode = FILL_MODE::E::FILL_SOLID;
-
-    //Create RasterizerState
-    m_RasterizerState =
-      GraphicsManager::instance().createRasterizerState(rasterizerDesc);
 
     //Sets primitive topology
     GraphicsManager::instance().setPrimitiveTopology(4);
-
-
-    SAMPLER_DESCRIPTOR sampDesc;
-    memset(&sampDesc, 0, sizeof(sampDesc));
-    sampDesc.Filter = FILTER::E::FILTER_MIN_MAG_MIP_POINT;
-    sampDesc.AddressU = ADDRESS_MODE::E::TEXTURE_ADDRESS_WRAP;
-    sampDesc.AddressY = ADDRESS_MODE::E::TEXTURE_ADDRESS_WRAP;
-    sampDesc.AddressW = ADDRESS_MODE::E::TEXTURE_ADDRESS_WRAP;
-    sampDesc.ComparisonFunc = COMPARISON_FUNC::E::COMPARISON_NEVER;
-    sampDesc.MinLOD = 0;
-    sampDesc.MaxLOD = 3.402823466e+38f;
-
-    m_pSampler = GraphicsManager::instance().createSamplerState(sampDesc);
 
     //Initialize the matrices
     g_World.identity();
@@ -203,7 +297,7 @@ namespace gzEngineSDK {
     //Initialize the camera
     m_camera = new Camera(m_windowWidth, m_windowHeight);
 
-    m_camera->setPosition(Vector3f(0.0, 0.0, -175));
+    m_camera->setPosition(Vector3f(0.0, 0.0, -50.0));
     m_camera->UpdateCamera();
     cbMatrixbuffer.view = m_camera->getViewMatrix();
     cbMatrixbuffer.projection = m_camera->getProjectionMatrix();
@@ -219,7 +313,6 @@ namespace gzEngineSDK {
   {
 
     /*  MESH_DATA * dwarf = Model->getMeshData();*/
-
    //Update our time
     float t = 0.0f;
     static DWORD dwTimeStart = 0;
@@ -231,7 +324,7 @@ namespace gzEngineSDK {
     t = (dwTimerCur - dwTimeStart) / 1000.0f;
 
     //rotate mesh 
-    g_World.matrixRotationY(t);
+   //g_World.matrixRotationY(t);
 
     //Clear back buffer
     float ClearColor[4] = { .5f, 0.5f, 0.5f, 1.0f }; //Gris
@@ -243,8 +336,7 @@ namespace gzEngineSDK {
     GraphicsManager::instance().clearDepthStencilView(
       CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
       1.0f,
-      0,
-      m_pDepthStencilView);
+      0);
 
     g_World.transpose();
     cbMatrixbuffer.world = g_World;
@@ -260,31 +352,26 @@ namespace gzEngineSDK {
 
     //Sets the Viewport
     GraphicsManager::instance().setViewports(1, vp);
-    GraphicsManager::instance().setRenderTargets(1, m_pBackBufferTex,
-                                                 m_pDepthStencilView);
-    GraphicsManager::instance().setRasterizerState(m_RasterizerState);
-    GraphicsManager::instance().setInputLayout(inputLayout);
-    GraphicsManager::instance().setVertexShader(m_pLightVertexShader);
-    GraphicsManager::instance().setVSConstantBuffers(constantMatrix, 0, 1);
-    GraphicsManager::instance().setPixelShader(m_pLightPixelShader);
-    GraphicsManager::instance().setSamplerState(0, m_pSampler, 1);
-    SceneManager::instance().update();
-    GraphicsManager::instance().present(0, 0);
+    GraphicsManager::instance().setRenderTarget(m_pBackBufferTex);
+    Renderer::instance().render();
+
   }
 
   void 
   BaseApp::update()
   {
-   
+  
+/*
     m_camera->Move(Vector3f(0.0, 0.0, -1.0), 0.5);
     m_camera->UpdateCamera();
     cbMatrixbuffer.view = m_camera->getViewMatrix();
     GraphicsManager::instance().updateSubresource(constantMatrix,
-                                                  &cbMatrixbuffer);
+                                                  &cbMatrixbuffer);*/
+    GraphicsManager::instance().setVSConstantBuffers(constantMatrix, 0, 1);
   }
 
   bool 
-  BaseApp::loadLibrary( String libraryName, String funcName )
+  BaseApp::loadGraphicsLibrary( String libraryName, String funcName )
   {
     HINSTANCE hCGDll = LoadLibraryEx( libraryName.c_str(),
                                       nullptr,
@@ -312,6 +399,38 @@ namespace gzEngineSDK {
     m_graphicsFunc = (createGraphicsManager)GetProcAddress(hCGDll,
                                                            funcName.c_str());
     m_graphicsFunc();
+    return true;
+  }
+
+  bool 
+  BaseApp::loadRendererLibrary(String libraryName, String funcName)
+  {
+    HINSTANCE hCGDll = LoadLibraryEx(libraryName.c_str(),
+                                     nullptr,
+                                     LOAD_WITH_ALTERED_SEARCH_PATH);
+
+    if (!hCGDll)
+    {
+      std::cout << "Could not load the dynamic" << "" << std::endl;
+      return false;
+    }
+
+    m_rendererFunc = (createRenderer)GetProcAddress(hCGDll,
+                                                           funcName.c_str());
+
+    if (!m_graphicsFunc)
+    {
+      std::cout << "Could not locate the function" << std::endl;
+      return false;
+    }
+
+    hCGDll = LoadLibraryEx(libraryName.c_str(),
+                           nullptr,
+                           0);
+
+    m_rendererFunc = (createRenderer)GetProcAddress(hCGDll,
+                                                    funcName.c_str());
+    m_rendererFunc();
     return true;
   }
 

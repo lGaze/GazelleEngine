@@ -36,4 +36,10 @@ namespace gzEngineSDK {
   {
     ResourceManager::instance().drawModel(m_resource);
   }
+
+  void 
+  MeshComponent::changeMaterial(Material & Material)
+  {
+    ResourceManager::instance().changeMaterial(m_resource, Material);
+  }
 }

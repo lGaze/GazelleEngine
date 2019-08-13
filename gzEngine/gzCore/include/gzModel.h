@@ -57,6 +57,12 @@ class GZ_CORE_EXPORT Model : public Resource
    void
    Draw();
 
+   /**
+    * @brief
+    */
+   void
+   changeMaterial(Material & newMat);
+
  private:
 
    /**
@@ -64,6 +70,8 @@ class GZ_CORE_EXPORT Model : public Resource
     */
    Material *
    createMaterial(aiMaterial* material);
+
+   
 
   /************************************************************************/
   /* Member functions                                                     */

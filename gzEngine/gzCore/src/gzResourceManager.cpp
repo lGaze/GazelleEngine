@@ -59,7 +59,14 @@ namespace gzEngineSDK {
   void 
   ResourceManager::drawModel(ResourceHandle<Model> model)
   {
-    Model * a = reinterpret_cast<Model*>(model.getHandle());
-    a->Draw();
+    Model * tempModel = reinterpret_cast<Model*>(model.getHandle());
+    tempModel->Draw();
+  }
+
+  void 
+  ResourceManager::changeMaterial(ResourceHandle<Model> model, Material & newMat)
+  {
+    Model * tempModel = reinterpret_cast<Model*>(model.getHandle());
+    tempModel->changeMaterial(newMat);
   }
 }

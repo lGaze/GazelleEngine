@@ -18,6 +18,8 @@ struct VERTEX {
   Vector3f position;
   Vector3f normal;
   Vector2f texcoord;
+  Vector3f binormal;
+  Vector3f tangent;
 };
 
 struct TEXTURE2D_DESCRIPTOR {

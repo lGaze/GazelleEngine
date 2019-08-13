@@ -17,12 +17,12 @@ class GZ_CORE_EXPORT Material : public Resource
   /**
    * @brief default constructor
    */
-  Material() = default;
+  Material();
 
   /**
    * @brief default destructor
    */
-  ~Material() = default;
+  ~Material();
 
   /************************************************************************/
   /* Material functions                                                   */
@@ -37,11 +37,47 @@ class GZ_CORE_EXPORT Material : public Resource
   }
 
   /**
-   * @brief Sets the given texture into the albedo pointer of the material
+   * @brief Gets the Albedo texture
    */
   FORCEINLINE Texture &
   getAlbedoTexture() {
     return *m_albedoTexture;
+  }
+
+
+  /**
+   * @brief gets the Normal texture;
+   */
+  FORCEINLINE Texture &
+  getNormalTexture() {
+    return *m_normalTexture;
+  }
+
+
+  /**
+   * @brief Gets the Metallic texture of the material
+   */
+  FORCEINLINE Texture &
+  getMetallicTexture() {
+    return *m_metallicTexture;
+  }
+
+
+  /**
+   * @brief Gets the Roughness texture of the material
+   */
+  FORCEINLINE Texture &
+    getRoughnessTexture() {
+    return *m_roughnessTexture;
+  }
+
+
+  /**
+   * @brief Gets the Emissive texture of the material
+   */
+  FORCEINLINE Texture &
+  getEmissiveTexture() {
+    return *m_emissiveTexture;
   }
 
   /**
@@ -83,6 +119,14 @@ class GZ_CORE_EXPORT Material : public Resource
   setSpecularTexture(Texture & specularTexture){
     m_specularTexture = &specularTexture;
   }
+
+ private:
+
+   /**
+    * @brief 
+    */
+  void
+  createAsDefault();
 
   /************************************************************************/
   /* Member declarations                                                  */

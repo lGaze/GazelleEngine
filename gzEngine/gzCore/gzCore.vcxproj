@@ -59,6 +59,7 @@
     <ClCompile Include="src\gzGraphicsManager.cpp" />
     <ClCompile Include="src\gzInputLayout.cpp" />
     <ClCompile Include="src\gzLibraryLoader.cpp" />
+    <ClCompile Include="src\gzMaterial.cpp" />
     <ClCompile Include="src\gzMeshComponent.cpp" />
     <ClCompile Include="src\gzModel.cpp" />
     <ClCompile Include="src\gzPixelShader.cpp" />

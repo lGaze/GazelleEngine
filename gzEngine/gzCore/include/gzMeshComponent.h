@@ -42,10 +42,16 @@ class GZ_CORE_EXPORT MeshComponent : public Component
   loadMesh(String path);
 
   /**
-   * @brief 
+   * @brief This function updates the mesh component
    */
   void
   update() override;
+
+  /**
+   * @brief 
+   */
+  void
+  changeMaterial(Material &Material);
 
   /************************************************************************/
   /* Member declarations                                                  */

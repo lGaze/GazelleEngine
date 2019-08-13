@@ -52,7 +52,8 @@ namespace gzEngineSDK {
         }
       }
 
-      if (pScene->mMeshes[i]->mMaterialIndex >= 0)
+      m_mesh[i].material = new Material();
+      if (pScene->mMeshes[i]->mMaterialIndex > 0)
       {
         aiMaterial * material =
           pScene->mMaterials[pScene->mMeshes[i]->mMaterialIndex];
@@ -89,6 +90,16 @@ namespace gzEngineSDK {
           m_vertices[index].normal.x = it->mNormals[j].x;
           m_vertices[index].normal.y = it->mNormals[j].y;
           m_vertices[index].normal.z = it->mNormals[j].z;
+        }
+        if (it->HasTangentsAndBitangents())
+        {
+          m_vertices[index].binormal.x = it->mBitangents[j].x;
+          m_vertices[index].binormal.y = it->mBitangents[j].y;
+          m_vertices[index].binormal.z = it->mBitangents[j].z;
+
+          m_vertices[index].tangent.x = it->mTangents[j].x;
+          m_vertices[index].tangent.y = it->mTangents[j].y;
+          m_vertices[index].tangent.z = it->mTangents[j].z;
         }
       }
       for (uint32 j = 0; j < it->mNumFaces; ++j)
@@ -151,6 +162,18 @@ namespace gzEngineSDK {
       {
         GraphicsManager::instance().setShaderResources(&m_mesh[i].material->getAlbedoTexture(),
                                                        0,
+                                                       1);
+        GraphicsManager::instance().setShaderResources(&m_mesh[i].material->getNormalTexture(),
+                                                       1,
+                                                       1);
+        GraphicsManager::instance().setShaderResources(&m_mesh[i].material->getMetallicTexture(),
+                                                       2,
+                                                       1);
+        GraphicsManager::instance().setShaderResources(&m_mesh[i].material->getRoughnessTexture(),
+                                                       3,
+                                                       1);
+        GraphicsManager::instance().setShaderResources(&m_mesh[i].material->getEmissiveTexture(),
+                                                       4,
                                                        1);
       }
       GraphicsManager::instance().drawIndexed(m_mesh[i].numIndex, 
@@ -221,6 +244,15 @@ namespace gzEngineSDK {
     }
 
     return tempMaterial;
+  }
+
+  void 
+  Model::changeMaterial(Material & newMat)
+  {
+    for (auto &it : m_mesh)
+    {
+      it.material = &newMat;
+    }
   }
 
 }

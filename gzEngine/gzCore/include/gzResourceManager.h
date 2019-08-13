@@ -54,6 +54,12 @@ class GZ_CORE_EXPORT ResourceManager : public Module<ResourceManager>
   void
   drawModel(ResourceHandle<Model> model);
 
+  /**
+   * @brief 
+   */
+  void
+  changeMaterial(ResourceHandle<Model> model, Material & newMat);
+
 
   /************************************************************************/
   /* Member declarations                                                  */

@@ -22,11 +22,15 @@ class GZ_CORE_EXPORT Renderer : public Module<Renderer>
   /**
    * @brief default destructor
    */
+  virtual
   ~Renderer() = default;
 
   /************************************************************************/
   /* Renderer functions                                                   */
   /************************************************************************/
+
+  virtual void
+  render() = 0;
 
   /************************************************************************/
   /* Member declarations                                                  */
