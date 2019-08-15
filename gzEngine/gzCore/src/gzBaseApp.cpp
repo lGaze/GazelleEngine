@@ -120,6 +120,10 @@ namespace gzEngineSDK {
     constantMatrix =
       GraphicsManager::instance().createBuffer(bufferDesc, nullptr);
 
+    bufferDesc.ByteWidth = sizeof(cbLight);
+    constantLightBuffer =
+      GraphicsManager::instance().createBuffer(bufferDesc, nullptr);
+
     SceneManager::instance().createScene();
     SceneManager::instance().setActiveScene();
    
@@ -132,159 +136,63 @@ namespace gzEngineSDK {
     MeshComponent * testModel4 = new MeshComponent();
     MeshComponent * testModel5 = new MeshComponent();
 
-    testModel->loadMesh("Meshes\\Vela\\Vela_Mat_1.x");
-    //testModel1->loadMesh("Meshes\\Vela\\Vela_Mat_2.x");
-    //testModel2->loadMesh("Meshes\\Vela\\Vela_Mat_3.x");
-    //testModel3->loadMesh("Meshes\\Vela\\Vela_Mat_4.x");
-    //testModel4->loadMesh("Meshes\\Vela\\Vela_Mat_5.x");
-    //testModel5->loadMesh("Meshes\\Vela\\Vela_Mat_6.x");
+   //testModel->loadMesh("Meshes\\BattleDroid.fbx");
+   testModel->loadMesh("Meshes\\model.dae");
+   
 
     Material * tempMaterial = new Material();
-    Material * tempMaterial1 = new Material();
-    Material * tempMaterial2= new Material();
-    Material * tempMaterial3 = new Material();
-    Material * tempMaterial4 = new Material();
-    Material * tempMaterial5 = new Material();
 
     Texture * tempTex = new Texture;
 
-     //Guns Material
+/*
+     //Droide Material
     //-------------------------------------------------------------------------------------//
     tempTex = 
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Gun_BaseColor.tga");
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Droid\\17_-_Default_albedo.jpg");
     tempMaterial->setAlbedoTexture(*tempTex);
     
     tempTex = 
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Gun_Metallic.tga");
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Droid\\17_-_Default_metallic.jpg");
     tempMaterial->setMetallicTexture(*tempTex);
 
     tempTex =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Gun_Normal.tga");
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Droid\\17_-_Default_normal.jpg");
     tempMaterial->setNormalTexture(*tempTex);
 
     tempTex =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Gun_Roughness.tga");
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Droid\\17_-_Default_roughness.jpg");
     tempMaterial->setRoughnessTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Droid\\17_-_Default_emissive.jpg");
+    tempMaterial->setEmissiveTexture(*tempTex);*/
+
+     //Robot Material
+    //-------------------------------------------------------------------------------------//
+    tempTex = 
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Robot\\default_albedo.jpg");
+    tempMaterial->setAlbedoTexture(*tempTex);
+    
+    tempTex = 
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Robot\\default_metallic.jpg");
+    tempMaterial->setMetallicTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Robot\\default_normal.jpg");
+    tempMaterial->setNormalTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Robot\\default_roughness.jpg");
+    tempMaterial->setRoughnessTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Robot\\default_emissive.jpg");
+    tempMaterial->setEmissiveTexture(*tempTex);
+
 
     testModel->changeMaterial(*tempMaterial);
 
-/*
-     //Legs Material
-    //-------------------------------------------------------------------------------------//
-    tempTex = 
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Legs_BaseColor.tga");
-    tempMaterial1->setAlbedoTexture(*tempTex);
-    
-    tempTex = 
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Legs_Metallic.tga");
-    tempMaterial1->setMetallicTexture(*tempTex);
-
-    tempTex =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Legs_Normal.tga");
-    tempMaterial1->setNormalTexture(*tempTex);
-
-    tempTex =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Legs_Roughness.tga");
-    tempMaterial1->setRoughnessTexture(*tempTex);
-
-    testModel1->changeMaterial(*tempMaterial1);*/
-
-   /*  //Mechanic Material
-    //-------------------------------------------------------------------------------------//
-    tempTex = 
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Mechanical_BaseColor.tga");
-    tempMaterial2->setAlbedoTexture(*tempTex);
-    
-    tempTex = 
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Mechanical_Metallic.tga");
-    tempMaterial2->setMetallicTexture(*tempTex);
-
-    tempTex =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Mechanical_Normal.tga");
-    tempMaterial2->setNormalTexture(*tempTex);
-
-    tempTex =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Mechanical_Roughness.tga");
-    tempMaterial2->setRoughnessTexture(*tempTex);
-
-    tempTex =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Mechanical_Emissive.tga");
-    tempMaterial2->setEmissiveTexture(*tempTex);
-
-    testModel2->changeMaterial(*tempMaterial2);
-
-     //Char Material
-    //-------------------------------------------------------------------------------------//
-    tempTex = 
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Char_BaseColor.tga");
-    tempMaterial3->setAlbedoTexture(*tempTex);
-    
-    tempTex = 
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Char_Metallic.tga");
-    tempMaterial3->setMetallicTexture(*tempTex);
-
-    tempTex =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Char_Normal.tga");
-    tempMaterial3->setNormalTexture(*tempTex);
-
-    tempTex =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Char_Roughness.tga");
-    tempMaterial3->setRoughnessTexture(*tempTex);
-
-    tempTex =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Char_Emissive.tga");
-    tempMaterial3->setEmissiveTexture(*tempTex);
-
-    testModel3->changeMaterial(*tempMaterial3);
-
-     //Plate Material
-    //-------------------------------------------------------------------------------------//
-    tempTex = 
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Plate_BaseColor.tga");
-    tempMaterial4->setAlbedoTexture(*tempTex);
-    
-    tempTex = 
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Plate_Metallic.tga");
-    tempMaterial4->setMetallicTexture(*tempTex);
-
-    tempTex =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Plate_Normal.tga");
-    tempMaterial4->setNormalTexture(*tempTex);
-
-    tempTex =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Plate_Roughness.tga");
-    tempMaterial4->setRoughnessTexture(*tempTex);
-
-    tempTex =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_Plate_Emissive.tga");
-    tempMaterial4->setEmissiveTexture(*tempTex);
-
-    testModel4->changeMaterial(*tempMaterial4);
-
-     //Eyes Material
-    //-------------------------------------------------------------------------------------//
-    tempTex = 
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_EyeCornea_BaseColor.tga");
-    tempMaterial5->setAlbedoTexture(*tempTex);
-
-    tempTex =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_EyeCornea_Normal.tga");
-    tempMaterial5->setNormalTexture(*tempTex);
-
-    tempTex =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\Vela\\Vela_EyeCornea_Roughness.tga");
-    tempMaterial5->setRoughnessTexture(*tempTex);
-
-    testModel5->changeMaterial(*tempMaterial5);*/
-
-
-
     a->addComponent(testModel);
-    //a->addComponent(testModel1);
-    //a->addComponent(testModel2);
-    //a->addComponent(testModel3);
-    //a->addComponent(testModel4);
-    //a->addComponent(testModel5);
 
     SceneManager::instance().addGameObjectToScene(*a);
 
@@ -297,7 +205,7 @@ namespace gzEngineSDK {
     //Initialize the camera
     m_camera = new Camera(m_windowWidth, m_windowHeight);
 
-    m_camera->setPosition(Vector3f(0.0, 0.0, -50.0));
+    m_camera->setPosition(Vector3f(0.0, 0.0, -2.0));
     m_camera->UpdateCamera();
     cbMatrixbuffer.view = m_camera->getViewMatrix();
     cbMatrixbuffer.projection = m_camera->getProjectionMatrix();
@@ -311,26 +219,30 @@ namespace gzEngineSDK {
   void
   BaseApp::render()
   {
-
-    /*  MESH_DATA * dwarf = Model->getMeshData();*/
    //Update our time
-    float t = 0.0f;
+    time = 0.0f;
     static DWORD dwTimeStart = 0;
     DWORD dwTimerCur = GetTickCount();
     if (dwTimeStart == 0)
     {
       dwTimeStart = dwTimerCur;
     }
-    t = (dwTimerCur - dwTimeStart) / 1000.0f;
+    time = (dwTimerCur - dwTimeStart) / 1000.0f;
 
     //rotate mesh 
-   //g_World.matrixRotationY(t);
+    //g_World.matrixRotationY(time);
 
     //Clear back buffer
     float ClearColor[4] = { .5f, 0.5f, 0.5f, 1.0f }; //Gris
-    GraphicsManager::instance().clearRenderTargetView(ClearColor,
-                                                      m_pBackBufferTex);
+    //GraphicsManager::instance().clearRenderTargetView(ClearColor,
+     //                                                 m_pBackBufferTex);
 
+    Vector3f a = m_camera->getEyePosition();
+    cbLight.viewPosition = Vector4f(a.x, a.y, a.z, 1.0f);
+    cbLight.lightPosition = Vector4f(-100.0, -100.0, -100.0, 0.0);
+    cbLight.lightPosition.w = cos(time);
+    GraphicsManager::instance().updateSubresource(constantLightBuffer,
+                                                  &cbLight);
 
     //Clear depth Stencil
     GraphicsManager::instance().clearDepthStencilView(
@@ -340,8 +252,6 @@ namespace gzEngineSDK {
 
     g_World.transpose();
     cbMatrixbuffer.world = g_World;
-    cbMatrixbuffer.ViewPosition = Vector4f(Eye.x, Eye.y, Eye.z, 1.0f);
-
     GraphicsManager::instance().updateSubresource(constantMatrix,
                                                   &cbMatrixbuffer);
 

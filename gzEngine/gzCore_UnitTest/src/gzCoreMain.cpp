@@ -8,7 +8,7 @@ using namespace gzEngineSDK;
 
 int32 main()
 {
-  BaseApp::startUp( 640, 480, "GazelleEngine", 400, 200 );
+  BaseApp::startUp( 1900, 1000, "GazelleEngine", 0, 0 );
   BaseApp::instance().runMainLoop();
   BaseApp::shutDown();
 

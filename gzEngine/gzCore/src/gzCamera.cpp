@@ -11,15 +11,15 @@ namespace gzEngineSDK {
 
   Camera::Camera(int width, int height)
   {
-    m_eye = Vector3f(0.0f, 0.0f, -1.0);
-    m_at = Vector3f(0.0f, 1.0f, 0.0f);
+    m_eye = Vector3f(0.0f, 0.0f, -10.0);
+    m_at = Vector3f(0.0f, 0.0f, 0.0f);
     m_up = m_eye + Vector3f(0.0, 1.0, 0.0);
 
     m_fovy = 0.785398163f;
     m_aspect =
       static_cast<float>(width) / static_cast<float>(height);
-    m_zNear = 3.0f;
-    m_zFar = 1000.0f;
+    m_zNear = .5f;
+    m_zFar = 500.0f;
 
     m_dirty = true;
   }
@@ -28,7 +28,7 @@ namespace gzEngineSDK {
   Camera::Move(Vector3f direction, float cameraSpeed)
   {
     m_eye += direction * cameraSpeed;
-    m_at = m_eye + Vector3f(0.0, 0.0, 1.0);
+    m_at = Vector3f(0.0, 0.0, 10.0);
     m_dirty = true;
   }
 
@@ -58,7 +58,7 @@ namespace gzEngineSDK {
   void 
   Camera::UpdateProjectionMatrix()
   {
-    m_projectionMatrix = m_projectionMatrix =
+    m_projectionMatrix =
       m_projectionMatrix.matrixPerspectiveFovLH(m_fovy,
                                                 m_aspect,
                                                 m_zNear,

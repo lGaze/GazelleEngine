@@ -308,4 +308,17 @@ namespace gzEngineSDK {
     m[2][2] = CosT;
   }
 
+  void 
+  Matrix4::matrixRotationX( float angle )
+  {
+    float CosT = cosf(angle);
+    float SinT = sinf(angle);
+
+    m[1][1] = CosT;
+    m[1][2] = -SinT;
+    m[2][1] = SinT;
+    m[2][2] = CosT;
+
+  }
+
 }

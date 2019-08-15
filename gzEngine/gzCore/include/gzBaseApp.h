@@ -83,13 +83,14 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
   loadRendererLibrary(String libraryName, String funcName);
   
 
+
   using createGraphicsManager = void*(*)();
   using createRenderer = void*(*)();
 
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-	
+
  private:
    
    /**
@@ -166,9 +167,15 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
      Matrix4 view;
      Matrix4 projection;
      Matrix4 world;
-     Vector4f ViewPosition;
    };
 
+   struct cbLight
+   {
+     Vector4f viewPosition;
+     Vector4f lightPosition;
+   };
+
+   cbLight cbLight;
    cbMatrix cbMatrixbuffer;
 
    Matrix4 g_World;
@@ -182,6 +189,13 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    Vector<Texture*>ClaireSpecularTextures;
 
    GameObject * a;
+
+   float time;
+   Vector4f m_ViewPos;
+
+   public:
+
+   Buffer * constantLightBuffer;
 
 };
 

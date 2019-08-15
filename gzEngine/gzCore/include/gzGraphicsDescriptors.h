@@ -16,8 +16,8 @@ namespace gzEngineSDK {
 
 struct VERTEX {
   Vector3f position;
-  Vector3f normal;
   Vector2f texcoord;
+  Vector3f normal;
   Vector3f binormal;
   Vector3f tangent;
 };

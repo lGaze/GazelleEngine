@@ -51,6 +51,10 @@ class GZ_CORE_EXPORT Camera
   void
   setTarget(Vector3f target);
 
+  Vector3f
+  getEyePosition() {
+    return m_eye;
+  }
 
   /**
    * @brief Gets the transposed view matrix

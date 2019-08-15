@@ -5,9 +5,14 @@
 /* @brief 
 /**************************************************************************/
 
+#include <assimp/postprocess.h>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+
 #include "gzModel.h"
 #include "gzGraphicsManager.h"
 #include "gzMaterial.h"
+
 
 namespace gzEngineSDK {
   
@@ -84,7 +89,6 @@ namespace gzEngineSDK {
           m_vertices[index].texcoord.y =
             static_cast<float>(it->mTextureCoords[0][j].y);
         }
-
         if (it->HasNormals())
         {
           m_vertices[index].normal.x = it->mNormals[j].x;

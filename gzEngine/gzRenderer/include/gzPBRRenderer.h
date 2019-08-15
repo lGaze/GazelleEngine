@@ -53,14 +53,21 @@ class PBRRenderer : public Renderer
 
    RasterizerState * m_rasterizerState;
    InputLayout * m_gbufferLayout;
+   InputLayout * m_pbrLayout;
    VertexShader* m_gbufferVertexShader;
    PixelShader * m_gbufferPixelShader;
+   VertexShader * m_pbrVertexShader;
+   PixelShader * m_pbrPixelShader;
    SamplerState * m_samplerState;
    Texture * m_positionsRT;
    Texture * m_normalsRT;
    Texture * m_albedoRT;
    Texture * m_emissiveRT;
-   //Model * quad;
+   Texture * m_pbrRT;
+   Texture * m_lut;
+   Model * quad;
    Vector<Texture *> m_gbufferRTTextures;
+   Buffer * m_lightCBuffer;
+
  };
 }

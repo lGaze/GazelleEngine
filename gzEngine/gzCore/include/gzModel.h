@@ -7,13 +7,11 @@
 
 #pragma once
 
-#include <assimp/postprocess.h>
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-
 #include "gzPrerequisitesCore.h"
 #include "gzTexture.h"
 #include "gzResource.h"
+
+struct aiMaterial;
 
 namespace gzEngineSDK {
 
@@ -63,6 +61,12 @@ class GZ_CORE_EXPORT Model : public Resource
    void
    changeMaterial(Material & newMat);
 
+   Buffer * m_vertexBuffer;
+
+   Buffer * m_indexBuffer;
+
+   Vector<Mesh> m_mesh;
+
  private:
 
    /**
@@ -83,12 +87,8 @@ class GZ_CORE_EXPORT Model : public Resource
 
    Vector<uint32> m_indices;
 
-   Vector<Mesh> m_mesh;
 
    String m_directoryPath;
 
-   Buffer * m_vertexBuffer;
-
-   Buffer * m_indexBuffer;
  };
 }
