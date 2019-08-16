@@ -32,7 +32,7 @@ namespace gzEngineSDK {
     m_lightCBuffer = BaseApp::instance().constantLightBuffer;
     GraphicsManager::instance().setRenderTarget(m_pbrRT);
 
-    float ClearColor1[4] = { 1, 0, 0, 1 };
+    float ClearColor1[4] = { 1, .5, .5, 1 };
     GraphicsManager::instance().clearRenderTargetView(ClearColor1, m_pbrRT);
     GraphicsManager::instance().setRasterizerState(m_rasterizerState);
     GraphicsManager::instance().setInputLayout(m_pbrLayout);
@@ -74,6 +74,32 @@ namespace gzEngineSDK {
     GraphicsManager::instance().drawIndexed(quad->m_mesh[0].numIndex,
                                             quad->m_mesh[0].indexBase,
                                             0);
+
+    //Pass3
+    GraphicsManager::instance().setRenderTarget(m_backBuffer);
+    GraphicsManager::instance().clearRenderTargetView(ClearColor1, m_backBuffer);
+    GraphicsManager::instance().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
+                                                      1.0f,
+                                                      0);
+    GraphicsManager::instance().setRasterizerState(m_rasterizerState);
+    GraphicsManager::instance().setInputLayout(m_pbrLayout);
+    GraphicsManager::instance().setVertexShader(m_pbrVertexShader);
+    GraphicsManager::instance().setPixelShader(m_toneMapPixelShader);
+    GraphicsManager::instance().setShaderResources(m_pbrRT, 0, 1);
+    GraphicsManager::instance().setVertexBuffers(0,
+                                                 1,
+                                                 quad->m_vertexBuffer,
+                                                 &stride,
+                                                 &offset);
+
+    GraphicsManager::instance().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
+                                               quad->m_indexBuffer,
+                                               offset);
+
+    GraphicsManager::instance().drawIndexed(quad->m_mesh[0].numIndex,
+                                            quad->m_mesh[0].indexBase,
+                                            0);
+
 
     GraphicsManager::instance().present(0, 0);
   }
@@ -152,6 +178,8 @@ namespace gzEngineSDK {
     m_gbufferRTTextures.push_back(m_normalsRT);
     m_emissiveRT = GraphicsManager::instance().createTexture2D(renderTexDesc);
     m_gbufferRTTextures.push_back(m_emissiveRT);
+    m_pbrRT = GraphicsManager::instance().createTexture2D(renderTexDesc);
+    m_backBuffer = GraphicsManager::instance().getBackBufferTex();
 
     m_pbrVertexShader = GraphicsManager::instance().CreateVertexShader(
       L"Shaders\\PBR_vs.hlsl",
@@ -166,12 +194,16 @@ namespace gzEngineSDK {
       "ps_main",
       "ps_4_0");
 
-    m_pbrRT = GraphicsManager::instance().getBackBufferTex();
-
+    m_toneMapPixelShader = GraphicsManager::instance().createPixelShader(
+      L"Shaders\\ToneMap.hlsl",
+      "ps_main",
+      "ps_4_0");
+    
     quad = new Model();
     quad->Load("Meshes\\QuadPerron.obj");
 
     m_lut = GraphicsManager::instance().LoadTextureFromFile("Textures\\ibl_brdf_lut.png");
+
 
   }
 

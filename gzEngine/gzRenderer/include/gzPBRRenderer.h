@@ -56,6 +56,7 @@ class PBRRenderer : public Renderer
    InputLayout * m_pbrLayout;
    VertexShader* m_gbufferVertexShader;
    PixelShader * m_gbufferPixelShader;
+   PixelShader * m_toneMapPixelShader;
    VertexShader * m_pbrVertexShader;
    PixelShader * m_pbrPixelShader;
    SamplerState * m_samplerState;
@@ -65,6 +66,7 @@ class PBRRenderer : public Renderer
    Texture * m_emissiveRT;
    Texture * m_pbrRT;
    Texture * m_lut;
+   Texture * m_backBuffer;
    Model * quad;
    Vector<Texture *> m_gbufferRTTextures;
    Buffer * m_lightCBuffer;
