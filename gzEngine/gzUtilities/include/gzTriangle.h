@@ -2,7 +2,7 @@
 /* @filename gzTriangle.h
 /* @author Victor Flores 
 /* @date 2019/02/15
-/* @brief 
+/* @brief This file can be used for create Triangles
 /**************************************************************************/
 
 #pragma once
@@ -21,7 +21,10 @@ namespace gzEngineSDK {
     Triangle() = default;
 	  
     /**
-     * @brief 
+     * @brief This constructor generates a Triangle with the given values
+     * @param Vector3f wich indicates the position of the 1° vertex
+     * @param Vector3f wich indicates the position of the 2° vertex
+     * @param Vector3f wich indicates the position of the 3° vertex
      */
     Triangle(const Vector3f& vertex1, const Vector3f& vertex2, const Vector3f& vertex3);
 
@@ -41,17 +44,17 @@ namespace gzEngineSDK {
    public:
 
     /**
-     * @brief 
+     * @brief Positon of the 1° Vertex
      */
     Vector3f triangleVert1;    
     
     /**
-     * @brief 
+     * @brief Positon of the 2° Vertex
      */
     Vector3f triangleVert2;   
     
     /**
-     * @brief 
+     * @brief Positon of the 3° Vertex
      */
     Vector3f triangleVert3;
 

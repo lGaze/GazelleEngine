@@ -2,7 +2,7 @@
 /* @filename gzBox2D.h
 /* @author Victor Flores 
 /* @date 2019/02/15
-/* @brief 
+/* @brief This file can be used for create 2D Boxes
 /**************************************************************************/
 
 #pragma once
@@ -16,42 +16,45 @@ namespace gzEngineSDK {
    public:
    
     /**
-     * @brief default constructor
+     * @brief Default constructor.
      */
     Box2D() = default;
 
     /**
-     * @brief 
+     * @brief This constructor generate a 2D box with the given center, width and height.
+     * @param Vector2f wich indicates the given center of the 2D Box.
+     * @param Float value wich indicates the given height of the 2D Box.
+     * @param Floar value wich inicates the given width of the 2D Box.
      */
     Box2D(const Vector2f& centerPos, const float height, const float width);
-	
-    /**
-     * @brief default destructor
-     */
-    ~Box2D() = default;
-	
-	  /************************************************************************/
-    /* Box2D functions                                                      */
-    /************************************************************************/
-	
-	  /************************************************************************/
-    /* Member declarations                                                  */
-    /************************************************************************/
-	
-   public:
 
     /**
-     * @brief 
+     * @brief Default destructor.
      */
+    ~Box2D() = default;
+
+    /************************************************************************/
+    /* Box2D functions                                                      */
+    /************************************************************************/
+
+    /************************************************************************/
+    /* Member declarations                                                  */
+    /************************************************************************/
+
+   public:
+
+     /**
+      * @brief Indicates the center of the Box
+      */
      Vector2f boxCenter;
 
      /**
-      * @brief 
+      * @brief Indicates the Height of the Box
       */
      float boxHeight;
 
      /**
-      * @brief 
+      * @brief Indicates the Width of the Box
       */
      float boxWidth;
    

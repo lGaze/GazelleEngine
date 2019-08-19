@@ -2,7 +2,7 @@
 /* @filename gzPlane.h
 /* @author Victor Flores 
 /* @date 2019/02/15
-/* @brief 
+/* @brief This file can be used for create planes
 /**************************************************************************/
 
 #pragma once

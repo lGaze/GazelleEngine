@@ -136,14 +136,15 @@ namespace gzEngineSDK {
     MeshComponent * testModel4 = new MeshComponent();
     MeshComponent * testModel5 = new MeshComponent();
 
-   testModel->loadMesh("Meshes\\BattleDroid.fbx");
-   //testModel->loadMesh("Meshes\\model.dae");
+   //testModel->loadMesh("Meshes\\BattleDroid.fbx");
+   testModel->loadMesh("Meshes\\model.dae");
    
 
     Material * tempMaterial = new Material();
 
     Texture * tempTex = new Texture;
 
+/*
      //Droide Material
     //-------------------------------------------------------------------------------------//
     tempTex = 
@@ -164,9 +165,8 @@ namespace gzEngineSDK {
 
     tempTex =
       GraphicsManager::instance().LoadTextureFromFile("Textures\\Droid\\17_-_Default_emissive.jpg");
-    tempMaterial->setEmissiveTexture(*tempTex);
+    tempMaterial->setEmissiveTexture(*tempTex);*/
 
-/*
      //Robot Material
     //-------------------------------------------------------------------------------------//
     tempTex = 
@@ -187,7 +187,7 @@ namespace gzEngineSDK {
 
     tempTex =
       GraphicsManager::instance().LoadTextureFromFile("Textures\\Robot\\default_emissive.jpg");
-    tempMaterial->setEmissiveTexture(*tempTex);*/
+    tempMaterial->setEmissiveTexture(*tempTex);
 
 
     testModel->changeMaterial(*tempMaterial);
@@ -230,7 +230,7 @@ namespace gzEngineSDK {
     time = (dwTimerCur - dwTimeStart) / 1000.0f;
 
     //rotate mesh 
-    g_World.matrixRotationX(time);
+    //g_World.matrixRotationX(time);
 
     //Clear back buffer
     float ClearColor[4] = { .5f, 0.5f, 0.5f, 1.0f }; //Gris

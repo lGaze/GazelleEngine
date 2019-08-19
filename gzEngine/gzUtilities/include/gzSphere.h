@@ -2,7 +2,7 @@
 /* @filename gzSphere.h
 /* @author Victor Flores 
 /* @date 2019/02/15
-/* @brief 
+/* @brief This file can be used for create spheres 
 /**************************************************************************/
 
 #pragma once
@@ -43,12 +43,12 @@ namespace gzEngineSDK {
    public:
 
     /**
-     * @brief 
+     * @brief The radius size of the sphere
      */
     float radiusSize;
 
     /**
-     * @brief 
+     * @brief The center Position of the sphere
      */
     Vector3f centerPos;
 

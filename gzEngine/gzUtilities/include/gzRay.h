@@ -2,7 +2,7 @@
 /* @filename gzRay.h
 /* @author Victor Flores
 /* @date 2019/02/15
-/* @brief 
+/* @brief This file can be used for create Rays
 /***************************************************************************/
 
 #pragma once
@@ -21,7 +21,9 @@ namespace gzEngineSDK {
     Ray() = default;
 
     /**
-     * @brief 
+     * @brief This Constructor generates a Ray from the given values
+     * @param Vector3f wich indicates the given origin position of the ray
+     * @param Vector3f wich indicates the given direction of the ray 
      */
     Ray(const Vector3f& originPos, const Vector3f& direction);
 
@@ -41,12 +43,12 @@ namespace gzEngineSDK {
    public:
 
      /**
-      * @brief 
+      * @brief The origin position of th ray
       */
     Vector3f originPos;
 
      /**
-      * @brief 
+      * @brief The direction of the ray 
       */
     Vector3f direction;
   };
