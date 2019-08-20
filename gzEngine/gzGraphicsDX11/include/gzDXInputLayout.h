@@ -18,12 +18,12 @@ class DXInputLayout : public InputLayout
    * @brief default constructor
    */
    DXInputLayout();
-	
+
   /**
    * @brief default destructor
    */
   ~DXInputLayout() = default;
-	
+
   /************************************************************************/
   /* InputLayout functions                                                */
   /************************************************************************/
@@ -62,7 +62,7 @@ class DXInputLayout : public InputLayout
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-	
+
  private:
 
   /**

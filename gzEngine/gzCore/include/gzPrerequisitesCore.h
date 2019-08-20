@@ -2,7 +2,7 @@
 /* @filename gzPrerequisitesCore.h
 /* @author Victor Flores
 /* @date 2019/02/26
-/* @brief
+/* @brief Prerequisites of the core project 
 /**************************************************************************/
 #pragma once
 

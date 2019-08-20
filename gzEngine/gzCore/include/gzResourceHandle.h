@@ -2,7 +2,7 @@
 /* @filename gzResourceHandle.h
 /* @author Victor Flores 
 /* @date 2019/07/20
-/* @brief 
+/* @brief This function works for make handle of the resources
 /**************************************************************************/
 
 #pragma once
@@ -33,6 +33,7 @@ class GZ_CORE_EXPORT ResourceHandle
 
   /**
    * @brief This function returns the handle
+   * @return Handle of the resource 
    */
   FORCEINLINE int64
   getHandle() {
@@ -45,6 +46,7 @@ class GZ_CORE_EXPORT ResourceHandle
 
   /**
    * @brief This function sets the data into the resource handle
+   * @param pointer of the resource to be handled 
    */
   FORCEINLINE void
   setHandle(Resource * resource){

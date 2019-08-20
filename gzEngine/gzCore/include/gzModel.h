@@ -2,7 +2,7 @@
 /* @filename gzModel.h
 /* @author Victor Flores 
 /* @date 2019/07/05
-/* @brief 
+/* @brief This file can be used for create models 
 /**************************************************************************/
 
 #pragma once
@@ -28,12 +28,12 @@ class GZ_CORE_EXPORT Model : public Resource
  public:
    
   /**
-   * @brief default constructor
+   * @brief Default Constructor
    */
   Model();
  
   /**
-   * @brief default destructor
+   * @brief Default Destructor
    */
   ~Model() = default;
 
@@ -44,22 +44,27 @@ class GZ_CORE_EXPORT Model : public Resource
  public:
 
    /**
-    * @brief 
+    * @brief This function loads a model from a given path 
+    * @param The path of the model
+    * @return Bool value wich indicates if the load succed or not
     */
    bool
    Load(String filename);
 
    /**
-    * @brief 
+    * @brief This function draws all the meshes 
     */
    void
    Draw();
 
    /**
-    * @brief
+    * @brief This function changes the material for a new one
+    * @param Reference to the new material 
     */
    void
    changeMaterial(Material & newMat);
+
+   //TODO: Fix this public variables, make them private and make getters
 
    Buffer * m_vertexBuffer;
 
@@ -70,7 +75,9 @@ class GZ_CORE_EXPORT Model : public Resource
  private:
 
    /**
-    * @brief 
+    * @brief This function creates a material
+    * @param Material from assimp 
+    * @return A new material of the mesh
     */
    Material *
    createMaterial(aiMaterial* material);

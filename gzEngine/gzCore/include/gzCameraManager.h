@@ -2,7 +2,7 @@
 /* @filename gzCameraManager.h
 /* @author Victor Flores 
 /* @date 2019/07/24
-/* @brief 
+/* @brief This file can be used for create and manipulate cameras
 /*************************************************************************/
 
 #pragma once
@@ -17,12 +17,12 @@ class GZ_CORE_EXPORT CameraManager : public Module<CameraManager>
  public:
    
   /**
-   * @brief default constructor
+   * @brief Default Constructor
    */
   CameraManager() = default;
 
   /**
-   * @brief default destructor
+   * @brief Default Destructor
    */
   ~CameraManager() = default;
 

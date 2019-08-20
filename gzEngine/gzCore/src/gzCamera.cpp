@@ -9,7 +9,7 @@
 
 namespace gzEngineSDK {
 
-  Camera::Camera(int width, int height)
+  Camera::Camera(int32 width, int32 height)
   {
     m_eye = Vector3f(0.0f, 0.0f, -10.0);
     m_at = Vector3f(0.0f, 0.0f, 0.0f);

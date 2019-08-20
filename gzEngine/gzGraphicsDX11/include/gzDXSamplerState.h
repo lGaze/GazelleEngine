@@ -18,16 +18,16 @@ class DXSamplerState : public SamplerState
    * @brief default constructor
    */
   DXSamplerState();
-	
+
   /**
    * @brief default destructor
    */
   ~DXSamplerState() = default;
-	
+
   /************************************************************************/
   /* SamplerState functions                                               */
   /************************************************************************/
-	
+
   /**
    * @brief Creates Sampler description
    */
@@ -54,7 +54,7 @@ class DXSamplerState : public SamplerState
   /* Member declarations                                                  */
   /************************************************************************/
 
-	
+
  private:
    
    /**

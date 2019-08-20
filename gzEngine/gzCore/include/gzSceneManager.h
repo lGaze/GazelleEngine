@@ -2,7 +2,7 @@
 /* @filename gzSceneManager.h
 /* @author Victor Flores 
 /* @date 2019/08/03
-/* @brief Scene Manager header file
+/* @brief This file can create an manipulate Scenes
 /**************************************************************************/
 #pragma once
 #include "gzPrerequisitesCore.h"
@@ -35,6 +35,7 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
 
   /**
    * @brief Gets the active Scene
+   * @return pointer to the Active Scene
    */
   Scene *
   getActiveScene();
@@ -53,18 +54,20 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
 
   /**
    * @brief Creates a empty game object
+   * @paran Return a Game object 
    */
   GameObject *
   createEmptyGameObject();
 
   /**
    * @brief Adds a Scene to the active scene
+   * @param Reference to the game object that is going to be added to the active Scene 
    */
   void
   addGameObjectToScene(GameObject & gameObject);
 
   /**
-   * @brief 
+   * @brief Function Update for the active Scene
    */
   void
   update();

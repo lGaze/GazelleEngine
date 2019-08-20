@@ -29,6 +29,7 @@ class GZ_CORE_EXPORT MeshComponent : public Component
 
   /**
    * @brief Functions that returns the type of this component
+   * @return The type of this component
    */
   COMPONENT_TYPE::E
   getComponentType();
@@ -37,6 +38,7 @@ class GZ_CORE_EXPORT MeshComponent : public Component
 
   /**
    * @brief Loads a mesh into the component
+   * @param Path of the mesh 
    */
   void
   loadMesh(String path);
@@ -49,6 +51,7 @@ class GZ_CORE_EXPORT MeshComponent : public Component
 
   /**
    * @brief 
+   * @param Reference to the new material 
    */
   void
   changeMaterial(Material &Material);

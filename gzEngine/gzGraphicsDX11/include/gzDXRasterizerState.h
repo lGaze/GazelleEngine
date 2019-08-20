@@ -19,16 +19,16 @@ class DXRasterizerState : public RasterizerState
    * @brief default constructor
    */
    DXRasterizerState();
-	
+
   /**
    * @brief default destructor
    */
   ~ DXRasterizerState() = default;
-	
+
   /************************************************************************/
   /*  DXRasterizerState functions                                         */
   /************************************************************************/
-	
+
   /**
    * @brief 
    */
@@ -54,7 +54,7 @@ class DXRasterizerState : public RasterizerState
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-	
+
 private:
 
   /**

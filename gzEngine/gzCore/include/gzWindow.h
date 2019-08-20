@@ -2,7 +2,8 @@
 /* @filename gzWindow.h
 /* @author Victor Flores 
 /* @date 2019/03/02
-/* @brief 
+/* @brief This is the window header file, in this file are the main functions
+/* of a winddow
 /**************************************************************************/
 #pragma once
 
@@ -15,19 +16,19 @@ class GZ_CORE_EXPORT Window
  public:
    
   /**
-   * @brief default constructor
+   * @brief Default Constructor
    */
   Window() = default;
-	
+
   /**
-   * @brief default destructor
+   * @brief Default Destructor
    */
   ~Window() = default;
-	
+
   /************************************************************************/
   /* Window functions                                                     */
   /************************************************************************/
-	
+
   /**
    * @brief Function which initializates the window
    * @returns Bool value which indicates if the initialization of the window succeed
@@ -56,6 +57,7 @@ class GZ_CORE_EXPORT Window
 
   /**
    * @brief Gets the handler of the window
+   * @return handle of the window
    */
   FORCEINLINE HWND
   getHWND() { return m_hWnd; }
@@ -63,7 +65,7 @@ class GZ_CORE_EXPORT Window
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-	
+
  private:
 
    /**

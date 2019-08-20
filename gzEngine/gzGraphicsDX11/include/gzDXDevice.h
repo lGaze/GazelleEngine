@@ -18,16 +18,16 @@ class Device
    * @brief default constructor
    */
   Device();
-	
+
   /**
    * @brief default destructor
    */
   ~Device() = default;
-	
+
   /************************************************************************/
   /* Device functions                                                     */
   /************************************************************************/
-	
+
   /**
    * @brief Function for Device, Device Context and SwapChain creation
    * @returns Value wich indicates if the creation succeed
@@ -119,7 +119,7 @@ class Device
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-	
+
 
 
  private:
@@ -132,7 +132,7 @@ class Device
 
    D3D_DRIVER_TYPE m_driverType;
 
-   D3D_FEATURE_LEVEL	m_featureLevel;
+   D3D_FEATURE_LEVEL m_featureLevel;
 
    uint32 m_numDriverTypes;
 

@@ -18,16 +18,16 @@ class DXPixelShader : public PixelShader
    * @brief default constructor
    */
   DXPixelShader();
-	
+
   /**
    * @brief default destructor
    */
   ~DXPixelShader() = default;
-	
+
   /************************************************************************/
   /* PixelShader functions                                                */
   /************************************************************************/
-	
+
   /**
    * @brief Gets the PixelShaderInterface
    */
@@ -47,7 +47,7 @@ class DXPixelShader : public PixelShader
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-	
+
  private:
 
   /**

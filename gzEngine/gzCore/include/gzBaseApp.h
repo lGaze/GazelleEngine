@@ -2,7 +2,8 @@
 /* @filename BaseApp.h
 /* @author Victor Flores 
 /* @date 2019/03/02
-/* @brief Base application
+/* @brief In this file are the basic function for a application to work 
+/* correctly.
 /*************************************************************************/
 
 #pragma once
@@ -19,23 +20,23 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
  public:
    
   /**
-   * @brief default constructor
+   * @brief Default Constructor
    */
   BaseApp( uint32 windowWidth,
            uint32 windowHeight,
            String windowName,
            uint32 posX,
            uint32 posY );
-	
+
   /**
-   * @brief default destructor
+   * @brief Default Destructor
    */
   ~BaseApp() = default;
-	 
+
   /************************************************************************/
   /* BaseApp functions                                                    */
   /************************************************************************/
-	
+
  public:
 
   /**
@@ -47,20 +48,21 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
  private:
 
   /**
-   * @brief Function which initializes all the Application needs 
-   * @returns Bool value which indicates if the initialization succeed 
+   * @brief Function which initializes all the Application needs to run 
+   * @return Bool value which indicates if the initialization succeed or not
    */
   bool 
   initApp();
 
   /**
-   * @brief 
+   * @brief Function that initializes the specific things of the application 
+   * @return Bool value which indicates if the initialization succeed or not
    */
   bool
   postInit();
 
   /**
-   * @brief Fuction for Render
+   * @brief Fuction which the app uses for render objects
    */
   void 
   render();
@@ -99,7 +101,7 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    bool m_mainLoop;
 
    /**
-    * @brief 
+    * @brief Pointer to the window  
     */
    Window* m_pwindow;
 

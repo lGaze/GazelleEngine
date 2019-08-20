@@ -18,16 +18,16 @@ class DeviceContext
    * @brief default constructor
    */
    DeviceContext();
-	
+
   /**
    * @brief default destructor
    */
   ~ DeviceContext() = default;
-	
+
   /************************************************************************/
   /*  DeviceContext functions                                             */
   /************************************************************************/
-	
+
    /**
    * @brief
    */
@@ -174,7 +174,7 @@ class DeviceContext
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-	
+
  private:
    
    /**

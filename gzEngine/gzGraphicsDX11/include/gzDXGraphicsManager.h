@@ -19,13 +19,13 @@ class DXGraphicsManager : public GraphicsManager
    * @brief default constructor
    */
   DXGraphicsManager();
-	
+
   /**
    * @brief default destructor
    */
   virtual 
   ~DXGraphicsManager() {} 
-	
+
   /************************************************************************/
   /* DXGraphicsmanager functions                                          */
   /************************************************************************/
@@ -272,7 +272,7 @@ class DXGraphicsManager : public GraphicsManager
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-	
+
  public:
 
   /**

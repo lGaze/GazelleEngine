@@ -19,7 +19,7 @@ namespace gzEngineSDK {
      * @brief default constructor
      */
     Sphere() = default;
-	
+
     /**
      * @brief Constructor with position and radius parameters
      * @param Vector3 center position of the object

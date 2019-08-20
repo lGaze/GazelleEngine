@@ -2,7 +2,7 @@
 /* @filename gzScene.h
 /* @author Victor Flores 
 /* @date 2019/08/03
-/* @brief 
+/* @brief  Scene Header file
 /**************************************************************************/
 #pragma once
 #include "gzPrerequisitesCore.h"
@@ -28,6 +28,7 @@ class GZ_CORE_EXPORT Scene
   
   /**
    * @brief Adds a GameObject into the Scene
+   * @param Reference to the game object
    */
   void
   addGameObject(GameObject & gameObject);
@@ -40,6 +41,7 @@ class GZ_CORE_EXPORT Scene
 
   /**
    * @brief Gets the Scene Name
+   * @return String name of the scene 
    */
   String
   getSceneName();

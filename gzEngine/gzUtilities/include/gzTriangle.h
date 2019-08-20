@@ -19,7 +19,7 @@ namespace gzEngineSDK {
      * @brief default constructor
      */
     Triangle() = default;
-	  
+  
     /**
      * @brief This constructor generates a Triangle with the given values
      * @param Vector3f wich indicates the position of the 1° vertex
@@ -32,15 +32,15 @@ namespace gzEngineSDK {
      * @brief default destructor
      */
     ~Triangle() = default;
-	
-	  /************************************************************************/
+
+    /************************************************************************/
     /* Triangle functions                                                   */
     /************************************************************************/
-	
-	  /************************************************************************/
+
+    /************************************************************************/
     /* Member declarations                                                  */
     /************************************************************************/
-	
+ 
    public:
 
     /**

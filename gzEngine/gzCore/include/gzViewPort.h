@@ -2,7 +2,7 @@
 /* @filename gzViewPort.h
 /* @author Victor Flores 
 /* @date 2019/03/24
-/* @brief 
+/* @brief This file works as an interface for create View Ports
 /**************************************************************************/
 
 #pragma once
@@ -15,24 +15,24 @@ class GZ_CORE_EXPORT ViewPort
  public:
    
   /**
-   * @brief default constructor
+   * @brief Default constructor
    */
   ViewPort();
-	
+
   /**
-   * @brief default destructor
+   * @brief Default destructor
    */
   virtual
   ~ViewPort();
-	
+
   /************************************************************************/
   /* ViewPort functions                                               */
   /************************************************************************/
-	
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-	
+
  public:
    
  };

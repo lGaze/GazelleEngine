@@ -100,11 +100,11 @@
 /* Finds the current platform                                                                    
 /************************************************************************/
 
-#if defined(__WIN32__) || defined(_WIN32)	 //If its a Windows platform
+#if defined(__WIN32__) || defined(_WIN32)  //If its a Windows platform
 # define GZ_PLATFORM GZ_PLATFORM_WIN32
-#elif defined( __APPLE_CC__ )	 //if its a Apple platform
+#elif defined( __APPLE_CC__ )  //if its a Apple platform
 # define GZ_PLATFORM GZ_PLATFORM_OSX
-#else 	//Will consider it as a Linux platform
+#else  //Will consider it as a Linux platform
 # define GZ_PLATFORM GZ_PLATFORM_LINUX
 #endif
 

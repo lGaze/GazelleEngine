@@ -17,7 +17,7 @@ class GZ_CORE_EXPORT GameObject
  
  protected:
   /**
-   * @brief default constructor
+   * @brief Default Constructor
    */
   GameObject();
 
@@ -26,7 +26,7 @@ class GZ_CORE_EXPORT GameObject
  public:
 
   /**
-   * @brief default destructor
+   * @brief Default Destructor
    */
   ~GameObject() = default;
 
@@ -36,6 +36,7 @@ class GZ_CORE_EXPORT GameObject
 
   /**
    * @brief This function adds a component to the vector of components
+   * @param Pointer to the new component
    */
   void
   addComponent(Component * newComponent);
@@ -47,29 +48,38 @@ class GZ_CORE_EXPORT GameObject
   removeComponent();
 
   /**
-   * @brief 
+   * @brief This function gets a specific component in his vector of components
+   * @param The type of the wanted component
+   * @return Reference to the wanted component
    */
   Component &
   getComponent(COMPONENT_TYPE::E componentType);
 
   /**
-   * @brief 
+   * @brief This function creates a component 
+   * @param Type of the component to be created
    */
   void
   createComponent(COMPONENT_TYPE::E componentType);
 
   /**
    * @brief Adds a children to the game object
+   * @param Reference of the game object that will be added to the vector of game objects
    */
   void
   addChildren(GameObject & gameObject);
 
   /**
    * @brief Search the given name in the children of this game object
+   * @param Name of the wanted game object
+   * @return if founded returns the wanted game object
    */
   GameObject *
   findChildrenbyName(String gameObjectName);
 
+  /**
+   * @brief This function updates the game object
+   */
   void
   update();
 
@@ -79,7 +89,7 @@ class GZ_CORE_EXPORT GameObject
 
  public:
 
-  bool m_isEneabled;
+  bool m_isEneabled; 
   Transform m_transform;
   String m_objectName;
  

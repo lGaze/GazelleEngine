@@ -2,7 +2,7 @@
 /* @filename gzSamplerState.h
 /* @author Victor Flores 
 /* @date 2019/03/25
-/* @brief 
+/* @brief This file works as an interface for create Sampler States
 /**************************************************************************/
 
 #pragma once
@@ -18,21 +18,21 @@ class GZ_CORE_EXPORT SamplerState
    * @brief default constructor
    */
   SamplerState();
-	
+
   /**
    * @brief default destructor
    */
   virtual
   ~SamplerState();
-	
+
   /************************************************************************/
   /* SamplerState functions                                               */
   /************************************************************************/
-	
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-	
+
  public:
    
  };

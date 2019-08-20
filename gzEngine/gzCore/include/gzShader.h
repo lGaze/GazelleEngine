@@ -2,7 +2,7 @@
 /* @filename gzShader.h
 /* @author Victor Flores 
 /* @date 2019/03/28
-/* @brief 
+/* @brief  This file works as an interface for create Shaders
 /**************************************************************************/
 
 #pragma once
@@ -15,23 +15,23 @@ class GZ_CORE_EXPORT Shader
  public:
    
   /**
-   * @brief default constructor
+   * @brief Default constructor
    */
   Shader();
-	
+
   /**
-   * @brief default destructor
+   * @brief Default destructor
    */
   ~Shader();
-	
+
   /************************************************************************/
   /* Shader functions                                                    */
   /************************************************************************/
-	
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-	
+
  public:
    
  };

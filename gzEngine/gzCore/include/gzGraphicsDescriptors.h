@@ -2,7 +2,7 @@
 /* @filename gzGraphicsDescriptors.h
 /* @author Victor Flores 
 /* @date 2019/03/17
-/* @brief 
+/* @brief File that contains all the grafic descriptors 
 /**************************************************************************/
 
 #pragma once

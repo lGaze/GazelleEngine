@@ -2,7 +2,7 @@
 /* @filename gzRenderer.h
 /* @author Victor Flores 
 /* @date 2019/08/07
-/* @brief 
+/* @brief  This file works as an interface for rederers 
 /**************************************************************************/
 #pragma once
 

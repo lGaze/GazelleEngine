@@ -17,12 +17,12 @@ class SwapChain
    * @brief default constructor
    */
   SwapChain();
-	
+
   /**
    * @brief default destructor
    */
   ~SwapChain() = default;
-	
+
   /************************************************************************/
   /* SwapChain functions                                                  */
   /************************************************************************/
@@ -30,7 +30,7 @@ class SwapChain
   /**
    * @brief Create a Description for the current Swapchain
    */
-	void
+  void
   CreateSwapChainDesc( uint32 Width, uint32 Height, void* hWnd );
 
   /**
@@ -64,7 +64,7 @@ class SwapChain
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-	
+
  private:
 
   /**

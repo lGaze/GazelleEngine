@@ -15,12 +15,12 @@ class GZ_CORE_EXPORT Material : public Resource
  public:
    
   /**
-   * @brief default constructor
+   * @brief Default constructor
    */
   Material();
 
   /**
-   * @brief default destructor
+   * @brief Default destructor
    */
   ~Material();
 
@@ -30,6 +30,7 @@ class GZ_CORE_EXPORT Material : public Resource
 
   /**
    * @brief Sets the given texture into the albedo pointer of the material
+   * @param Reference of the new Texture
    */
   FORCEINLINE void
   setAlbedoTexture(Texture & albedoTexture){
@@ -82,6 +83,7 @@ class GZ_CORE_EXPORT Material : public Resource
 
   /**
    * @brief Sets the given texture into the albedo pointer of the material
+   * @param Reference of the new Texture
    */
   FORCEINLINE void
   setMetallicTexture(Texture & metallicTexture){
@@ -90,6 +92,7 @@ class GZ_CORE_EXPORT Material : public Resource
 
   /**
    * @brief Sets the given texture into the roughness pointer of the material
+   * @param Reference of the new Texture
    */
   FORCEINLINE void
   setRoughnessTexture(Texture & roughnessTexture) {
@@ -98,6 +101,7 @@ class GZ_CORE_EXPORT Material : public Resource
 
   /**
    * @brief Sets the given texture into the normal pointer of the material
+   * @param Reference of the new Texture
    */
   FORCEINLINE void
   setNormalTexture(Texture & normalTexture){
@@ -106,6 +110,7 @@ class GZ_CORE_EXPORT Material : public Resource
 
   /**
    * @brief Sets the given texture into the emissive pointer of the material
+   * @param Reference of the new Texture
    */
   FORCEINLINE void
   setEmissiveTexture(Texture & emissiveTexture){
@@ -114,6 +119,7 @@ class GZ_CORE_EXPORT Material : public Resource
 
   /**
    * @brief Sets the given texture into the specular pointer of the material
+   * @param Reference of the new Texture
    */
   FORCEINLINE void
   setSpecularTexture(Texture & specularTexture){
@@ -123,7 +129,7 @@ class GZ_CORE_EXPORT Material : public Resource
  private:
 
    /**
-    * @brief 
+    * @brief This function initializes the default values of the material
     */
   void
   createAsDefault();

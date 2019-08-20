@@ -18,19 +18,19 @@ class DXVertexShader : public VertexShader
    * @brief default constructor
    */
   DXVertexShader();
-	
+
   /**
    * @brief default destructor
    */
   ~DXVertexShader() = default;
-	
+
   /************************************************************************/
   /* VertexShader functions                                               */
   /************************************************************************/
-	
+
   /**
-	 * @brief Gets the VertexShader interface
-	 */
+   * @brief Gets the VertexShader interface
+   */
   FORCEINLINE ID3D11VertexShader**
   getVertexShaderInterface() {
     return &m_pVertexShader;
@@ -47,7 +47,7 @@ class DXVertexShader : public VertexShader
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-	
+
  private:
 
   /**

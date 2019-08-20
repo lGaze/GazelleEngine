@@ -2,7 +2,7 @@
 /* @filename gzGraphicsManager.h
 /* @author Victor Flores 
 /* @date 2019/03/03
-/* @brief 
+/* @brief Interface to the grafics api 
 /**************************************************************************/
 #pragma once
 
@@ -30,19 +30,29 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   /************************************************************************/
   
   /**
-   * @brief 
+   * @brief This function initializes all the grapics api needs 
+   * @param handle of the window
+   * @param int value wich indicates the given width of the window
+   * @param int value wich indicates the given height of the window
+   * @return Bool value wich indicates if the initializatioin succed or not 
    */
   virtual bool
   initGraphicsManager(void* hWnd, int32 width, int32 height ) = 0;
 
   /**
-   * @brief 
+   * @brief Creates a Texture 2D with the given parameters
+   * @param Reference to a descriptor of a 2D Texture
+   * @return The Texture
    */
   virtual Texture*
   createTexture2D( TEXTURE2D_DESCRIPTOR &textureInfo ) = 0;
 
   /**
-   * @brief 
+   * @brief Creates a Vertex Shader with the given parameters
+   * @param The name of the vertex shader
+   * @param The entry point of the Vertex Shader 
+   * @param The Shader model that is going to be used
+   * @return The vertex shader created
    */
   virtual VertexShader*
   CreateVertexShader( const WString & fileName,
@@ -50,7 +60,10 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
                       const String & ShaderModel ) = 0;
 
   /**
-   * @brief 
+   * @brief Creates an Input layout with the given parameters
+   * @param Pointer of the vertex shader that is going to be used for the 
+   * creation of the input layout
+   * @return The Input layout created
    */
   virtual InputLayout*
   createInputLayout( VertexShader * vertexShader ) = 0;

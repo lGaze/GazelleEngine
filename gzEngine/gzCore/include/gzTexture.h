@@ -2,7 +2,7 @@
 /* @filename gzTexture.h
 /* @author Victor Flores 
 /* @date 2019/03/16
-/* @brief 
+/* @brief  This file works as an interface for create Textures
 /**************************************************************************/
 
 #pragma once
@@ -16,28 +16,30 @@ class GZ_CORE_EXPORT Texture : public Resource
  public:
    
   /**
-   * @brief default constructor
+   * @brief Default constructor
    */
   Texture();
-	
+
   /**
-   * @brief default destructor
+   * @brief Default destructor
    */
   virtual
   ~Texture();
-	 
+ 
   /************************************************************************/
   /* Texture functions                                                    */
   /************************************************************************/
 
   /**
-   * @brief 
+   * @brief Loads a Texture from a given path 
+   * @param Path of the file 
    */
   void
   loadTextureFromFile(const String filepath);
 
   /**
-   * @brief 
+   * @brief Gets the informatio of the texture
+   * @return The information of the texture
    */
   FORCEINLINE unsigned char*
   getTextureInfo() {
@@ -45,7 +47,8 @@ class GZ_CORE_EXPORT Texture : public Resource
   }
 
   /**
-   * @brief 
+   * @brief Gets the width of the texture
+   * @return Integer that indicates the width of the texture
    */
   FORCEINLINE int32
   getWidth() {
@@ -53,7 +56,8 @@ class GZ_CORE_EXPORT Texture : public Resource
   }
 
   /**
-   * @brief 
+   * @brief Gets the height of the texture
+   * @return Integer that indicates the height of the texture
    */
   FORCEINLINE int32
   getHeight() {
@@ -61,7 +65,8 @@ class GZ_CORE_EXPORT Texture : public Resource
   }
 
   /**
-   * @brief 
+   * @brief Gets the chanels of the texture
+   * @param integer that indicates the chanels of the texture
    */
   FORCEINLINE int32
   getChanels() { 

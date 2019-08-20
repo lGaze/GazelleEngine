@@ -2,7 +2,7 @@
 /* @filename gzVertexShader.h
 /* @author Victor Flores 
 /* @date 2019/03/27
-/* @brief 
+/* @brief This file works as an interface for create Vertex Shaders
 /**************************************************************************/
 
 #pragma once
@@ -15,24 +15,24 @@ class GZ_CORE_EXPORT VertexShader
  public:
    
   /**
-   * @brief default constructor
+   * @brief Default constructor
    */
   VertexShader();
-	
+
   /**
-   * @brief default destructor
+   * @brief Default destructor
    */
   virtual
   ~VertexShader();
-	
+
   /************************************************************************/
   /* VertexShader functions                                               */
   /************************************************************************/
-	
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-	
+
  public:
    
 

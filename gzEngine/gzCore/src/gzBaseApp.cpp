@@ -31,7 +31,7 @@ namespace gzEngineSDK {
     m_windowPosY(posY) { }
 
   int32
-    BaseApp::runMainLoop()
+  BaseApp::runMainLoop()
   {
     m_mainLoop = true;
 

@@ -18,16 +18,16 @@ class DXViewPort : public ViewPort
    * @brief default constructor
    */
   DXViewPort();
-	
+
   /**
    * @brief default destructor
    */
   ~DXViewPort() = default;
-	
+
   /************************************************************************/
   /* ViewPort functions                                                   */
   /************************************************************************/
-	
+
   /**
    * @brief Sets the ViewPort
    */
@@ -45,7 +45,7 @@ class DXViewPort : public ViewPort
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-	
+
  private:
 
    /**

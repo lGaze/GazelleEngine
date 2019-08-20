@@ -18,16 +18,16 @@ class DXBuffer : public Buffer
    * @brief default constructor
    */
   DXBuffer();
-	
+
   /**
    * @brief default destructor
    */
   ~DXBuffer() = default;
-	
+
   /************************************************************************/
   /* Buffer functions                                                    */
   /************************************************************************/
-	
+
   /**
    * @brief Create a Description for the buffer
    */
@@ -53,7 +53,7 @@ class DXBuffer : public Buffer
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
-	
+
  private:
 
   /**

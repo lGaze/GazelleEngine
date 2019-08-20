@@ -25,12 +25,12 @@ namespace gzEngineSDK {
    public:
 
     /**
-     * @brief default constructor
+     * @brief Default Constructor
      */
     Component() = default;
 
     /**
-     * @brief default destructor
+     * @brief Default Destructor
      */
     virtual
     ~Component() = default;
@@ -49,7 +49,8 @@ namespace gzEngineSDK {
     update(){};
 
     /**
-     * @brief 
+     * @brief Gets the type of the component
+     * @return Componet type
      */
     COMPONENT_TYPE::E
     getComponentType();

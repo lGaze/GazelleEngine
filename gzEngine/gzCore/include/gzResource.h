@@ -2,7 +2,7 @@
 /* @filename gzResource.h
 /* @author Victor Flores 
 /* @date 2019/07/19
-/* @brief 
+/* @brief Resources header file
 /**************************************************************************/
 #pragma once
 
