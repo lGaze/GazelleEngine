@@ -6,34 +6,37 @@
 /**************************************************************************/
 
 #include "gzCamera.h"
+#include <gzGraphicsManager.h>
 
 namespace gzEngineSDK {
 
-  Camera::Camera(int32 width, int32 height)
+  Camera::Camera()
   {
-    m_eye = Vector3f(0.0f, 0.0f, -10.0);
-    m_at = Vector3f(0.0f, 0.0f, 0.0f);
-    m_up = m_eye + Vector3f(0.0, 1.0, 0.0);
 
-    m_fovy = 0.785398163f;
+    m_eye = Vector3f(0.0f, 0.0f, 0.0f);
+    m_front = Vector3f(0.0f, 0.0f, -1.0f);
+    m_up = Vector3f(0.0, 1.0, 0.0);
+
+    m_fovy = PIFOURTHS;
     m_aspect =
-      static_cast<float>(width) / static_cast<float>(height);
-    m_zNear = .5f;
-    m_zFar = 500.0f;
+      GraphicsManager::instance().getViewportDimensions().x / 
+      GraphicsManager::instance().getViewportDimensions().y;
+    m_zNear = DEFAULT_NEAR;
+    m_zFar = DEFAULT_FAR;
 
     m_dirty = true;
   }
 
   void 
-  Camera::Move(Vector3f direction, float cameraSpeed)
+  Camera::move(Vector3f direction, float cameraSpeed)
   {
     m_eye += direction * cameraSpeed;
-    m_at = Vector3f(0.0, 0.0, 10.0);
+    m_front = m_eye + Vector3f(0.0f, 0.0f, -1.0f);
     m_dirty = true;
   }
 
   void 
-  Camera::Rotate(Vector3f axis, float degrees)
+  Camera::rotate(Vector3f axis, float degrees)
   {
   }
 
@@ -41,22 +44,18 @@ namespace gzEngineSDK {
   Camera::setPosition(Vector3f position)
   {
     m_eye = position;
+    m_front += m_eye;
     m_dirty = true;
   }
 
   void 
-  Camera::setTarget(Vector3f target)
+  Camera::updateViewMatrix()
   {
+    m_viewMatrix = m_viewMatrix.matrixLookAtLH(m_eye, m_front, m_up);
   }
 
   void 
-  Camera::UpdateViewMatrix()
-  {
-    m_viewMatrix = m_viewMatrix.matrixLookAtLH(m_eye, m_at, m_up);
-  }
-
-  void 
-  Camera::UpdateProjectionMatrix()
+  Camera::updateProjectionMatrix()
   {
     m_projectionMatrix =
       m_projectionMatrix.matrixPerspectiveFovLH(m_fovy,
@@ -66,13 +65,13 @@ namespace gzEngineSDK {
   }
 
   void 
-  Camera::UpdateCamera()
+  Camera::updateCamera()
   {
     if (!m_dirty) {
       return;
     }
-    UpdateViewMatrix();
-    UpdateProjectionMatrix();
+    updateViewMatrix();
+    updateProjectionMatrix();
     m_dirty = false;
   }
 }

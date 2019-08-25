@@ -22,6 +22,9 @@ namespace gzEngineSDK {
   void 
   PBRRenderer::render()
   {
+    GraphicsManager::instance().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
+                                                      1.0f,
+                                                      0);
     createGBuffer();
     SceneManager::instance().update();
 
@@ -32,7 +35,7 @@ namespace gzEngineSDK {
     m_lightCBuffer = BaseApp::instance().constantLightBuffer;
     GraphicsManager::instance().setRenderTarget(m_pbrRT);
 
-    float ClearColor1[4] = { 1, .5, .5, 1 };
+    float ClearColor1[4] = { .5, .5, .5, 1 };
     GraphicsManager::instance().clearRenderTargetView(ClearColor1, m_pbrRT);
     GraphicsManager::instance().setRasterizerState(m_rasterizerState);
     GraphicsManager::instance().setInputLayout(m_pbrLayout);
@@ -66,21 +69,16 @@ namespace gzEngineSDK {
                                                    3,
                                                    1);
 
-/*
-    GraphicsManager::instance().setShaderResources(m_lut,
-                                                   4,
-                                                   1);*/
-
     GraphicsManager::instance().drawIndexed(quad->m_mesh[0].numIndex,
                                             quad->m_mesh[0].indexBase,
                                             0);
 
     //Pass3
-    GraphicsManager::instance().setRenderTarget(m_backBuffer);
     GraphicsManager::instance().clearRenderTargetView(ClearColor1, m_backBuffer);
     GraphicsManager::instance().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
                                                       1.0f,
                                                       0);
+    GraphicsManager::instance().setRenderTarget(m_backBuffer);
     GraphicsManager::instance().setRasterizerState(m_rasterizerState);
     GraphicsManager::instance().setInputLayout(m_pbrLayout);
     GraphicsManager::instance().setVertexShader(m_pbrVertexShader);
@@ -105,9 +103,9 @@ namespace gzEngineSDK {
   }
 
   void 
-  PBRRenderer::createGBuffer()
+    PBRRenderer::createGBuffer()
   {
-    float ClearColor1[4] = { 0,0,0,0 }; 
+
     GraphicsManager::instance().clearRenderTargetView(ClearColor1, m_positionsRT);
     GraphicsManager::instance().clearRenderTargetView(ClearColor1, m_albedoRT);
     GraphicsManager::instance().clearRenderTargetView(ClearColor1, m_normalsRT);

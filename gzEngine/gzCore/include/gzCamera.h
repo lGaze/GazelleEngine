@@ -8,6 +8,9 @@
 #pragma once
 #include "gzPrerequisitesCore.h"
 
+constexpr auto DEFAULT_NEAR = 3.0f;
+constexpr auto DEFAULT_FAR = 1000.0f;
+
 namespace gzEngineSDK {
 class GZ_CORE_EXPORT Camera
 {
@@ -16,7 +19,7 @@ class GZ_CORE_EXPORT Camera
   /**
    * @brief Default constructor.
    */
-  Camera(int32 width, int32 height);
+  Camera();
 
   /**
    * @brief Default destructor.
@@ -31,25 +34,19 @@ class GZ_CORE_EXPORT Camera
    * @brief This function makes the camera move.
    */
   void
-  Move(Vector3f direction, float cameraSpeed);
+  move(Vector3f direction, float cameraSpeed);
 
   /**
    * @brief This function makes the camera rotate.
    */
   void
-  Rotate(Vector3f axis, float degrees);
+  rotate(Vector3f axis, float degrees);
 
   /**
    * @brief This function sets camera position coordinates.
    */
   void
   setPosition(Vector3f position);
-
-  /**
-   * @brief This function sets the target of the camera.
-   */
-  void
-  setTarget(Vector3f target);
 
   Vector3f
   getEyePosition() {
@@ -60,9 +57,8 @@ class GZ_CORE_EXPORT Camera
    * @brief Gets the transposed view matrix.
    * @return Transposed view matrix.
    */
-  FORCEINLINE const Matrix4
+  FORCEINLINE Matrix4
   getViewMatrix() {
-    m_viewMatrix.transpose();
     return m_viewMatrix;
   }
 
@@ -70,9 +66,8 @@ class GZ_CORE_EXPORT Camera
    * @brief Gets the trasnposed projection matrix.
    * @return Transposed projection matrix.
    */
-  FORCEINLINE const Matrix4
+  FORCEINLINE Matrix4
   getProjectionMatrix() {
-    m_projectionMatrix.transpose();
     return m_projectionMatrix;
   }
 
@@ -80,7 +75,7 @@ class GZ_CORE_EXPORT Camera
    * @brief This function updates the camera if it changed
    */
   void
-  UpdateCamera();
+  updateCamera();
 
  private:
 
@@ -88,13 +83,13 @@ class GZ_CORE_EXPORT Camera
    * @brief This function updates the view matrix if is needed
    */
   void
-  UpdateViewMatrix();
+  updateViewMatrix();
 
   /**
    * @brief This function updates the projection matrix if is needed
    */
   void
-  UpdateProjectionMatrix();
+  updateProjectionMatrix();
 
   /************************************************************************/
   /* Member declarations                                                  */
@@ -103,7 +98,7 @@ class GZ_CORE_EXPORT Camera
  private:
 
   Vector3f m_eye; //Camera Postition
-  Vector3f m_at; //Target Position
+  Vector3f m_front; //Front Position
   Vector3f m_up; //Camera up vector
 
   float m_fovy; //field of view

@@ -70,6 +70,7 @@ class PBRRenderer : public Renderer
    Model * quad;
    Vector<Texture *> m_gbufferRTTextures;
    Buffer * m_lightCBuffer;
+   float ClearColor1[4] = { 0,0,0,0 };
 
  };
 }

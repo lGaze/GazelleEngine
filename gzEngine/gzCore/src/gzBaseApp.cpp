@@ -16,6 +16,7 @@
 #include "gzResourceManager.h"
 #include "gzRenderer.h"
 #include "gzMaterial.h"
+#include "gzCameraManager.h"
 
 namespace gzEngineSDK {
 
@@ -77,6 +78,7 @@ namespace gzEngineSDK {
 
     SceneManager::startUp();
     ResourceManager::startUp();
+    CameraManager::startUp();
 
     if (!postInit())
     {
@@ -94,7 +96,7 @@ namespace gzEngineSDK {
   }
 
   bool
-    BaseApp::postInit()
+  BaseApp::postInit()
   {
     bool result = true;
 
@@ -130,11 +132,6 @@ namespace gzEngineSDK {
     a = SceneManager::instance().createEmptyGameObject();
 
     MeshComponent * testModel = new MeshComponent();
-    MeshComponent * testModel1 = new MeshComponent();
-    MeshComponent * testModel2 = new MeshComponent();
-    MeshComponent * testModel3 = new MeshComponent();
-    MeshComponent * testModel4 = new MeshComponent();
-    MeshComponent * testModel5 = new MeshComponent();
 
    //testModel->loadMesh("Meshes\\BattleDroid.fbx");
    testModel->loadMesh("Meshes\\model.dae");
@@ -203,14 +200,15 @@ namespace gzEngineSDK {
     g_World.identity();
 
     //Initialize the camera
-    m_camera = new Camera(m_windowWidth, m_windowHeight);
+    m_camera = CameraManager::instance().createCamera();
 
-    m_camera->setPosition(Vector3f(0.0, 0.0, -5.0));
-    m_camera->UpdateCamera();
+    CameraManager::instance().setActiveCameraPosition(Vector3f(0.0f, 0.0f, 5.0f));
     cbMatrixbuffer.view = m_camera->getViewMatrix();
+    cbMatrixbuffer.view.transpose();
     cbMatrixbuffer.projection = m_camera->getProjectionMatrix();
-    GraphicsManager::instance().updateSubresource(constantMatrix,
-                                                  &cbMatrixbuffer);
+    cbMatrixbuffer.projection.transpose();
+    //GraphicsManager::instance().updateSubresource(constantMatrix,
+    //                                              &cbMatrixbuffer);
 
     return result;
 
@@ -219,21 +217,9 @@ namespace gzEngineSDK {
   void
   BaseApp::render()
   {
-   //Update our time
-    time = 0.0f;
-    static DWORD dwTimeStart = 0;
-    DWORD dwTimerCur = GetTickCount();
-    if (dwTimeStart == 0)
-    {
-      dwTimeStart = dwTimerCur;
-    }
-    time = (dwTimerCur - dwTimeStart) / 1000.0f;
-
     //rotate mesh 
     //g_World.matrixRotationX(time);
 
-    //Clear back buffer
-    float ClearColor[4] = { .5f, 0.5f, 0.5f, 1.0f }; //Gris
     //GraphicsManager::instance().clearRenderTargetView(ClearColor,
      //                                                 m_pBackBufferTex);
 
@@ -244,16 +230,10 @@ namespace gzEngineSDK {
     GraphicsManager::instance().updateSubresource(constantLightBuffer,
                                                   &cbLight);
 
-    //Clear depth Stencil
-    GraphicsManager::instance().clearDepthStencilView(
-      CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
-      1.0f,
-      0);
-
     g_World.transpose();
     cbMatrixbuffer.world = g_World;
-    GraphicsManager::instance().updateSubresource(constantMatrix,
-                                                  &cbMatrixbuffer);
+    //GraphicsManager::instance().updateSubresource(constantMatrix,
+    //                                              &cbMatrixbuffer);
 
 
     /************************************************************************/
@@ -270,13 +250,20 @@ namespace gzEngineSDK {
   void 
   BaseApp::update()
   {
-  
-/*
-    m_camera->Move(Vector3f(0.0, 0.0, -1.0), 0.5);
-    m_camera->UpdateCamera();
+    //Update our time
+    time = 0.0f;
+    static DWORD dwTimeStart = 0;
+    DWORD dwTimerCur = GetTickCount();
+    if (dwTimeStart == 0)
+    {
+      dwTimeStart = dwTimerCur;
+    }
+    time = (dwTimerCur - dwTimeStart) / 1000.0f;
+
     cbMatrixbuffer.view = m_camera->getViewMatrix();
+    cbMatrixbuffer.view.transpose();
     GraphicsManager::instance().updateSubresource(constantMatrix,
-                                                  &cbMatrixbuffer);*/
+                                                &cbMatrixbuffer);
     GraphicsManager::instance().setVSConstantBuffers(constantMatrix, 0, 1);
   }
 

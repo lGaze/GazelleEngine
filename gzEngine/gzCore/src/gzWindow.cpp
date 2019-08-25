@@ -6,6 +6,7 @@
 /**************************************************************************/
 
 #include "gzWindow.h"
+#include <gzCameraManager.h>
 
 namespace gzEngineSDK {
 
@@ -77,6 +78,23 @@ namespace gzEngineSDK {
       PostQuitMessage( 0 );
       break;
 
+    case WM_KEYDOWN:
+      switch (wParam)
+      {
+      case 'A':
+        CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::LEFT);
+        break;
+      case 'D':
+        CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::RIGHT);
+        break;
+      case 'S':
+        CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::FORWARD);
+        break;
+      case 'W':
+        CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::BACKWARD);
+        break;
+      }
+      break;
     default:
       return DefWindowProc( window, message, wParam, lParam );
     }

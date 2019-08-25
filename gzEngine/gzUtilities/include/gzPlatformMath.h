@@ -13,6 +13,9 @@ namespace gzEngineSDK {
   {
    public:
 
+     #define PI 3.14159265359
+     #define PIFOURTHS 0.78539816339
+
     PlatformMath() = default;
     ~PlatformMath() = default;
 

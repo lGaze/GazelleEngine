@@ -54,6 +54,7 @@
     <ClCompile Include="src\gzBaseApp.cpp" />
     <ClCompile Include="src\gzBuffer.cpp" />
     <ClCompile Include="src\gzCamera.cpp" />
+    <ClCompile Include="src\gzCameraManager.cpp" />
     <ClCompile Include="src\gzComponent.cpp" />
     <ClCompile Include="src\gzGameObject.cpp" />
     <ClCompile Include="src\gzGraphicsManager.cpp" />
