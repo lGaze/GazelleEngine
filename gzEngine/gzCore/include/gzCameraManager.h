@@ -70,6 +70,24 @@ class GZ_CORE_EXPORT CameraManager : public Module<CameraManager>
   moveActiveCamera(CAMERA_MOVEMENT::E direction);
 
   /**
+   * @brief Gets the EyePosition of the Main Camera
+   */
+  Vector3f
+  getActiveCameraEyePosition();
+
+  /**
+   * @brief Gets the ViewMatrix of the Main Camera
+   */
+  Matrix4
+  getActiveCameraViewMatrix();
+
+  /**
+   * @brief Gets the Projection of the Main Camera
+   */
+  Matrix4
+  getActiveCameraProjectionMatrix();
+
+  /**
    * @brief Updates the camera manager
    */
   void

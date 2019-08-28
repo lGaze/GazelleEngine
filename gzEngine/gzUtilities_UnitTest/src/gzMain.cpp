@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-
 #include <gzPrerequisitesUtilities.h>
 #include <gzMath.h>
 #include <gzVector2f.h>

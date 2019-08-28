@@ -51,25 +51,44 @@ class PBRRenderer : public Renderer
 
  private:
 
+  //RasterizerStates
    RasterizerState * m_rasterizerState;
+
+   //InputLayouts
    InputLayout * m_gbufferLayout;
    InputLayout * m_pbrLayout;
+
+   //VertexShaders
    VertexShader* m_gbufferVertexShader;
+   VertexShader * m_pbrVertexShader;
+
+   //PixelShaders
    PixelShader * m_gbufferPixelShader;
    PixelShader * m_toneMapPixelShader;
-   VertexShader * m_pbrVertexShader;
    PixelShader * m_pbrPixelShader;
+
+   //SamplerStates
    SamplerState * m_samplerState;
+
+   //Textures/RenderTargets
    Texture * m_positionsRT;
    Texture * m_normalsRT;
    Texture * m_albedoRT;
    Texture * m_emissiveRT;
    Texture * m_pbrRT;
    Texture * m_lut;
-   Texture * m_backBuffer;
-   Model * quad;
+   Texture * m_backBufferRT;
    Vector<Texture *> m_gbufferRTTextures;
+
+   //Buffers
    Buffer * m_lightCBuffer;
+
+   //QuadAligned
+   Model * quad;
+
+   //Viewports
+   VIEWPORT_DESCRIPTOR m_viewport;
+
    float ClearColor1[4] = { 0,0,0,0 };
 
  };

@@ -1,0 +1,85 @@
+/**************************************************************************/
+/* @filename gzGraphicsTestApp.h
+/* @author Victor Flores 
+/* @date 2019/08/26
+/* @brief Application for testing graphic things
+/**************************************************************************/
+#pragma once
+
+#include <gzBaseApp.h>
+
+namespace gzEngineSDK {
+class GrapichsTestApp : public BaseApp
+{
+ public:
+ 
+  /**
+   * @brief default constructor
+   */
+  GrapichsTestApp(uint32 windowWidth,
+                   uint32 windowHeight,
+                   String windowName,
+                   uint32 posX,
+                   uint32 posY);
+
+   /**
+    * @brief default destructor
+    */
+  ~GrapichsTestApp() = default;
+
+  /************************************************************************/
+  /* GrapichsTestApp functions                                            */
+  /************************************************************************/
+
+ protected:
+
+  /**
+   * @brief Function that initializes the specific things of the application
+   * @return Bool value which indicates if the initialization succeed or not
+   */
+  virtual bool
+  postInit() override;
+
+  /**
+   * @brief Funtion for Update the logic of the app
+   */
+  virtual void 
+  update() override;
+
+
+  /************************************************************************/
+  /* Member declarations                                                  */
+  /************************************************************************/
+
+ private:
+   
+   Camera * m_camera;
+
+   struct cbMatrix
+   {
+     Matrix4 view;
+     Matrix4 projection;
+     Matrix4 world;
+   };
+
+   struct cbLight
+   {
+     Vector4f viewPosition;
+     Vector4f lightPosition;
+   };
+
+   cbLight cbLightBuffer;
+   cbMatrix cbMatrixbuffer;
+
+   Matrix4 g_World;
+
+   Vector3f Eye;
+
+   Buffer * constantMatrix;
+
+   GameObject * m_gameObject;
+
+   float time;
+   Vector4f m_ViewPos;
+};
+}

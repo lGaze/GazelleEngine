@@ -1,0 +1,175 @@
+/**************************************************************************/
+/* @filename gzGraphicsTestApp.cpp
+/* @author Victor Flores 
+/* @date 2019/08/25
+/**************************************************************************/
+
+#include "gzGraphicsTestApp.h"
+#include <gzSceneManager.h>
+#include <gzMeshComponent.h>
+#include <gzMaterial.h>
+#include <gzTexture.h>
+#include <gzGameObject.h>
+#include <gzCameraManager.h>
+#include <gzCamera.h>
+
+namespace gzEngineSDK {
+
+  GrapichsTestApp::GrapichsTestApp(uint32 windowWidth, 
+                                   uint32 windowHeight, 
+                                   String windowName, 
+                                   uint32 posX, 
+                                   uint32 posY) 
+  {
+    m_windowWidth = windowWidth;
+    m_windowHeight = windowHeight;
+    m_windowName = windowName;
+    m_windowPosX = posX;
+    m_windowPosY = posY;
+  }
+
+  bool 
+  GrapichsTestApp::postInit()
+  {
+    bool result = true;
+
+    //Creates the Device, Context and SwapChain
+    result = GraphicsManager::instance().initGraphicsManager(
+      static_cast<void*>(m_pwindow->getHWND()),
+      m_windowWidth,
+      m_windowHeight);
+
+    //Create the constant buffers desc
+    BUFFER_DESCRIPTOR bufferDesc;
+    memset(&bufferDesc, 0, sizeof(bufferDesc));
+    bufferDesc.Usage = USAGES::E::USAGE_DEFAULT;
+    bufferDesc.ByteWidth = sizeof(cbMatrix);
+    bufferDesc.BindFlags = BIND_FLAGS::E::BIND_CONSTANT_BUFFER;
+    bufferDesc.CPUAccessFlags = 0;
+
+    //Create Constant buffer
+    constantMatrix =
+      GraphicsManager::instance().createBuffer(bufferDesc, nullptr);
+
+    bufferDesc.ByteWidth = sizeof(cbLight);
+    constantLightBuffer =
+      GraphicsManager::instance().createBuffer(bufferDesc, nullptr);
+
+    SceneManager::instance().createScene();
+    SceneManager::instance().setActiveScene();
+
+    m_gameObject = SceneManager::instance().createEmptyGameObject();
+
+    MeshComponent * testModel = new MeshComponent();
+
+    //testModel->loadMesh("Meshes\\BattleDroid.fbx");
+    testModel->loadMesh("Meshes\\model.dae");
+
+
+    Material * tempMaterial = new Material();
+
+    Texture * tempTex = new Texture;
+
+    /*
+         //Droide Material
+        //-------------------------------------------------------------------------------------//
+        tempTex =
+          GraphicsManager::instance().LoadTextureFromFile("Textures\\Droid\\17_-_Default_albedo.jpg");
+        tempMaterial->setAlbedoTexture(*tempTex);
+
+        tempTex =
+          GraphicsManager::instance().LoadTextureFromFile("Textures\\Droid\\17_-_Default_metallic.jpg");
+        tempMaterial->setMetallicTexture(*tempTex);
+
+        tempTex =
+          GraphicsManager::instance().LoadTextureFromFile("Textures\\Droid\\17_-_Default_normal.jpg");
+        tempMaterial->setNormalTexture(*tempTex);
+
+        tempTex =
+          GraphicsManager::instance().LoadTextureFromFile("Textures\\Droid\\17_-_Default_roughness.jpg");
+        tempMaterial->setRoughnessTexture(*tempTex);
+
+        tempTex =
+          GraphicsManager::instance().LoadTextureFromFile("Textures\\Droid\\17_-_Default_emissive.jpg");
+        tempMaterial->setEmissiveTexture(*tempTex);*/
+
+        //Robot Material
+       //-------------------------------------------------------------------------------------//
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Robot\\default_albedo.jpg");
+    tempMaterial->setAlbedoTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Robot\\default_metallic.jpg");
+    tempMaterial->setMetallicTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Robot\\default_normal.jpg");
+    tempMaterial->setNormalTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Robot\\default_roughness.jpg");
+    tempMaterial->setRoughnessTexture(*tempTex);
+
+    tempTex =
+      GraphicsManager::instance().LoadTextureFromFile("Textures\\Robot\\default_emissive.jpg");
+    tempMaterial->setEmissiveTexture(*tempTex);
+
+
+    testModel->changeMaterial(*tempMaterial);
+
+    m_gameObject->addComponent(testModel);
+
+    SceneManager::instance().addGameObjectToScene(*m_gameObject);
+
+    //Sets primitive topology
+    GraphicsManager::instance().setPrimitiveTopology(4);
+
+    //Initialize the matrices
+    g_World.identity();
+
+    //Initialize the camera
+    m_camera = CameraManager::instance().createCamera();
+
+    CameraManager::instance().setActiveCameraPosition(Vector3f(0.0f, 0.0f, 5.0f));
+    cbMatrixbuffer.view = CameraManager::instance().getActiveCameraViewMatrix();
+    cbMatrixbuffer.view.transpose();
+    cbMatrixbuffer.projection = 
+      CameraManager::instance().getActiveCameraProjectionMatrix();
+    cbMatrixbuffer.projection.transpose();
+
+    return result;
+
+  }
+
+  void 
+  GrapichsTestApp::update()
+  {
+    //Update our time
+    time = 0.0f;
+    static DWORD dwTimeStart = 0;
+    DWORD dwTimerCur = GetTickCount();
+    if (dwTimeStart == 0)
+    {
+      dwTimeStart = dwTimerCur;
+    }
+    time = (dwTimerCur - dwTimeStart) / 1000.0f;
+
+    Vector3f viewPos = CameraManager::instance().getActiveCameraEyePosition();
+    cbLightBuffer.viewPosition = Vector4f(viewPos.x, viewPos.y, viewPos.z, 1.0f);
+    cbLightBuffer.lightPosition = Vector4f(-100.0, -100.0, -100.0, 0.0);
+    cbLightBuffer.lightPosition.w = cos(time);
+    GraphicsManager::instance().updateSubresource(constantLightBuffer,
+                                                  &cbLightBuffer);
+    g_World.matrixRotationY(time);
+    g_World.transpose();
+    cbMatrixbuffer.world = g_World;
+    cbMatrixbuffer.view = CameraManager::instance().getActiveCameraViewMatrix();
+    cbMatrixbuffer.view.transpose();
+    GraphicsManager::instance().updateSubresource(constantMatrix,
+                                                  &cbMatrixbuffer);
+    GraphicsManager::instance().setVSConstantBuffers(constantMatrix, 0, 1);
+  }
+
+}
+

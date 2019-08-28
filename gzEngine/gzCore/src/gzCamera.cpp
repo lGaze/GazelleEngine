@@ -35,10 +35,11 @@ namespace gzEngineSDK {
     m_dirty = true;
   }
 
+/*
   void 
   Camera::rotate(Vector3f axis, float degrees)
   {
-  }
+  }*/
 
   void 
   Camera::setPosition(Vector3f position)

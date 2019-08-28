@@ -66,6 +66,24 @@ namespace gzEngineSDK {
 
   }
 
+  Vector3f 
+  CameraManager::getActiveCameraEyePosition()
+  {
+    return m_activeCamera->getEyePosition();
+  }
+
+  Matrix4 
+  CameraManager::getActiveCameraViewMatrix()
+  {
+    return m_activeCamera->getViewMatrix();
+  }
+
+  Matrix4 
+  CameraManager::getActiveCameraProjectionMatrix()
+  {
+    return m_activeCamera->getProjectionMatrix();
+  }
+
   void 
   CameraManager::update()
   {

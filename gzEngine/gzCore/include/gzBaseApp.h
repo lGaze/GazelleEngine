@@ -22,11 +22,7 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
   /**
    * @brief Default Constructor
    */
-  BaseApp( uint32 windowWidth,
-           uint32 windowHeight,
-           String windowName,
-           uint32 posX,
-           uint32 posY );
+  BaseApp() = default;
 
   /**
    * @brief Default Destructor
@@ -45,21 +41,21 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
   int32
   runMainLoop();
 
- private:
+ protected:
 
   /**
    * @brief Function which initializes all the Application needs to run 
    * @return Bool value which indicates if the initialization succeed or not
    */
-  bool 
+  virtual bool 
   initApp();
 
   /**
    * @brief Function that initializes the specific things of the application 
    * @return Bool value which indicates if the initialization succeed or not
    */
-  bool
-  postInit();
+  virtual bool
+  postInit() = 0;
 
   /**
    * @brief Fuction which the app uses for render objects
@@ -70,8 +66,8 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
   /**
    * @brief Funtion for Update the logic 
    */
-  void
-  update();
+  virtual void
+  update() = 0;
 
   //TODO: Class for loadig libraries 
   /**
@@ -79,21 +75,16 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    * @returns Bool value wich indicates if the library could be loaded or not
    */
   bool
-  loadGraphicsLibrary(String libraryName, String funcName);
-
-  bool
-  loadRendererLibrary(String libraryName, String funcName);
-  
+  loadLibrary(String libraryName, String funcName);  
 
 
-  using createGraphicsManager = void*(*)();
-  using createRenderer = void*(*)();
+  using createLibrary = void*(*)();
 
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 
- private:
+ protected:
    
    /**
     * @brief Value wich indicates if the mainloop continues 
@@ -108,13 +99,8 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    /**
     * @brief 
     */
-   createGraphicsManager m_graphicsFunc;
+   createLibrary m_library;
    
-   /**
-    * @brief 
-    */
-   createRenderer m_rendererFunc;
-
    /**
     * @brief 
     */
@@ -140,61 +126,6 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
     */
    uint32 m_windowPosY; 
 
-   /**
-    * @brief 
-    */
-   Texture * m_pDepthStencilView;
-
-   /**
-    * @brief BackBuffer texture 
-    */
-   Texture * m_pBackBufferTex;
-
-   /**
-    * @brief
-    */
-   Camera * m_camera;
-
-   /**
-    * @brief normal viewport
-    */
-   VIEWPORT_DESCRIPTOR vp;
-
- /************************************************************************/
- /*       Test                                                           */
- /************************************************************************/
-
-   struct cbMatrix
-   {
-     Matrix4 view;
-     Matrix4 projection;
-     Matrix4 world;
-   };
-
-   struct cbLight
-   {
-     Vector4f viewPosition;
-     Vector4f lightPosition;
-   };
-
-   cbLight cbLight;
-   cbMatrix cbMatrixbuffer;
-
-   Matrix4 g_World;
-
-   Vector3f Eye;
-
-   Buffer * constantMatrix;
-
-   Vector<Texture*>ClaireDifusseTextures;
-   Vector<Texture*>ClaireNormalTextures;
-   Vector<Texture*>ClaireSpecularTextures;
-
-   GameObject * a;
-
-   float time;
-   Vector4f m_ViewPos;
-
    public:
 
    Buffer * constantLightBuffer;
@@ -203,5 +134,4 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
 
 BaseApp&
 g_baseApp();
-
 }

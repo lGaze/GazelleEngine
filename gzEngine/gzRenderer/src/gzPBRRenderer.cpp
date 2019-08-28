@@ -74,11 +74,11 @@ namespace gzEngineSDK {
                                             0);
 
     //Pass3
-    GraphicsManager::instance().clearRenderTargetView(ClearColor1, m_backBuffer);
+    GraphicsManager::instance().clearRenderTargetView(ClearColor1, m_backBufferRT);
     GraphicsManager::instance().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
                                                       1.0f,
                                                       0);
-    GraphicsManager::instance().setRenderTarget(m_backBuffer);
+    GraphicsManager::instance().setRenderTarget(m_backBufferRT);
     GraphicsManager::instance().setRasterizerState(m_rasterizerState);
     GraphicsManager::instance().setInputLayout(m_pbrLayout);
     GraphicsManager::instance().setVertexShader(m_pbrVertexShader);
@@ -153,6 +153,10 @@ namespace gzEngineSDK {
 
     m_samplerState = GraphicsManager::instance().createSamplerState(samplerDesc);
 
+    m_viewport = GraphicsManager::instance().getViewport();
+
+    GraphicsManager::instance().setViewports(1, m_viewport);
+
     Vector2f vpDimensions = GraphicsManager::instance().getViewportDimensions();
 
     //Albedo Texture
@@ -177,7 +181,7 @@ namespace gzEngineSDK {
     m_emissiveRT = GraphicsManager::instance().createTexture2D(renderTexDesc);
     m_gbufferRTTextures.push_back(m_emissiveRT);
     m_pbrRT = GraphicsManager::instance().createTexture2D(renderTexDesc);
-    m_backBuffer = GraphicsManager::instance().getBackBufferTex();
+    m_backBufferRT = GraphicsManager::instance().getBackBufferTex();
 
     m_pbrVertexShader = GraphicsManager::instance().CreateVertexShader(
       L"Shaders\\PBR_vs.hlsl",
