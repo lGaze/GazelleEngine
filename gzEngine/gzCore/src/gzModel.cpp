@@ -128,7 +128,7 @@ namespace gzEngineSDK {
     initData.SysMemPitch = m_vertices.size();
 
     m_vertexBuffer = 
-      GraphicsManager::instance().createBuffer(tempDesc, &initData);
+      g_GraphicsManager().createBuffer(tempDesc, &initData);
     
     tempDesc.BindFlags = BIND_FLAGS::E::BIND_INDEX_BUFFER;
     tempDesc.Usage = USAGES::E::USAGE_DEFAULT;
@@ -139,7 +139,7 @@ namespace gzEngineSDK {
     initData.SysMemPitch = m_indices.size();
 
     m_indexBuffer = 
-      GraphicsManager::instance().createBuffer(tempDesc, &initData);
+      g_GraphicsManager().createBuffer(tempDesc, &initData);
 
     return true;
   }
@@ -150,13 +150,13 @@ namespace gzEngineSDK {
     uint32 stride = sizeof(VERTEX);
     uint32 offset = 0;
 
-    GraphicsManager::instance().setVertexBuffers(0, 
+    g_GraphicsManager().setVertexBuffers(0, 
                                                  1, 
                                                  m_vertexBuffer,
                                                  &stride, 
                                                  &offset);
 
-    GraphicsManager::instance().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
+    g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
                                                m_indexBuffer, 
                                                offset);
 
@@ -164,23 +164,23 @@ namespace gzEngineSDK {
     {
       if (nullptr != m_mesh[i].material)
       {
-        GraphicsManager::instance().setShaderResources(&m_mesh[i].material->getAlbedoTexture(),
+        g_GraphicsManager().setShaderResources(&m_mesh[i].material->getAlbedoTexture(),
                                                        0,
                                                        1);
-        GraphicsManager::instance().setShaderResources(&m_mesh[i].material->getNormalTexture(),
+        g_GraphicsManager().setShaderResources(&m_mesh[i].material->getNormalTexture(),
                                                        1,
                                                        1);
-        GraphicsManager::instance().setShaderResources(&m_mesh[i].material->getMetallicTexture(),
+        g_GraphicsManager().setShaderResources(&m_mesh[i].material->getMetallicTexture(),
                                                        2,
                                                        1);
-        GraphicsManager::instance().setShaderResources(&m_mesh[i].material->getRoughnessTexture(),
+        g_GraphicsManager().setShaderResources(&m_mesh[i].material->getRoughnessTexture(),
                                                        3,
                                                        1);
-        GraphicsManager::instance().setShaderResources(&m_mesh[i].material->getEmissiveTexture(),
+        g_GraphicsManager().setShaderResources(&m_mesh[i].material->getEmissiveTexture(),
                                                        4,
                                                        1);
       }
-      GraphicsManager::instance().drawIndexed(m_mesh[i].numIndex, 
+      g_GraphicsManager().drawIndexed(m_mesh[i].numIndex, 
                                               m_mesh[i].indexBase, 
                                               0);
     }
@@ -210,7 +210,7 @@ namespace gzEngineSDK {
       //TODO: just do that for spider, don´t use it for other shit
       //filename.erase(0, 2);
       filename = m_directoryPath + filename;
-      tempTexture = GraphicsManager::instance().LoadTextureFromFile(filename);
+      tempTexture = g_GraphicsManager().LoadTextureFromFile(filename);
       tempMaterial->setAlbedoTexture(*tempTexture);
     }
 
@@ -221,7 +221,7 @@ namespace gzEngineSDK {
       //TODO: just do that for spider, don´t use it for other shit
       //filename.erase(0, 2);
       filename = m_directoryPath + filename;
-      tempTexture = GraphicsManager::instance().LoadTextureFromFile(filename);
+      tempTexture = g_GraphicsManager().LoadTextureFromFile(filename);
       tempMaterial->setSpecularTexture(*tempTexture);
     }
 
@@ -232,7 +232,7 @@ namespace gzEngineSDK {
       //TODO: just do that for spider, don´t use it for other shit
       //filename.erase(0, 2);
       filename = m_directoryPath + filename;
-      tempTexture = GraphicsManager::instance().LoadTextureFromFile(filename);
+      tempTexture = g_GraphicsManager().LoadTextureFromFile(filename);
       tempMaterial->setSpecularTexture(*tempTexture);
     }
 
@@ -243,7 +243,7 @@ namespace gzEngineSDK {
       //TODO: just do that for spider, don´t use it for other shit
       //filename.erase(0, 2);
       filename = m_directoryPath + filename;
-      tempTexture = GraphicsManager::instance().LoadTextureFromFile(filename);
+      tempTexture = g_GraphicsManager().LoadTextureFromFile(filename);
       tempMaterial->setSpecularTexture(*tempTexture);
     }
 

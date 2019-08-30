@@ -88,10 +88,10 @@ namespace gzEngineSDK {
         CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::RIGHT);
         break;
       case 'S':
-        CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::FORWARD);
+        CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::BACKWARD);
         break;
       case 'W':
-        CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::BACKWARD);
+        CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::FORWARD);
         break;
       }
       break;

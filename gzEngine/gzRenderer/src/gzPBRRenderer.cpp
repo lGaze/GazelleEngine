@@ -14,7 +14,7 @@
 
 namespace gzEngineSDK {
 
-  PBRRenderer::PBRRenderer()
+  PBRRenderer::PBRRenderer() : stride(sizeof(VERTEX)), offset(0)
   {
     initRenderer();
   }
@@ -22,114 +22,124 @@ namespace gzEngineSDK {
   void 
   PBRRenderer::render()
   {
-    GraphicsManager::instance().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
-                                                      1.0f,
-                                                      0);
-    createGBuffer();
-    SceneManager::instance().update();
-
-    uint32 stride = sizeof(VERTEX);
-    uint32 offset = 0;
-
-    //Pass 2
-    m_lightCBuffer = BaseApp::instance().constantLightBuffer;
-    GraphicsManager::instance().setRenderTarget(m_pbrRT);
-
-    float ClearColor1[4] = { .5, .5, .5, 1 };
-    GraphicsManager::instance().clearRenderTargetView(ClearColor1, m_pbrRT);
-    GraphicsManager::instance().setRasterizerState(m_rasterizerState);
-    GraphicsManager::instance().setInputLayout(m_pbrLayout);
-    GraphicsManager::instance().setVertexShader(m_pbrVertexShader);
-    GraphicsManager::instance().setPSConstantBuffers(m_lightCBuffer, 0, 1);
-    GraphicsManager::instance().setPixelShader(m_pbrPixelShader);
-    GraphicsManager::instance().setVertexBuffers(0,
-                                                 1,
-                                                 quad->m_vertexBuffer,
-                                                 &stride,
-                                                 &offset);
-
-    GraphicsManager::instance().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
-                                               quad->m_indexBuffer,
-                                               offset);
-
-
-    GraphicsManager::instance().setShaderResources(m_positionsRT,
-                                                   0,
-                                                   1);
-
-    GraphicsManager::instance().setShaderResources(m_albedoRT,
-                                                   1,
-                                                   1);
-
-    GraphicsManager::instance().setShaderResources(m_normalsRT,
-                                                   2,
-                                                   1);
-
-    GraphicsManager::instance().setShaderResources(m_emissiveRT,
-                                                   3,
-                                                   1);
-
-    GraphicsManager::instance().drawIndexed(quad->m_mesh[0].numIndex,
-                                            quad->m_mesh[0].indexBase,
-                                            0);
-
-    //Pass3
-    GraphicsManager::instance().clearRenderTargetView(ClearColor1, m_backBufferRT);
-    GraphicsManager::instance().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
-                                                      1.0f,
-                                                      0);
-    GraphicsManager::instance().setRenderTarget(m_backBufferRT);
-    GraphicsManager::instance().setRasterizerState(m_rasterizerState);
-    GraphicsManager::instance().setInputLayout(m_pbrLayout);
-    GraphicsManager::instance().setVertexShader(m_pbrVertexShader);
-    GraphicsManager::instance().setPixelShader(m_toneMapPixelShader);
-    GraphicsManager::instance().setShaderResources(m_pbrRT, 0, 1);
-    GraphicsManager::instance().setVertexBuffers(0,
-                                                 1,
-                                                 quad->m_vertexBuffer,
-                                                 &stride,
-                                                 &offset);
-
-    GraphicsManager::instance().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
-                                               quad->m_indexBuffer,
-                                               offset);
-
-    GraphicsManager::instance().drawIndexed(quad->m_mesh[0].numIndex,
-                                            quad->m_mesh[0].indexBase,
-                                            0);
-
-
-    GraphicsManager::instance().present(0, 0);
+    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
+                                              1.0f,
+                                              0);
+    gBufferPass();
+    pbrPass();
+    toneMapPass();
+    renderToScreen(*m_toneMapRT);
   }
 
   void 
-    PBRRenderer::createGBuffer()
+    PBRRenderer::gBufferPass()
   {
 
-    GraphicsManager::instance().clearRenderTargetView(ClearColor1, m_positionsRT);
-    GraphicsManager::instance().clearRenderTargetView(ClearColor1, m_albedoRT);
-    GraphicsManager::instance().clearRenderTargetView(ClearColor1, m_normalsRT);
-    GraphicsManager::instance().clearRenderTargetView(ClearColor1, m_emissiveRT);
-    GraphicsManager::instance().setRenderTargets(m_gbufferRTTextures);
+    g_GraphicsManager().clearRenderTargetView(ClearColor1, m_positionsRT);
+    g_GraphicsManager().clearRenderTargetView(ClearColor1, m_albedoRT);
+    g_GraphicsManager().clearRenderTargetView(ClearColor1, m_normalsRT);
+    g_GraphicsManager().clearRenderTargetView(ClearColor1, m_emissiveRT);
+    g_GraphicsManager().setRenderTargets(m_gbufferRTTextures);
 
-    m_gbufferVertexShader = GraphicsManager::instance().CreateVertexShader(
-      L"Shaders\\common.hlsl",
-      "vs_main",
-      "vs_4_0");
+    g_GraphicsManager().setInputLayout(m_gbufferLayout);
+    g_GraphicsManager().setVertexShader(m_gbufferVertexShader);
+    g_GraphicsManager().setPixelShader(m_gbufferPixelShader);
+    g_GraphicsManager().setSamplerState(0, m_samplerState, 1);
 
-    m_gbufferLayout = 
-      GraphicsManager::instance().createInputLayout(m_gbufferVertexShader);
+    SceneManager::instance().update();
 
-    m_gbufferPixelShader = GraphicsManager::instance().createPixelShader(
-      L"Shaders\\GBuffer.hlsl",
-      "ps_main",
-      "ps_4_0");
+  }
 
-    GraphicsManager::instance().setInputLayout(m_gbufferLayout);
-    GraphicsManager::instance().setVertexShader(m_gbufferVertexShader);
-    GraphicsManager::instance().setPixelShader(m_gbufferPixelShader);
-    GraphicsManager::instance().setSamplerState(0, m_samplerState, 1);
+  void 
+  PBRRenderer::pbrPass()
+  {
+    m_lightCBuffer = BaseApp::instance().constantLightBuffer;
+    g_GraphicsManager().setRenderTarget(m_pbrRT);
 
+    float ClearColor1[4] = { .5, .5, .5, 1 };
+    g_GraphicsManager().clearRenderTargetView(ClearColor1, m_pbrRT);
+    g_GraphicsManager().setRasterizerState(m_rasterizerState);
+    g_GraphicsManager().setInputLayout(m_pbrLayout);
+    g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
+    g_GraphicsManager().setPSConstantBuffers(m_lightCBuffer, 0, 1);
+    g_GraphicsManager().setPixelShader(m_pbrPixelShader);
+    g_GraphicsManager().setVertexBuffers(0,
+                                         1,
+                                         quad->m_vertexBuffer,
+                                         &stride,
+                                         &offset);
+
+    g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
+                                       quad->m_indexBuffer,
+                                       offset);
+
+    for (uint32 i = 0; i < m_gbufferRTTextures.size(); ++i)
+    {
+      g_GraphicsManager().setShaderResources(m_gbufferRTTextures[i],
+                                             i,
+                                             1);
+    }
+
+    g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
+                                    quad->m_mesh[0].indexBase,
+                                    0);
+  }
+
+  void 
+  PBRRenderer::toneMapPass()
+  {
+    g_GraphicsManager().clearRenderTargetView(ClearColor1, m_toneMapRT);
+    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
+                                              1.0f,
+                                              0);
+    g_GraphicsManager().setRenderTarget(m_toneMapRT);
+    g_GraphicsManager().setRasterizerState(m_rasterizerState);
+    g_GraphicsManager().setInputLayout(m_pbrLayout);
+    g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
+    g_GraphicsManager().setPixelShader(m_toneMapPixelShader);
+    g_GraphicsManager().setShaderResources(m_pbrRT, 0, 1);
+    g_GraphicsManager().setVertexBuffers(0,
+                                         1,
+                                         quad->m_vertexBuffer,
+                                         &stride,
+                                         &offset);
+
+    g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
+                                       quad->m_indexBuffer,
+                                       offset);
+
+    g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
+                                    quad->m_mesh[0].indexBase,
+                                    0);
+  }
+
+  void 
+  PBRRenderer::renderToScreen(Texture & texture)
+  {
+    g_GraphicsManager().clearRenderTargetView(ClearColor1, m_backBufferRT);
+    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
+                                              1.0f,
+                                              0);
+    g_GraphicsManager().setRenderTarget(m_backBufferRT);
+    g_GraphicsManager().setRasterizerState(m_rasterizerState);
+    g_GraphicsManager().setInputLayout(m_pbrLayout);
+    g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
+    g_GraphicsManager().setPixelShader(m_backBufferPixelShader);
+    g_GraphicsManager().setShaderResources(&texture, 0, 1);
+    g_GraphicsManager().setVertexBuffers(0,
+                                         1,
+                                         quad->m_vertexBuffer,
+                                         &stride,
+                                         &offset);
+
+    g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
+                                       quad->m_indexBuffer,
+                                       offset);
+
+    g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
+                                    quad->m_mesh[0].indexBase,
+                                    0);
+    g_GraphicsManager().present(0, 0);
   }
 
   void PBRRenderer::initRenderer()
@@ -139,7 +149,7 @@ namespace gzEngineSDK {
     rasterizerDes.CullMode = CULL_MODE::E::CULL_NONE;
     rasterizerDes.FillMode = FILL_MODE::E::FILL_SOLID;
 
-    m_rasterizerState = GraphicsManager::instance().createRasterizerState(rasterizerDes);
+    m_rasterizerState = g_GraphicsManager().createRasterizerState(rasterizerDes);
 
     SAMPLER_DESCRIPTOR samplerDesc;
     memset(&samplerDesc, 0, sizeof(samplerDesc));
@@ -151,13 +161,13 @@ namespace gzEngineSDK {
     samplerDesc.MinLOD = 0;
     samplerDesc.MaxLOD = 3.402823466e+38f;
 
-    m_samplerState = GraphicsManager::instance().createSamplerState(samplerDesc);
+    m_samplerState = g_GraphicsManager().createSamplerState(samplerDesc);
 
-    m_viewport = GraphicsManager::instance().getViewport();
+    m_viewport = g_GraphicsManager().getViewport();
 
-    GraphicsManager::instance().setViewports(1, m_viewport);
+    g_GraphicsManager().setViewports(1, m_viewport);
 
-    Vector2f vpDimensions = GraphicsManager::instance().getViewportDimensions();
+    Vector2f vpDimensions = g_GraphicsManager().getViewportDimensions();
 
     //Albedo Texture
     TEXTURE2D_DESCRIPTOR renderTexDesc;
@@ -172,40 +182,58 @@ namespace gzEngineSDK {
     renderTexDesc.CPUAccessFlags = 0;
     renderTexDesc.MiscFlags = 0;
 
-    m_positionsRT = GraphicsManager::instance().createTexture2D(renderTexDesc);
+    m_positionsRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_gbufferRTTextures.push_back(m_positionsRT);
-    m_albedoRT = GraphicsManager::instance().createTexture2D(renderTexDesc);
+    m_albedoRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_gbufferRTTextures.push_back(m_albedoRT);
-    m_normalsRT = GraphicsManager::instance().createTexture2D(renderTexDesc);
+    m_normalsRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_gbufferRTTextures.push_back(m_normalsRT);
-    m_emissiveRT = GraphicsManager::instance().createTexture2D(renderTexDesc);
+    m_emissiveRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_gbufferRTTextures.push_back(m_emissiveRT);
-    m_pbrRT = GraphicsManager::instance().createTexture2D(renderTexDesc);
-    m_backBufferRT = GraphicsManager::instance().getBackBufferTex();
+    m_pbrRT = g_GraphicsManager().createTexture2D(renderTexDesc);
+    m_toneMapRT = g_GraphicsManager().createTexture2D(renderTexDesc);
+    m_backBufferRT = g_GraphicsManager().getBackBufferTex();
 
-    m_pbrVertexShader = GraphicsManager::instance().CreateVertexShader(
-      L"Shaders\\PBR_vs.hlsl",
-      "PBRvs_main",
+    m_gbufferVertexShader = g_GraphicsManager().CreateVertexShader(
+      L"Shaders\\common.hlsl",
+      "vs_main",
       "vs_4_0");
 
-    m_pbrLayout =
-      GraphicsManager::instance().createInputLayout(m_pbrVertexShader);
+    m_gbufferLayout =
+      g_GraphicsManager().createInputLayout(m_gbufferVertexShader);
 
-    m_pbrPixelShader = GraphicsManager::instance().createPixelShader(
-      L"Shaders\\PBRps.hlsl",
+    m_gbufferPixelShader = g_GraphicsManager().createPixelShader(
+      L"Shaders\\GBuffer.hlsl",
       "ps_main",
       "ps_4_0");
 
-    m_toneMapPixelShader = GraphicsManager::instance().createPixelShader(
+    m_quadAlignedVertexShader = g_GraphicsManager().CreateVertexShader(
+      L"Shaders\\commonQuadAligned.hlsl",
+      "commonQuadAligned_main",
+      "vs_4_0");
+
+    m_pbrLayout =
+      g_GraphicsManager().createInputLayout(m_quadAlignedVertexShader);
+
+    m_pbrPixelShader = g_GraphicsManager().createPixelShader(
+      L"Shaders\\PBR.hlsl",
+      "ps_main",
+      "ps_4_0");
+
+    m_toneMapPixelShader = g_GraphicsManager().createPixelShader(
       L"Shaders\\ToneMap.hlsl",
+      "ps_main",
+      "ps_4_0");
+
+    m_backBufferPixelShader = g_GraphicsManager().createPixelShader(
+      L"Shaders\\backBufferPS.hlsl",
       "ps_main",
       "ps_4_0");
     
     quad = new Model();
     quad->Load("Meshes\\QuadPerron.obj");
 
-    m_lut = GraphicsManager::instance().LoadTextureFromFile("Textures\\ibl_brdf_lut.png");
-
+    m_lut = g_GraphicsManager().LoadTextureFromFile("Textures\\ibl_brdf_lut.png");
 
   }
 

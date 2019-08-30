@@ -37,17 +37,17 @@ namespace gzEngineSDK {
   Material::createAsDefault()
   {
     m_albedoTexture = 
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\default_albedo.png");
+      g_GraphicsManager().LoadTextureFromFile("Textures\\default_albedo.png");
     m_metallicTexture =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\default_EMR.png");
+      g_GraphicsManager().LoadTextureFromFile("Textures\\default_EMR.png");
     m_roughnessTexture = 
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\default_EMR.png");
+      g_GraphicsManager().LoadTextureFromFile("Textures\\default_EMR.png");
     m_normalTexture = 
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\default_normal.png");
+      g_GraphicsManager().LoadTextureFromFile("Textures\\default_normal.png");
     m_emissiveTexture =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\default_EMR.png");
+      g_GraphicsManager().LoadTextureFromFile("Textures\\default_EMR.png");
     m_specularTexture =
-      GraphicsManager::instance().LoadTextureFromFile("Textures\\default_albedo.png");
+      g_GraphicsManager().LoadTextureFromFile("Textures\\default_albedo.png");
     
   }
 

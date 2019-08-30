@@ -42,25 +42,25 @@ namespace gzEngineSDK {
   {
     if (direction == CAMERA_MOVEMENT::E::LEFT)
     {
-      m_activeCamera->move(Vector3f(0.5f, 0.0f, 0.0f), 1.0f);
+      m_activeCamera->move(Vector3f(-1.0f, 0.0f, 0.0f), 1.0f);
       m_activeCamera->updateCamera();
     }
 
     if (direction == CAMERA_MOVEMENT::E::RIGHT)
     {
-      m_activeCamera->move(Vector3f(-0.5f, 0.0f, 0.0f), 1.0f);
+      m_activeCamera->move(Vector3f(1.0f, 0.0f, 0.0f), 1.0f);
       m_activeCamera->updateCamera();
     }
 
     if (direction == CAMERA_MOVEMENT::E::FORWARD)
     {
-      m_activeCamera->move(Vector3f(0.0f, 0.0f, 0.5f), 1.0f);
+      m_activeCamera->move(Vector3f(0.0f, 0.0f, 1.0f), 1.0f);
       m_activeCamera->updateCamera();
     }
 
     if (direction == CAMERA_MOVEMENT::E::BACKWARD)
     {
-      m_activeCamera->move(Vector3f(0.0f, 0.0f, -0.5f), 1.0f);
+      m_activeCamera->move(Vector3f(0.0f, 0.0f, -1.0f), 1.0f);
       m_activeCamera->updateCamera();
     }
 
@@ -87,6 +87,7 @@ namespace gzEngineSDK {
   void 
   CameraManager::update()
   {
+    m_activeCamera->updateCamera();
   }
 }
 

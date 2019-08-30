@@ -280,10 +280,8 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   
  };
 
-/*
- GraphicsManager&
- g_GraphicsManager() {
-   return GraphicsManager::instance();
- }*/
+
+ GZ_CORE_EXPORT GraphicsManager&
+ g_GraphicsManager();
 
 }

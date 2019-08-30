@@ -16,7 +16,7 @@ namespace gzEngineSDK {
   ResourceManager::createTexture2D(TEXTURE2D_DESCRIPTOR & textureInfo)
   {
     Texture * tempTex = new Texture();
-    tempTex = GraphicsManager::instance().createTexture2D(textureInfo);
+    tempTex = g_GraphicsManager().createTexture2D(textureInfo);
 
     ResourceHandle<Texture> handle;
     handle.setHandle(tempTex);
@@ -27,7 +27,7 @@ namespace gzEngineSDK {
   ResourceManager::loadTextureFromFile(const String filename)
   {
     Texture * tempTex = new Texture();
-    tempTex = GraphicsManager::instance().LoadTextureFromFile(filename);
+    tempTex = g_GraphicsManager().LoadTextureFromFile(filename);
 
     ResourceHandle<Texture> handle;
     handle.setHandle(tempTex);

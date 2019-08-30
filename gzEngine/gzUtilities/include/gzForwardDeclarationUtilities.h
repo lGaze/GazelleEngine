@@ -24,6 +24,8 @@ namespace gzEngineSDK {
     class Box2D;
     class Plane;
     class Ray;
+    class Timer;
+    class Time;
 
   }
 

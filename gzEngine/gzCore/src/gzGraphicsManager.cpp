@@ -11,4 +11,9 @@ namespace gzEngineSDK {
 
   GraphicsManager::GraphicsManager() { }
   GraphicsManager::~GraphicsManager() { }
+
+  GZ_CORE_EXPORT GraphicsManager& 
+  g_GraphicsManager() {
+    return GraphicsManager::instance();
+  }
 }

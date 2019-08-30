@@ -7,16 +7,11 @@
 /**************************************************************************/
 
 #include "gzBaseApp.h"
-#include "gzModel.h"
-#include "gzTexture.h"
-#include "gzGameObject.h"
-#include "gzMeshComponent.h"
-#include "gzCamera.h"
 #include "gzSceneManager.h"
 #include "gzResourceManager.h"
 #include "gzRenderer.h"
-#include "gzMaterial.h"
 #include "gzCameraManager.h"
+#include <gzTime.h>
 
 namespace gzEngineSDK {
 
@@ -40,6 +35,8 @@ namespace gzEngineSDK {
 
       //Render
       render();
+
+      g_Time().update();
     }
 
     return 0;
@@ -51,6 +48,7 @@ namespace gzEngineSDK {
     SceneManager::startUp();
     ResourceManager::startUp();
     CameraManager::startUp();
+    Time::startUp();
 
     m_pwindow = new Window();
     if (!m_pwindow->initWindow(m_windowWidth,

@@ -15,7 +15,7 @@ namespace gzEngineSDK {
 class PBRRenderer : public Renderer
 {
  public:
-   
+
   /**
    * @brief default constructor
    */
@@ -32,15 +32,36 @@ class PBRRenderer : public Renderer
   /************************************************************************/
 
    /**
-    * @brief 
+    * @brief This function renders the the objects to screen 
     */
    virtual void
    render() override;
 
  private:
 
+   /**
+    * @brief Gbuffer pass function
+    */
    void
-   createGBuffer();
+   gBufferPass();
+
+   /**
+    * @brief PBR pass function
+    */
+   void
+   pbrPass();
+
+   /**
+    * @brief Tone map pass function 
+    */
+   void
+   toneMapPass();
+
+   /**
+    * @brief Renders the given texture
+    */
+   void
+   renderToScreen(Texture & texture);
 
    void
    initRenderer();
@@ -60,12 +81,13 @@ class PBRRenderer : public Renderer
 
    //VertexShaders
    VertexShader* m_gbufferVertexShader;
-   VertexShader * m_pbrVertexShader;
+   VertexShader * m_quadAlignedVertexShader;
 
    //PixelShaders
    PixelShader * m_gbufferPixelShader;
    PixelShader * m_toneMapPixelShader;
    PixelShader * m_pbrPixelShader;
+   PixelShader * m_backBufferPixelShader;
 
    //SamplerStates
    SamplerState * m_samplerState;
@@ -77,6 +99,7 @@ class PBRRenderer : public Renderer
    Texture * m_emissiveRT;
    Texture * m_pbrRT;
    Texture * m_lut;
+   Texture * m_toneMapRT;
    Texture * m_backBufferRT;
    Vector<Texture *> m_gbufferRTTextures;
 
@@ -89,6 +112,8 @@ class PBRRenderer : public Renderer
    //Viewports
    VIEWPORT_DESCRIPTOR m_viewport;
 
+   uint32 stride;
+   uint32 offset;
    float ClearColor1[4] = { 0,0,0,0 };
 
  };

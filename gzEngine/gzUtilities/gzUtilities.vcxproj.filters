@@ -69,6 +69,12 @@
     <ClInclude Include="include\gzException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\gzTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gzTime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\gzVector2f.cpp">
@@ -99,6 +105,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gzException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gzTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gzTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
