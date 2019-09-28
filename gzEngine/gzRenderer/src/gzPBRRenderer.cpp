@@ -32,7 +32,7 @@ namespace gzEngineSDK {
   }
 
   void 
-    PBRRenderer::gBufferPass()
+  PBRRenderer::gBufferPass()
   {
 
     g_GraphicsManager().clearRenderTargetView(ClearColor1, m_positionsRT);
@@ -139,10 +139,11 @@ namespace gzEngineSDK {
     g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
                                     quad->m_mesh[0].indexBase,
                                     0);
-    g_GraphicsManager().present(0, 0);
+    
   }
 
-  void PBRRenderer::initRenderer()
+  void 
+  PBRRenderer::initRenderer()
   {
     RASTERIZER_DESCRIPTOR rasterizerDes;
     memset(&rasterizerDes, 0, sizeof(rasterizerDes));
@@ -236,5 +237,4 @@ namespace gzEngineSDK {
     m_lut = g_GraphicsManager().LoadTextureFromFile("Textures\\ibl_brdf_lut.png");
 
   }
-
 }

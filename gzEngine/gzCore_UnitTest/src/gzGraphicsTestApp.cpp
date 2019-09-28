@@ -4,15 +4,23 @@
 /* @date 2019/08/25
 /**************************************************************************/
 
+#include <ImGui/imgui.h>
+#include <ImGui/imgui_impl_win32.h>
+#include <ImGui/imgui_impl_dx11.h>
 #include "gzGraphicsTestApp.h"
 #include <gzSceneManager.h>
+#include <gzCameraManager.h>
+#include <gzResourceManager.h>
+#include <gzRenderer.h>
 #include <gzMeshComponent.h>
 #include <gzMaterial.h>
 #include <gzTexture.h>
 #include <gzGameObject.h>
-#include <gzCameraManager.h>
 #include <gzTime.h>
 #include <gzCamera.h>
+#include "gzWin32Window.h"
+
+
 
 namespace gzEngineSDK {
 
@@ -36,9 +44,9 @@ namespace gzEngineSDK {
 
     //Creates the Device, Context and SwapChain
     result = g_GraphicsManager().initGraphicsManager(
-      static_cast<void*>(m_pwindow->getHWND()),
-      m_windowWidth,
-      m_windowHeight);
+      m_pwindow->getHandle(),
+      m_pwindow->m_windowWidthRect,
+      m_pwindow->m_windowHeightRect);
 
     //Create the constant buffers desc
     BUFFER_DESCRIPTOR bufferDesc;
@@ -163,6 +171,100 @@ namespace gzEngineSDK {
                                           &cbMatrixbuffer);
     g_GraphicsManager().setVSConstantBuffers(constantMatrix, 0, 1);
     
+  }
+
+  bool 
+  GrapichsTestApp::initApp()
+  {
+    SceneManager::startUp();
+    ResourceManager::startUp();
+    CameraManager::startUp();
+    Time::startUp();
+
+    m_pwindow = new Win32Window();
+    if (!m_pwindow->initWindow(m_windowWidth,
+                               m_windowHeight,
+                               m_windowName,
+                               m_windowPosX,
+                               m_windowPosY))
+    {
+      std::cout << "Init Window failed" << std::endl;
+      return false;
+    }
+
+    if (!loadLibrary("gzGraphicsDX11d.dll", "CreateManagerObject"))
+    {
+      std::cout << "Failed to load the Graphics library " << std::endl;
+      return false;
+    }
+
+    if (!postInit())
+    {
+      std::cout << "Failed to Initialize" << std::endl;
+      return false;
+    }
+
+    if (!loadLibrary("gzPBRRendererd.dll", "CreateManagerObject"))
+    {
+      std::cout << "Failed to load the Renderer library " << std::endl;
+      return false;
+    }
+
+    if (!initImGui())
+    {
+      std::cout << "Failed to initialize the UI" << std::endl;
+      return false;
+    }
+
+    return true;
+  }
+
+  void 
+  GrapichsTestApp::render()
+  {
+    Renderer::instance().render();
+    renderImGui();
+    g_GraphicsManager().present(0, 0);
+  }
+
+  bool 
+  GrapichsTestApp::initImGui()
+  {
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
+    auto HWND = m_pwindow->getHandle();
+    if (!ImGui_ImplWin32_Init(HWND)) {
+      return false;
+    }
+
+    auto * device = 
+      reinterpret_cast<ID3D11Device*>(g_GraphicsManager().getDevice());
+    auto * context = 
+      reinterpret_cast<ID3D11DeviceContext*>(g_GraphicsManager().getContext());
+    if (!ImGui_ImplDX11_Init(device, context)) {
+      return false;
+    }
+    ImGui::StyleColorsDark();
+
+    return true;
+  }
+
+  void 
+  GrapichsTestApp::renderImGui()
+  {
+    //start the ImGui frame
+    ImGui_ImplDX11_NewFrame();
+    ImGui_ImplWin32_NewFrame();
+    ImGui::NewFrame();
+    //Create ImGui Test Window
+    ImGui::Begin("Test");
+    ImGui::Button("TestButton!");
+    ImGui::End();
+    //Assemble Together Draw Data
+    ImGui::Render();
+    //Render Draw Data
+    ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
   }
 
 }

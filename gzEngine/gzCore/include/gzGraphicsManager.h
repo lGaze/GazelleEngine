@@ -269,6 +269,21 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   virtual Vector2f
   getViewportDimensions() = 0;
 
+  /**
+   * @brief Gets the device pointer
+   * @return The device as a void pointer
+   */
+  virtual void*
+  getDevice() = 0;
+
+  /**
+   * @brief Gets the context pointer
+   * @return The context as a void pointer
+   */
+  virtual void*
+  getContext() = 0;
+
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

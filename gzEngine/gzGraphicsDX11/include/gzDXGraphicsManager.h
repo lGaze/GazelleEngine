@@ -269,6 +269,13 @@ class DXGraphicsManager : public GraphicsManager
   virtual void 
   setRenderTargets(Vector<Texture *> renderTargets) override;
 
+
+  virtual void* 
+  getDevice() override;
+
+  virtual void* 
+  getContext() override;
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

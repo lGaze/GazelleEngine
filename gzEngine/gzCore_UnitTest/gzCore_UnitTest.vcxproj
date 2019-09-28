@@ -19,11 +19,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="externals\ImGui\imgui.cpp" />
+    <ClCompile Include="externals\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="externals\ImGui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="externals\ImGui\imgui_impl_win32.cpp" />
+    <ClCompile Include="externals\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="src\gzCoreMain.cpp" />
     <ClCompile Include="src\gzGraphicsTestApp.cpp" />
+    <ClCompile Include="src\gzWin32Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="externals\ImGui\imconfig.h" />
+    <ClInclude Include="externals\ImGui\imgui.h" />
+    <ClInclude Include="externals\ImGui\imgui_impl_dx11.h" />
+    <ClInclude Include="externals\ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="externals\ImGui\imgui_internal.h" />
+    <ClInclude Include="externals\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="externals\ImGui\imstb_textedit.h" />
+    <ClInclude Include="externals\ImGui\imstb_truetype.h" />
     <ClInclude Include="include\gzGraphicsTestApp.h" />
+    <ClInclude Include="include\gzWin32Window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -98,7 +113,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./include/;$(SolutionDir)gzCore/include;$(DEVLIBS)GoogleTest/googletest/include;$(SolutionDir)gzUtilities/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./externals/;./include/;$(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)lib/$(PlatformTarget)/;$(DEVLIBS)GoogleTest/lib/$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -111,7 +126,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./include/;$(SolutionDir)gzCore/include;$(DEVLIBS)GoogleTest/googletest/include;$(SolutionDir)gzUtilities/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./externals/;./include/;$(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)lib/$(PlatformTarget)/;$(DEVLIBS)GoogleTest/lib/$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

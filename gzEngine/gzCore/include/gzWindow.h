@@ -29,49 +29,58 @@ class GZ_CORE_EXPORT Window
   /* Window functions                                                     */
   /************************************************************************/
 
+ public:
+
   /**
    * @brief Function which initializates the window
    * @returns Bool value which indicates if the initialization of the window succeed
    */
-  bool
+  virtual bool
   initWindow( uint32 width,
               uint32 height,
               String windowName,
               uint32 posX,
-              uint32 posY );
+              uint32 posY ) = 0;
 
   /**
-   * @brief Dispaches all the windows messages
+   * @brief Dispaches all the messages
    */
-  void
-  messageHandler();
+  virtual void
+  messageHandler() = 0;
 
-  /**
-   * @brief WndProc
-   */
-  static LRESULT
-  CALLBACK WndProc( HWND window,
-                    UINT message,
-                    WPARAM wParam,
-                    LPARAM lParam );
-
-  /**
-   * @brief Gets the handler of the window
-   * @return handle of the window
-   */
-  FORCEINLINE HWND
-  getHWND() { return m_hWnd; }
+  virtual void *
+  getHandle() = 0;
 
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 
- private:
+ public:
 
-   /**
-    * @brief Handler of the window
-    */
-   HWND m_hWnd;
+  /**
+   * @brief
+   */
+  uint32 m_windowWidthRect;
+
+  /**
+   * @brief
+   */
+  uint32 m_windowHeightRect;
+
+  /**
+   * @brief
+   */
+  String m_windowName;
+
+  /**
+   * @brief
+   */
+  uint32 m_windowPosX;
+
+  /**
+   * @brief
+   */
+  uint32 m_windowPosY;
 
  };
 }

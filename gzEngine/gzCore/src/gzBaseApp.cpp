@@ -11,7 +11,7 @@
 #include "gzResourceManager.h"
 #include "gzRenderer.h"
 #include "gzCameraManager.h"
-#include <gzTime.h>
+#include <gzTime.h> 
 
 namespace gzEngineSDK {
 
@@ -50,7 +50,7 @@ namespace gzEngineSDK {
     CameraManager::startUp();
     Time::startUp();
 
-    m_pwindow = new Window();
+    
     if (!m_pwindow->initWindow(m_windowWidth,
                                m_windowHeight,
                                m_windowName,

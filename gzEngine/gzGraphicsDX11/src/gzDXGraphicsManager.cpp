@@ -183,6 +183,18 @@ namespace gzEngineSDK {
     
   }
 
+  void* 
+  DXGraphicsManager::getDevice()
+  {
+    return m_pdevice->getDevice();
+  }
+
+  void* 
+  DXGraphicsManager::getContext()
+  {
+    return m_pdeviceContext->getContext();
+  }
+
   void
   DXGraphicsManager::clearRenderTargetView( const float ColorRGBA[4],
                                             Texture * renderTarget )

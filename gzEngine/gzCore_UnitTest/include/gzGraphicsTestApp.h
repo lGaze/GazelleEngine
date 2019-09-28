@@ -8,6 +8,7 @@
 
 #include <gzBaseApp.h>
 
+
 namespace gzEngineSDK {
 class GrapichsTestApp : public BaseApp
 {
@@ -17,10 +18,10 @@ class GrapichsTestApp : public BaseApp
    * @brief default constructor
    */
   GrapichsTestApp(uint32 windowWidth,
-                   uint32 windowHeight,
-                   String windowName,
-                   uint32 posX,
-                   uint32 posY);
+                  uint32 windowHeight,
+                  String windowName,
+                  uint32 posX,
+                  uint32 posY);
 
    /**
     * @brief default destructor
@@ -46,6 +47,30 @@ class GrapichsTestApp : public BaseApp
   virtual void 
   update() override;
 
+  /**
+   * @brief Function which initializes all the Application needs to run
+   * @return Bool value which indicates if the initialization succeed or not
+   */
+  virtual bool
+  initApp() override;
+
+  /**
+   * @brief Fuction which the app uses for render objects
+   */
+  virtual void
+  render() override;
+
+  /**
+   * @brief Funtion that initializes ImGui
+   */
+  bool
+  initImGui();
+
+  /**
+   * @brief function for render the imgui
+   */
+  void
+  renderImGui();
 
   /************************************************************************/
   /* Member declarations                                                  */

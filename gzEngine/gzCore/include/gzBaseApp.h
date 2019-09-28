@@ -60,7 +60,7 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
   /**
    * @brief Fuction which the app uses for render objects
    */
-  void 
+  virtual void 
   render();
 
   /**
@@ -97,34 +97,34 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    Window* m_pwindow;
 
    /**
-    * @brief 
-    */
-   createLibrary m_library;
-   
-   /**
-    * @brief 
-    */
+   * @brief
+   */
    uint32 m_windowWidth;
 
    /**
-    * @brief 
+    * @brief
     */
    uint32 m_windowHeight;
 
    /**
-    * @brief 
+    * @brief
     */
    String m_windowName;
 
    /**
-    * @brief 
+    * @brief
     */
    uint32 m_windowPosX;
 
    /**
+    * @brief
+    */
+   uint32 m_windowPosY;
+
+   /**
     * @brief 
     */
-   uint32 m_windowPosY; 
+   createLibrary m_library;
 
    public:
 

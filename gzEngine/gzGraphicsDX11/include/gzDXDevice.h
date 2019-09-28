@@ -116,6 +116,15 @@ class Device
   CreateRasterizerState( D3D11_RASTERIZER_DESC * desc,
                          ID3D11RasterizerState ** rasterizerState );
 
+  /**
+   * @brief This function returns the device
+   * @param The device pointer as a void pointer
+   */
+  FORCEINLINE void * 
+  getDevice() {
+    return m_pDevice;
+  }
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

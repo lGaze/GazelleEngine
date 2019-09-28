@@ -171,6 +171,14 @@ class DeviceContext
     return &m_pDeviceContext;
   };
 
+  /**
+   * @brief This function returns the context pointer
+   * @param The device context pointer as a void pointer
+   */
+  FORCEINLINE void*
+  getContext() {
+    return m_pDeviceContext;
+  }
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

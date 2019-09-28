@@ -13,20 +13,15 @@ namespace gzEngineSDK {
   /************************************************************************/
   /* Forward declaration of utility classes                               */
   /************************************************************************/
-
-  namespace gzEngineSDK {
-
-    class PlatformMath;
-    class Vector2f;
-    class Vector3f;
-    class Vector4f;
-    class Matrix4;
-    class Box2D;
-    class Plane;
-    class Ray;
-    class Timer;
-    class Time;
-
-  }
+  class PlatformMath;
+  class Vector2f;
+  class Vector3f;
+  class Vector4f;
+  class Matrix4;
+  class Box2D;
+  class Plane;
+  class Ray;
+  class Timer;
+  class Time;
 
 }
