@@ -33,9 +33,10 @@ class PBRRenderer : public Renderer
 
    /**
     * @brief This function renders the the objects to screen 
+    * @param int number that is going to indicate the render target
     */
    virtual void
-   render() override;
+   render(int32 renderTarget) override;
 
  private:
 
@@ -61,7 +62,7 @@ class PBRRenderer : public Renderer
     * @brief Renders the given texture
     */
    void
-   renderToScreen(Texture & texture);
+   renderToScreen(int32 renderTarget);
 
    void
    initRenderer();
@@ -102,6 +103,7 @@ class PBRRenderer : public Renderer
    Texture * m_toneMapRT;
    Texture * m_backBufferRT;
    Vector<Texture *> m_gbufferRTTextures;
+   Vector<Texture *> m_pRTTextures;
 
    //Buffers
    Buffer * m_lightCBuffer;
@@ -114,7 +116,7 @@ class PBRRenderer : public Renderer
 
    uint32 stride;
    uint32 offset;
-   float ClearColor1[4] = { 0,0,0,0 };
+   float ClearColor1[4] = { 0,250,0,0 };
 
  };
 }

@@ -26,6 +26,7 @@
     <ClCompile Include="externals\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="src\gzCoreMain.cpp" />
     <ClCompile Include="src\gzGraphicsTestApp.cpp" />
+    <ClCompile Include="src\gzMenuOptions.cpp" />
     <ClCompile Include="src\gzWin32Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -38,6 +39,7 @@
     <ClInclude Include="externals\ImGui\imstb_textedit.h" />
     <ClInclude Include="externals\ImGui\imstb_truetype.h" />
     <ClInclude Include="include\gzGraphicsTestApp.h" />
+    <ClInclude Include="include\gzMenuOptions.h" />
     <ClInclude Include="include\gzWin32Window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

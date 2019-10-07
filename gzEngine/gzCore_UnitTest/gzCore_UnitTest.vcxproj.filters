@@ -45,6 +45,9 @@
     <ClCompile Include="src\gzWin32Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\gzMenuOptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\gzGraphicsTestApp.h">
@@ -75,6 +78,9 @@
       <Filter>Externals\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="include\gzWin32Window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gzMenuOptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

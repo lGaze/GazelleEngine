@@ -30,7 +30,7 @@ class GZ_CORE_EXPORT Renderer : public Module<Renderer>
   /************************************************************************/
 
   virtual void
-  render() = 0;
+  render(int32 renderTarget) = 0;
 
   /************************************************************************/
   /* Member declarations                                                  */

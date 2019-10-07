@@ -85,7 +85,7 @@ namespace gzEngineSDK {
   void
   BaseApp::render()
   {
-    Renderer::instance().render();
+    
   }
 
   bool 

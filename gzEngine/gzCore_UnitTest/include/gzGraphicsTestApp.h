@@ -20,8 +20,8 @@ class GrapichsTestApp : public BaseApp
   GrapichsTestApp(uint32 windowWidth,
                   uint32 windowHeight,
                   String windowName,
-                  uint32 posX,
-                  uint32 posY);
+                  int32 posX,
+                  int32 posY);
 
    /**
     * @brief default destructor
@@ -91,6 +91,7 @@ class GrapichsTestApp : public BaseApp
    {
      Vector4f viewPosition;
      Vector4f lightPosition;
+     Vector4f clearColor;
    };
 
    cbLight cbLightBuffer;
@@ -105,6 +106,7 @@ class GrapichsTestApp : public BaseApp
    GameObject * m_gameObject;
 
    float time;
+   float rotationValue = 0.0f;
    Vector4f m_ViewPos;
 };
 }

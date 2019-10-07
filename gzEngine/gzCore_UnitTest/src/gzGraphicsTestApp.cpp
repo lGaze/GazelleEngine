@@ -11,6 +11,7 @@
 #include <gzSceneManager.h>
 #include <gzCameraManager.h>
 #include <gzResourceManager.h>
+#include <gzMenuOptions.h>
 #include <gzRenderer.h>
 #include <gzMeshComponent.h>
 #include <gzMaterial.h>
@@ -27,8 +28,8 @@ namespace gzEngineSDK {
   GrapichsTestApp::GrapichsTestApp(uint32 windowWidth, 
                                    uint32 windowHeight, 
                                    String windowName, 
-                                   uint32 posX, 
-                                   uint32 posY) 
+                                   int32 posX, 
+                                   int32 posY) 
   {
     m_windowWidth = windowWidth;
     m_windowHeight = windowHeight;
@@ -157,12 +158,23 @@ namespace gzEngineSDK {
     time = g_Time().getTime();
     Vector3f viewPos = CameraManager::instance().getActiveCameraEyePosition();
     cbLightBuffer.viewPosition = Vector4f(viewPos.x, viewPos.y, viewPos.z, 1.0f);
-    cbLightBuffer.lightPosition = Vector4f(-100.0, -100.0, -100.0, 0.0);
+    cbLightBuffer.lightPosition = Vector4f(MenuOptions::s_lightPosition[0],
+                                           MenuOptions::s_lightPosition[1],
+                                           MenuOptions::s_lightPosition[2], 
+                                           0.0);
     cbLightBuffer.lightPosition.w = cos(time);
+
+    cbLightBuffer.clearColor = Vector4f(MenuOptions::s_color[0], 
+                                        MenuOptions::s_color[1],
+                                        MenuOptions::s_color[2],
+                                        MenuOptions::s_color[3]);
     g_GraphicsManager().updateSubresource(constantLightBuffer,
                                           &cbLightBuffer);
-    g_World.matrixRotationY(time);
-    g_World.transpose();
+    if (MenuOptions::s_rotationY)
+    {
+      g_World.matrixRotationY(time);
+      g_World.transpose();
+    }
     cbMatrixbuffer.world = g_World;
     CameraManager::instance().update();
     cbMatrixbuffer.view = CameraManager::instance().getActiveCameraViewMatrix();
@@ -179,7 +191,8 @@ namespace gzEngineSDK {
     SceneManager::startUp();
     ResourceManager::startUp();
     CameraManager::startUp();
-    Time::startUp();
+    g_Time().startUp();
+    g_menuOptions().startUp();
 
     m_pwindow = new Win32Window();
     if (!m_pwindow->initWindow(m_windowWidth,
@@ -222,7 +235,7 @@ namespace gzEngineSDK {
   void 
   GrapichsTestApp::render()
   {
-    Renderer::instance().render();
+    Renderer::instance().render(MenuOptions::s_testCounter);
     renderImGui();
     g_GraphicsManager().present(0, 0);
   }
@@ -257,9 +270,23 @@ namespace gzEngineSDK {
     ImGui_ImplDX11_NewFrame();
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();
-    //Create ImGui Test Window
-    ImGui::Begin("Test");
-    ImGui::Button("TestButton!");
+    //Create ImGui Render Options Window
+    ImGui::Begin("Renderer Options");
+    if (ImGui::CollapsingHeader("Render To Screen")) {
+      ImGui::RadioButton("PBR", &MenuOptions::s_testCounter, 0);
+      ImGui::RadioButton("Tonemap", &MenuOptions::s_testCounter, 1);
+      ImGui::RadioButton("Positions", &MenuOptions::s_testCounter, 2);
+      ImGui::RadioButton("Albedo", &MenuOptions::s_testCounter, 3);
+      ImGui::RadioButton("Normals", &MenuOptions::s_testCounter, 4);
+      ImGui::RadioButton("Emissive", &MenuOptions::s_testCounter, 5);
+    }
+    ImGui::Checkbox("Activate Rotation Y", &MenuOptions::s_rotationY);
+    ImGui::DragFloat3("Light Position",
+                      MenuOptions::s_lightPosition,
+                      0.01f,
+                      -1.0f,
+                      1.0f);
+    ImGui::ColorEdit4("color", &MenuOptions::s_color[0]);
     ImGui::End();
     //Assemble Together Draw Data
     ImGui::Render();

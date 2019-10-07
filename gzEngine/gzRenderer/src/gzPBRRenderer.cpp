@@ -12,6 +12,7 @@
 #include <gzBaseApp.h>
 
 
+
 namespace gzEngineSDK {
 
   PBRRenderer::PBRRenderer() : stride(sizeof(VERTEX)), offset(0)
@@ -20,7 +21,7 @@ namespace gzEngineSDK {
   }
 
   void 
-  PBRRenderer::render()
+  PBRRenderer::render(int32 renderTarget)
   {
     g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
                                               1.0f,
@@ -28,7 +29,7 @@ namespace gzEngineSDK {
     gBufferPass();
     pbrPass();
     toneMapPass();
-    renderToScreen(*m_toneMapRT);
+    renderToScreen(renderTarget);
   }
 
   void 
@@ -55,8 +56,6 @@ namespace gzEngineSDK {
   {
     m_lightCBuffer = BaseApp::instance().constantLightBuffer;
     g_GraphicsManager().setRenderTarget(m_pbrRT);
-
-    float ClearColor1[4] = { .5, .5, .5, 1 };
     g_GraphicsManager().clearRenderTargetView(ClearColor1, m_pbrRT);
     g_GraphicsManager().setRasterizerState(m_rasterizerState);
     g_GraphicsManager().setInputLayout(m_pbrLayout);
@@ -114,7 +113,7 @@ namespace gzEngineSDK {
   }
 
   void 
-  PBRRenderer::renderToScreen(Texture & texture)
+  PBRRenderer::renderToScreen(int32 renderTarget)
   {
     g_GraphicsManager().clearRenderTargetView(ClearColor1, m_backBufferRT);
     g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
@@ -125,7 +124,8 @@ namespace gzEngineSDK {
     g_GraphicsManager().setInputLayout(m_pbrLayout);
     g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
     g_GraphicsManager().setPixelShader(m_backBufferPixelShader);
-    g_GraphicsManager().setShaderResources(&texture, 0, 1);
+
+    g_GraphicsManager().setShaderResources(m_pRTTextures[renderTarget], 0, 1);
     g_GraphicsManager().setVertexBuffers(0,
                                          1,
                                          quad->m_vertexBuffer,
@@ -194,6 +194,12 @@ namespace gzEngineSDK {
     m_pbrRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_toneMapRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_backBufferRT = g_GraphicsManager().getBackBufferTex();
+
+    m_pRTTextures.push_back(m_toneMapRT);
+    m_pRTTextures.push_back(m_pbrRT);
+    m_pRTTextures.insert(std::end(m_pRTTextures),
+                         std::begin(m_gbufferRTTextures),
+                         std::end(m_gbufferRTTextures));
 
     m_gbufferVertexShader = g_GraphicsManager().CreateVertexShader(
       L"Shaders\\common.hlsl",
