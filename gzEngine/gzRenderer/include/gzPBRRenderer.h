@@ -36,7 +36,7 @@ class PBRRenderer : public Renderer
     * @param int number that is going to indicate the render target
     */
    virtual void
-   render(int32 renderTarget) override;
+   render(int32 renderTarget, float clearColor[0]) override;
 
  private:
 
@@ -116,7 +116,7 @@ class PBRRenderer : public Renderer
 
    uint32 stride;
    uint32 offset;
-   float ClearColor1[4] = { 0,250,0,0 };
+   float ClearColor1[4];
 
  };
 }

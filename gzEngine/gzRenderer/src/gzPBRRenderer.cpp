@@ -21,8 +21,9 @@ namespace gzEngineSDK {
   }
 
   void 
-  PBRRenderer::render(int32 renderTarget)
+  PBRRenderer::render(int32 renderTarget, float clearColor[4])
   {
+    memcpy(ClearColor1,clearColor,sizeof(ClearColor1));
     g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
                                               1.0f,
                                               0);

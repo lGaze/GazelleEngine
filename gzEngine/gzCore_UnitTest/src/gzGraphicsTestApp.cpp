@@ -235,7 +235,7 @@ namespace gzEngineSDK {
   void 
   GrapichsTestApp::render()
   {
-    Renderer::instance().render(MenuOptions::s_testCounter);
+    Renderer::instance().render(MenuOptions::s_testCounter, MenuOptions::s_color);
     renderImGui();
     g_GraphicsManager().present(0, 0);
   }
@@ -273,8 +273,8 @@ namespace gzEngineSDK {
     //Create ImGui Render Options Window
     ImGui::Begin("Renderer Options");
     if (ImGui::CollapsingHeader("Render To Screen")) {
-      ImGui::RadioButton("PBR", &MenuOptions::s_testCounter, 0);
-      ImGui::RadioButton("Tonemap", &MenuOptions::s_testCounter, 1);
+      ImGui::RadioButton("Tonemap", &MenuOptions::s_testCounter, 0);
+      ImGui::RadioButton("PBR", &MenuOptions::s_testCounter, 1);
       ImGui::RadioButton("Positions", &MenuOptions::s_testCounter, 2);
       ImGui::RadioButton("Albedo", &MenuOptions::s_testCounter, 3);
       ImGui::RadioButton("Normals", &MenuOptions::s_testCounter, 4);
@@ -286,7 +286,7 @@ namespace gzEngineSDK {
                       0.01f,
                       -1.0f,
                       1.0f);
-    ImGui::ColorEdit4("color", &MenuOptions::s_color[0]);
+    ImGui::ColorEdit4("Clear Color", &MenuOptions::s_color[0]);
     ImGui::End();
     //Assemble Together Draw Data
     ImGui::Render();
