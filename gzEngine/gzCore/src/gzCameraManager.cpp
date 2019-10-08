@@ -6,6 +6,7 @@
 
 #include "gzCameraManager.h"
 #include "gzCamera.h"
+#include <gzTime.h>
 
 namespace gzEngineSDK {
 
@@ -42,25 +43,25 @@ namespace gzEngineSDK {
   {
     if (direction == CAMERA_MOVEMENT::E::LEFT)
     {
-      m_activeCamera->move(Vector3f(-1.0f, 0.0f, 0.0f), 1.0f);
+      m_activeCamera->move(Vector3f(-1.0f, 0.0f, 0.0f), 3.0f * g_Time().getDelta());
       m_activeCamera->updateCamera();
     }
 
     if (direction == CAMERA_MOVEMENT::E::RIGHT)
     {
-      m_activeCamera->move(Vector3f(1.0f, 0.0f, 0.0f), 1.0f);
+      m_activeCamera->move(Vector3f(1.0f, 0.0f, 0.0f), 3.0f * g_Time().getDelta());
       m_activeCamera->updateCamera();
     }
 
     if (direction == CAMERA_MOVEMENT::E::FORWARD)
     {
-      m_activeCamera->move(Vector3f(0.0f, 0.0f, 1.0f), 1.0f);
+      m_activeCamera->move(Vector3f(0.0f, 0.0f, 1.0f), 3.0f * g_Time().getDelta());
       m_activeCamera->updateCamera();
     }
 
     if (direction == CAMERA_MOVEMENT::E::BACKWARD)
     {
-      m_activeCamera->move(Vector3f(0.0f, 0.0f, -1.0f), 1.0f);
+      m_activeCamera->move(Vector3f(0.0f, 0.0f, -1.0f), 3.0f * g_Time().getDelta());
       m_activeCamera->updateCamera();
     }
 

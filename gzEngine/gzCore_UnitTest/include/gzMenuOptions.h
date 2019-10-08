@@ -15,8 +15,7 @@ class MenuOptions : public Module<MenuOptions>
    static int32 s_testCounter;
    static float s_lightPosition[3];
    static float s_color[4];
-   static bool s_rotationX;
-   static bool s_rotationY;
+   static int32 s_rotation;
 };
 MenuOptions&
 g_menuOptions();

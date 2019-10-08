@@ -52,4 +52,10 @@ namespace gzEngineSDK {
   {
     m_activeScene->update();
   }
+
+  bool
+  SceneManager::activeSceneEmpty()
+  {
+    return m_activeScene->isRootEmpty();
+  }
 }

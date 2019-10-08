@@ -27,7 +27,10 @@ namespace gzEngineSDK {
     g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
                                               1.0f,
                                               0);
-    gBufferPass();
+    if (!SceneManager::instance().activeSceneEmpty())
+    {
+      gBufferPass();
+    }
     pbrPass();
     toneMapPass();
     renderToScreen(renderTarget);

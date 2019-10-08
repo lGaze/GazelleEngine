@@ -52,6 +52,12 @@ class GZ_CORE_EXPORT Scene
   void
   update();
 
+  /**
+   * @brief Functionthat returns true if the root of the scene is nullptr
+   */
+  bool
+  isRootEmpty();
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

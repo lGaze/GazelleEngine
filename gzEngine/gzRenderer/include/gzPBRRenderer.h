@@ -36,7 +36,7 @@ class PBRRenderer : public Renderer
     * @param int number that is going to indicate the render target
     */
    virtual void
-   render(int32 renderTarget, float clearColor[0]) override;
+   render(int32 renderTarget, float clearColor[4]) override;
 
  private:
 

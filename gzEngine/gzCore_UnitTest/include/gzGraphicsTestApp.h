@@ -72,6 +72,14 @@ class GrapichsTestApp : public BaseApp
   void
   renderImGui();
 
+  /**
+   * @brief Opens a windows dialog and gets the path of the file
+   */
+  void
+  openfile();
+
+
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
@@ -104,6 +112,11 @@ class GrapichsTestApp : public BaseApp
    Buffer * constantMatrix;
 
    GameObject * m_gameObject;
+
+   Material * tempMaterial;
+
+   bool wasRotatingX = false;
+   bool wasRotatingY = false;
 
    float time;
    float rotationValue = 0.0f;

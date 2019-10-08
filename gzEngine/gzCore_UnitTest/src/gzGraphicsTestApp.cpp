@@ -68,44 +68,36 @@ namespace gzEngineSDK {
     SceneManager::instance().createScene();
     SceneManager::instance().setActiveScene();
 
-    m_gameObject = SceneManager::instance().createEmptyGameObject();
+    tempMaterial = new Material();
 
-    MeshComponent * testModel = new MeshComponent();
+    Texture * tempTex = new Texture();
 
-    //testModel->loadMesh("Meshes\\BattleDroid.fbx");
-    testModel->loadMesh("Meshes\\model.dae");
-
-
-    Material * tempMaterial = new Material();
-
-    Texture * tempTex = new Texture;
-
-    /*
-         //Droide Material
-        //-------------------------------------------------------------------------------------//
-        tempTex =
-          g_GraphicsManager().LoadTextureFromFile("Textures\\Droid\\17_-_Default_albedo.jpg");
-        tempMaterial->setAlbedoTexture(*tempTex);
-
-        tempTex =
-          g_GraphicsManager().LoadTextureFromFile("Textures\\Droid\\17_-_Default_metallic.jpg");
-        tempMaterial->setMetallicTexture(*tempTex);
-
-        tempTex =
-          g_GraphicsManager().LoadTextureFromFile("Textures\\Droid\\17_-_Default_normal.jpg");
-        tempMaterial->setNormalTexture(*tempTex);
-
-        tempTex =
-          g_GraphicsManager().LoadTextureFromFile("Textures\\Droid\\17_-_Default_roughness.jpg");
-        tempMaterial->setRoughnessTexture(*tempTex);
-
-        tempTex =
-          g_GraphicsManager().LoadTextureFromFile("Textures\\Droid\\17_-_Default_emissive.jpg");
-        tempMaterial->setEmissiveTexture(*tempTex);*/
-
-        //Robot Material
-       //-------------------------------------------------------------------------------------//
+    
+     //Droide Material
+    //-------------------------------------------------------------------------------------//
     tempTex =
+      g_GraphicsManager().LoadTextureFromFile("Textures\\Droid\\17_-_Default_albedo.jpg");
+    tempMaterial->setAlbedoTexture(*tempTex);
+
+    tempTex =
+      g_GraphicsManager().LoadTextureFromFile("Textures\\Droid\\17_-_Default_metallic.jpg");
+    tempMaterial->setMetallicTexture(*tempTex);
+
+    tempTex =
+      g_GraphicsManager().LoadTextureFromFile("Textures\\Droid\\17_-_Default_normal.jpg");
+    tempMaterial->setNormalTexture(*tempTex);
+
+    tempTex =
+      g_GraphicsManager().LoadTextureFromFile("Textures\\Droid\\17_-_Default_roughness.jpg");
+    tempMaterial->setRoughnessTexture(*tempTex);
+
+    tempTex =
+      g_GraphicsManager().LoadTextureFromFile("Textures\\Droid\\17_-_Default_emissive.jpg");
+    tempMaterial->setEmissiveTexture(*tempTex);
+
+    //Robot Material
+   //-------------------------------------------------------------------------------------//
+   /* tempTex =
       g_GraphicsManager().LoadTextureFromFile("Textures\\Robot\\default_albedo.jpg");
     tempMaterial->setAlbedoTexture(*tempTex);
 
@@ -123,14 +115,8 @@ namespace gzEngineSDK {
 
     tempTex =
       g_GraphicsManager().LoadTextureFromFile("Textures\\Robot\\default_emissive.jpg");
-    tempMaterial->setEmissiveTexture(*tempTex);
+    tempMaterial->setEmissiveTexture(*tempTex);*/
 
-
-    testModel->changeMaterial(*tempMaterial);
-
-    m_gameObject->addComponent(testModel);
-
-    SceneManager::instance().addGameObjectToScene(*m_gameObject);
 
     //Sets primitive topology
     g_GraphicsManager().setPrimitiveTopology(4);
@@ -170,11 +156,34 @@ namespace gzEngineSDK {
                                         MenuOptions::s_color[3]);
     g_GraphicsManager().updateSubresource(constantLightBuffer,
                                           &cbLightBuffer);
-    if (MenuOptions::s_rotationY)
+
+    switch (MenuOptions::s_rotation)
     {
+    case 0:
+      break;
+    case 1:
+      if (wasRotatingY)
+      {
+        g_World.identity();
+        wasRotatingY = false;
+      }
+      g_World.matrixRotationX(time);
+      g_World.transpose();
+      wasRotatingX = true;
+      break;
+    case 2:
+      if (wasRotatingX)
+      {
+        g_World.identity();
+        wasRotatingX = false;
+      }
       g_World.matrixRotationY(time);
       g_World.transpose();
+      wasRotatingY = true;
+      break;
+      
     }
+
     cbMatrixbuffer.world = g_World;
     CameraManager::instance().update();
     cbMatrixbuffer.view = CameraManager::instance().getActiveCameraViewMatrix();
@@ -280,7 +289,13 @@ namespace gzEngineSDK {
       ImGui::RadioButton("Normals", &MenuOptions::s_testCounter, 4);
       ImGui::RadioButton("Emissive", &MenuOptions::s_testCounter, 5);
     }
-    ImGui::Checkbox("Activate Rotation Y", &MenuOptions::s_rotationY);
+    
+    ImGui::RadioButton("None", &MenuOptions::s_rotation, 0);
+    ImGui::SameLine();
+    ImGui::RadioButton("Activate Rotation X", &MenuOptions::s_rotation, 1);
+    ImGui::SameLine();
+    ImGui::RadioButton("Activate Rotation Y", &MenuOptions::s_rotation, 2);
+    
     ImGui::DragFloat3("Light Position",
                       MenuOptions::s_lightPosition,
                       0.01f,
@@ -288,10 +303,51 @@ namespace gzEngineSDK {
                       1.0f);
     ImGui::ColorEdit4("Clear Color", &MenuOptions::s_color[0]);
     ImGui::End();
+    //Create ImGui SceneMenu
+    ImGui::Begin("Scene");
+    if (ImGui::Button("Load Model From File")) 
+    {
+      openfile();
+    }
+    ImGui::End();
+
     //Assemble Together Draw Data
     ImGui::Render();
     //Render Draw Data
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+  }
+
+  void 
+  GrapichsTestApp::openfile()
+  {
+    char filename[100];
+    OPENFILENAME ofn;
+    memset(&ofn, 0, sizeof(ofn));
+    ofn.lStructSize = sizeof(ofn);
+    ofn.hwndOwner = static_cast<HWND>(m_pwindow->getHandle());
+    ofn.lpstrFile = filename;
+    ofn.lpstrFile[0] = '\0';
+    ofn.nMaxFile = sizeof(filename);
+    ofn.lpstrFilter = "ALL\0*.*\0";
+    ofn.lpstrTitle = "Select The Model";
+    ofn.lpstrInitialDir = "Meshes\\";
+    ofn.Flags = OFN_FILEMUSTEXIST;
+    GetOpenFileName(&ofn);
+    
+    m_gameObject = SceneManager::instance().createEmptyGameObject();
+
+    MeshComponent * testModel = new MeshComponent();
+
+    //testModel->loadMesh("Meshes\\BattleDroid.fbx");
+    testModel->loadMesh(filename);
+
+
+    testModel->changeMaterial(*tempMaterial);
+
+    m_gameObject->addComponent(testModel);
+
+    SceneManager::instance().addGameObjectToScene(*m_gameObject);
+
   }
 
 }

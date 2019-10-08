@@ -72,6 +72,12 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
   void
   update();
 
+  /**
+   * @brief Funtion that returns true if is something in the scene to render
+   */
+  bool
+  activeSceneEmpty();
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

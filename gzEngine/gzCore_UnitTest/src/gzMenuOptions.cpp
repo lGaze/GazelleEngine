@@ -10,8 +10,8 @@
 int32 MenuOptions::s_testCounter = 0;
 float MenuOptions::s_lightPosition[3];
 float MenuOptions::s_color[4] = { 1,0.3,0.01,0 };
-bool MenuOptions::s_rotationX = false;
-bool MenuOptions::s_rotationY = true;
+int32 MenuOptions::s_rotation = 0;
+
 
 MenuOptions & g_menuOptions() {
   return MenuOptions::instance();

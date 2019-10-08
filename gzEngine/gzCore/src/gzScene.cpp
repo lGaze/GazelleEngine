@@ -46,4 +46,10 @@ namespace gzEngineSDK {
     m_root->update();
   }
 
+  bool 
+  Scene::isRootEmpty()
+  {
+    return m_root == nullptr;
+  }
+
 }
