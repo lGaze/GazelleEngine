@@ -338,9 +338,7 @@ namespace gzEngineSDK {
 
     MeshComponent * testModel = new MeshComponent();
 
-    //testModel->loadMesh("Meshes\\BattleDroid.fbx");
     testModel->loadMesh(filename);
-
 
     testModel->changeMaterial(*tempMaterial);
 

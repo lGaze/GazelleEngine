@@ -28,6 +28,7 @@
     <ClInclude Include="include\gzGraphicsDescriptors.h" />
     <ClInclude Include="include\gzGraphicsManager.h" />
     <ClInclude Include="include\gzInputLayout.h" />
+    <ClInclude Include="include\gzInputManager.h" />
     <ClInclude Include="include\gzLibraryLoader.h" />
     <ClInclude Include="include\gzMaterial.h" />
     <ClInclude Include="include\gzMeshComponent.h" />

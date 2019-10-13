@@ -150,15 +150,15 @@ namespace gzEngineSDK {
     uint32 stride = sizeof(VERTEX);
     uint32 offset = 0;
 
-    g_GraphicsManager().setVertexBuffers(0, 
-                                                 1, 
-                                                 m_vertexBuffer,
-                                                 &stride, 
-                                                 &offset);
+    g_GraphicsManager().setVertexBuffers(0,
+                                         1,
+                                         m_vertexBuffer,
+                                         &stride,
+                                         &offset);
 
     g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
-                                               m_indexBuffer, 
-                                               offset);
+                                       m_indexBuffer,
+                                       offset);
 
     for (uint32 i = 0; i < m_mesh.size(); i++)
     {
