@@ -35,6 +35,8 @@ namespace gzEngineSDK {
   class Scene;
   class SceneGraph;
   class Material;
+  class InputManager;
+
 }
 
 //DLL export

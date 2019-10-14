@@ -2,7 +2,7 @@
 /* @filename gzPBRRendererPlugin.cpp
 /* @author Victor Flores 
 /* @date 2019/08/11
-/* @brief 
+/* @brief Plugin of PBR renderer
 /**************************************************************************/
 
 #include "gzPBRRendererPrerequisites.h"

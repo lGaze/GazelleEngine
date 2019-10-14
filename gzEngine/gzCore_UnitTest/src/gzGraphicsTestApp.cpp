@@ -19,6 +19,7 @@
 #include <gzGameObject.h>
 #include <gzTime.h>
 #include <gzCamera.h>
+#include <gzInputManager.h>
 #include "gzWin32Window.h"
 
 
@@ -226,11 +227,18 @@ namespace gzEngineSDK {
       return false;
     }
 
+    if (!loadLibrary("gzGainputd.dll", "CreateManagerObject"))
+    {
+      std::cout << "Failed to load the Input library " << std::endl;
+      return false;
+    }
+
     if (!loadLibrary("gzPBRRendererd.dll", "CreateManagerObject"))
     {
       std::cout << "Failed to load the Renderer library " << std::endl;
       return false;
-    }
+    } 
+
 
     if (!initImGui())
     {
@@ -244,7 +252,8 @@ namespace gzEngineSDK {
   void 
   GrapichsTestApp::render()
   {
-    Renderer::instance().render(MenuOptions::s_testCounter, MenuOptions::s_color);
+    Renderer::instance().render(MenuOptions::s_testCounter, 
+                                MenuOptions::s_color);
     renderImGui();
     g_GraphicsManager().present(0, 0);
   }

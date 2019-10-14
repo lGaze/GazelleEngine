@@ -78,7 +78,8 @@ namespace gzEngineSDK {
     }
   }
 
-  static bool ImGui_ImplWin32_UpdateMouseCursor()
+  static bool 
+  ImGui_ImplWin32_UpdateMouseCursor()
   {
     ImGuiIO& io = ImGui::GetIO();
     if (io.ConfigFlags & ImGuiConfigFlags_NoMouseCursorChange)
@@ -110,7 +111,11 @@ namespace gzEngineSDK {
     return true;
   }
 
-  LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+  LRESULT 
+  ImGui_ImplWin32_WndProcHandler(HWND hwnd, 
+                                 UINT msg, 
+                                 WPARAM wParam, 
+                                 LPARAM lParam)
   {
     if (ImGui::GetCurrentContext() == NULL)
       return 0;

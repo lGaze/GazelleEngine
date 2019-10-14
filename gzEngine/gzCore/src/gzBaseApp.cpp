@@ -12,6 +12,7 @@
 #include "gzRenderer.h"
 #include "gzCameraManager.h"
 #include <gzTime.h> 
+#include "gzInputManager.h"
 
 namespace gzEngineSDK {
 
@@ -37,6 +38,7 @@ namespace gzEngineSDK {
       render();
 
       g_Time().update();
+      g_InputManager().update();
     }
 
     return 0;

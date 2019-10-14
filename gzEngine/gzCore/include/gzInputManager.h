@@ -12,16 +12,43 @@
 namespace KEYBOARDBUTTONS {
   enum e
   {
-    key0,
-    key1,
-    key2,
-    key3,
-    key4,
-    key5, 
-    key6,
-    key7,
-    key8,
-    key9,
+    kKeyA,
+    kKeyB,
+    kKeyC,
+    kKeyD,
+    kKeyE,
+    kKeyF,
+    kKeyG,
+    kKeyH,
+    kKeyI,
+    kKeyJ,
+    kKeyK,
+    kKeyL,
+    kKeyM,
+    kKeyN,
+    kKeyO,
+    kKeyP,
+    kKeyQ,
+    kKeyR,
+    kKeyS,
+    kKeyT,
+    kKeyU,
+    kKeyV,
+    kKeyW,
+    kKeyX,
+    kKeyY,
+    kKeyZ,
+    kKeySpace
+  };
+}
+
+namespace MOUSEBUTTONS {
+  enum e {
+    kMouseButtonLeft,
+    kMouseButtonMiddle,
+    kMouseButtonRight,
+    kMouseButtonWheelDown,
+    kMouseButtonWheelUp,
   };
 }
 
@@ -48,7 +75,7 @@ class GZ_CORE_EXPORT InputManager : public Module<InputManager>
    * @brief This function checks if the given button was pressed
    */
   virtual bool
-  wasButtonPressed();
+  wasButtonPressed(KEYBOARDBUTTONS::e) = 0;
 
   /**
    * @brief This function update the inputs
@@ -63,4 +90,7 @@ class GZ_CORE_EXPORT InputManager : public Module<InputManager>
  public:
    
  };
+
+GZ_CORE_EXPORT InputManager& 
+g_InputManager();
 }
