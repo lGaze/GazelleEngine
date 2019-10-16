@@ -6,6 +6,8 @@
 /**************************************************************************/
 
 #include "gzGainputManager.h"
+#include <Windows.h>
+#include <gzBaseApp.h>
 
 namespace gzEngineSDK {
 
@@ -20,13 +22,24 @@ namespace gzEngineSDK {
 
   bool 
   GainputManager::wasButtonPressed(KEYBOARDBUTTONS::e button){
-    return m_map->GetBoolWasDown(button);
+    return m_map->GetBool(button);
+  }
+
+  void 
+  GainputManager::handleMesage(void * mesage)
+  {
+    MSG* msg = static_cast<MSG*>(mesage);
+    m_inputManager.HandleMessage(*msg);
   }
 
   void
   GainputManager::initGainput() {
     m_keyboardId =
       m_inputManager.CreateDevice<gainput::InputDeviceKeyboard>();
+    m_inputManager.SetDisplaySize(
+      g_GraphicsManager().getViewportDimensions().x,
+      g_GraphicsManager().getViewportDimensions().y);
+
     m_map = new gainput::InputMap(m_inputManager);
     m_map->MapBool(KEYBOARDBUTTONS::kKeyW, m_keyboardId, gainput::KeyW);
     m_map->MapBool(KEYBOARDBUTTONS::kKeyA, m_keyboardId, gainput::KeyA);

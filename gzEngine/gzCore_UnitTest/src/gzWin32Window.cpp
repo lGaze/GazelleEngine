@@ -7,9 +7,13 @@
 
 #include "gzWin32Window.h"
 #include <gzCameraManager.h>
+#include <gzBaseApp.h>
+#include <gzInputManager.h>
 #include <ImGui/imgui.h>
 #include <ImGui/imgui_impl_win32.h>
 #include <ImGui/imgui_impl_dx11.h>
+
+#define IDI_ICON1                       132
 
 static bool g_WantUpdateHasGamepad = true;
 namespace gzEngineSDK {
@@ -35,7 +39,9 @@ namespace gzEngineSDK {
     wndclass.cbClsExtra = 0;
     wndclass.cbWndExtra = 0;
     wndclass.hInstance = GetModuleHandle(0);
-    wndclass.hIcon = LoadIcon(0, IDI_APPLICATION);
+    wndclass.hIcon = LoadIcon(GetModuleHandle(0), "GazelleEngine");
+    wndclass.hIconSm = LoadIcon(GetModuleHandle(0), "GazelleEngine");
+    wndclass.cbSize = sizeof(WNDCLASSEX);
     wndclass.hCursor = LoadCursor(0, IDC_ARROW);
     wndclass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wndclass.lpszMenuName = NULL;
@@ -74,7 +80,12 @@ namespace gzEngineSDK {
     while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
     {
       TranslateMessage(&msg);
+      void * message = static_cast<void*>(&msg);
+      g_InputManager().handleMesage(message);
       DispatchMessage(&msg);
+      if (msg.message == WM_QUIT) {
+       BaseApp::instance().m_mainLoop = false;
+      }
     }
   }
 
@@ -201,27 +212,8 @@ namespace gzEngineSDK {
       hdc = BeginPaint(window, &ps);
       EndPaint(window, &ps);
       break;
-
     case WM_DESTROY:
       PostQuitMessage(0);
-      break;
-
-    case WM_KEYDOWN:
-      switch (wParam)
-      {
-      case 'A':
-        CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::LEFT);
-        break;
-      case 'D':
-        CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::RIGHT);
-        break;
-      case 'S':
-        CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::BACKWARD);
-        break;
-      case 'W':
-        CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::FORWARD);
-        break;
-      }
       break;
     default:
       return DefWindowProc(window, message, wParam, lParam);

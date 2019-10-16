@@ -42,7 +42,13 @@ class GainputManager : public InputManager
   virtual bool 
   wasButtonPressed(KEYBOARDBUTTONS::e button) override;
 
- private:
+  /**
+   * @brief This function handles the messages
+   */
+  virtual void 
+  handleMesage(void * mesage) override;
+
+private:
 
   /**
    * @brief This function initializes all the gainput needs 

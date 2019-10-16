@@ -83,13 +83,15 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
+  
+ public:
 
- protected:
-   
-   /**
+  /**
     * @brief Value wich indicates if the mainloop continues 
     */
    bool m_mainLoop;
+
+ protected:
 
    /**
     * @brief Pointer to the window  

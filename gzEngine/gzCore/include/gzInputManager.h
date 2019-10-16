@@ -83,6 +83,12 @@ class GZ_CORE_EXPORT InputManager : public Module<InputManager>
   virtual void
   update() = 0;
 
+  /**
+   * @brief 
+   */
+  virtual void
+  handleMesage(void * mesage) = 0;
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

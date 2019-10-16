@@ -185,6 +185,27 @@ namespace gzEngineSDK {
       
     }
 
+    if (g_InputManager().wasButtonPressed(KEYBOARDBUTTONS::kKeyA))
+    {
+      CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::LEFT);
+    }
+
+    if (g_InputManager().wasButtonPressed(KEYBOARDBUTTONS::kKeyW))
+    {
+      CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::FORWARD);
+    }
+
+    if (g_InputManager().wasButtonPressed(KEYBOARDBUTTONS::kKeyS))
+    {
+      CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::BACKWARD);
+    }
+
+    if (g_InputManager().wasButtonPressed(KEYBOARDBUTTONS::kKeyD))
+    {
+      CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::RIGHT);
+    }
+
+
     cbMatrixbuffer.world = g_World;
     CameraManager::instance().update();
     cbMatrixbuffer.view = CameraManager::instance().getActiveCameraViewMatrix();
