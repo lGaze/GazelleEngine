@@ -219,13 +219,6 @@ class DXGraphicsManager : public GraphicsManager
   virtual Texture * 
   createTextureFromBackBuffer() override;
 
-/*
-  / **
-   * @brief 
-   * /
-  virtual void
-  createVertexAndIndexBufferFromMesh( MESH_DATA * Mesh, int32 nunMeshes ) override;*/
-
   /**
    * @brief 
    */
@@ -275,6 +268,12 @@ class DXGraphicsManager : public GraphicsManager
 
   virtual void* 
   getContext() override;
+
+  /**
+   * @brief This function creates a cubemap of a dds file 
+   */
+  virtual Texture * 
+  loadDDSTextureFromFile(const WCHAR * filename) override;
 
   /************************************************************************/
   /* Member declarations                                                  */

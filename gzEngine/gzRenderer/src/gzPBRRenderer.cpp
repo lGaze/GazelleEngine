@@ -83,6 +83,10 @@ namespace gzEngineSDK {
                                              1);
     }
 
+    g_GraphicsManager().setShaderResources(m_irradiance, 4, 1);
+    g_GraphicsManager().setShaderResources(m_specularReflection, 5, 1);
+    g_GraphicsManager().setShaderResources(m_lut, 6, 1);
+
     g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
                                     quad->m_mesh[0].indexBase,
                                     0);
@@ -129,7 +133,7 @@ namespace gzEngineSDK {
     g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
     g_GraphicsManager().setPixelShader(m_backBufferPixelShader);
 
-    g_GraphicsManager().setShaderResources(m_pRTTextures[renderTarget], 0, 1);
+    g_GraphicsManager().setShaderResources(/*m_pRTTextures[renderTarget]*/m_irradiance, 0, 1);
     g_GraphicsManager().setVertexBuffers(0,
                                          1,
                                          quad->m_vertexBuffer,
@@ -240,7 +244,13 @@ namespace gzEngineSDK {
       L"Shaders\\backBufferPS.hlsl",
       "ps_main",
       "ps_4_0");
+
+    m_irradiance = 
+      g_GraphicsManager().loadDDSTextureFromFile(L"Textures\\Vela\\CubeMap.dds");
     
+    m_specularReflection =
+      g_GraphicsManager().loadDDSTextureFromFile(L"Textures\\galileo_cross.dds");
+
     quad = new Model();
     quad->Load("Meshes\\QuadPerron.obj");
 

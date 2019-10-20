@@ -195,6 +195,22 @@ namespace gzEngineSDK {
     return m_pdeviceContext->getContext();
   }
 
+  gzEngineSDK::Texture * 
+  DXGraphicsManager::loadDDSTextureFromFile(const WCHAR * filename)
+  {
+    m_ptexture = new DXTexture();
+    m_pdevice->CreateTextureFromDDSFile(filename, 
+                                        m_ptexture->getTextureInterface());
+
+    m_pdevice->CreateShaderResourceView(
+      *m_ptexture->getTextureInterface(),
+      nullptr,
+      m_ptexture->getShaderResourceViewInterface());
+
+    auto * ret = reinterpret_cast<Texture*>(m_ptexture);
+    return ret;
+  }
+
   void
   DXGraphicsManager::clearRenderTargetView( const float ColorRGBA[4],
                                             Texture * renderTarget )

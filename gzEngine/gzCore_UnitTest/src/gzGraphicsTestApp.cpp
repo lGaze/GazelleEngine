@@ -76,6 +76,7 @@ namespace gzEngineSDK {
     
      //Droide Material
     //-------------------------------------------------------------------------------------//
+/*
     tempTex =
       g_GraphicsManager().LoadTextureFromFile("Textures\\Droid\\17_-_Default_albedo.jpg");
     tempMaterial->setAlbedoTexture(*tempTex);
@@ -94,11 +95,11 @@ namespace gzEngineSDK {
 
     tempTex =
       g_GraphicsManager().LoadTextureFromFile("Textures\\Droid\\17_-_Default_emissive.jpg");
-    tempMaterial->setEmissiveTexture(*tempTex);
+    tempMaterial->setEmissiveTexture(*tempTex);*/
 
     //Robot Material
    //-------------------------------------------------------------------------------------//
-   /* tempTex =
+    tempTex =
       g_GraphicsManager().LoadTextureFromFile("Textures\\Robot\\default_albedo.jpg");
     tempMaterial->setAlbedoTexture(*tempTex);
 
@@ -116,7 +117,7 @@ namespace gzEngineSDK {
 
     tempTex =
       g_GraphicsManager().LoadTextureFromFile("Textures\\Robot\\default_emissive.jpg");
-    tempMaterial->setEmissiveTexture(*tempTex);*/
+    tempMaterial->setEmissiveTexture(*tempTex);
 
 
     //Sets primitive topology

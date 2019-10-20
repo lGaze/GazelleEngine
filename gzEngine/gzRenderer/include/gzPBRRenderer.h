@@ -102,6 +102,8 @@ class PBRRenderer : public Renderer
    Texture * m_lut;
    Texture * m_toneMapRT;
    Texture * m_backBufferRT;
+   Texture * m_irradiance;
+   Texture * m_specularReflection;
    Vector<Texture *> m_gbufferRTTextures;
    Vector<Texture *> m_pRTTextures;
 

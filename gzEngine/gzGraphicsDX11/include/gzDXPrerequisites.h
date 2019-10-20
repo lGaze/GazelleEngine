@@ -60,4 +60,3 @@ namespace gzEngineSDK {
 # define GZ_DIRECTX_EXPORT __attribute__ ((visibility ("default")))
 # define GZ_DIRECTX_HIDDEN __attribute__ ((visibility ("hidden")))
 #endif*/
-

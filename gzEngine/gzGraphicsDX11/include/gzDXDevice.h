@@ -117,6 +117,12 @@ class Device
                          ID3D11RasterizerState ** rasterizerState );
 
   /**
+   * @brief This function creates a texture from a .DDS File
+   */
+  bool
+  CreateTextureFromDDSFile(const WCHAR * filename, ID3D11Texture2D** pTexture);
+
+  /**
    * @brief This function returns the device
    * @param The device pointer as a void pointer
    */

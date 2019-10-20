@@ -6,6 +6,7 @@
 /**************************************************************************/
 
 #include "gzDXDevice.h"
+#include "DDSTextureLoader.h"
 
 namespace gzEngineSDK {
 
@@ -236,6 +237,24 @@ namespace gzEngineSDK {
     result = m_pDevice->CreateRasterizerState( desc, rasterizerState );
 
     if (FAILED (result))
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+  bool 
+  Device::CreateTextureFromDDSFile(const WCHAR * filename, 
+                                   ID3D11Texture2D** pTexture)
+  {
+    HRESULT result = S_OK;
+    ID3D11Resource** pResource = reinterpret_cast<ID3D11Resource**>(pTexture);
+    result = DirectX::CreateDDSTextureFromFile(m_pDevice, 
+                                               filename, 
+                                               pResource, 
+                                               nullptr);
+    if (FAILED(result))
     {
       return false;
     }

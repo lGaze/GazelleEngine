@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="externals\DDSTextureLoader.h" />
     <ClInclude Include="include\gzDXBuffer.h" />
     <ClInclude Include="include\gzDXDevice.h" />
     <ClInclude Include="include\gzDXDeviceContext.h" />
@@ -35,6 +36,7 @@
     <ClInclude Include="include\gzDXViewPort.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="externals\DDSTextureLoader.cpp" />
     <ClCompile Include="src\gzDXBuffer.cpp" />
     <ClCompile Include="src\gzDXDevice.cpp" />
     <ClCompile Include="src\gzDXDeviceContext.cpp" />
@@ -127,7 +129,7 @@
       <ConformanceMode>false</ConformanceMode>
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./include/;$(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/; ./externals/; $(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -146,7 +148,7 @@
       <ConformanceMode>false</ConformanceMode>
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./include/;$(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/; ./externals/; $(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -167,7 +169,7 @@
       <ConformanceMode>false</ConformanceMode>
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./include/;$(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/; ./externals/; $(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -190,7 +192,7 @@
       <ConformanceMode>false</ConformanceMode>
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./include/;$(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/; ./externals/; $(SolutionDir)gzCore/include;$(SolutionDir)gzUtilities/include</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>

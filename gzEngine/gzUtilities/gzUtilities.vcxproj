@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -175,6 +175,7 @@
     <ClInclude Include="include\gzPlatformMath.h" />
     <ClInclude Include="include\gzPlatformTypes.h" />
     <ClInclude Include="include\gzPrerequisitesUtilities.h" />
+    <ClInclude Include="include\gzQuaternion.h" />
     <ClInclude Include="include\gzRay.h" />
     <ClInclude Include="include\gzSphere.h" />
     <ClInclude Include="include\gzStdHeaders.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="src\gzException.cpp" />
     <ClCompile Include="src\gzMatrix4.cpp" />
     <ClCompile Include="src\gzPlane.cpp" />
+    <ClCompile Include="src\gzQuaternion.cpp" />
     <ClCompile Include="src\gzRay.cpp" />
     <ClCompile Include="src\gzSphere.cpp" />
     <ClCompile Include="src\gzTime.cpp" />

@@ -283,6 +283,11 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   virtual void*
   getContext() = 0;
 
+  /**
+   * @brief This function creates a cubemap of a dds file
+   */
+  virtual Texture *
+  loadDDSTextureFromFile(const WCHAR * filename) = 0;
 
   /************************************************************************/
   /* Member declarations                                                  */
