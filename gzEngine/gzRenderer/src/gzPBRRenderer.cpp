@@ -133,7 +133,7 @@ namespace gzEngineSDK {
     g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
     g_GraphicsManager().setPixelShader(m_backBufferPixelShader);
 
-    g_GraphicsManager().setShaderResources(/*m_pRTTextures[renderTarget]*/m_irradiance, 0, 1);
+    g_GraphicsManager().setShaderResources(m_pRTTextures[renderTarget], 0, 1);
     g_GraphicsManager().setVertexBuffers(0,
                                          1,
                                          quad->m_vertexBuffer,
