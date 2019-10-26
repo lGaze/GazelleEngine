@@ -48,6 +48,12 @@ class GrapichsTestApp : public BaseApp
   update() override;
 
   /**
+   * @brief This function process the inputs
+   */
+  void
+  processInputs();
+
+  /**
    * @brief Function which initializes all the Application needs to run
    * @return Bool value which indicates if the initialization succeed or not
    */

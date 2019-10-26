@@ -7,6 +7,7 @@
 
 
 #include "gzVector3f.h"
+#include "gzQuaternion.h"
 
 namespace gzEngineSDK {
 
@@ -106,5 +107,35 @@ namespace gzEngineSDK {
   float
   Vector3f::magitude() const {
     return Math::sqrt((x*x) + (y*y) + (z*z));
+  }
+
+  void
+  Vector3f::rotateq(float angle, Vector3f axis)
+  {
+    Quaternion p(*this);
+    float sinHalf = Math::sin(angle / 2);
+    float cosHalf = Math::cos(angle / 2);
+
+    float x_ = axis.x * sinHalf;
+    float y_ = axis.y * sinHalf;
+    float z_ = axis.z * sinHalf;
+    float w_ = cosHalf;
+
+    Quaternion q(x_, y_, z_, w_);
+
+    Quaternion res = q*p*q.conjuate();
+
+    x = res.m_x;
+    y = res.m_y;
+    z = res.m_z;
+  }
+
+  void
+  Vector3f::rotate(float angle, Vector3f axis)
+  {
+    float sinAngle = Math::sin(-angle);
+    float cosAngle = Math::cos(-angle);
+
+    this->crossProduct(axis*sinAngle + *this*cosAngle + axis * (this->dot(axis*(1 - cosAngle))));
   }
 }

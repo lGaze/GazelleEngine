@@ -70,6 +70,20 @@ class GZ_CORE_EXPORT CameraManager : public Module<CameraManager>
   moveActiveCamera(CAMERA_MOVEMENT::E direction);
 
   /**
+   * @brief Moves the active camera
+   * @param The direction of the movement
+   */
+  void
+  rotateActiveCameraX(float angle);
+
+  /**
+   * @brief Moves the active camera
+   * @param The direction of the movement
+   */
+  void
+  rotateActiveCameraY(float angle);
+
+  /**
    * @brief Gets the EyePosition of the Main Camera
    */
   Vector3f

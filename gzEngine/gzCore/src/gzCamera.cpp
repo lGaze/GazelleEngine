@@ -14,8 +14,9 @@ namespace gzEngineSDK {
   {
 
     m_eye = Vector3f(0.0f, 0.0f, 0.0f);
-    m_front = Vector3f(0.0f, 0.0f, 1.0f);
+    m_target = Vector3f(0.0f, 0.0f, 1.0f);
     m_up = Vector3f(0.0, 1.0, 0.0);
+    m_worldUp = Vector3f(0.0f, 1.0f, 0.0f);
 
     m_fovy = PIFOURTHS;
     m_aspect =
@@ -30,29 +31,61 @@ namespace gzEngineSDK {
   void 
   Camera::move(Vector3f direction, float cameraSpeed)
   {
-    m_eye += direction * cameraSpeed;
-    m_front = m_eye + Vector3f(0.0f, 0.0f, 1.0f);
+    Vector3f tmp = direction * cameraSpeed;
+    m_eye += tmp;
+    m_target += tmp;
     m_dirty = true;
   }
 
-/*
   void 
-  Camera::rotate(Vector3f axis, float degrees)
+  Camera::moveForward(float cameraSpeed)
   {
-  }*/
+    move(m_forward, cameraSpeed);
+  }
+
+  void 
+  Camera::moveRight(float cameraSpeed)
+  {
+    move(m_right, cameraSpeed);
+  }
+
+  void 
+  Camera::rotateY(float angle)
+  {
+    m_target -= m_eye;
+
+    m_target.rotateq(angle, m_worldUp);
+
+    m_target += m_eye;
+
+    m_dirty = true;
+  }
+
+  void
+  Camera::rotateX(float angle)
+  {
+    m_target -= m_eye;
+
+    m_target.rotateq(angle, m_right);
+
+    m_target += m_eye;
+
+    m_dirty = true;
+  }
+
 
   void 
   Camera::setPosition(Vector3f position)
   {
     m_eye = position;
-    m_front = m_eye + Vector3f(0.0f, 0.0f, 1.0f);
+    m_target = m_eye + Vector3f(0.0f, 0.0f, 1.0f);
     m_dirty = true;
   }
 
   void 
   Camera::updateViewMatrix()
   {
-    m_viewMatrix = m_viewMatrix.matrixLookAtLH(m_eye, m_front, m_up);
+    m_viewMatrix = m_viewMatrix.matrixLookAtLH(m_eye, m_target, m_up);
   }
 
   void 
@@ -68,9 +101,13 @@ namespace gzEngineSDK {
   void 
   Camera::updateCamera()
   {
-    if (!m_dirty) {
-      return;
-    }
+    if (!m_dirty) { return; }
+    
+    m_forward = (m_target - m_eye).getNormalized();
+    m_right = m_up.crossProduct(m_forward).getNormalized();
+    m_up = m_forward.crossProduct(m_right).getNormalized();
+
+
     updateViewMatrix();
     updateProjectionMatrix();
     m_dirty = false;

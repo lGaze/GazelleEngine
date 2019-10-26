@@ -17,6 +17,7 @@ namespace gzEngineSDK {
   class Vector2f;
   class Vector3f;
   class Vector4f;
+  class Quaternion;
   class Matrix4;
   class Box2D;
   class Plane;

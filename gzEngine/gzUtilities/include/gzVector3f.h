@@ -160,6 +160,23 @@ class GZ_UTILITY_EXPORT Vector3f
   float
   magitude() const;
 
+  /**
+   * @brief This function rotates the vector using quaternions
+   * @param float vector wich indicates the angle of rotation
+   * @param Vector3f wich indicates the axis of rotation
+   */
+  void
+  rotateq(float angle, Vector3f axis);
+
+  /**
+   * @brief This function rotates the vector
+   * @param float vector wich indicates the angle of rotation
+   * @param Vector3f wich indicates the axis of rotation
+   */
+  void
+  rotate(float angle, Vector3f axis);
+
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

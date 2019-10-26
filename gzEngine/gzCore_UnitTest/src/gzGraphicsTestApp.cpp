@@ -119,7 +119,6 @@ namespace gzEngineSDK {
       g_GraphicsManager().LoadTextureFromFile("Textures\\Robot\\default_emissive.jpg");
     tempMaterial->setEmissiveTexture(*tempTex);
 
-
     //Sets primitive topology
     g_GraphicsManager().setPrimitiveTopology(4);
 
@@ -144,6 +143,7 @@ namespace gzEngineSDK {
   GrapichsTestApp::update()
   {
     time = g_Time().getTime();
+    processInputs();
     Vector3f viewPos = CameraManager::instance().getActiveCameraEyePosition();
     cbLightBuffer.viewPosition = Vector4f(viewPos.x, viewPos.y, viewPos.z, 1.0f);
     cbLightBuffer.lightPosition = Vector4f(MenuOptions::s_lightPosition[0],
@@ -186,6 +186,36 @@ namespace gzEngineSDK {
       
     }
 
+    cbMatrixbuffer.world = g_World;
+    CameraManager::instance().update();
+    cbMatrixbuffer.view = CameraManager::instance().getActiveCameraViewMatrix();
+    cbMatrixbuffer.view.transpose();
+    g_GraphicsManager().updateSubresource(constantMatrix,
+                                          &cbMatrixbuffer);
+    g_GraphicsManager().setVSConstantBuffers(constantMatrix, 0, 1);
+    
+  }
+
+  void 
+  GrapichsTestApp::processInputs()
+  {
+    if (g_InputManager().wasButtonPressed(KEYBOARDBUTTONS::kArrowUp))
+    {
+      CameraManager::instance().rotateActiveCameraX(-1 * g_Time().getDelta());
+    }
+    if (g_InputManager().wasButtonPressed(KEYBOARDBUTTONS::kArrowDown))
+    {
+      CameraManager::instance().rotateActiveCameraX(1 * g_Time().getDelta());
+    }
+    if (g_InputManager().wasButtonPressed(KEYBOARDBUTTONS::kArrowLeft))
+    {
+      CameraManager::instance().rotateActiveCameraY(-1 * g_Time().getDelta());
+    }
+    if (g_InputManager().wasButtonPressed(KEYBOARDBUTTONS::kArrowRight))
+    {
+      CameraManager::instance().rotateActiveCameraY(1 * g_Time().getDelta());
+    }
+
     if (g_InputManager().wasButtonPressed(KEYBOARDBUTTONS::kKeyA))
     {
       CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::LEFT);
@@ -205,16 +235,6 @@ namespace gzEngineSDK {
     {
       CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::RIGHT);
     }
-
-
-    cbMatrixbuffer.world = g_World;
-    CameraManager::instance().update();
-    cbMatrixbuffer.view = CameraManager::instance().getActiveCameraViewMatrix();
-    cbMatrixbuffer.view.transpose();
-    g_GraphicsManager().updateSubresource(constantMatrix,
-                                          &cbMatrixbuffer);
-    g_GraphicsManager().setVSConstantBuffers(constantMatrix, 0, 1);
-    
   }
 
   bool 

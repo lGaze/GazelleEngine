@@ -202,12 +202,14 @@ namespace gzEngineSDK {
     m_pbrRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_toneMapRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_backBufferRT = g_GraphicsManager().getBackBufferTex();
+    m_ssaoRT = g_GraphicsManager().createTexture2D(renderTexDesc);
 
     m_pRTTextures.push_back(m_toneMapRT);
     m_pRTTextures.push_back(m_pbrRT);
     m_pRTTextures.insert(std::end(m_pRTTextures),
                          std::begin(m_gbufferRTTextures),
                          std::end(m_gbufferRTTextures));
+    m_pRTTextures.push_back(m_ssaoRT);
 
     m_gbufferVertexShader = g_GraphicsManager().CreateVertexShader(
       L"Shaders\\common.hlsl",
@@ -242,6 +244,11 @@ namespace gzEngineSDK {
 
     m_backBufferPixelShader = g_GraphicsManager().createPixelShader(
       L"Shaders\\backBufferPS.hlsl",
+      "ps_main",
+      "ps_4_0");
+
+    m_ssaoPixelShader = g_GraphicsManager().createPixelShader(
+      L"Shaders\\SSAO.hlsl",
       "ps_main",
       "ps_4_0");
 

@@ -535,16 +535,6 @@ namespace gzEngineSDK {
       __uuidof( ID3D11Texture2D ),
       ( LPVOID* ) m_ptexture->getTextureInterface());
 
-    
-
-    D3D11_TEXTURE2D_DESC tempTexDesc;
-    (*m_ptexture->getTextureInterface())->GetDesc( &tempTexDesc );
-
-    D3D11_RENDER_TARGET_VIEW_DESC tempDesc;
-    memset( &tempDesc, 0, sizeof( tempDesc ) );
-    tempDesc.Format = tempTexDesc.Format;
-    tempDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
-
     m_pdevice->CreateRenderTargetView(
       (*m_ptexture->getTextureInterface()),
       nullptr,

@@ -35,6 +35,12 @@ namespace gzEngineSDK {
     Quaternion(Vector3f axis, float angle);
 
     /**
+     * @brief Specialized constructor
+     * @param Vector3f wich indicates the axis of the quaternion
+     */
+    Quaternion(Vector3f v3);
+
+    /**
      * @brief default destructor
      */
     ~Quaternion() = default;
@@ -46,10 +52,11 @@ namespace gzEngineSDK {
     /**
      * @brief Overload of the * operator
      * @brief Reference to the Quaternion with wich the multiplication will be made.
-     * @return Quaternion with the multiplication value.
+     * @return Quaternion with the multiplication result .
      */
     Quaternion
     operator*(const Quaternion& quaternion) const;
+
 
     /************************************************************************/
     /* Quaternion functions                                                 */

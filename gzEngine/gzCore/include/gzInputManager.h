@@ -38,7 +38,11 @@ namespace KEYBOARDBUTTONS {
     kKeyX,
     kKeyY,
     kKeyZ,
-    kKeySpace
+    kKeySpace,
+    kArrowUp,
+    kArrowDown,
+    kArrowLeft,
+    kArrowRight
   };
 }
 

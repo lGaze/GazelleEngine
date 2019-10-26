@@ -89,6 +89,7 @@ class PBRRenderer : public Renderer
    PixelShader * m_toneMapPixelShader;
    PixelShader * m_pbrPixelShader;
    PixelShader * m_backBufferPixelShader;
+   PixelShader * m_ssaoPixelShader;
 
    //SamplerStates
    SamplerState * m_samplerState;
@@ -104,6 +105,8 @@ class PBRRenderer : public Renderer
    Texture * m_backBufferRT;
    Texture * m_irradiance;
    Texture * m_specularReflection;
+   Texture * m_ssaoRT;
+
    Vector<Texture *> m_gbufferRTTextures;
    Vector<Texture *> m_pRTTextures;
 

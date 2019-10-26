@@ -37,10 +37,28 @@ class GZ_CORE_EXPORT Camera
   move(Vector3f direction, float cameraSpeed);
 
   /**
-   * @brief This function makes the camera rotate.
+   * @brief This function moves the camera in the forward direction of the camera
    */
   void
-  rotate(Vector3f axis, float degrees);
+  moveForward(float cameraSpeed);
+
+  /**
+   * @brief This function moves the camera in the right direction of the camera
+   */
+  void
+  moveRight(float cameraSpeed);
+
+  /**
+   * @brief This function makes the camera rotate in X axis.
+   */
+  void
+  rotateX(float angle);
+
+  /**
+   * @brief This function makes the camera rotate in Y axis.
+   */
+  void
+  rotateY(float angle);
 
   /**
    * @brief This function sets camera position coordinates.
@@ -98,8 +116,11 @@ class GZ_CORE_EXPORT Camera
  private:
 
   Vector3f m_eye; //Camera Postition
-  Vector3f m_front; //Front Position
+  Vector3f m_target; //Front Position
   Vector3f m_up; //Camera up vector
+  Vector3f m_worldUp; //world up vector
+  Vector3f m_forward;
+  Vector3f m_right;
 
   double m_fovy; //field of view
   float m_aspect; //aspect of the window

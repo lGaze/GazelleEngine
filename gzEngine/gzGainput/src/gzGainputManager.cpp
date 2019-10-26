@@ -45,6 +45,10 @@ namespace gzEngineSDK {
     m_map->MapBool(KEYBOARDBUTTONS::kKeyA, m_keyboardId, gainput::KeyA);
     m_map->MapBool(KEYBOARDBUTTONS::kKeyS, m_keyboardId, gainput::KeyS);
     m_map->MapBool(KEYBOARDBUTTONS::kKeyD, m_keyboardId, gainput::KeyD);
+    m_map->MapBool(KEYBOARDBUTTONS::kArrowUp, m_keyboardId, gainput::KeyUp);
+    m_map->MapBool(KEYBOARDBUTTONS::kArrowDown, m_keyboardId, gainput::KeyDown);
+    m_map->MapBool(KEYBOARDBUTTONS::kArrowLeft, m_keyboardId, gainput::KeyLeft);
+    m_map->MapBool(KEYBOARDBUTTONS::kArrowRight, m_keyboardId, gainput::KeyRight);
   }
 
 }

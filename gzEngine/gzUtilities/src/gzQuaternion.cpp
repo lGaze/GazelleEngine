@@ -24,6 +24,11 @@ namespace gzEngineSDK {
     m_w = cosHalf;
   }
 
+  Quaternion::Quaternion(Vector3f v3) : m_x(v3.x), 
+                                        m_y(v3.y), 
+                                        m_z(v3.z), 
+                                        m_w(1.0f) {}
+
 
   Quaternion
   Quaternion::operator*(const Quaternion & quaternion) const {
@@ -31,25 +36,25 @@ namespace gzEngineSDK {
 
     res.m_w =
       ((m_w * quaternion.m_w) -
-      (m_x * quaternion.m_x) -
+       (m_x * quaternion.m_x) -
        (m_y * quaternion.m_y) -
        (m_z * quaternion.m_z));
 
     res.m_x =
       ((m_w * quaternion.m_x) +
-      (m_x * quaternion.m_w) +
+       (m_x * quaternion.m_w) +
        (m_y * quaternion.m_z) -
        (m_z * quaternion.m_y));
 
     res.m_y =
       ((m_w * quaternion.m_y) -
-      (m_x * quaternion.m_z) +
+       (m_x * quaternion.m_z) +
        (m_y * quaternion.m_w) +
        (m_z * quaternion.m_x));
 
     res.m_z =
       ((m_w * quaternion.m_z) +
-      (m_x * quaternion.m_y) -
+       (m_x * quaternion.m_y) -
        (m_y * quaternion.m_x) +
        (m_z * quaternion.m_w));
 
