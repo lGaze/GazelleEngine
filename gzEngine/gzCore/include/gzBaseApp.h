@@ -131,7 +131,7 @@ class GZ_CORE_EXPORT BaseApp : public Module<BaseApp>
    public:
 
    Buffer * constantLightBuffer;
-
+   Buffer * constantSSAOBuffer;
 };
 
 BaseApp&

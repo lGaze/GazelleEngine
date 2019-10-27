@@ -16,6 +16,10 @@ class MenuOptions : public Module<MenuOptions>
    static float s_lightPosition[3];
    static float s_color[4];
    static int32 s_rotation;
+   static float s_SampeRadiusValue;
+   static float s_intensityValue;
+   static float s_scaleValue;
+   static float s_biasValue;
 };
 MenuOptions&
 g_menuOptions();

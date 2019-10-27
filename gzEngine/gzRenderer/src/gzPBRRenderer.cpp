@@ -30,9 +30,10 @@ namespace gzEngineSDK {
     if (!SceneManager::instance().activeSceneEmpty())
     {
       gBufferPass();
+      ssaoPass();
     }
-    pbrPass();
-    toneMapPass();
+    //pbrPass();
+    //toneMapPass();
     renderToScreen(renderTarget);
   }
 
@@ -118,6 +119,38 @@ namespace gzEngineSDK {
     g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
                                     quad->m_mesh[0].indexBase,
                                     0);
+  }
+
+  void 
+  PBRRenderer::ssaoPass()
+  {
+    m_ssaoCBuffer = BaseApp::instance().constantSSAOBuffer;
+    g_GraphicsManager().clearRenderTargetView(ClearColor1, m_ssaoRT);
+    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::CLEAR_DEPTH,
+                                              1.0f,
+                                              0);
+    g_GraphicsManager().setRenderTarget(m_ssaoRT);
+    g_GraphicsManager().setRasterizerState(m_rasterizerState);
+    g_GraphicsManager().setInputLayout(m_pbrLayout);
+    g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
+    g_GraphicsManager().setPixelShader(m_ssaoPixelShader);
+    g_GraphicsManager().setPSConstantBuffers(m_ssaoCBuffer, 0, 1);
+    g_GraphicsManager().setShaderResources(m_positionsRT, 0, 1);
+    g_GraphicsManager().setShaderResources(m_normalsRT, 1, 1);
+    g_GraphicsManager().setVertexBuffers(0,
+                                         1,
+                                         quad->m_vertexBuffer,
+                                         &stride,
+                                         &offset);
+
+    g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
+                                       quad->m_indexBuffer,
+                                       offset);
+
+    g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
+                                    quad->m_mesh[0].indexBase,
+                                    0);
+
   }
 
   void 

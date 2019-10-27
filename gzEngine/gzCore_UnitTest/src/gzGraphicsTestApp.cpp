@@ -66,6 +66,9 @@ namespace gzEngineSDK {
     constantLightBuffer =
       g_GraphicsManager().createBuffer(bufferDesc, nullptr);
 
+    bufferDesc.ByteWidth = sizeof(cbSSAOVariables);
+    constantSSAOBuffer = g_GraphicsManager().createBuffer(bufferDesc, nullptr);
+
     SceneManager::instance().createScene();
     SceneManager::instance().setActiveScene();
 
@@ -158,6 +161,13 @@ namespace gzEngineSDK {
                                         MenuOptions::s_color[3]);
     g_GraphicsManager().updateSubresource(constantLightBuffer,
                                           &cbLightBuffer);
+
+    cbSSAOBuffer.viewPortDimensions = g_GraphicsManager().getViewportDimensions();
+    cbSSAOBuffer.g_Sample_radius = MenuOptions::s_SampeRadiusValue;
+    cbSSAOBuffer.g_Scale = MenuOptions::s_scaleValue;
+    cbSSAOBuffer.g_Intensity = MenuOptions::s_intensityValue;
+    cbSSAOBuffer.g_Bias = MenuOptions::s_biasValue;
+    g_GraphicsManager().updateSubresource(constantSSAOBuffer, &cbSSAOBuffer);
 
     switch (MenuOptions::s_rotation)
     {
@@ -339,6 +349,7 @@ namespace gzEngineSDK {
       ImGui::RadioButton("Albedo", &MenuOptions::s_testCounter, 3);
       ImGui::RadioButton("Normals", &MenuOptions::s_testCounter, 4);
       ImGui::RadioButton("Emissive", &MenuOptions::s_testCounter, 5);
+      ImGui::RadioButton("SSAO", &MenuOptions::s_testCounter, 6);
     }
     
     ImGui::RadioButton("None", &MenuOptions::s_rotation, 0);
@@ -353,6 +364,29 @@ namespace gzEngineSDK {
                       -1.0f,
                       1.0f);
     ImGui::ColorEdit4("Clear Color", &MenuOptions::s_color[0]);
+
+    ImGui::Spacing();
+    ImGui::Spacing();
+    ImGui::Spacing();
+    if (ImGui::CollapsingHeader("SSAO Variables")) {
+      ImGui::SliderFloat("Sample Radius", 
+                         &MenuOptions::s_SampeRadiusValue, 
+                         0.0f, 
+                         100.0f);
+      ImGui::SliderFloat("Intensity Value",
+                         &MenuOptions::s_intensityValue,
+                         0.0f,
+                         100.0f);     
+      ImGui::SliderFloat("Scale Value",
+                         &MenuOptions::s_scaleValue,
+                         0.0f,
+                         100.0f);
+
+      ImGui::SliderFloat("Bias Value",
+                         &MenuOptions::s_biasValue,
+                         0.0f,
+                         1.0f);
+    }
     ImGui::End();
     //Create ImGui SceneMenu
     ImGui::Begin("Scene");

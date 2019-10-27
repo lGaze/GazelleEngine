@@ -59,6 +59,12 @@ class PBRRenderer : public Renderer
    toneMapPass();
 
    /**
+    * @brief Screen Space Ambient Oclusion Pass
+    */
+   void
+   ssaoPass();
+
+   /**
     * @brief Renders the given texture
     */
    void
@@ -112,6 +118,7 @@ class PBRRenderer : public Renderer
 
    //Buffers
    Buffer * m_lightCBuffer;
+   Buffer * m_ssaoCBuffer;
 
    //QuadAligned
    Model * quad;

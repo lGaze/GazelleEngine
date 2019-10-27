@@ -108,8 +108,18 @@ class GrapichsTestApp : public BaseApp
      Vector4f clearColor;
    };
 
+   MS_ALIGN(16) struct cbSSAOVariables 
+   {
+     Vector2f viewPortDimensions;
+     float g_Sample_radius;
+     float g_Intensity;
+     float g_Scale;
+     float g_Bias;
+   };
+
    cbLight cbLightBuffer;
    cbMatrix cbMatrixbuffer;
+   cbSSAOVariables cbSSAOBuffer;
 
    Matrix4 g_World;
 
