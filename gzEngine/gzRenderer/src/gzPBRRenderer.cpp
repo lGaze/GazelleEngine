@@ -32,7 +32,7 @@ namespace gzEngineSDK {
       gBufferPass();
       ssaoPass();
       blurH(m_ssaoRT);
-      blurV(m_ssaoRT);
+      blurV(m_blurH1RT);
     }
     pbrPass();
     toneMapPass();
@@ -92,6 +92,7 @@ namespace gzEngineSDK {
   {
     m_lightCBuffer = BaseApp::instance().constantLightBuffer;
     g_GraphicsManager().setRenderTarget(m_pbrRT);
+    g_GraphicsManager().setViewports(1, m_viewport);
     g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
                                               1.0f,
                                               0);
@@ -195,6 +196,7 @@ namespace gzEngineSDK {
     g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
                                               1.0f,
                                               0);
+    g_GraphicsManager().setViewports(1, m_halfViewport);
     g_GraphicsManager().setRenderTarget(m_blurH1RT);
     g_GraphicsManager().setInputLayout(m_pbrLayout);
     g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
@@ -265,11 +267,15 @@ namespace gzEngineSDK {
 
     m_samplerState = g_GraphicsManager().createSamplerState(samplerDesc);
 
-    m_viewport = g_GraphicsManager().getViewport();
+    Vector2f vpDimensions = g_GraphicsManager().getViewportDimensions();
 
+    m_viewport = g_GraphicsManager().getViewport();
     g_GraphicsManager().setViewports(1, m_viewport);
 
-    Vector2f vpDimensions = g_GraphicsManager().getViewportDimensions();
+    m_halfViewport = m_viewport;
+    m_halfViewport.Width = vpDimensions.x * 0.5;
+    m_halfViewport.Height = vpDimensions.y * 0.5;
+
 
     //Texture desc
     TEXTURE2D_DESCRIPTOR renderTexDesc;
@@ -295,8 +301,8 @@ namespace gzEngineSDK {
     m_pbrRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_toneMapRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_backBufferRT = g_GraphicsManager().getBackBufferTex();
-    //renderTexDesc.Height = vpDimensions.y * 0.5;
-    //renderTexDesc.Width = vpDimensions.x * 0.5;
+    renderTexDesc.Height = vpDimensions.y * 0.5;
+    renderTexDesc.Width = vpDimensions.x * 0.5;
     m_blurH1RT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_blurV1RT = g_GraphicsManager().createTexture2D(renderTexDesc);
     renderTexDesc.Height = vpDimensions.y;

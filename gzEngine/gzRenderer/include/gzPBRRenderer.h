@@ -141,6 +141,7 @@ class PBRRenderer : public Renderer
 
    //Viewports
    VIEWPORT_DESCRIPTOR m_viewport;
+   VIEWPORT_DESCRIPTOR m_halfViewport;
 
    uint32 stride;
    uint32 offset;
