@@ -31,6 +31,8 @@ namespace gzEngineSDK {
     {
       gBufferPass();
       ssaoPass();
+      blurH(m_ssaoRT);
+      blurV(m_ssaoRT);
     }
     pbrPass();
     toneMapPass();
@@ -186,7 +188,62 @@ namespace gzEngineSDK {
     
   }
 
+  void
+  PBRRenderer::blurH(Texture * textureToBlur)
+  {
+    g_GraphicsManager().clearRenderTargetView(ClearColor1, m_blurH1RT);
+    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
+                                              1.0f,
+                                              0);
+    g_GraphicsManager().setRenderTarget(m_blurH1RT);
+    g_GraphicsManager().setInputLayout(m_pbrLayout);
+    g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
+    g_GraphicsManager().setPixelShader(m_blurh1PixelShader);
+    g_GraphicsManager().setShaderResources(textureToBlur, 0, 1);
+    g_GraphicsManager().setVertexBuffers(0,
+                                         1,
+                                         quad->m_vertexBuffer,
+                                         &stride,
+                                         &offset);
+
+    g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
+                                       quad->m_indexBuffer,
+                                       offset);
+
+    g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
+                                    quad->m_mesh[0].indexBase,
+                                    0);
+
+  }
+
   void 
+  PBRRenderer::blurV(Texture * textureToBlur)
+  {
+    g_GraphicsManager().clearRenderTargetView(ClearColor1, m_blurV1RT);
+    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
+                                              1.0f,
+                                              0);
+    g_GraphicsManager().setRenderTarget(m_blurV1RT);
+    g_GraphicsManager().setInputLayout(m_pbrLayout);
+    g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
+    g_GraphicsManager().setPixelShader(m_blurv1PixelShader);
+    g_GraphicsManager().setShaderResources(textureToBlur, 0, 1);
+    g_GraphicsManager().setVertexBuffers(0,
+                                         1,
+                                         quad->m_vertexBuffer,
+                                         &stride,
+                                         &offset);
+
+    g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
+                                       quad->m_indexBuffer,
+                                       offset);
+
+    g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
+                                    quad->m_mesh[0].indexBase,
+                                    0);
+  }
+
+  void
   PBRRenderer::initRenderer()
   {
     RASTERIZER_DESCRIPTOR rasterizerDes;
@@ -214,7 +271,7 @@ namespace gzEngineSDK {
 
     Vector2f vpDimensions = g_GraphicsManager().getViewportDimensions();
 
-    //Albedo Texture
+    //Texture desc
     TEXTURE2D_DESCRIPTOR renderTexDesc;
     memset(&renderTexDesc, 0, sizeof(renderTexDesc));
     renderTexDesc.Height = vpDimensions.y;
@@ -238,6 +295,13 @@ namespace gzEngineSDK {
     m_pbrRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_toneMapRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_backBufferRT = g_GraphicsManager().getBackBufferTex();
+    //renderTexDesc.Height = vpDimensions.y * 0.5;
+    //renderTexDesc.Width = vpDimensions.x * 0.5;
+    m_blurH1RT = g_GraphicsManager().createTexture2D(renderTexDesc);
+    m_blurV1RT = g_GraphicsManager().createTexture2D(renderTexDesc);
+    renderTexDesc.Height = vpDimensions.y;
+    renderTexDesc.Width = vpDimensions.x;
+    renderTexDesc.MipLevels = 4;
     m_ssaoRT = g_GraphicsManager().createTexture2D(renderTexDesc);
 
     m_pRTTextures.push_back(m_toneMapRT);
@@ -285,6 +349,16 @@ namespace gzEngineSDK {
 
     m_ssaoPixelShader = g_GraphicsManager().createPixelShader(
       L"Shaders\\SSAO.hlsl",
+      "ps_main",
+      "ps_4_0");
+
+    m_blurh1PixelShader = g_GraphicsManager().createPixelShader(
+      L"Shaders\\BlurH1PS.hlsl",
+      "ps_main",
+      "ps_4_0");
+
+    m_blurv1PixelShader = g_GraphicsManager().createPixelShader(
+      L"Shaders\\BlurV1PS.hlsl",
       "ps_main",
       "ps_4_0");
 

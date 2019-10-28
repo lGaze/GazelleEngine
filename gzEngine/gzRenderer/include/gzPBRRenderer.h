@@ -70,6 +70,18 @@ class PBRRenderer : public Renderer
    void
    renderToScreen(int32 renderTarget);
 
+   /**
+    * @brief Blur h pass function
+    */
+   void
+   blurH(Texture * textureToBlur);
+
+   /**
+    * @brief Blur v pass function
+    */
+   void
+   blurV(Texture * textureToBlur);
+
    void
    initRenderer();
 
@@ -96,6 +108,8 @@ class PBRRenderer : public Renderer
    PixelShader * m_pbrPixelShader;
    PixelShader * m_backBufferPixelShader;
    PixelShader * m_ssaoPixelShader;
+   PixelShader * m_blurh1PixelShader;
+   PixelShader * m_blurv1PixelShader;
 
    //SamplerStates
    SamplerState * m_samplerState;
@@ -112,6 +126,8 @@ class PBRRenderer : public Renderer
    Texture * m_irradiance;
    Texture * m_specularReflection;
    Texture * m_ssaoRT;
+   Texture * m_blurH1RT;
+   Texture * m_blurV1RT;
 
    Vector<Texture *> m_gbufferRTTextures;
    Vector<Texture *> m_pRTTextures;
