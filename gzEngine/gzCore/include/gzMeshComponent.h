@@ -34,8 +34,6 @@ class GZ_CORE_EXPORT MeshComponent : public Component
   COMPONENT_TYPE::E
   getComponentType();
 
-  /**/
-
   /**
    * @brief Loads a mesh into the component
    * @param Path of the mesh 
@@ -62,6 +60,7 @@ class GZ_CORE_EXPORT MeshComponent : public Component
 
  private:
 
+  bool m_isRendereable;
   ResourceHandle<Model> m_resource;
   COMPONENT_TYPE::E m_type;
    

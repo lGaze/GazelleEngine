@@ -46,6 +46,13 @@ class GZ_CORE_EXPORT Scene
   String
   getSceneName();
 
+/*
+  / **
+   * @brief Gets all the objects in the scene
+   * /
+  Vector<GameObject*>
+  getSceneGraph();*/
+
   /**
    * @brief Updates the scene
    */
@@ -53,10 +60,16 @@ class GZ_CORE_EXPORT Scene
   update();
 
   /**
-   * @brief Functionthat returns true if the root of the scene is nullptr
+   * @brief Function that returns true if the root of the scene is nullptr
    */
   bool
   isRootEmpty();
+
+  /**
+   * @brief This F¿function returns all the rendereable Game Objects
+   */
+  Vector<GameObject&>
+  rendereableGameObjects();
 
   /************************************************************************/
   /* Member declarations                                                  */

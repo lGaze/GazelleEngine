@@ -78,13 +78,19 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
   bool
   activeSceneEmpty();
 
+  /**
+   * @brief this function returns all the rendereable Game Objects
+   */
+  Vector3f
+  getRendereableGameObjects();
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 
  private:
 
-   Vector<Scene *> m_scenes;
-   Scene * m_activeScene;
+  Vector<Scene *> m_scenes;
+  Scene * m_activeScene;
  };
 }

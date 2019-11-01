@@ -52,4 +52,11 @@ namespace gzEngineSDK {
     return m_root == nullptr;
   }
 
+/*
+  Vector<GameObject&>
+  Scene::rendereableGameObjects()
+  {
+    m_root->
+  }*/
+
 }

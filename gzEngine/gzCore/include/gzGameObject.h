@@ -77,6 +77,13 @@ class GZ_CORE_EXPORT GameObject
   GameObject *
   findChildrenbyName(String gameObjectName);
 
+/*
+  / **
+   * @brief This function searchs in the children vector for rendereable objects
+   * /
+  Vector<GameObject*>
+  getRendereableChildrens();*/
+
   /**
    * @brief This function updates the game object
    */
@@ -97,6 +104,7 @@ private:
 
   Vector<Component*> m_components;
   Vector<GameObject*> m_children;
+  GameObject * m_parent;
    
  };
 }

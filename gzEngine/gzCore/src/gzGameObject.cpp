@@ -10,7 +10,8 @@
 
 namespace gzEngineSDK {
 
-  GameObject::GameObject() : m_isEneabled(true), m_objectName("GameObject") {}
+  GameObject::GameObject() : 
+    m_isEneabled(true), m_objectName("GameObject"){}
 
   void
   GameObject::addComponent(Component * newComponent)
@@ -63,6 +64,23 @@ namespace gzEngineSDK {
     }
     return nullptr;
   }
+
+/*
+  Vector<GameObject*> 
+  GameObject::getRendereableChildrens()
+  {
+/ *
+    Vector<GameObject*> temp;
+    for (uint32 i = 0; i < m_children.size(); i++)
+    {
+      if (m_children[i]->m_isRendereable)
+      {
+        temp.push_back(m_children[i]);
+      }
+    }
+    return temp;* /
+  }*/
+
   void 
   GameObject::update()
   {

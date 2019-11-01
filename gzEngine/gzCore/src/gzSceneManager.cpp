@@ -58,4 +58,12 @@ namespace gzEngineSDK {
   {
     return m_activeScene->isRootEmpty();
   }
+/*
+
+  Vector3f 
+  SceneManager::getRendereableGameObjects()
+  {
+    return;
+  }*/
+
 }

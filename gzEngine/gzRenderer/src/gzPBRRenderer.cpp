@@ -372,7 +372,7 @@ namespace gzEngineSDK {
       g_GraphicsManager().loadDDSTextureFromFile(L"Textures\\Vela\\CubeMap.dds");
     
     m_specularReflection =
-      g_GraphicsManager().loadDDSTextureFromFile(L"Textures\\galileo_cross.dds");
+      g_GraphicsManager().loadDDSTextureFromFile(L"Textures\\Vela\\Irradiance.dds");
 
     quad = new Model();
     quad->Load("Meshes\\QuadPerron.obj");
