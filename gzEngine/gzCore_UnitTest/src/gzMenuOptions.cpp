@@ -9,7 +9,7 @@
 
 int32 MenuOptions::s_testCounter = 0;
 float MenuOptions::s_lightPosition[3];
-float MenuOptions::s_color[4] = { 1,0.3,0.01,0 };
+float MenuOptions::s_color[4] = { 1.0f, 0.3f, 0.0f ,0.0f };
 int32 MenuOptions::s_rotation = 0;
 float MenuOptions::s_SampeRadiusValue = 0;
 float MenuOptions::s_intensityValue = 0;

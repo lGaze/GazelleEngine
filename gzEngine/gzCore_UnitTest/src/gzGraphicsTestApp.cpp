@@ -315,7 +315,6 @@ namespace gzEngineSDK {
   {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
     auto HWND = m_pwindow->getHandle();
     if (!ImGui_ImplWin32_Init(HWND)) {
       return false;

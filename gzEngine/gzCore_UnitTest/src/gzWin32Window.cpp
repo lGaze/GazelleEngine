@@ -51,7 +51,7 @@ namespace gzEngineSDK {
       return false;
 
     //Create window
-    RECT rc = { 0, 0, width, height };
+    RECT rc = { 0, 0, static_cast<LONG>(width),  static_cast<LONG>(height) };
     AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
     m_hWnd = CreateWindowEx(0, windowName.c_str(), windowName.c_str(),
                             WS_OVERLAPPEDWINDOW, posX, posY,

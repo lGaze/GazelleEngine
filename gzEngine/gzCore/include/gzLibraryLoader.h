@@ -26,12 +26,6 @@ class GZ_CORE_EXPORT LibraryLoader
   /* LibraryLoader functions                                              */
   /************************************************************************/
 
-  /**
-   * @brief Fuction that loads the given library 
-   */
-  bool
-  loadLibrary(String libraryName, String funcName);
-
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

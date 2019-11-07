@@ -273,15 +273,15 @@ namespace gzEngineSDK {
     g_GraphicsManager().setViewports(1, m_viewport);
 
     m_halfViewport = m_viewport;
-    m_halfViewport.Width = vpDimensions.x * 0.5;
-    m_halfViewport.Height = vpDimensions.y * 0.5;
+    m_halfViewport.Width = static_cast<float>(vpDimensions.x * 0.5);
+    m_halfViewport.Height = static_cast<float>(vpDimensions.y * 0.5);
 
 
     //Texture desc
     TEXTURE2D_DESCRIPTOR renderTexDesc;
     memset(&renderTexDesc, 0, sizeof(renderTexDesc));
-    renderTexDesc.Height = vpDimensions.y;
-    renderTexDesc.Width = vpDimensions.x;
+    renderTexDesc.Height = static_cast<uint32>(vpDimensions.y);
+    renderTexDesc.Width = static_cast<uint32>(vpDimensions.x);
     renderTexDesc.MipLevels = 1;
     renderTexDesc.ArraySize = 1;
     renderTexDesc.Format = 2;
@@ -301,12 +301,12 @@ namespace gzEngineSDK {
     m_pbrRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_toneMapRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_backBufferRT = g_GraphicsManager().getBackBufferTex();
-    renderTexDesc.Height = vpDimensions.y * 0.5;
-    renderTexDesc.Width = vpDimensions.x * 0.5;
+    renderTexDesc.Height = static_cast<uint32>(vpDimensions.y * 0.5);
+    renderTexDesc.Width = static_cast<uint32>(vpDimensions.x * 0.5);
     m_blurH1RT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_blurV1RT = g_GraphicsManager().createTexture2D(renderTexDesc);
-    renderTexDesc.Height = vpDimensions.y;
-    renderTexDesc.Width = vpDimensions.x;
+    renderTexDesc.Height = static_cast<uint32>(vpDimensions.y);
+    renderTexDesc.Width = static_cast<uint32>(vpDimensions.x);
     renderTexDesc.MipLevels = 4;
     m_ssaoRT = g_GraphicsManager().createTexture2D(renderTexDesc);
 

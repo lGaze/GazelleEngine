@@ -122,7 +122,7 @@ class GZ_CORE_EXPORT Camera
   Vector3f m_forward;
   Vector3f m_right;
 
-  double m_fovy; //field of view
+  float m_fovy; //field of view
   float m_aspect; //aspect of the window
   float m_zNear; //nearest point that the camera can see
   float m_zFar; //farest point that the camera can see

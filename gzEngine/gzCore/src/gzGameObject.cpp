@@ -24,16 +24,18 @@ namespace gzEngineSDK {
   {
   }
 
-  Component &
+  Component *
   GameObject::getComponent(COMPONENT_TYPE::E componentType)
   {
     for (auto it : m_components)
     {
       if(it->getComponentType() == componentType)
       {
-        return *it;
+        return it;
       }
     }
+
+    return nullptr;
   }
 
   void 

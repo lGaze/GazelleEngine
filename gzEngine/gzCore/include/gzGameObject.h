@@ -52,7 +52,7 @@ class GZ_CORE_EXPORT GameObject
    * @param The type of the wanted component
    * @return Reference to the wanted component
    */
-  Component &
+  Component *
   getComponent(COMPONENT_TYPE::E componentType);
 
   /**

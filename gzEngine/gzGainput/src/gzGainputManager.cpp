@@ -37,8 +37,8 @@ namespace gzEngineSDK {
     m_keyboardId =
       m_inputManager.CreateDevice<gainput::InputDeviceKeyboard>();
     m_inputManager.SetDisplaySize(
-      g_GraphicsManager().getViewportDimensions().x,
-      g_GraphicsManager().getViewportDimensions().y);
+      static_cast<uint32>( g_GraphicsManager().getViewportDimensions().x),
+      static_cast<uint32>( g_GraphicsManager().getViewportDimensions().y));
 
     m_map = new gainput::InputMap(m_inputManager);
     m_map->MapBool(KEYBOARDBUTTONS::kKeyW, m_keyboardId, gainput::KeyW);
