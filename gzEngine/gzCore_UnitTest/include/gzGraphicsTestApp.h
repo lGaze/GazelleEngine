@@ -108,13 +108,15 @@ class GrapichsTestApp : public BaseApp
      Vector4f clearColor;
    };
 
-   MS_ALIGN(16) struct cbSSAOVariables 
+   struct cbSSAOVariables 
    {
      Vector2f viewPortDimensions;
      float g_Sample_radius;
      float g_Intensity;
      float g_Scale;
      float g_Bias;
+
+     Vector2f unused;
    };
 
    cbLight cbLightBuffer;

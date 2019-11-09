@@ -18,7 +18,7 @@ namespace gzEngineSDK {
     m_up = Vector3f(0.0, 1.0, 0.0);
     m_worldUp = Vector3f(0.0f, 1.0f, 0.0f);
 
-    m_fovy = PIFOURTHS;
+    m_fovy = static_cast<float>(PIFOURTHS);
     m_aspect =
       g_GraphicsManager().getViewportDimensions().x / 
       g_GraphicsManager().getViewportDimensions().y;

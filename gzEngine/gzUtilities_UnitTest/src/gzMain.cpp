@@ -1,4 +1,6 @@
+#pragma warning(push, 0)
 #include <gtest/gtest.h>
+#pragma warning(pop)
 #include <gzMath.h>
 #include <gzVector2f.h>
 #include <gzVector3f.h>

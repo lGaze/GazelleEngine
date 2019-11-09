@@ -253,7 +253,6 @@
 #pragma  warning(disable : 4251)
 #pragma  warning(disable : 4996)
 #pragma  warning(disable : 4503)
-#pragma  warning(disable : 4324)
 
 #endif
 
