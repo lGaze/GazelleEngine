@@ -15,6 +15,7 @@ namespace gzEngineSDK {
   /************************************************************************/
   class PlatformMath;
   class Vector2f;
+  class Vector2i;
   class Vector3f;
   class Vector4f;
   class Quaternion;

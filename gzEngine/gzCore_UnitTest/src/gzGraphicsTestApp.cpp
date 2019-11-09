@@ -100,6 +100,7 @@ namespace gzEngineSDK {
       g_GraphicsManager().LoadTextureFromFile("Textures\\Droid\\17_-_Default_emissive.jpg");
     tempMaterial->setEmissiveTexture(*tempTex);*/
 
+
     //Robot Material
    //-------------------------------------------------------------------------------------//
     tempTex =
@@ -121,6 +122,29 @@ namespace gzEngineSDK {
     tempTex =
       g_GraphicsManager().LoadTextureFromFile("Textures\\Robot\\default_emissive.jpg");
     tempMaterial->setEmissiveTexture(*tempTex);
+
+/*
+    //Sphere
+    //-----------------------------------------------------------------------------------//
+    tempTex =
+      g_GraphicsManager().LoadTextureFromFile("Textures\\default_albedo.png");
+    tempMaterial->setAlbedoTexture(*tempTex);
+
+    tempTex =
+      g_GraphicsManager().LoadTextureFromFile("Meshes\\Sphere\\img.png");
+    tempMaterial->setMetallicTexture(*tempTex);
+
+    tempTex =
+      g_GraphicsManager().LoadTextureFromFile("Textures\\default_normal.png");
+    tempMaterial->setNormalTexture(*tempTex);
+
+    tempTex =
+      g_GraphicsManager().LoadTextureFromFile("Meshes\\Sphere\\imgR.jpg");
+    tempMaterial->setRoughnessTexture(*tempTex);
+
+    tempTex =
+      g_GraphicsManager().LoadTextureFromFile("Textures\\default_EMR.png");
+    tempMaterial->setEmissiveTexture(*tempTex);*/
 
     //Sets primitive topology
     g_GraphicsManager().setPrimitiveTopology(4);
@@ -368,23 +392,29 @@ namespace gzEngineSDK {
     ImGui::Spacing();
     ImGui::Spacing();
     if (ImGui::CollapsingHeader("SSAO Variables")) {
-      ImGui::SliderFloat("Sample Radius", 
-                         &MenuOptions::s_SampeRadiusValue, 
-                         0.0f, 
-                         100.0f);
-      ImGui::SliderFloat("Intensity Value",
-                         &MenuOptions::s_intensityValue,
-                         0.0f,
-                         100.0f);     
-      ImGui::SliderFloat("Scale Value",
-                         &MenuOptions::s_scaleValue,
-                         0.0f,
-                         100.0f);
+      ImGui::DragFloat("Sample Radius",
+                       &MenuOptions::s_SampeRadiusValue,
+                       0.1f,
+                       0.0f,
+                       100.0f);
 
-      ImGui::SliderFloat("Bias Value",
-                         &MenuOptions::s_biasValue,
-                         0.0f,
-                         1.0f);
+      ImGui::DragFloat("Intensity Value",
+                       &MenuOptions::s_intensityValue,
+                       0.1f,
+                       0.0f,
+                       100.0f);
+
+      ImGui::DragFloat("Scale Value",
+                       &MenuOptions::s_scaleValue,
+                       0.01f,
+                       0.0f,
+                       1.0f);
+
+      ImGui::DragFloat("Bias Value",
+                       &MenuOptions::s_biasValue,
+                       0.01f,
+                       0.0f,
+                       1.0f);
     }
     ImGui::End();
     //Create ImGui SceneMenu

@@ -183,6 +183,7 @@
     <ClInclude Include="include\gzTimer.h" />
     <ClInclude Include="include\gzTriangle.h" />
     <ClInclude Include="include\gzVector2f.h" />
+    <ClInclude Include="include\gzVector2i.h" />
     <ClInclude Include="include\gzVector3f.h" />
     <ClInclude Include="include\gzVector4f.h" />
   </ItemGroup>
@@ -198,6 +199,7 @@
     <ClCompile Include="src\gzTimer.cpp" />
     <ClCompile Include="src\gzTriangle.cpp" />
     <ClCompile Include="src\gzVector2f.cpp" />
+    <ClCompile Include="src\gzVector2i.cpp" />
     <ClCompile Include="src\gzVector3f.cpp" />
     <ClCompile Include="src\gzVector4f.cpp" />
   </ItemGroup>

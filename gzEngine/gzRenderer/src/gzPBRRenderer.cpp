@@ -42,11 +42,11 @@ namespace gzEngineSDK {
   void 
   PBRRenderer::gBufferPass()
   {
-
-    g_GraphicsManager().clearRenderTargetView(ClearColor1, m_positionsRT);
-    g_GraphicsManager().clearRenderTargetView(ClearColor1, m_albedoRT);
-    g_GraphicsManager().clearRenderTargetView(ClearColor1, m_normalsRT);
-    g_GraphicsManager().clearRenderTargetView(ClearColor1, m_emissiveRT);
+    float tansparent[4]{ 0.0f, 0.0f, 0.0f, 0.0f };
+    g_GraphicsManager().clearRenderTargetView(tansparent, m_positionsRT);
+    g_GraphicsManager().clearRenderTargetView(tansparent, m_albedoRT);
+    g_GraphicsManager().clearRenderTargetView(tansparent, m_normalsRT);
+    g_GraphicsManager().clearRenderTargetView(tansparent, m_emissiveRT);
     g_GraphicsManager().setRenderTargets(m_gbufferRTTextures);
 
     g_GraphicsManager().setInputLayout(m_gbufferLayout);
@@ -62,9 +62,9 @@ namespace gzEngineSDK {
   PBRRenderer::ssaoPass()
   {
     m_ssaoCBuffer = BaseApp::instance().constantSSAOBuffer;
-
+    float wite[4]{ 1.0f, 1.0f, 1.0f, 1.0f };
+    g_GraphicsManager().clearRenderTargetView(wite, m_ssaoRT);
     g_GraphicsManager().setRenderTarget(m_ssaoRT);
-    g_GraphicsManager().clearRenderTargetView(ClearColor1, m_ssaoRT);
     g_GraphicsManager().setInputLayout(m_pbrLayout);
     g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
     g_GraphicsManager().setPixelShader(m_ssaoPixelShader);
@@ -120,9 +120,8 @@ namespace gzEngineSDK {
     }
 
     g_GraphicsManager().setShaderResources(m_irradiance, 4, 1);
-    g_GraphicsManager().setShaderResources(m_specularReflection, 5, 1);
-    g_GraphicsManager().setShaderResources(m_lut, 6, 1);
-    g_GraphicsManager().setShaderResources(m_ssaoRT, 7, 1);
+    g_GraphicsManager().setShaderResources(m_lut, 5, 1);
+    g_GraphicsManager().setShaderResources(m_ssaoRT, 6, 1);
 
     g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
                                     quad->m_mesh[0].indexBase,
@@ -284,7 +283,7 @@ namespace gzEngineSDK {
     renderTexDesc.Width = static_cast<uint32>(vpDimensions.x);
     renderTexDesc.MipLevels = 1;
     renderTexDesc.ArraySize = 1;
-    renderTexDesc.Format = 2;
+    renderTexDesc.Format = FORMATS::E::FORMAT_R32G32B32A32_FLOAT;
     renderTexDesc.Usage = USAGES::E::USAGE_DEFAULT;
     renderTexDesc.BindFlags = BIND_FLAGS::E::BIND_SHADER_RESOURCE | BIND_FLAGS::E::BIND_RENDER_TARGET;
     renderTexDesc.CPUAccessFlags = 0;
@@ -369,7 +368,7 @@ namespace gzEngineSDK {
       "ps_4_0");
 
     m_irradiance = 
-      g_GraphicsManager().loadDDSTextureFromFile(L"Textures\\Vela\\CubeMap.dds");
+      g_GraphicsManager().loadDDSTextureFromFile(L"Textures\\DDS\\Garage.dds");
     
     m_specularReflection =
       g_GraphicsManager().loadDDSTextureFromFile(L"Textures\\Vela\\Irradiance.dds");
