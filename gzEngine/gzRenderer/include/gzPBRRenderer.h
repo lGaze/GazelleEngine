@@ -82,8 +82,25 @@ class PBRRenderer : public Renderer
    void
    blurV(Texture * textureToBlur);
 
+   /**
+    * @brief This function initializes all the objects that the renderer needs
+    */
    void
    initRenderer();
+
+   /**
+    * @brief This function creates the render targets and the textures 
+    * that are going to be used in the renderer.
+    */
+   void
+   createRendererTextures();
+
+   /**
+    * @brief This function creates the shaders that are going to be used in the 
+    * renderer.
+    */
+   void
+   createRendererShaders();
 
   /************************************************************************/
   /* PBRRenderer declarations                                             */
@@ -112,7 +129,8 @@ class PBRRenderer : public Renderer
    PixelShader * m_blurv1PixelShader;
 
    //SamplerStates
-   SamplerState * m_samplerState;
+   SamplerState * m_linearSampler;
+   SamplerState * m_pointSampler;
 
    //Textures/RenderTargets
    Texture * m_positionsRT;
@@ -128,7 +146,6 @@ class PBRRenderer : public Renderer
    Texture * m_ssaoRT;
    Texture * m_blurH1RT;
    Texture * m_blurV1RT;
-
    Vector<Texture *> m_gbufferRTTextures;
    Vector<Texture *> m_pRTTextures;
 

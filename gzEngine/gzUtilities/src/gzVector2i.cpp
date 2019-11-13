@@ -75,28 +75,4 @@ namespace gzEngineSDK {
   Vector2i::dot(const Vector2i& Vector) {
     return x * Vector.x + y * Vector.y;
   }
-
-  FORCEINLINE float
-  Vector2i::crossProduct(const Vector2i & Vector)
-  {
-    return x * Vector.y - y * Vector.x;
-  }
-
-  FORCEINLINE Vector2i
-  Vector2i::getNormalized() {
-    float mag = magitude();
-    return Vector2i(x / mag, y / mag);
-  }
-
-  void
-  Vector2i::normalize() {
-    float mag = magitude();
-    x /= mag;
-    y /= mag;
-  }
-
-  float
-  Vector2i::magitude() const {
-    return Math::sqrt((x*x) + (y*y));
-  }
 }

@@ -129,34 +129,6 @@ namespace gzEngineSDK {
     FORCEINLINE float
     dot(const Vector2i& Vector);
 
-    /**
-     * @brief This function computes a Cross Product
-     * @param Vector2i with wich the Cross Product will be calculated
-     * @return Float value wich indicates the result of the operation
-     */
-    FORCEINLINE float
-    crossProduct(const Vector2i& Vector);
-
-    /**
-     * @brief This function normalizes the Vector2i
-     * @return Normalized Vector2i
-     */
-    FORCEINLINE Vector2i
-    getNormalized();
-
-    /**
-     * @brief This function normalizes the Vector3i
-     */
-    void
-    normalize();
-
-    /**
-     * @brief This function gets the magnitude of the Vector2i
-     * @param Float value wich indicates the magnitude of the Vector2i
-     */
-    float
-     magitude() const;
-
     /************************************************************************/
     /* Member declarations                                                  */
     /************************************************************************/

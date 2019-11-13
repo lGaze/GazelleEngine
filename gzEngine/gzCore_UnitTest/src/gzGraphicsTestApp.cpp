@@ -373,6 +373,7 @@ namespace gzEngineSDK {
       ImGui::RadioButton("Normals", &MenuOptions::s_testCounter, 4);
       ImGui::RadioButton("Emissive", &MenuOptions::s_testCounter, 5);
       ImGui::RadioButton("SSAO", &MenuOptions::s_testCounter, 6);
+      ImGui::RadioButton("BlurSSAO", &MenuOptions::s_testCounter, 7);
     }
     
     ImGui::RadioButton("None", &MenuOptions::s_rotation, 0);

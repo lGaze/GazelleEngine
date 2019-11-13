@@ -156,8 +156,8 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    */
   virtual void
   clearDepthStencilView( uint32 ClearFlags,
-                         float Depthf,
-                         uint8 Stencil ) = 0;
+                         float Depthf = 1.0f,
+                         uint8 Stencil = 0 ) = 0;
 
 
   /**

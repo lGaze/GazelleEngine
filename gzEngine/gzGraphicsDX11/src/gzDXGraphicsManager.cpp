@@ -229,9 +229,9 @@ namespace gzEngineSDK {
   }
 
   void
-  DXGraphicsManager::clearDepthStencilView( uint32 ClearFlags,
-                                              float Depthf,
-                                              uint8 Stencil )
+  DXGraphicsManager::clearDepthStencilView(uint32 ClearFlags,
+                                           float Depthf,
+                                           uint8 Stencil)
   {
     m_pdepth = reinterpret_cast< DXTexture* >( m_pdepthStencilView );
     m_pdeviceContext->ClearDepthStencilView(

@@ -67,8 +67,8 @@ class DXGraphicsManager : public GraphicsManager
    */
   virtual void 
   clearDepthStencilView( uint32 ClearFlags, 
-                         float Depthf, 
-                         uint8 Stencil ) override;
+                         float Depthf = 1.0f, 
+                         uint8 Stencil = 0 ) override;
 
   /**
    * @brief 

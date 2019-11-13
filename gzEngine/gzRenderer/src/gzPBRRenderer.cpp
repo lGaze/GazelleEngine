@@ -24,9 +24,6 @@ namespace gzEngineSDK {
   PBRRenderer::render(int32 renderTarget, float clearColor[4])
   {
     memcpy(ClearColor1,clearColor,sizeof(ClearColor1));
-    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
-                                              1.0f,
-                                              0);
     if (!SceneManager::instance().activeSceneEmpty())
     {
       gBufferPass();
@@ -47,12 +44,13 @@ namespace gzEngineSDK {
     g_GraphicsManager().clearRenderTargetView(tansparent, m_albedoRT);
     g_GraphicsManager().clearRenderTargetView(tansparent, m_normalsRT);
     g_GraphicsManager().clearRenderTargetView(tansparent, m_emissiveRT);
+    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH);
     g_GraphicsManager().setRenderTargets(m_gbufferRTTextures);
-
+    g_GraphicsManager().setRasterizerState(m_rasterizerState);
     g_GraphicsManager().setInputLayout(m_gbufferLayout);
     g_GraphicsManager().setVertexShader(m_gbufferVertexShader);
     g_GraphicsManager().setPixelShader(m_gbufferPixelShader);
-    g_GraphicsManager().setSamplerState(0, m_samplerState, 1);
+    g_GraphicsManager().setSamplerState(0, m_linearSampler, 1);
 
     SceneManager::instance().update();
 
@@ -92,25 +90,14 @@ namespace gzEngineSDK {
   {
     m_lightCBuffer = BaseApp::instance().constantLightBuffer;
     g_GraphicsManager().setRenderTarget(m_pbrRT);
+    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH);
     g_GraphicsManager().setViewports(1, m_viewport);
-    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
-                                              1.0f,
-                                              0);
+    g_GraphicsManager().setSamplerState(0, m_pointSampler, 1);
     g_GraphicsManager().clearRenderTargetView(ClearColor1, m_pbrRT);
-    g_GraphicsManager().setRasterizerState(m_rasterizerState);
     g_GraphicsManager().setInputLayout(m_pbrLayout);
     g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
     g_GraphicsManager().setPSConstantBuffers(m_lightCBuffer, 0, 1);
     g_GraphicsManager().setPixelShader(m_pbrPixelShader);
-    g_GraphicsManager().setVertexBuffers(0,
-                                         1,
-                                         quad->m_vertexBuffer,
-                                         &stride,
-                                         &offset);
-
-    g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
-                                       quad->m_indexBuffer,
-                                       offset);
 
     for (uint32 i = 0; i < m_gbufferRTTextures.size(); ++i)
     {
@@ -121,7 +108,17 @@ namespace gzEngineSDK {
 
     g_GraphicsManager().setShaderResources(m_irradiance, 4, 1);
     g_GraphicsManager().setShaderResources(m_lut, 5, 1);
-    g_GraphicsManager().setShaderResources(m_ssaoRT, 6, 1);
+    g_GraphicsManager().setShaderResources(m_blurV1RT, 6, 1);
+
+    g_GraphicsManager().setVertexBuffers(0,
+                                         1,
+                                         quad->m_vertexBuffer,
+                                         &stride,
+                                         &offset);
+
+    g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
+                                       quad->m_indexBuffer,
+                                       offset);
 
     g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
                                     quad->m_mesh[0].indexBase,
@@ -133,15 +130,14 @@ namespace gzEngineSDK {
   PBRRenderer::toneMapPass()
   {
     g_GraphicsManager().clearRenderTargetView(ClearColor1, m_toneMapRT);
-    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
-                                              1.0f,
-                                              0);
     g_GraphicsManager().setRenderTarget(m_toneMapRT);
+    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH);
     g_GraphicsManager().setRasterizerState(m_rasterizerState);
     g_GraphicsManager().setInputLayout(m_pbrLayout);
     g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
     g_GraphicsManager().setPixelShader(m_toneMapPixelShader);
     g_GraphicsManager().setShaderResources(m_pbrRT, 0, 1);
+
     g_GraphicsManager().setVertexBuffers(0,
                                          1,
                                          quad->m_vertexBuffer,
@@ -162,16 +158,14 @@ namespace gzEngineSDK {
   PBRRenderer::renderToScreen(int32 renderTarget)
   {
     g_GraphicsManager().clearRenderTargetView(ClearColor1, m_backBufferRT);
-    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
-                                              1.0f,
-                                              0);
     g_GraphicsManager().setRenderTarget(m_backBufferRT);
+    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH);
     g_GraphicsManager().setRasterizerState(m_rasterizerState);
     g_GraphicsManager().setInputLayout(m_pbrLayout);
     g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
     g_GraphicsManager().setPixelShader(m_backBufferPixelShader);
-
     g_GraphicsManager().setShaderResources(m_pRTTextures[renderTarget], 0, 1);
+
     g_GraphicsManager().setVertexBuffers(0,
                                          1,
                                          quad->m_vertexBuffer,
@@ -184,23 +178,23 @@ namespace gzEngineSDK {
 
     g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
                                     quad->m_mesh[0].indexBase,
-                                    0);
-    
+                                    0); 
   }
 
   void
   PBRRenderer::blurH(Texture * textureToBlur)
   {
-    g_GraphicsManager().clearRenderTargetView(ClearColor1, m_blurH1RT);
-    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
-                                              1.0f,
-                                              0);
-    g_GraphicsManager().setViewports(1, m_halfViewport);
+    float wite[4]{ 1.0f, 1.0f, 1.0f, 1.0f };
+    g_GraphicsManager().clearRenderTargetView(wite, m_blurH1RT);
+    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH);
     g_GraphicsManager().setRenderTarget(m_blurH1RT);
     g_GraphicsManager().setInputLayout(m_pbrLayout);
+    g_GraphicsManager().setSamplerState(0, m_linearSampler, 1);
+    g_GraphicsManager().setSamplerState(1, m_pointSampler, 1);
     g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
     g_GraphicsManager().setPixelShader(m_blurh1PixelShader);
     g_GraphicsManager().setShaderResources(textureToBlur, 0, 1);
+
     g_GraphicsManager().setVertexBuffers(0,
                                          1,
                                          quad->m_vertexBuffer,
@@ -221,14 +215,15 @@ namespace gzEngineSDK {
   PBRRenderer::blurV(Texture * textureToBlur)
   {
     g_GraphicsManager().clearRenderTargetView(ClearColor1, m_blurV1RT);
-    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH,
-                                              1.0f,
-                                              0);
+    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH);
     g_GraphicsManager().setRenderTarget(m_blurV1RT);
     g_GraphicsManager().setInputLayout(m_pbrLayout);
+    g_GraphicsManager().setSamplerState(0, m_linearSampler, 1);
+    g_GraphicsManager().setSamplerState(1, m_pointSampler, 1);
     g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
     g_GraphicsManager().setPixelShader(m_blurv1PixelShader);
     g_GraphicsManager().setShaderResources(textureToBlur, 0, 1);
+
     g_GraphicsManager().setVertexBuffers(0,
                                          1,
                                          quad->m_vertexBuffer,
@@ -247,6 +242,7 @@ namespace gzEngineSDK {
   void
   PBRRenderer::initRenderer()
   {
+    //Rasterizer
     RASTERIZER_DESCRIPTOR rasterizerDes;
     memset(&rasterizerDes, 0, sizeof(rasterizerDes));
     rasterizerDes.CullMode = CULL_MODE::E::CULL_NONE;
@@ -254,6 +250,7 @@ namespace gzEngineSDK {
 
     m_rasterizerState = g_GraphicsManager().createRasterizerState(rasterizerDes);
 
+    //Sampler Descriptor
     SAMPLER_DESCRIPTOR samplerDesc;
     memset(&samplerDesc, 0, sizeof(samplerDesc));
     samplerDesc.Filter = FILTER::E::FILTER_MIN_MAG_MIP_LINEAR;
@@ -264,17 +261,30 @@ namespace gzEngineSDK {
     samplerDesc.MinLOD = 0;
     samplerDesc.MaxLOD = 3.402823466e+38f;
 
-    m_samplerState = g_GraphicsManager().createSamplerState(samplerDesc);
+    //Linear Sampler
+    m_linearSampler = g_GraphicsManager().createSamplerState(samplerDesc);
 
-    Vector2f vpDimensions = g_GraphicsManager().getViewportDimensions();
+    //Point Sampler
+    samplerDesc.Filter = FILTER::E::FILTER_MAXIMUM_MIN_MAG_MIP_POINT;
+    m_pointSampler = g_GraphicsManager().createSamplerState(samplerDesc);
 
+    //Viewport
     m_viewport = g_GraphicsManager().getViewport();
     g_GraphicsManager().setViewports(1, m_viewport);
 
-    m_halfViewport = m_viewport;
-    m_halfViewport.Width = static_cast<float>(vpDimensions.x * 0.5);
-    m_halfViewport.Height = static_cast<float>(vpDimensions.y * 0.5);
+    createRendererTextures();
+    createRendererShaders();
 
+    quad = new Model();
+    quad->Load("Meshes\\QuadPerron.obj");
+
+  }
+
+  void
+  PBRRenderer::createRendererTextures()
+  {
+    //Gets the default Viewport Dimentions 
+    Vector2f vpDimensions = g_GraphicsManager().getViewportDimensions();
 
     //Texture desc
     TEXTURE2D_DESCRIPTOR renderTexDesc;
@@ -285,27 +295,34 @@ namespace gzEngineSDK {
     renderTexDesc.ArraySize = 1;
     renderTexDesc.Format = FORMATS::E::FORMAT_R32G32B32A32_FLOAT;
     renderTexDesc.Usage = USAGES::E::USAGE_DEFAULT;
-    renderTexDesc.BindFlags = BIND_FLAGS::E::BIND_SHADER_RESOURCE | BIND_FLAGS::E::BIND_RENDER_TARGET;
+    renderTexDesc.BindFlags = BIND_FLAGS::E::BIND_SHADER_RESOURCE | 
+                              BIND_FLAGS::E::BIND_RENDER_TARGET;
     renderTexDesc.CPUAccessFlags = 0;
     renderTexDesc.MiscFlags = 0;
 
+    //Shader Resources/Render Targets
     m_positionsRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_gbufferRTTextures.push_back(m_positionsRT);
+
     m_albedoRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_gbufferRTTextures.push_back(m_albedoRT);
+
     m_normalsRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_gbufferRTTextures.push_back(m_normalsRT);
+
     m_emissiveRT = g_GraphicsManager().createTexture2D(renderTexDesc);
     m_gbufferRTTextures.push_back(m_emissiveRT);
+
     m_pbrRT = g_GraphicsManager().createTexture2D(renderTexDesc);
+
     m_toneMapRT = g_GraphicsManager().createTexture2D(renderTexDesc);
+
     m_backBufferRT = g_GraphicsManager().getBackBufferTex();
-    renderTexDesc.Height = static_cast<uint32>(vpDimensions.y * 0.5);
-    renderTexDesc.Width = static_cast<uint32>(vpDimensions.x * 0.5);
+
     m_blurH1RT = g_GraphicsManager().createTexture2D(renderTexDesc);
+
     m_blurV1RT = g_GraphicsManager().createTexture2D(renderTexDesc);
-    renderTexDesc.Height = static_cast<uint32>(vpDimensions.y);
-    renderTexDesc.Width = static_cast<uint32>(vpDimensions.x);
+
     renderTexDesc.MipLevels = 4;
     m_ssaoRT = g_GraphicsManager().createTexture2D(renderTexDesc);
 
@@ -315,7 +332,23 @@ namespace gzEngineSDK {
                          std::begin(m_gbufferRTTextures),
                          std::end(m_gbufferRTTextures));
     m_pRTTextures.push_back(m_ssaoRT);
+    m_pRTTextures.push_back(m_blurV1RT);
 
+    //Shader Resources
+    m_irradiance =
+      g_GraphicsManager().loadDDSTextureFromFile(L"Textures\\DDS\\Garage.dds");
+
+    m_specularReflection =
+      g_GraphicsManager().loadDDSTextureFromFile(L"Textures\\Vela\\Irradiance.dds");
+
+    m_lut =
+      g_GraphicsManager().LoadTextureFromFile("Textures\\ibl_brdf_lut.png");
+
+  }
+
+  void 
+  PBRRenderer::createRendererShaders()
+  {
     m_gbufferVertexShader = g_GraphicsManager().CreateVertexShader(
       L"Shaders\\common.hlsl",
       "vs_main",
@@ -358,25 +391,13 @@ namespace gzEngineSDK {
       "ps_4_0");
 
     m_blurh1PixelShader = g_GraphicsManager().createPixelShader(
-      L"Shaders\\BlurH1PS.hlsl",
+      L"Shaders\\BlurHPS.hlsl",
       "ps_main",
       "ps_4_0");
 
     m_blurv1PixelShader = g_GraphicsManager().createPixelShader(
-      L"Shaders\\BlurV1PS.hlsl",
+      L"Shaders\\BlurVPS.hlsl",
       "ps_main",
       "ps_4_0");
-
-    m_irradiance = 
-      g_GraphicsManager().loadDDSTextureFromFile(L"Textures\\DDS\\Garage.dds");
-    
-    m_specularReflection =
-      g_GraphicsManager().loadDDSTextureFromFile(L"Textures\\Vela\\Irradiance.dds");
-
-    quad = new Model();
-    quad->Load("Meshes\\QuadPerron.obj");
-
-    m_lut = g_GraphicsManager().LoadTextureFromFile("Textures\\ibl_brdf_lut.png");
-
   }
 }
