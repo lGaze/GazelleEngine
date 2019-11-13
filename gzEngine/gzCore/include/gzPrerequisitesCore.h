@@ -11,6 +11,7 @@
 #include <gzMatrix4.h>
 #include <gzVector3f.h>
 #include <gzVector2f.h>
+#include <gzVector2i.h>
 #include <gzVector4f.h>
 #include <gzQuaternion.h>
 

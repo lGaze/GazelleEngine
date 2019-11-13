@@ -253,7 +253,7 @@ class DXGraphicsManager : public GraphicsManager
   /**
    * @brief Gets the Viewport dimentions
    */
-  virtual Vector2f 
+  virtual Vector2i
   getViewportDimensions() override;
 
   /**
@@ -369,7 +369,7 @@ class DXGraphicsManager : public GraphicsManager
   /**
    * @brief 
    */
-  Vector2f m_viewportDimensions;
+  Vector2i m_viewportDimensions;
 
  };
 }

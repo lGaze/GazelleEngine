@@ -41,7 +41,7 @@ namespace gzEngineSDK {
      * @param Reference to the Vector2i with which the addition will be made.
      * @return Vector2i with the result of the addition.
      */
-    FORCEINLINE Vector2i
+    Vector2i
     operator+(const Vector2i& Vector) const;
 
     /**
@@ -49,7 +49,7 @@ namespace gzEngineSDK {
      * @param Reference to the Vector2i with which the substraction will be made.
      * @return Vector2i with the result of the substraction.
      */
-    FORCEINLINE Vector2i
+    Vector2i
     operator-(const Vector2i& Vector) const;
 
     /**
@@ -57,15 +57,15 @@ namespace gzEngineSDK {
      * @param Float value whic indicates the Scalar with which the multiplication will be made.
      * @return Vector3f with the result of the multiplication.
      */
-    FORCEINLINE Vector2i
-    operator*(float Scalar) const;
+    Vector2i
+    operator*(uint32 Scalar) const;
 
     /**
      * @brief Overlad of the * operator
      * @param Reference to the Vector3f with which the multiplication will be made.
      * @return Vector2i with the result of the multiplication.
      */
-    FORCEINLINE Vector2i
+    Vector2i
     operator*(const Vector2i& Vector) const;
 
     /**
@@ -73,15 +73,15 @@ namespace gzEngineSDK {
      * @param Float value whic indicates the Scalar with which the division will be made.
      * @return Vector2i with the result of the division.
      */
-    FORCEINLINE Vector2i
-    operator/(float Scalar) const;
+    Vector2i
+    operator/(uint32 Scalar) const;
 
     /**
      * @brief Overlad of the / operator
      * @param Reference to the Vector3f with which the division will be made.
      * @return Vector2i with the result of the division.
      */
-    FORCEINLINE Vector2i
+    Vector2i
     operator/(const Vector2i& Vector) const;
 
     /**
@@ -89,7 +89,7 @@ namespace gzEngineSDK {
      * @param Vector2i with which the adition will be made.
      * @return Vector2i with the addition result values.
      */
-    FORCEINLINE Vector2i
+    Vector2i
     operator+=(const Vector2i& Vector);
 
     /**
@@ -97,7 +97,7 @@ namespace gzEngineSDK {
      * @param Vector2i with which the substraction will be made.
      * @return Vector2i with the substraction result values.
      */
-    FORCEINLINE Vector2i
+    Vector2i
     operator-=(const Vector2i& Vector);
 
     /**
@@ -105,16 +105,16 @@ namespace gzEngineSDK {
      * @param Vector2i with which the multiplication will be made.
      * @return Vector2i with the multiplication result values.
      */
-    FORCEINLINE Vector2i
-    operator*=(float Scalar);
+    Vector2i
+    operator*=(uint32 Scalar);
 
     /**
      * @brief Overlad of the /= operator
      * @param Vector2i with which the division will be made.
      * @return Vector2i with the division result values.
      */
-    FORCEINLINE Vector2i
-    operator/=(float Scalar);
+    Vector2i
+    operator/=(uint32 Scalar);
 
 
     /************************************************************************/
@@ -126,7 +126,7 @@ namespace gzEngineSDK {
      * @param Vector2i with wich the Dot Product will be calculated
      * @return Float value wich indicates the result of the operation
      */
-    FORCEINLINE float
+    uint32
     dot(const Vector2i& Vector);
 
     /************************************************************************/

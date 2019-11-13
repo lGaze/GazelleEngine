@@ -110,7 +110,7 @@ class GrapichsTestApp : public BaseApp
 
    struct cbSSAOVariables 
    {
-     Vector2f viewPortDimensions;
+     Vector2i viewPortDimensions;
      float g_Sample_radius;
      float g_Intensity;
      float g_Scale;

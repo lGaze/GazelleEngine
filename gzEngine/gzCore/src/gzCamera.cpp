@@ -20,8 +20,8 @@ namespace gzEngineSDK {
 
     m_fovy = static_cast<float>(PIFOURTHS);
     m_aspect =
-      g_GraphicsManager().getViewportDimensions().x / 
-      g_GraphicsManager().getViewportDimensions().y;
+      static_cast<float>(g_GraphicsManager().getViewportDimensions().x) /
+      static_cast<float>(g_GraphicsManager().getViewportDimensions().y);
     m_zNear = DEFAULT_NEAR;
     m_zFar = DEFAULT_FAR;
 

@@ -266,7 +266,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
   /**
    * @brief Gets the Viewport dimensions
    */
-  virtual Vector2f
+  virtual Vector2i
   getViewportDimensions() = 0;
 
   /**

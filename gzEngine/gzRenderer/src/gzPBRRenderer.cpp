@@ -265,7 +265,7 @@ namespace gzEngineSDK {
     m_linearSampler = g_GraphicsManager().createSamplerState(samplerDesc);
 
     //Point Sampler
-    samplerDesc.Filter = FILTER::E::FILTER_MAXIMUM_MIN_MAG_MIP_POINT;
+    samplerDesc.Filter = FILTER::E::FILTER_MIN_MAG_MIP_POINT;
     m_pointSampler = g_GraphicsManager().createSamplerState(samplerDesc);
 
     //Viewport
@@ -284,13 +284,13 @@ namespace gzEngineSDK {
   PBRRenderer::createRendererTextures()
   {
     //Gets the default Viewport Dimentions 
-    Vector2f vpDimensions = g_GraphicsManager().getViewportDimensions();
+    Vector2i vpDimensions = g_GraphicsManager().getViewportDimensions();
 
     //Texture desc
     TEXTURE2D_DESCRIPTOR renderTexDesc;
     memset(&renderTexDesc, 0, sizeof(renderTexDesc));
-    renderTexDesc.Height = static_cast<uint32>(vpDimensions.y);
-    renderTexDesc.Width = static_cast<uint32>(vpDimensions.x);
+    renderTexDesc.Height = vpDimensions.y;
+    renderTexDesc.Width = vpDimensions.x;
     renderTexDesc.MipLevels = 1;
     renderTexDesc.ArraySize = 1;
     renderTexDesc.Format = FORMATS::E::FORMAT_R32G32B32A32_FLOAT;

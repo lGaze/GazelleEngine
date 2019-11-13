@@ -76,8 +76,7 @@ namespace gzEngineSDK {
     m_viewPort.TopLeftX = 0;
     m_viewPort.TopLeftY = 0;
 
-    m_viewportDimensions = Vector2f(static_cast<float>(width), 
-                                    static_cast<float>(height));
+    m_viewportDimensions = Vector2i(width, height);
 
     return restult;
   }
@@ -653,7 +652,7 @@ namespace gzEngineSDK {
     return m_viewPort;
   }
 
-  Vector2f 
+  Vector2i
   DXGraphicsManager::getViewportDimensions()
   {
     return m_viewportDimensions;
