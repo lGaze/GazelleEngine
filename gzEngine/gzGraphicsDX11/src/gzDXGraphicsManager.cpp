@@ -478,7 +478,7 @@ namespace gzEngineSDK {
      
     m_ptexture = new DXTexture();
     m_ptexture->LoadTexture( filename );
-    
+
     D3D11_TEXTURE2D_DESC tempTexDesc;
     memset( &tempTexDesc, 0, sizeof( tempTexDesc ) );
     tempTexDesc.Width = m_ptexture->getWidth();

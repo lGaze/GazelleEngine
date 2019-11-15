@@ -26,5 +26,5 @@ namespace gzEngineSDK {
   class Timer;
   class Time;
   class LinearColor;
-
+  class Color;
 }

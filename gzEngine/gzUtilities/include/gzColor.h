@@ -60,7 +60,7 @@ class GZ_UTILITY_EXPORT LinearColor
 
 class GZ_UTILITY_EXPORT Color
 {
-public:
+ public:
 
   /**
    * @brief default constructor
@@ -70,12 +70,33 @@ public:
   /**
    * @brief This function creates a color with 4 char values
    */
-  Color(char r, char g, char b, char a);
+  Color(uint8 r, uint8 g, uint8 b, uint8 a = 255);
 
   /**
    * @brief default destructor
    */
   ~Color() = default;
+
+ public:
+
+   union {
+     struct {
+       uint8 r, g, b, a;
+     }channel;
+     uint8 rgba[4];
+   };
+
+  //COLORS
+  static const Color Transparent;
+  static const Color Black;
+  static const Color White;
+  static const Color Red;
+  static const Color Green;
+  static const Color Blue;
+  static const Color Pink;
+  static const Color Orange;
+  static const Color Purple;
+  static const Color Yellow;
 
 };
 }

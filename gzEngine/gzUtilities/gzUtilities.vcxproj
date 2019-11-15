@@ -164,8 +164,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="gzColor.h" />
     <ClInclude Include="include\gzBox2D.h" />
+    <ClInclude Include="include\gzColor.h" />
     <ClInclude Include="include\gzException.h" />
     <ClInclude Include="include\gzForwardDeclarationUtilities.h" />
     <ClInclude Include="include\gzMath.h" />
@@ -189,8 +189,8 @@
     <ClInclude Include="include\gzVector4f.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="gzColor.cpp" />
     <ClCompile Include="src\gzBox2D.cpp" />
+    <ClCompile Include="src\gzColor.cpp" />
     <ClCompile Include="src\gzException.cpp" />
     <ClCompile Include="src\gzMatrix4.cpp" />
     <ClCompile Include="src\gzPlane.cpp" />

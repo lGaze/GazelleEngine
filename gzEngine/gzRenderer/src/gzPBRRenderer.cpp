@@ -13,6 +13,7 @@
 
 
 
+
 namespace gzEngineSDK {
 
   PBRRenderer::PBRRenderer() : stride(sizeof(VERTEX)), offset(0)
@@ -39,11 +40,10 @@ namespace gzEngineSDK {
   void 
   PBRRenderer::gBufferPass()
   {
-    float tansparent[4]{ 0.0f, 0.0f, 0.0f, 0.0f };
-    g_GraphicsManager().clearRenderTargetView(tansparent, m_positionsRT);
-    g_GraphicsManager().clearRenderTargetView(tansparent, m_albedoRT);
-    g_GraphicsManager().clearRenderTargetView(tansparent, m_normalsRT);
-    g_GraphicsManager().clearRenderTargetView(tansparent, m_emissiveRT);
+    g_GraphicsManager().clearRenderTargetView(LinearColor::Transparent.rgba, m_positionsRT);
+    g_GraphicsManager().clearRenderTargetView(LinearColor::Transparent.rgba, m_albedoRT);
+    g_GraphicsManager().clearRenderTargetView(LinearColor::Transparent.rgba, m_normalsRT);
+    g_GraphicsManager().clearRenderTargetView(LinearColor::Transparent.rgba, m_emissiveRT);
     g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH);
     g_GraphicsManager().setRenderTargets(m_gbufferRTTextures);
     g_GraphicsManager().setRasterizerState(m_rasterizerState);
@@ -60,8 +60,8 @@ namespace gzEngineSDK {
   PBRRenderer::ssaoPass()
   {
     m_ssaoCBuffer = BaseApp::instance().constantSSAOBuffer;
-    float wite[4]{ 1.0f, 1.0f, 1.0f, 1.0f };
-    g_GraphicsManager().clearRenderTargetView(wite, m_ssaoRT);
+ 
+    g_GraphicsManager().clearRenderTargetView(LinearColor::White.rgba, m_ssaoRT);
     g_GraphicsManager().setRenderTarget(m_ssaoRT);
     g_GraphicsManager().setInputLayout(m_pbrLayout);
     g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
@@ -184,8 +184,7 @@ namespace gzEngineSDK {
   void
   PBRRenderer::blurH(Texture * textureToBlur)
   {
-    float wite[4]{ 1.0f, 1.0f, 1.0f, 1.0f };
-    g_GraphicsManager().clearRenderTargetView(wite, m_blurH1RT);
+    g_GraphicsManager().clearRenderTargetView(LinearColor::White.rgba, m_blurH1RT);
     g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH);
     g_GraphicsManager().setRenderTarget(m_blurH1RT);
     g_GraphicsManager().setInputLayout(m_pbrLayout);
@@ -214,7 +213,7 @@ namespace gzEngineSDK {
   void 
   PBRRenderer::blurV(Texture * textureToBlur)
   {
-    g_GraphicsManager().clearRenderTargetView(ClearColor1, m_blurV1RT);
+    g_GraphicsManager().clearRenderTargetView(LinearColor::White.rgba, m_blurV1RT);
     g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH);
     g_GraphicsManager().setRenderTarget(m_blurV1RT);
     g_GraphicsManager().setInputLayout(m_pbrLayout);

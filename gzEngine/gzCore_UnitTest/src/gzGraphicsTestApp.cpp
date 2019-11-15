@@ -99,6 +99,7 @@ namespace gzEngineSDK {
     tempTex =
       g_GraphicsManager().LoadTextureFromFile("Textures\\Droid\\17_-_Default_emissive.jpg");
     tempMaterial->setEmissiveTexture(*tempTex);*/
+/*
 
 
     //Robot Material
@@ -121,7 +122,7 @@ namespace gzEngineSDK {
 
     tempTex =
       g_GraphicsManager().LoadTextureFromFile("Textures\\Robot\\default_emissive.jpg");
-    tempMaterial->setEmissiveTexture(*tempTex);
+    tempMaterial->setEmissiveTexture(*tempTex);*/
 
 /*
     //Sphere
@@ -446,7 +447,7 @@ namespace gzEngineSDK {
     ofn.lpstrFilter = "ALL\0*.*\0";
     ofn.lpstrTitle = "Select The Model";
     ofn.lpstrInitialDir = "Meshes\\";
-    ofn.Flags = OFN_FILEMUSTEXIST;
+    ofn.Flags = OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
     GetOpenFileName(&ofn);
     
     m_gameObject = SceneManager::instance().createEmptyGameObject();
@@ -455,7 +456,7 @@ namespace gzEngineSDK {
 
     testModel->loadMesh(filename);
 
-    testModel->changeMaterial(*tempMaterial);
+    //testModel->changeMaterial(*tempMaterial);
 
     m_gameObject->addComponent(testModel);
 
