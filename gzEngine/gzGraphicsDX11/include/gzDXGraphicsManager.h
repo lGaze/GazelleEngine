@@ -46,8 +46,7 @@ class DXGraphicsManager : public GraphicsManager
    * @brief Sets the render target with the given render taget
    */
   virtual void
-  setRenderTarget( Texture * renderTarget ) override;
-
+  setRenderTarget( Texture * renderTarget, Texture * depthStencil = nullptr ) override;
 
   /**
    * @brief Clears the given render target with the given color
@@ -65,10 +64,11 @@ class DXGraphicsManager : public GraphicsManager
   /**
    * @brief 
    */
-  virtual void 
-  clearDepthStencilView( uint32 ClearFlags, 
-                         float Depthf = 1.0f, 
-                         uint8 Stencil = 0 ) override;
+  virtual void
+  clearDepthStencilView(Texture * depthStencil,
+                        uint32 ClearFlags,
+                        float Depthf = 1.0f,
+                        uint8 Stencil = 0) override;
 
   /**
    * @brief 
@@ -242,7 +242,7 @@ class DXGraphicsManager : public GraphicsManager
    * @brief Gets the DephtStencil Texture
    */
   virtual Texture * 
-  getDepthStencilView() override;
+  getDefaultDepthStencilView() override;
 
   /**
    * @brief Gets the Viewport descriptor
@@ -260,7 +260,8 @@ class DXGraphicsManager : public GraphicsManager
    * @brief Sets multiple Render Targets at once
    */
   virtual void 
-  setRenderTargets(Vector<Texture *> renderTargets) override;
+  setRenderTargets(Vector<Texture *> renderTargets, 
+                   Texture * depthStencil = nullptr) override;
 
 
   virtual void* 

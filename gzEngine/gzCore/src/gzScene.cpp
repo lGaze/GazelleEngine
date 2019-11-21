@@ -17,11 +17,11 @@ namespace gzEngineSDK {
   }
 
   void 
-  Scene::addGameObject(GameObject & gameObject)
+  Scene::addGameObject(GameObject * gameObject)
   {
     if (m_root == nullptr)
     {
-      m_root = &gameObject;
+      m_root = gameObject;
     }
     else
     {
@@ -52,11 +52,11 @@ namespace gzEngineSDK {
     return m_root == nullptr;
   }
 
-/*
-  Vector<GameObject&>
-  Scene::rendereableGameObjects()
+
+  Vector<GameObject*>
+  Scene::getRendereableGameObjects()
   {
-    m_root->
-  }*/
+    return m_root->getRendereableChildrens();
+  }
 
 }

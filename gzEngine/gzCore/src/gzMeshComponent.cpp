@@ -14,32 +14,27 @@ namespace gzEngineSDK {
 
   using namespace COMPONENT_TYPE;
 
-  MeshComponent::MeshComponent()
-  {
+  MeshComponent::MeshComponent() {
     m_type = kMeshComponent;
+    m_isRendereable = true;
   }
 
   COMPONENT_TYPE::E 
-  MeshComponent::getComponentType()
-  {
+  MeshComponent::getComponentType() {
     return m_type;
   }
 
   void
-  MeshComponent::loadMesh(String path)
-  {
+  MeshComponent::loadMesh(String path) {
     m_resource = ResourceManager::instance().loadModelFromFile(path);
   }
 
   void 
-  MeshComponent::update()
-  {
-    ResourceManager::instance().drawModel(m_resource);
+  MeshComponent::update() {
   }
 
   void 
-  MeshComponent::changeMaterial(Material & Material)
-  {
+  MeshComponent::changeMaterial(Material & Material) {
     ResourceManager::instance().changeMaterial(m_resource, Material);
   }
 }

@@ -12,14 +12,6 @@
 
 namespace gzEngineSDK {
 
-  namespace COMPONENT_TYPE
-  {
-    enum GZ_CORE_EXPORT E
-    {
-      kMeshComponent = 0,
-    };
-  }
-
   class GZ_CORE_EXPORT Component
   {
    public:
@@ -52,8 +44,16 @@ namespace gzEngineSDK {
      * @brief Gets the type of the component
      * @return Componet type
      */
-    COMPONENT_TYPE::E
+    virtual COMPONENT_TYPE::E
     getComponentType();
+
+    /**
+     * @brief This function returns if a component is rendereable
+     */
+    bool
+    isRendereable() {
+      return m_isRendereable;
+    }
 
     /************************************************************************/
     /* Member declarations                                                  */
@@ -63,5 +63,8 @@ namespace gzEngineSDK {
 
     COMPONENT_TYPE::E m_type;
 
+   protected:
+
+    bool m_isRendereable;
  };
 }

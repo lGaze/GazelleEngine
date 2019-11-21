@@ -94,13 +94,14 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief This function sets the rendet target view
    */
   virtual void
-  setRenderTarget( Texture * renderTarget ) = 0;
+  setRenderTarget( Texture * renderTarget, Texture * depthStencil = nullptr ) = 0;
 
   /**
    * @brief This function sets multiple Render Target Views
    */
   virtual void
-  setRenderTargets(Vector<Texture*> renderTargets) = 0;
+  setRenderTargets(Vector<Texture*> renderTargets, 
+                   Texture * depthStencil = nullptr) = 0;
 
   /**
    * @brief This function sets the viewport
@@ -155,10 +156,10 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief
    */
   virtual void
-  clearDepthStencilView( uint32 ClearFlags,
-                         float Depthf = 1.0f,
-                         uint8 Stencil = 0 ) = 0;
-
+  clearDepthStencilView(Texture * depthStencil,
+                        uint32 ClearFlags,
+                        float Depthf = 1.0f,
+                        uint8 Stencil = 0) = 0;
 
   /**
    * @brief
@@ -255,7 +256,7 @@ class GZ_CORE_EXPORT GraphicsManager : public Module<GraphicsManager>
    * @brief Gets the Depth Stencil texture created at the init function
    */
   virtual Texture *
-  getDepthStencilView() = 0;
+  getDefaultDepthStencilView() = 0;
 
   /**
    * @brief Gets the Viewport descriptor created at the init function

@@ -26,8 +26,7 @@ namespace gzEngineSDK {
   }
 
   void 
-  GainputManager::handleMesage(void * mesage)
-  {
+  GainputManager::handleMesage(void * mesage) {
     MSG* msg = static_cast<MSG*>(mesage);
     m_inputManager.HandleMessage(*msg);
   }

@@ -374,4 +374,12 @@ namespace INPUT_CLASSIFICATION {
   };
 }
 
+
+namespace COMPONENT_TYPE {
+  enum E
+  {
+    kMeshComponent = 0,
+  };
+}
+
 }

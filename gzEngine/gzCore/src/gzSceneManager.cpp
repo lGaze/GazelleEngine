@@ -42,7 +42,7 @@ namespace gzEngineSDK {
   }
 
   void
-  SceneManager::addGameObjectToScene(GameObject & gameObject)
+  SceneManager::addGameObjectToScene(GameObject * gameObject)
   {
     m_activeScene->addGameObject(gameObject);
   }
@@ -58,12 +58,12 @@ namespace gzEngineSDK {
   {
     return m_activeScene->isRootEmpty();
   }
-/*
 
-  Vector3f 
+
+  Vector<GameObject*>
   SceneManager::getRendereableGameObjects()
   {
-    return;
-  }*/
+    return m_activeScene->getRendereableGameObjects();
+  }
 
 }

@@ -11,7 +11,7 @@
 namespace gzEngineSDK {
 
 template<class T>
-class GZ_CORE_EXPORT ResourceHandle
+class ResourceHandle
 {
  public:
    
@@ -38,6 +38,14 @@ class GZ_CORE_EXPORT ResourceHandle
   FORCEINLINE int64
   getHandle() {
     return m_handle;
+  }
+
+  /**
+   * @brief
+   */
+  T*
+  operator ->() {
+    return reinterpret_cast<T*>(m_handle);
   }
 
  protected:

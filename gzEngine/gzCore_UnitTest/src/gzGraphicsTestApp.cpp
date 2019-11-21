@@ -99,8 +99,6 @@ namespace gzEngineSDK {
     tempTex =
       g_GraphicsManager().LoadTextureFromFile("Textures\\Droid\\17_-_Default_emissive.jpg");
     tempMaterial->setEmissiveTexture(*tempTex);*/
-/*
-
 
     //Robot Material
    //-------------------------------------------------------------------------------------//
@@ -122,9 +120,9 @@ namespace gzEngineSDK {
 
     tempTex =
       g_GraphicsManager().LoadTextureFromFile("Textures\\Robot\\default_emissive.jpg");
-    tempMaterial->setEmissiveTexture(*tempTex);*/
+    tempMaterial->setEmissiveTexture(*tempTex);
 
-/*
+  /*
     //Sphere
     //-----------------------------------------------------------------------------------//
     tempTex =
@@ -186,8 +184,9 @@ namespace gzEngineSDK {
                                         MenuOptions::s_color[3]);
     g_GraphicsManager().updateSubresource(constantLightBuffer,
                                           &cbLightBuffer);
-
-    cbSSAOBuffer.viewPortDimensions = g_GraphicsManager().getViewportDimensions();
+    Vector2f vpDimentions = Vector2f(static_cast<float>(g_GraphicsManager().getViewportDimensions().x),
+                                     static_cast<float>(g_GraphicsManager().getViewportDimensions().y));
+    cbSSAOBuffer.viewPortDimensions = vpDimentions;
     cbSSAOBuffer.g_Sample_radius = MenuOptions::s_SampeRadiusValue;
     cbSSAOBuffer.g_Scale = MenuOptions::s_scaleValue;
     cbSSAOBuffer.g_Intensity = MenuOptions::s_intensityValue;
@@ -218,7 +217,6 @@ namespace gzEngineSDK {
       g_World.transpose();
       wasRotatingY = true;
       break;
-      
     }
 
     cbMatrixbuffer.world = g_World;
@@ -255,17 +253,14 @@ namespace gzEngineSDK {
     {
       CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::LEFT);
     }
-
     if (g_InputManager().wasButtonPressed(KEYBOARDBUTTONS::kKeyW))
     {
       CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::FORWARD);
     }
-
     if (g_InputManager().wasButtonPressed(KEYBOARDBUTTONS::kKeyS))
     {
       CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::BACKWARD);
     }
-
     if (g_InputManager().wasButtonPressed(KEYBOARDBUTTONS::kKeyD))
     {
       CameraManager::instance().moveActiveCamera(CAMERA_MOVEMENT::E::RIGHT);
@@ -456,11 +451,11 @@ namespace gzEngineSDK {
 
     testModel->loadMesh(filename);
 
-    //testModel->changeMaterial(*tempMaterial);
+    testModel->changeMaterial(*tempMaterial);
 
     m_gameObject->addComponent(testModel);
 
-    SceneManager::instance().addGameObjectToScene(*m_gameObject);
+    SceneManager::instance().addGameObjectToScene(m_gameObject);
 
   }
 

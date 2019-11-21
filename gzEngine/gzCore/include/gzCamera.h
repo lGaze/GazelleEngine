@@ -8,8 +8,8 @@
 #pragma once
 #include "gzPrerequisitesCore.h"
 
-constexpr auto DEFAULT_NEAR = 3.0f;
-constexpr auto DEFAULT_FAR = 1000.0f;
+constexpr auto DEFAULT_NEAR = 0.3f;
+constexpr auto DEFAULT_FAR = 100.0f;
 
 namespace gzEngineSDK {
 class GZ_CORE_EXPORT Camera

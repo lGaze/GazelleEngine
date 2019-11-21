@@ -9,7 +9,6 @@
 #include "gzPBRRendererPrerequisites.h"
 #include <gzRenderer.h>
 #include <gzSceneManager.h>
-#include <gzGraphicsManager.h>
 
 namespace gzEngineSDK {
 class PBRRenderer : public Renderer
@@ -102,6 +101,12 @@ class PBRRenderer : public Renderer
    void
    createRendererShaders();
 
+   /**
+    * @brief This function draws all the geometry for the G-Buffer
+    */
+   void
+   drawGeometry();
+
   /************************************************************************/
   /* PBRRenderer declarations                                             */
   /************************************************************************/
@@ -132,7 +137,7 @@ class PBRRenderer : public Renderer
    SamplerState * m_linearSampler;
    SamplerState * m_pointSampler;
 
-   //Textures/RenderTargets
+   //Textures
    Texture * m_positionsRT;
    Texture * m_normalsRT;
    Texture * m_albedoRT;
@@ -146,6 +151,7 @@ class PBRRenderer : public Renderer
    Texture * m_ssaoRT;
    Texture * m_blurH1RT;
    Texture * m_blurV1RT;
+   Texture * m_defaultDSV;
    Vector<Texture *> m_gbufferRTTextures;
    Vector<Texture *> m_pRTTextures;
 

@@ -25,7 +25,7 @@ namespace gzEngineSDK {
   }
 
   Component *
-  GameObject::getComponent(COMPONENT_TYPE::E componentType)
+  GameObject::getComponent(COMPONENT_TYPE::E componentType, uint32 index)
   {
     for (auto it : m_components)
     {
@@ -34,7 +34,6 @@ namespace gzEngineSDK {
         return it;
       }
     }
-
     return nullptr;
   }
 
@@ -49,9 +48,9 @@ namespace gzEngineSDK {
   }
 
   void 
-  GameObject::addChildren(GameObject & gameObject)
+  GameObject::addChildren(GameObject * gameObject)
   {
-    m_children.push_back(&gameObject);
+    m_children.push_back(gameObject);
   }
 
   GameObject *
@@ -67,21 +66,32 @@ namespace gzEngineSDK {
     return nullptr;
   }
 
-/*
+
   Vector<GameObject*> 
   GameObject::getRendereableChildrens()
   {
-/ *
     Vector<GameObject*> temp;
     for (uint32 i = 0; i < m_children.size(); i++)
     {
-      if (m_children[i]->m_isRendereable)
+      for (uint32 j = 0; j < m_children[i]->m_components.size(); j++)
       {
-        temp.push_back(m_children[i]);
+        if (m_children[i]->m_components[j]->isRendereable() == true)
+        {
+          temp.push_back(m_children[i]);
+        }
       }
     }
-    return temp;* /
-  }*/
+
+    for (auto it : m_components)
+    {
+      if(it->isRendereable() == true)
+      {
+        temp.push_back(this);
+      }
+    }
+
+    return temp;
+  }
 
   void 
   GameObject::update()

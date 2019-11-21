@@ -43,25 +43,25 @@ namespace gzEngineSDK {
   {
     if (direction == CAMERA_MOVEMENT::E::LEFT)
     {
-      m_activeCamera->moveRight(-100.0f * g_Time().getDelta());
+      m_activeCamera->moveRight(-1.0f * g_Time().getDelta());
       m_activeCamera->updateCamera();
     }
 
     if (direction == CAMERA_MOVEMENT::E::RIGHT)
     {
-      m_activeCamera->moveRight(100.0f * g_Time().getDelta());
+      m_activeCamera->moveRight(1.0f * g_Time().getDelta());
       m_activeCamera->updateCamera();
     }
 
     if (direction == CAMERA_MOVEMENT::E::FORWARD)
     {
-      m_activeCamera->moveForward(100.0f * g_Time().getDelta());
+      m_activeCamera->moveForward(1.0f * g_Time().getDelta());
       m_activeCamera->updateCamera();
     }
 
     if (direction == CAMERA_MOVEMENT::E::BACKWARD)
     {
-      m_activeCamera->moveForward(-100.0f * g_Time().getDelta());
+      m_activeCamera->moveForward(-1.0f * g_Time().getDelta());
       m_activeCamera->updateCamera();
     }
 

@@ -64,7 +64,7 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
    * @param Reference to the game object that is going to be added to the active Scene 
    */
   void
-  addGameObjectToScene(GameObject & gameObject);
+  addGameObjectToScene(GameObject * gameObject);
 
   /**
    * @brief Function Update for the active Scene
@@ -81,7 +81,7 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
   /**
    * @brief this function returns all the rendereable Game Objects
    */
-  Vector3f
+  Vector<GameObject*>
   getRendereableGameObjects();
 
   /************************************************************************/

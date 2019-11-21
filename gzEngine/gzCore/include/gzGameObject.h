@@ -53,7 +53,7 @@ class GZ_CORE_EXPORT GameObject
    * @return Reference to the wanted component
    */
   Component *
-  getComponent(COMPONENT_TYPE::E componentType);
+  getComponent(COMPONENT_TYPE::E componentType, uint32 index = 0);
 
   /**
    * @brief This function creates a component 
@@ -67,7 +67,7 @@ class GZ_CORE_EXPORT GameObject
    * @param Reference of the game object that will be added to the vector of game objects
    */
   void
-  addChildren(GameObject & gameObject);
+  addChildren(GameObject * gameObject);
 
   /**
    * @brief Search the given name in the children of this game object
@@ -77,12 +77,11 @@ class GZ_CORE_EXPORT GameObject
   GameObject *
   findChildrenbyName(String gameObjectName);
 
-/*
-  / **
+  /**
    * @brief This function searchs in the children vector for rendereable objects
-   * /
+   */
   Vector<GameObject*>
-  getRendereableChildrens();*/
+  getRendereableChildrens();
 
   /**
    * @brief This function updates the game object

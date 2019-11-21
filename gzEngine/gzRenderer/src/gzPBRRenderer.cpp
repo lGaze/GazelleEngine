@@ -10,7 +10,12 @@
 #include <gzTexture.h>
 #include <gzModel.h>
 #include <gzBaseApp.h>
-
+#include <gzGameObject.h>
+#include <gzMeshComponent.h>
+#include <gzMaterial.h>
+#include <gzGraphicsManager.h>
+#include <gzResourceHandle.h>
+#include <gzBuffer.h>
 
 
 
@@ -25,6 +30,8 @@ namespace gzEngineSDK {
   PBRRenderer::render(int32 renderTarget, float clearColor[4])
   {
     memcpy(ClearColor1,clearColor,sizeof(ClearColor1));
+    g_GraphicsManager().clearDepthStencilView(m_defaultDSV, 
+                                              CLEAR_DSV_FLAGS::E::CLEAR_DEPTH);
     if (!SceneManager::instance().activeSceneEmpty())
     {
       gBufferPass();
@@ -44,15 +51,14 @@ namespace gzEngineSDK {
     g_GraphicsManager().clearRenderTargetView(LinearColor::Transparent.rgba, m_albedoRT);
     g_GraphicsManager().clearRenderTargetView(LinearColor::Transparent.rgba, m_normalsRT);
     g_GraphicsManager().clearRenderTargetView(LinearColor::Transparent.rgba, m_emissiveRT);
-    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH);
-    g_GraphicsManager().setRenderTargets(m_gbufferRTTextures);
+    g_GraphicsManager().setRenderTargets(m_gbufferRTTextures, m_defaultDSV);
     g_GraphicsManager().setRasterizerState(m_rasterizerState);
     g_GraphicsManager().setInputLayout(m_gbufferLayout);
     g_GraphicsManager().setVertexShader(m_gbufferVertexShader);
     g_GraphicsManager().setPixelShader(m_gbufferPixelShader);
     g_GraphicsManager().setSamplerState(0, m_linearSampler, 1);
 
-    SceneManager::instance().update();
+    drawGeometry();
 
   }
 
@@ -60,8 +66,8 @@ namespace gzEngineSDK {
   PBRRenderer::ssaoPass()
   {
     m_ssaoCBuffer = BaseApp::instance().constantSSAOBuffer;
- 
-    g_GraphicsManager().clearRenderTargetView(LinearColor::White.rgba, m_ssaoRT);
+    float wite[4]{ 1,1,1,1 };
+    g_GraphicsManager().clearRenderTargetView(wite, m_ssaoRT);
     g_GraphicsManager().setRenderTarget(m_ssaoRT);
     g_GraphicsManager().setInputLayout(m_pbrLayout);
     g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
@@ -90,7 +96,6 @@ namespace gzEngineSDK {
   {
     m_lightCBuffer = BaseApp::instance().constantLightBuffer;
     g_GraphicsManager().setRenderTarget(m_pbrRT);
-    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH);
     g_GraphicsManager().setViewports(1, m_viewport);
     g_GraphicsManager().setSamplerState(0, m_pointSampler, 1);
     g_GraphicsManager().clearRenderTargetView(ClearColor1, m_pbrRT);
@@ -131,7 +136,6 @@ namespace gzEngineSDK {
   {
     g_GraphicsManager().clearRenderTargetView(ClearColor1, m_toneMapRT);
     g_GraphicsManager().setRenderTarget(m_toneMapRT);
-    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH);
     g_GraphicsManager().setRasterizerState(m_rasterizerState);
     g_GraphicsManager().setInputLayout(m_pbrLayout);
     g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
@@ -158,8 +162,7 @@ namespace gzEngineSDK {
   PBRRenderer::renderToScreen(int32 renderTarget)
   {
     g_GraphicsManager().clearRenderTargetView(ClearColor1, m_backBufferRT);
-    g_GraphicsManager().setRenderTarget(m_backBufferRT);
-    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH);
+    g_GraphicsManager().setRenderTarget(m_backBufferRT, m_defaultDSV);
     g_GraphicsManager().setRasterizerState(m_rasterizerState);
     g_GraphicsManager().setInputLayout(m_pbrLayout);
     g_GraphicsManager().setVertexShader(m_quadAlignedVertexShader);
@@ -185,7 +188,6 @@ namespace gzEngineSDK {
   PBRRenderer::blurH(Texture * textureToBlur)
   {
     g_GraphicsManager().clearRenderTargetView(LinearColor::White.rgba, m_blurH1RT);
-    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH);
     g_GraphicsManager().setRenderTarget(m_blurH1RT);
     g_GraphicsManager().setInputLayout(m_pbrLayout);
     g_GraphicsManager().setSamplerState(0, m_linearSampler, 1);
@@ -214,7 +216,6 @@ namespace gzEngineSDK {
   PBRRenderer::blurV(Texture * textureToBlur)
   {
     g_GraphicsManager().clearRenderTargetView(LinearColor::White.rgba, m_blurV1RT);
-    g_GraphicsManager().clearDepthStencilView(CLEAR_DSV_FLAGS::E::CLEAR_DEPTH);
     g_GraphicsManager().setRenderTarget(m_blurV1RT);
     g_GraphicsManager().setInputLayout(m_pbrLayout);
     g_GraphicsManager().setSamplerState(0, m_linearSampler, 1);
@@ -332,6 +333,9 @@ namespace gzEngineSDK {
                          std::end(m_gbufferRTTextures));
     m_pRTTextures.push_back(m_ssaoRT);
     m_pRTTextures.push_back(m_blurV1RT);
+    
+    //Default DSV
+    m_defaultDSV = g_GraphicsManager().getDefaultDepthStencilView();
 
     //Shader Resources
     m_irradiance =
@@ -398,5 +402,56 @@ namespace gzEngineSDK {
       L"Shaders\\BlurVPS.hlsl",
       "ps_main",
       "ps_4_0");
+  }
+
+  void 
+  PBRRenderer::drawGeometry()
+  {
+    uint32 stride = sizeof(VERTEX);
+    uint32 offset = 0;
+
+    Vector<GameObject*> sceneObjects =
+      SceneManager::instance().getRendereableGameObjects();
+
+    for (auto &it : sceneObjects)
+    {
+      auto * meshComponent = it->getComponent(COMPONENT_TYPE::kMeshComponent);
+      MeshComponent * model = reinterpret_cast<MeshComponent*>(meshComponent);
+      g_GraphicsManager().setVertexBuffers(0,
+                                           1,
+                                           model->getHandle()->m_vertexBuffer,
+                                           &stride,
+                                           &offset);
+
+      g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
+                                         model->getHandle()->m_indexBuffer,
+                                         offset);
+
+      for (uint32 i = 0; i < model->getHandle()->m_mesh.size(); i++)
+      {
+        auto m_mesh = model->getHandle()->m_mesh[i];
+        if (nullptr != m_mesh.material)
+        {
+          g_GraphicsManager().setShaderResources(&m_mesh.material->getAlbedoTexture(),
+                                                 0,
+                                                 1);
+          g_GraphicsManager().setShaderResources(&m_mesh.material->getNormalTexture(),
+                                                 1,
+                                                 1);
+          g_GraphicsManager().setShaderResources(&m_mesh.material->getMetallicTexture(),
+                                                 2,
+                                                 1);
+          g_GraphicsManager().setShaderResources(&m_mesh.material->getRoughnessTexture(),
+                                                 3,
+                                                 1);
+          g_GraphicsManager().setShaderResources(&m_mesh.material->getEmissiveTexture(),
+                                                 4,
+                                                 1);
+        }
+        g_GraphicsManager().drawIndexed(m_mesh.numIndex,
+                                        m_mesh.indexBase,
+                                        0);
+      }
+    }
   }
 }

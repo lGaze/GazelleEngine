@@ -32,7 +32,7 @@ class GZ_CORE_EXPORT MeshComponent : public Component
    * @return The type of this component
    */
   COMPONENT_TYPE::E
-  getComponentType();
+  getComponentType() override;
 
   /**
    * @brief Loads a mesh into the component
@@ -54,13 +54,20 @@ class GZ_CORE_EXPORT MeshComponent : public Component
   void
   changeMaterial(Material &Material);
 
+  /**
+   * @brief This function gets the handle of the model
+   */
+  ResourceHandle<Model>
+  getHandle() {
+    return m_resource;
+  }
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/
 
  private:
 
-  bool m_isRendereable;
   ResourceHandle<Model> m_resource;
   COMPONENT_TYPE::E m_type;
    

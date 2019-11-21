@@ -31,7 +31,7 @@ class GZ_CORE_EXPORT Scene
    * @param Reference to the game object
    */
   void
-  addGameObject(GameObject & gameObject);
+  addGameObject(GameObject * gameObject);
 
   /**
    * @brief Removes a GameObject from the scene
@@ -66,10 +66,10 @@ class GZ_CORE_EXPORT Scene
   isRootEmpty();
 
   /**
-   * @brief This F¿function returns all the rendereable Game Objects
+   * @brief This Function returns all the rendereable Game Objects
    */
-  Vector<GameObject&>
-  rendereableGameObjects();
+  Vector<GameObject*>
+  getRendereableGameObjects();
 
   /************************************************************************/
   /* Member declarations                                                  */
