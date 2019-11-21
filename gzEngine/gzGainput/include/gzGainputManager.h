@@ -40,7 +40,7 @@ class GainputManager : public InputManager
    * @return Returns true if the button was pressed
    */
   virtual bool 
-  wasButtonPressed(KEYBOARDBUTTONS::e button) override;
+  wasButtonPressed(KEYBOARDBUTTONS::E button) override;
 
   /**
    * @brief This function handles the messages

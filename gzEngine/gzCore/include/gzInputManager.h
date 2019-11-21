@@ -9,52 +9,6 @@
 #include "gzPrerequisitesCore.h"
 #include <gzModule.h>
 
-namespace KEYBOARDBUTTONS {
-  enum e
-  {
-    kKeyA,
-    kKeyB,
-    kKeyC,
-    kKeyD,
-    kKeyE,
-    kKeyF,
-    kKeyG,
-    kKeyH,
-    kKeyI,
-    kKeyJ,
-    kKeyK,
-    kKeyL,
-    kKeyM,
-    kKeyN,
-    kKeyO,
-    kKeyP,
-    kKeyQ,
-    kKeyR,
-    kKeyS,
-    kKeyT,
-    kKeyU,
-    kKeyV,
-    kKeyW,
-    kKeyX,
-    kKeyY,
-    kKeyZ,
-    kKeySpace,
-    kArrowUp,
-    kArrowDown,
-    kArrowLeft,
-    kArrowRight
-  };
-}
-
-namespace MOUSEBUTTONS {
-  enum e {
-    kMouseButtonLeft,
-    kMouseButtonMiddle,
-    kMouseButtonRight,
-    kMouseButtonWheelDown,
-    kMouseButtonWheelUp,
-  };
-}
 
 namespace gzEngineSDK {
 class GZ_CORE_EXPORT InputManager : public Module<InputManager>
@@ -79,7 +33,7 @@ class GZ_CORE_EXPORT InputManager : public Module<InputManager>
    * @brief This function checks if the given button was pressed
    */
   virtual bool
-  wasButtonPressed(KEYBOARDBUTTONS::e) = 0;
+  wasButtonPressed(KEYBOARDBUTTONS::E) = 0;
 
   /**
    * @brief This function update the inputs

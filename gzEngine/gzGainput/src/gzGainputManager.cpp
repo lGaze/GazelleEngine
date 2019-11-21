@@ -21,7 +21,7 @@ namespace gzEngineSDK {
   }
 
   bool 
-  GainputManager::wasButtonPressed(KEYBOARDBUTTONS::e button){
+  GainputManager::wasButtonPressed(KEYBOARDBUTTONS::E button){
     return m_map->GetBool(button);
   }
 

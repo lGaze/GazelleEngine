@@ -7,7 +7,8 @@
 #pragma once
 
 #include <gzPrerequisitesUtilities.h>
-#include "gzGraphicsDescriptors.h"
+#include "gzDescriptors.h"
+#include "gzEnums.h"
 #include <gzMatrix4.h>
 #include <gzVector3f.h>
 #include <gzVector2f.h>

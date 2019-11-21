@@ -107,13 +107,6 @@ namespace gzEngineSDK {
     if ( tempTexDesc.BindFlags == D3D11_BIND_SHADER_RESOURCE ||
         tempTexDesc.BindFlags == 40 )
     {
-/*
-      D3D11_SHADER_RESOURCE_VIEW_DESC tempDesc;
-      memset( &tempDesc, 0, sizeof( tempDesc ) );
-      tempDesc.Format = tempTexDesc.Format;
-      tempDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-*/
-
       m_pdevice->CreateShaderResourceView(
         *m_ptexture->getTextureInterface(),
         nullptr,

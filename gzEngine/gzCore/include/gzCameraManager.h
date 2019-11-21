@@ -12,17 +12,6 @@
 #include <gzModule.h>
 
 namespace gzEngineSDK {
-
-  namespace CAMERA_MOVEMENT {
-    enum E
-    {
-      FORWARD,
-      BACKWARD,
-      LEFT,
-      RIGHT
-    };
-  }
-
 class GZ_CORE_EXPORT CameraManager : public Module<CameraManager>
 {
  public:
