@@ -13,20 +13,13 @@ namespace gzEngineSDK {
   
   Scene::Scene() : m_name("NewScene")
   {
-    m_root = nullptr;
+    m_root = SceneManager::instance().createEmptyGameObject();
   }
 
   void 
   Scene::addGameObject(GameObject * gameObject)
   {
-    if (m_root == nullptr)
-    {
-      m_root = gameObject;
-    }
-    else
-    {
-      m_root->addChildren(gameObject);
-    }
+    m_root->addChildren(gameObject);
   }
 
   void 
@@ -49,7 +42,7 @@ namespace gzEngineSDK {
   bool 
   Scene::isRootEmpty()
   {
-    return m_root == nullptr;
+    return m_root->getChildren().size() < 1;
   }
 
 

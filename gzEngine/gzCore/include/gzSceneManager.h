@@ -7,6 +7,7 @@
 #pragma once
 #include "gzPrerequisitesCore.h"
 #include <gzModule.h>
+#include "gzScene.h"
 
 namespace gzEngineSDK {
 class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
@@ -76,13 +77,22 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
    * @brief Funtion that returns true if is something in the scene to render
    */
   bool
-  activeSceneEmpty();
+  isActiveSceneEmpty();
 
   /**
    * @brief this function returns all the rendereable Game Objects
    */
   Vector<GameObject*>
   getRendereableGameObjects();
+
+  /**
+   * @brief This function returns the children of the root node of the active Scene
+   */
+  FORCEINLINE
+  Vector<GameObject*>
+  getChildren() {
+    return m_activeScene->getChildren();
+  }
 
   /************************************************************************/
   /* Member declarations                                                  */

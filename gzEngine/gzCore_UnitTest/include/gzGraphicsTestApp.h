@@ -84,7 +84,8 @@ class GrapichsTestApp : public BaseApp
   void
   openfile();
 
-
+  void
+  addChildrenToSceneGraph(Vector<GameObject*> children);
 
   /************************************************************************/
   /* Member declarations                                                  */

@@ -6,6 +6,7 @@
 /**************************************************************************/
 #pragma once
 #include "gzPrerequisitesCore.h"
+#include "gzGameObject.h"
 
 namespace gzEngineSDK {
 class GZ_CORE_EXPORT Scene
@@ -70,6 +71,15 @@ class GZ_CORE_EXPORT Scene
    */
   Vector<GameObject*>
   getRendereableGameObjects();
+
+  /**
+   * @brief This function returns the children of the root node
+   */
+  FORCEINLINE
+  Vector<GameObject*>
+  getChildren() {
+    return m_root->getChildren();
+  }
 
   /************************************************************************/
   /* Member declarations                                                  */

@@ -54,7 +54,7 @@ namespace gzEngineSDK {
   }
 
   bool
-  SceneManager::activeSceneEmpty()
+  SceneManager::isActiveSceneEmpty()
   {
     return m_activeScene->isRootEmpty();
   }
@@ -65,5 +65,4 @@ namespace gzEngineSDK {
   {
     return m_activeScene->getRendereableGameObjects();
   }
-
 }

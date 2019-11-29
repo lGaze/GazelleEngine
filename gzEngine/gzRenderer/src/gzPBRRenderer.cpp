@@ -32,7 +32,7 @@ namespace gzEngineSDK {
     memcpy(ClearColor1,clearColor,sizeof(ClearColor1));
     g_GraphicsManager().clearDepthStencilView(m_defaultDSV, 
                                               CLEAR_DSV_FLAGS::E::CLEAR_DEPTH);
-    if (!SceneManager::instance().activeSceneEmpty())
+    if (!SceneManager::instance().isActiveSceneEmpty())
     {
       gBufferPass();
       ssaoPass();

@@ -84,6 +84,28 @@ class GZ_CORE_EXPORT GameObject
   getRendereableChildrens();
 
   /**
+   * @brief This function returns the children of the Game Object
+   */
+  FORCEINLINE
+  Vector<GameObject*>
+  getChildren() {
+    return m_children;
+  }
+
+  /**
+   * @brief This fuction returns true if the Game Object has children
+   */
+  FORCEINLINE
+  bool
+  haveChildren() {
+    if (m_children.size() > 0)
+    {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * @brief This function updates the game object
    */
   void

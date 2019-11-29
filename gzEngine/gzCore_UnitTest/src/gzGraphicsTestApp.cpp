@@ -359,6 +359,8 @@ namespace gzEngineSDK {
     ImGui_ImplDX11_NewFrame();
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();
+
+    ImGui::ShowDemoWindow();
     //Create ImGui Render Options Window
     ImGui::Begin("Renderer Options");
     if (ImGui::CollapsingHeader("Render To Screen")) {
@@ -414,11 +416,17 @@ namespace gzEngineSDK {
                        1.0f);
     }
     ImGui::End();
+
     //Create ImGui SceneMenu
     ImGui::Begin("Scene");
+    ImGui::Separator();
     if (ImGui::Button("Load Model From File")) 
     {
       openfile();
+    }
+    if (!SceneManager::instance().isActiveSceneEmpty())
+    {
+      addChildrenToSceneGraph(SceneManager::instance().getChildren());
     }
     ImGui::End();
 
@@ -457,6 +465,27 @@ namespace gzEngineSDK {
 
     SceneManager::instance().addGameObjectToScene(m_gameObject);
 
+  }
+
+  void 
+  GrapichsTestApp::addChildrenToSceneGraph(Vector<GameObject*> children)
+  {
+    for (auto it : children)
+    {
+      ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
+      if (!it->haveChildren())
+      {
+        ImGui::TreeNodeEx(it->m_objectName.c_str(),
+                          ImGuiTreeNodeFlags_Leaf |
+                          ImGuiTreeNodeFlags_NoTreePushOnOpen);
+      }
+      else
+      {
+        ImGui::TreeNodeEx(it->m_objectName.c_str(),
+                          ImGuiTreeNodeFlags_Selected);
+      }
+      addChildrenToSceneGraph(it->getChildren());
+    }
   }
 
 }
