@@ -94,6 +94,12 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
     return m_activeScene->getChildren();
   }
 
+  /**
+   * @brief This function returns the name of the active scene
+   */
+  String
+  getActiveSceneName();
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

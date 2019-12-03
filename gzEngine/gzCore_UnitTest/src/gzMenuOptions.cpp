@@ -15,6 +15,8 @@ float MenuOptions::s_SampeRadiusValue = 22;
 float MenuOptions::s_intensityValue = 15;
 float MenuOptions::s_scaleValue = 0.4;
 float MenuOptions::s_biasValue = 0.3;
+String MenuOptions::s_gameObjectName = "";
+String MenuOptions::s_sceneName = "";
 
 MenuOptions & g_menuOptions() {
   return MenuOptions::instance();

@@ -20,6 +20,8 @@ class MenuOptions : public Module<MenuOptions>
    static float s_intensityValue;
    static float s_scaleValue;
    static float s_biasValue;
+   static String s_gameObjectName;
+   static String s_sceneName;
 };
 MenuOptions&
 g_menuOptions();

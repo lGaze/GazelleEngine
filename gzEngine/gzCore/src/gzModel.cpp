@@ -39,13 +39,13 @@ namespace gzEngineSDK {
     }
 
     m_mesh.resize(pScene->mNumMeshes);
-
+    m_modelName = pScene->mMeshes[0]->mName.C_Str();
+      
     for (uint32 i = 0; i < pScene->mNumMeshes; ++i)
     {
       m_mesh[i].vertexBase = numOfVertices;
       numOfVertices += pScene->mMeshes[i]->mNumVertices;
       m_mesh[i].numVertex = pScene->mMeshes[i]->mNumVertices;
-
       m_mesh[i].indexBase = numOfIndices;
 
       if (pScene->mMeshes[i]->HasFaces())

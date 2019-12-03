@@ -69,4 +69,11 @@ namespace gzEngineSDK {
     Model * tempModel = reinterpret_cast<Model*>(model.getHandle());
     tempModel->changeMaterial(newMat);
   }
+
+  String 
+  ResourceManager::getModelName(ResourceHandle<Model> model)
+  {
+    Model * tempModel = reinterpret_cast<Model*>(model.getHandle());
+    return tempModel->m_modelName;
+  }
 }

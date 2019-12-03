@@ -65,4 +65,11 @@ namespace gzEngineSDK {
   {
     return m_activeScene->getRendereableGameObjects();
   }
+
+  String
+  SceneManager::getActiveSceneName()
+  {
+    return m_activeScene->m_name.c_str();
+  }
+
 }

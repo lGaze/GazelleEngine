@@ -417,17 +417,36 @@ namespace gzEngineSDK {
     }
     ImGui::End();
 
+
     //Create ImGui SceneMenu
     ImGui::Begin("Scene");
+    ImGui::Text(SceneManager::instance().getActiveSceneName().c_str());
     ImGui::Separator();
-    if (ImGui::Button("Load Model From File")) 
-    {
-      openfile();
-    }
     if (!SceneManager::instance().isActiveSceneEmpty())
     {
+      ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
       addChildrenToSceneGraph(SceneManager::instance().getChildren());
     }
+
+    if (ImGui::IsMouseReleased(1)) 
+    {
+      ImGui::OpenPopup("Scene Options");
+    }
+
+    //Scene Options pop-up
+    if (ImGui::BeginPopup("Scene Options"))
+    {
+      if (ImGui::MenuItem("Create Empty Object"))
+      {
+      }
+      if (ImGui::MenuItem("Create Game Object From File"))
+      {
+        openfile();
+      }
+      ImGui::EndPopup();
+    }
+
+
     ImGui::End();
 
     //Assemble Together Draw Data
@@ -458,11 +477,11 @@ namespace gzEngineSDK {
     MeshComponent * testModel = new MeshComponent();
 
     testModel->loadMesh(filename);
-
+   
     testModel->changeMaterial(*tempMaterial);
 
     m_gameObject->addComponent(testModel);
-
+    m_gameObject->m_objectName = testModel->getModelName();
     SceneManager::instance().addGameObjectToScene(m_gameObject);
 
   }
@@ -472,17 +491,24 @@ namespace gzEngineSDK {
   {
     for (auto it : children)
     {
-      ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
       if (!it->haveChildren())
       {
         ImGui::TreeNodeEx(it->m_objectName.c_str(),
                           ImGuiTreeNodeFlags_Leaf |
                           ImGuiTreeNodeFlags_NoTreePushOnOpen);
+        if (ImGui::IsItemClicked())
+        {
+          MenuOptions::s_gameObjectName = it->m_objectName.c_str();
+        }
       }
       else
       {
         ImGui::TreeNodeEx(it->m_objectName.c_str(),
                           ImGuiTreeNodeFlags_Selected);
+        if (ImGui::IsItemClicked())
+        {
+          MenuOptions::s_gameObjectName = it->m_objectName.c_str();
+        }
       }
       addChildrenToSceneGraph(it->getChildren());
     }

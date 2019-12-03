@@ -62,6 +62,12 @@ class GZ_CORE_EXPORT MeshComponent : public Component
     return m_resource;
   }
 
+  /**
+   * @brief This function returns the name of the loaded Mesh
+   */
+  String
+  getModelName();
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

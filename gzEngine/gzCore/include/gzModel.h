@@ -70,6 +70,8 @@ class GZ_CORE_EXPORT Model : public Resource
 
    Buffer * m_indexBuffer;
 
+   String m_modelName;
+
    Vector<Mesh> m_mesh;
 
  private:
@@ -93,7 +95,6 @@ class GZ_CORE_EXPORT Model : public Resource
    Vector<VERTEX> m_vertices;
 
    Vector<uint32> m_indices;
-
 
    String m_directoryPath;
 

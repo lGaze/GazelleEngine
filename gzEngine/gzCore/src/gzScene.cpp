@@ -11,7 +11,7 @@
 
 namespace gzEngineSDK {
   
-  Scene::Scene() : m_name("NewScene")
+  Scene::Scene() : m_name("New Scene")
   {
     m_root = SceneManager::instance().createEmptyGameObject();
   }
