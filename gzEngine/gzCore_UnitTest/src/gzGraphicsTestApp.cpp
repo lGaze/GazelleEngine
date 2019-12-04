@@ -72,7 +72,7 @@ namespace gzEngineSDK {
     SceneManager::instance().createScene();
     SceneManager::instance().setActiveScene();
 
-    tempMaterial = new Material();
+    materialRobot = new Material();
 
     Texture * tempTex = new Texture();
 
@@ -104,23 +104,25 @@ namespace gzEngineSDK {
    //-------------------------------------------------------------------------------------//
     tempTex =
       g_GraphicsManager().LoadTextureFromFile("Textures\\Robot\\default_albedo.jpg");
-    tempMaterial->setAlbedoTexture(*tempTex);
+    materialRobot->setAlbedoTexture(*tempTex);
 
     tempTex =
       g_GraphicsManager().LoadTextureFromFile("Textures\\Robot\\default_metallic.jpg");
-    tempMaterial->setMetallicTexture(*tempTex);
+    materialRobot->setMetallicTexture(*tempTex);
 
     tempTex =
       g_GraphicsManager().LoadTextureFromFile("Textures\\Robot\\default_normal.jpg");
-    tempMaterial->setNormalTexture(*tempTex);
+    materialRobot->setNormalTexture(*tempTex);
 
     tempTex =
       g_GraphicsManager().LoadTextureFromFile("Textures\\Robot\\default_roughness.jpg");
-    tempMaterial->setRoughnessTexture(*tempTex);
+    materialRobot->setRoughnessTexture(*tempTex);
 
     tempTex =
       g_GraphicsManager().LoadTextureFromFile("Textures\\Robot\\default_emissive.jpg");
-    tempMaterial->setEmissiveTexture(*tempTex);
+    materialRobot->setEmissiveTexture(*tempTex);
+
+    defaultMaterials.push_back(materialRobot);
 
   /*
     //Sphere
@@ -428,11 +430,10 @@ namespace gzEngineSDK {
       addChildrenToSceneGraph(SceneManager::instance().getChildren());
     }
 
-    if (ImGui::IsMouseReleased(1)) 
+    if (ImGui::IsMouseClicked(1)) 
     {
       ImGui::OpenPopup("Scene Options");
     }
-
     //Scene Options pop-up
     if (ImGui::BeginPopup("Scene Options"))
     {
@@ -445,9 +446,13 @@ namespace gzEngineSDK {
       }
       ImGui::EndPopup();
     }
-
-
     ImGui::End();
+
+    ImGui::Begin("Inspector");
+    if (gameObjectWasSelected)
+    {
+      SceneManager::instance().
+    }
 
     //Assemble Together Draw Data
     ImGui::Render();
@@ -477,8 +482,6 @@ namespace gzEngineSDK {
     MeshComponent * testModel = new MeshComponent();
 
     testModel->loadMesh(filename);
-   
-    testModel->changeMaterial(*tempMaterial);
 
     m_gameObject->addComponent(testModel);
     m_gameObject->m_objectName = testModel->getModelName();
@@ -498,6 +501,7 @@ namespace gzEngineSDK {
                           ImGuiTreeNodeFlags_NoTreePushOnOpen);
         if (ImGui::IsItemClicked())
         {
+          wasGameObjectSelected = true;
           MenuOptions::s_gameObjectName = it->m_objectName.c_str();
         }
       }
@@ -507,6 +511,7 @@ namespace gzEngineSDK {
                           ImGuiTreeNodeFlags_Selected);
         if (ImGui::IsItemClicked())
         {
+          wasGameObjectSelected = true;
           MenuOptions::s_gameObjectName = it->m_objectName.c_str();
         }
       }

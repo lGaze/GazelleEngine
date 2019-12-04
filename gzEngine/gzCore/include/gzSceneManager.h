@@ -100,6 +100,12 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
   String
   getActiveSceneName();
 
+  /**
+   * @brief This function finds the Game Object by the name given
+   */
+  GameObject *
+  findGameObjectByName(String gamObjectName);
+
   /************************************************************************/
   /* Member declarations                                                  */
   /************************************************************************/

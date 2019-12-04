@@ -72,4 +72,10 @@ namespace gzEngineSDK {
     return m_activeScene->m_name.c_str();
   }
 
+  GameObject *
+  SceneManager::findGameObjectByName(String gameObjectName)
+  {
+    
+  }
+
 }

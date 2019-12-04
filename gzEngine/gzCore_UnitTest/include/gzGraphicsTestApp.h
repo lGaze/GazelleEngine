@@ -120,20 +120,23 @@ class GrapichsTestApp : public BaseApp
      Vector2f unused;
    };
 
+   Vector3f Eye;
    cbLight cbLightBuffer;
    cbMatrix cbMatrixbuffer;
    cbSSAOVariables cbSSAOBuffer;
 
    Matrix4 g_World;
 
-   Vector3f Eye;
-
    Buffer * constantMatrix;
 
    GameObject * m_gameObject;
 
-   Material * tempMaterial;
+   Material * materialRobot;
+   Material * materialDroide;
 
+   Vector<Material*> defaultMaterials;
+
+   bool gameObjectWasSelected = false;
    bool wasRotatingX = false;
    bool wasRotatingY = false;
 
