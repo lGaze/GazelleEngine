@@ -8,6 +8,7 @@
 #include "gzPrerequisitesCore.h"
 #include <gzModule.h>
 #include "gzScene.h"
+#include "gzResourceHandle.h"
 
 namespace gzEngineSDK {
 class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
@@ -57,15 +58,21 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
    * @brief Creates a empty game object
    * @paran Return a Game object 
    */
-  GameObject *
+  GameObjectHandle 
   createEmptyGameObject();
+
+  /**
+   * @brief This function creates a empty Game Object with the given name
+   */
+  GameObjectHandle
+  createEmptyGameObject(String gameObjectName);
 
   /**
    * @brief Adds a Scene to the active scene
    * @param Reference to the game object that is going to be added to the active Scene 
    */
   void
-  addGameObjectToScene(GameObject * gameObject);
+  addGameObjectToScene(GameObjectHandle gameObject);
 
   /**
    * @brief Function Update for the active Scene
@@ -82,17 +89,14 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
   /**
    * @brief this function returns all the rendereable Game Objects
    */
-  Vector<GameObject*>
+  Vector<GameObjectHandle>
   getRendereableGameObjects();
 
   /**
    * @brief This function returns the children of the root node of the active Scene
    */
-  FORCEINLINE
   Vector<GameObject*>
-  getChildren() {
-    return m_activeScene->getChildren();
-  }
+  getChildren();
 
   /**
    * @brief This function returns the name of the active scene
@@ -103,7 +107,7 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
   /**
    * @brief This function finds the Game Object by the name given
    */
-  GameObject *
+  GameObjectHandle
   findGameObjectByName(String gamObjectName);
 
   /************************************************************************/
@@ -114,5 +118,8 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
 
   Vector<Scene *> m_scenes;
   Scene * m_activeScene;
+  Map<String, GameObjectHandle> m_gameObjectMap;
+  uint32 m_objectId;
+
  };
 }

@@ -126,6 +126,9 @@
     <ClInclude Include="include\gzDescriptors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\gzGameObjectHandle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\gzBaseApp.cpp">
@@ -177,9 +180,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gzCamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gzResourceHandle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gzResourceManager.cpp">

@@ -8,9 +8,10 @@
 #include "gzScene.h"
 #include "gzGameObject.h"
 
+
 namespace gzEngineSDK {
 
-  SceneManager::SceneManager() 
+  SceneManager::SceneManager() : m_objectId(-1)
   {
     m_activeScene = nullptr;
   }
@@ -34,17 +35,59 @@ namespace gzEngineSDK {
     m_scenes.push_back(newScene);
   }
 
-  GameObject *
+  GameObjectHandle
   SceneManager::createEmptyGameObject()
   {
-    GameObject * newGameObject = new GameObject();
-    return newGameObject;
+    GameObjectHandle handle;
+    GameObject * emptyGameObject = new GameObject(m_objectId);
+    m_objectId++;
+    handle.setHandle(emptyGameObject);
+
+    auto mapObjectName = m_gameObjectMap.find(handle->m_objectName);
+    String gameObjectNum(" (");
+    if (mapObjectName != m_gameObjectMap.end())
+    {
+      gameObjectNum.append(std::to_string(handle->m_uniqueID));
+      handle->m_objectName.append(gameObjectNum += ")");
+      return handle;
+    }
+
+    m_gameObjectMap.insert(std::pair<String, GameObjectHandle>(
+      handle->m_objectName,
+      handle));
+    return handle;
+  }
+
+  GameObjectHandle 
+  SceneManager::createEmptyGameObject(String gameObjectName)
+  {
+    GameObjectHandle handle;
+    GameObject * emptyGameObject = new GameObject(m_objectId);
+    m_objectId++;
+    handle.setHandle(emptyGameObject);
+    handle->m_objectName = gameObjectName;
+    auto mapObjectName = m_gameObjectMap.find(handle->m_objectName);
+
+    String gameObjectNum(" (");
+    if (mapObjectName != m_gameObjectMap.end())
+    {
+      gameObjectNum.append(std::to_string(handle->m_uniqueID));
+      handle->m_objectName.append(gameObjectNum += ")");
+      return handle;
+    }
+
+    m_gameObjectMap.insert(std::pair<String, GameObjectHandle>(
+      handle->m_objectName,
+      handle));
+
+    return handle;
   }
 
   void
-  SceneManager::addGameObjectToScene(GameObject * gameObject)
+  SceneManager::addGameObjectToScene(GameObjectHandle gameObject)
   {
-    m_activeScene->addGameObject(gameObject);
+    GameObject * tmpObject = reinterpret_cast<GameObject*>(gameObject.getHandle());
+    m_activeScene->addGameObject(tmpObject);
   }
 
   void 
@@ -60,10 +103,25 @@ namespace gzEngineSDK {
   }
 
 
-  Vector<GameObject*>
+  Vector<GameObjectHandle>
   SceneManager::getRendereableGameObjects()
   {
-    return m_activeScene->getRendereableGameObjects();
+    Vector<GameObjectHandle> tmpGameObjectHandles;
+    GameObjectHandle handle;
+    tmpGameObjectHandles.reserve(m_activeScene->getRendereableGameObjects().size());
+    for (auto it : m_activeScene->getRendereableGameObjects())
+    {
+      handle.setHandle(it);
+      tmpGameObjectHandles.push_back(handle);
+    }
+
+    return tmpGameObjectHandles;
+  }
+
+  Vector<GameObject*> 
+  SceneManager::getChildren()
+  {
+    return m_activeScene->getChildren();
   }
 
   String
@@ -72,10 +130,11 @@ namespace gzEngineSDK {
     return m_activeScene->m_name.c_str();
   }
 
-  GameObject *
+  GameObjectHandle
   SceneManager::findGameObjectByName(String gameObjectName)
   {
-    
+    GameObjectHandle handle;
+    return handle;
   }
 
 }

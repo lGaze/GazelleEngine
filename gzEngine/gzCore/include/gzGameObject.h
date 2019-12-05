@@ -19,7 +19,7 @@ class GZ_CORE_EXPORT GameObject
   /**
    * @brief Default Constructor
    */
-  GameObject();
+  GameObject(uint32 uniqueID);
 
   friend class SceneManager;
 
@@ -120,6 +120,7 @@ class GZ_CORE_EXPORT GameObject
   bool m_isEneabled; 
   Transform m_transform;
   String m_objectName;
+  uint32 m_uniqueID;
  
 private:
 

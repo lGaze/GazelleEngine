@@ -2,7 +2,7 @@
 /* @filename gzResourceHandle.h
 /* @author Victor Flores 
 /* @date 2019/07/20
-/* @brief This function works for make handle of the resources
+/* @brief This class works for make handle of the resources
 /**************************************************************************/
 
 #pragma once

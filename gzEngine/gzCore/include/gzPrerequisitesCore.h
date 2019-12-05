@@ -40,6 +40,7 @@ namespace gzEngineSDK {
   class SceneGraph;
   class Material;
   class InputManager;
+  class GameObjectHandle;
 
 }
 

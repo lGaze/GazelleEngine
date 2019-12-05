@@ -410,7 +410,7 @@ namespace gzEngineSDK {
     uint32 stride = sizeof(VERTEX);
     uint32 offset = 0;
 
-    Vector<GameObject*> sceneObjects =
+    Vector<GameObjectHandle> sceneObjects =
       SceneManager::instance().getRendereableGameObjects();
 
     for (auto &it : sceneObjects)

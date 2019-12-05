@@ -449,11 +449,12 @@ namespace gzEngineSDK {
     ImGui::End();
 
     ImGui::Begin("Inspector");
+/*
     if (gameObjectWasSelected)
     {
       SceneManager::instance().
-    }
-
+    }*/
+    ImGui::End();
     //Assemble Together Draw Data
     ImGui::Render();
     //Render Draw Data
@@ -476,15 +477,15 @@ namespace gzEngineSDK {
     ofn.lpstrInitialDir = "Meshes\\";
     ofn.Flags = OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
     GetOpenFileName(&ofn);
-    
-    m_gameObject = SceneManager::instance().createEmptyGameObject();
 
     MeshComponent * testModel = new MeshComponent();
 
     testModel->loadMesh(filename);
 
+    m_gameObject = 
+      SceneManager::instance().createEmptyGameObject(testModel->getModelName());
     m_gameObject->addComponent(testModel);
-    m_gameObject->m_objectName = testModel->getModelName();
+
     SceneManager::instance().addGameObjectToScene(m_gameObject);
 
   }
@@ -501,7 +502,7 @@ namespace gzEngineSDK {
                           ImGuiTreeNodeFlags_NoTreePushOnOpen);
         if (ImGui::IsItemClicked())
         {
-          wasGameObjectSelected = true;
+          gameObjectWasSelected = true;
           MenuOptions::s_gameObjectName = it->m_objectName.c_str();
         }
       }
@@ -511,7 +512,7 @@ namespace gzEngineSDK {
                           ImGuiTreeNodeFlags_Selected);
         if (ImGui::IsItemClicked())
         {
-          wasGameObjectSelected = true;
+          gameObjectWasSelected = true;
           MenuOptions::s_gameObjectName = it->m_objectName.c_str();
         }
       }

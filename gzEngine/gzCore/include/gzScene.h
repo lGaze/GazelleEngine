@@ -7,6 +7,7 @@
 #pragma once
 #include "gzPrerequisitesCore.h"
 #include "gzGameObject.h"
+#include "gzGameObjectHandle.h"
 
 namespace gzEngineSDK {
 class GZ_CORE_EXPORT Scene
@@ -91,7 +92,7 @@ class GZ_CORE_EXPORT Scene
 
  private:
 
-  GameObject * m_root;
+   GameObjectHandle m_root;
 
  };
 }

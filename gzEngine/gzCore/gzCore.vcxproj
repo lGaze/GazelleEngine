@@ -28,6 +28,7 @@
     <ClInclude Include="include\gzDescriptors.h" />
     <ClInclude Include="include\gzEnums.h" />
     <ClInclude Include="include\gzGameObject.h" />
+    <ClInclude Include="include\gzGameObjectHandle.h" />
     <ClInclude Include="include\gzGraphicsDescriptors.h" />
     <ClInclude Include="include\gzGraphicsEnums.h" />
     <ClInclude Include="include\gzGraphicsManager.h" />
@@ -71,7 +72,6 @@
     <ClCompile Include="src\gzModel.cpp" />
     <ClCompile Include="src\gzPixelShader.cpp" />
     <ClCompile Include="src\gzRasterizerState.cpp" />
-    <ClCompile Include="src\gzResourceHandle.cpp" />
     <ClCompile Include="src\gzResourceManager.cpp" />
     <ClCompile Include="src\gzSamplerState.cpp" />
     <ClCompile Include="src\gzScene.cpp" />

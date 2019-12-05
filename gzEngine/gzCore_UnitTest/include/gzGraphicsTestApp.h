@@ -7,7 +7,7 @@
 #pragma once
 
 #include <gzBaseApp.h>
-
+#include <gzGameObjectHandle.h>
 
 namespace gzEngineSDK {
 class GrapichsTestApp : public BaseApp
@@ -129,7 +129,7 @@ class GrapichsTestApp : public BaseApp
 
    Buffer * constantMatrix;
 
-   GameObject * m_gameObject;
+   GameObjectHandle m_gameObject;
 
    Material * materialRobot;
    Material * materialDroide;

@@ -10,8 +10,8 @@
 
 namespace gzEngineSDK {
 
-  GameObject::GameObject() : 
-    m_isEneabled(true), m_objectName("EmptyGameObject"){}
+  GameObject::GameObject(uint32 uniqueID) : 
+    m_isEneabled(true), m_objectName("GameObject"), m_uniqueID(uniqueID){}
 
   void
   GameObject::addComponent(Component * newComponent)
