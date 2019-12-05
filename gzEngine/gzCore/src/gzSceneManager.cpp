@@ -133,8 +133,12 @@ namespace gzEngineSDK {
   GameObjectHandle
   SceneManager::findGameObjectByName(String gameObjectName)
   {
-    GameObjectHandle handle;
-    return handle;
+    auto filename = m_gameObjectMap.find(gameObjectName);
+    if (filename != m_gameObjectMap.end())
+    {
+      return filename->second;
+    }
+    return GameObjectHandle();
   }
 
 }

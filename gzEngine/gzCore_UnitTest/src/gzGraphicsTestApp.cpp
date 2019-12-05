@@ -449,11 +449,12 @@ namespace gzEngineSDK {
     ImGui::End();
 
     ImGui::Begin("Inspector");
-/*
+
     if (gameObjectWasSelected)
     {
-      SceneManager::instance().
-    }*/
+      m_gameObject = SceneManager::instance().findGameObjectByName(
+        MenuOptions::s_gameObjectName);
+    }
     ImGui::End();
     //Assemble Together Draw Data
     ImGui::Render();
