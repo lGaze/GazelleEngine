@@ -75,19 +75,19 @@ namespace gzEngineSDK {
     g_GraphicsManager().setPSConstantBuffers(m_ssaoCBuffer, 0, 1);
     g_GraphicsManager().setVertexBuffers(0,
                                          1,
-                                         quad->m_vertexBuffer,
+                                         quad->m_mesh[0].vertexBuffer,
                                          &stride,
                                          &offset);
 
     g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
-                                       quad->m_indexBuffer,
+                                       quad->m_mesh[0].indexBuffer,
                                        offset);
 
     g_GraphicsManager().setShaderResources(m_positionsRT, 0, 1);
     g_GraphicsManager().setShaderResources(m_normalsRT, 1, 1);
 
     g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
-                                    quad->m_mesh[0].indexBase,
+                                    0,
                                     0);
   }
 
@@ -117,16 +117,16 @@ namespace gzEngineSDK {
 
     g_GraphicsManager().setVertexBuffers(0,
                                          1,
-                                         quad->m_vertexBuffer,
+                                         quad->m_mesh[0].vertexBuffer,
                                          &stride,
                                          &offset);
 
     g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
-                                       quad->m_indexBuffer,
+                                       quad->m_mesh[0].indexBuffer,
                                        offset);
 
     g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
-                                    quad->m_mesh[0].indexBase,
+                                    0,
                                     0);
   }
 
@@ -144,16 +144,16 @@ namespace gzEngineSDK {
 
     g_GraphicsManager().setVertexBuffers(0,
                                          1,
-                                         quad->m_vertexBuffer,
+                                         quad->m_mesh[0].vertexBuffer,
                                          &stride,
                                          &offset);
 
     g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
-                                       quad->m_indexBuffer,
+                                       quad->m_mesh[0].indexBuffer,
                                        offset);
 
     g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
-                                    quad->m_mesh[0].indexBase,
+                                    0,
                                     0);
   }
 
@@ -171,17 +171,17 @@ namespace gzEngineSDK {
 
     g_GraphicsManager().setVertexBuffers(0,
                                          1,
-                                         quad->m_vertexBuffer,
+                                         quad->m_mesh[0].vertexBuffer,
                                          &stride,
                                          &offset);
 
     g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
-                                       quad->m_indexBuffer,
+                                       quad->m_mesh[0].indexBuffer,
                                        offset);
 
     g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
-                                    quad->m_mesh[0].indexBase,
-                                    0); 
+                                    0,
+                                    0);
   }
 
   void
@@ -198,16 +198,16 @@ namespace gzEngineSDK {
 
     g_GraphicsManager().setVertexBuffers(0,
                                          1,
-                                         quad->m_vertexBuffer,
+                                         quad->m_mesh[0].vertexBuffer,
                                          &stride,
                                          &offset);
 
     g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
-                                       quad->m_indexBuffer,
+                                       quad->m_mesh[0].indexBuffer,
                                        offset);
 
     g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
-                                    quad->m_mesh[0].indexBase,
+                                    0,
                                     0);
 
   }
@@ -226,16 +226,16 @@ namespace gzEngineSDK {
 
     g_GraphicsManager().setVertexBuffers(0,
                                          1,
-                                         quad->m_vertexBuffer,
+                                         quad->m_mesh[0].vertexBuffer,
                                          &stride,
                                          &offset);
 
     g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
-                                       quad->m_indexBuffer,
+                                       quad->m_mesh[0].indexBuffer,
                                        offset);
 
     g_GraphicsManager().drawIndexed(quad->m_mesh[0].numIndex,
-                                    quad->m_mesh[0].indexBase,
+                                    0,
                                     0);
   }
 
@@ -341,9 +341,6 @@ namespace gzEngineSDK {
     m_irradiance =
       g_GraphicsManager().loadDDSTextureFromFile(L"Textures\\DDS\\Garage.dds");
 
-    m_specularReflection =
-      g_GraphicsManager().loadDDSTextureFromFile(L"Textures\\Vela\\Irradiance.dds");
-
     m_lut =
       g_GraphicsManager().LoadTextureFromFile("Textures\\ibl_brdf_lut.png");
 
@@ -417,39 +414,41 @@ namespace gzEngineSDK {
     {
       auto * meshComponent = it->getComponent(COMPONENT_TYPE::kMeshComponent);
       MeshComponent * model = reinterpret_cast<MeshComponent*>(meshComponent);
-      g_GraphicsManager().setVertexBuffers(0,
-                                           1,
-                                           model->getHandle()->m_vertexBuffer,
-                                           &stride,
-                                           &offset);
-
-      g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
-                                         model->getHandle()->m_indexBuffer,
-                                         offset);
-
+ 
       for (uint32 i = 0; i < model->getHandle()->m_mesh.size(); i++)
       {
         auto m_mesh = model->getHandle()->m_mesh[i];
-        if (nullptr != m_mesh.material)
+        if (nullptr != m_mesh.meshMaterial)
         {
-          g_GraphicsManager().setShaderResources(&m_mesh.material->getAlbedoTexture(),
+          g_GraphicsManager().setShaderResources(&m_mesh.meshMaterial->getAlbedoTexture(),
                                                  0,
                                                  1);
-          g_GraphicsManager().setShaderResources(&m_mesh.material->getNormalTexture(),
+          g_GraphicsManager().setShaderResources(&m_mesh.meshMaterial->getNormalTexture(),
                                                  1,
                                                  1);
-          g_GraphicsManager().setShaderResources(&m_mesh.material->getMetallicTexture(),
+          g_GraphicsManager().setShaderResources(&m_mesh.meshMaterial->getMetallicTexture(),
                                                  2,
                                                  1);
-          g_GraphicsManager().setShaderResources(&m_mesh.material->getRoughnessTexture(),
+          g_GraphicsManager().setShaderResources(&m_mesh.meshMaterial->getRoughnessTexture(),
                                                  3,
                                                  1);
-          g_GraphicsManager().setShaderResources(&m_mesh.material->getEmissiveTexture(),
+          g_GraphicsManager().setShaderResources(&m_mesh.meshMaterial->getEmissiveTexture(),
                                                  4,
                                                  1);
         }
+
+        g_GraphicsManager().setVertexBuffers(0,
+                                             1,
+                                             m_mesh.vertexBuffer,
+                                             &stride,
+                                             &offset);
+
+        g_GraphicsManager().setIndexBuffer(FORMATS::E::FORMAT_R32_UINT,
+                                           m_mesh.indexBuffer,
+                                           offset);
+
         g_GraphicsManager().drawIndexed(m_mesh.numIndex,
-                                        m_mesh.indexBase,
+                                        0,
                                         0);
       }
     }

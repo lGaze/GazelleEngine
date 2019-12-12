@@ -12,7 +12,7 @@
 
 namespace gzEngineSDK {
 
-  Material::Material()
+  Material::Material(/*uint32 m_uniqueID*/)
   {
     m_albedoTexture = new Texture();
     m_metallicTexture = new Texture();

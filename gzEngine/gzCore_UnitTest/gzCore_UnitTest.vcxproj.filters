@@ -51,6 +51,9 @@
     <ClCompile Include="externals\ImGui\imgui_demo.cpp">
       <Filter>Externals\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="externals\ImGui\imgui_stdlib.cpp">
+      <Filter>Externals\ImGui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\gzGraphicsTestApp.h">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="include\gzMenuOptions.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="externals\ImGui\imgui_stdlib.h">
+      <Filter>Externals\ImGui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

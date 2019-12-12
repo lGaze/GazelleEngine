@@ -17,7 +17,7 @@ class GZ_CORE_EXPORT Material : public Resource
   /**
    * @brief Default constructor
    */
-  Material();
+  Material(/*uint32 uniqueID*/);
 
   /**
    * @brief Default destructor
@@ -138,8 +138,13 @@ class GZ_CORE_EXPORT Material : public Resource
   /* Member declarations                                                  */
   /************************************************************************/
 
+ public:
+
+   String m_materialName;
+
  private:
 
+   uint32 m_uniqueID;
    Texture * m_albedoTexture;
    Texture * m_metallicTexture;
    Texture * m_roughnessTexture;

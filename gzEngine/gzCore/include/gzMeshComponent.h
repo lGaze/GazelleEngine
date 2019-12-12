@@ -12,7 +12,7 @@ namespace gzEngineSDK {
 class GZ_CORE_EXPORT MeshComponent : public Component
 {
  public:
-   
+
   /**
    * @brief default constructor
    */
@@ -48,11 +48,17 @@ class GZ_CORE_EXPORT MeshComponent : public Component
   update() override;
 
   /**
-   * @brief 
+   * @brief This function changes the material of the Model
    * @param Reference to the new material 
    */
   void
-  changeMaterial(Material &Material);
+  changeMaterial(Material &material);
+
+  /**
+   * @brief This function gets the given material
+   */
+  Material *
+  getMaterial();
 
   /**
    * @brief This function gets the handle of the model
@@ -76,6 +82,5 @@ class GZ_CORE_EXPORT MeshComponent : public Component
 
   ResourceHandle<Model> m_resource;
   COMPONENT_TYPE::E m_type;
-   
  };
 }

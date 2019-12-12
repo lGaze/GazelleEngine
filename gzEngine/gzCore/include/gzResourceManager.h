@@ -49,16 +49,28 @@ class GZ_CORE_EXPORT ResourceManager : public Module<ResourceManager>
   loadModelFromFile(const String filename);
 
   /**
+   * @brief This Function creates a material 
+   */
+  ResourceHandle<Material>
+  createMaterial();
+
+  /**
    * @brief 
    */
   void
   drawModel(ResourceHandle<Model> model);
 
   /**
-   * @brief 
+   * @brief This function changes the Material of the given model
    */
   void
   changeMaterial(ResourceHandle<Model> model, Material & newMat);
+
+  /**
+   * @brief This function returns the material of the given model
+   */
+  Material
+  getMaterial(ResourceHandle<Model> model);
 
   /**
    * @brief Returns the model name of the given resource handle
@@ -74,6 +86,8 @@ class GZ_CORE_EXPORT ResourceManager : public Module<ResourceManager>
   protected:
 
   Map<String, Model*> m_modelMap;
+  Map<uint32, ResourceHandle<Material>> m_materialMap;
+  uint32 m_materialUniqueID;
 
  };
 }

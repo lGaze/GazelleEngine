@@ -16,11 +16,13 @@ struct aiMaterial;
 namespace gzEngineSDK {
 
 struct Mesh {
-    uint32 vertexBase;
-    uint32 indexBase;
+    String meshName;
     uint32 numVertex;
     uint32 numIndex;
-    Material * material;
+    Buffer * indexBuffer;
+    Buffer * vertexBuffer;
+    String materialKey;
+    Material * meshMaterial;
 };
 
 class GZ_CORE_EXPORT Model : public Resource
@@ -51,11 +53,11 @@ class GZ_CORE_EXPORT Model : public Resource
    bool
    Load(String filename);
 
-   /**
-    * @brief This function draws all the meshes 
-    */
-   void
-   Draw();
+   ///**
+   // * @brief This function draws all the meshes 
+   // */
+   //void
+   //Draw();
 
    /**
     * @brief This function changes the material for a new one
@@ -64,11 +66,21 @@ class GZ_CORE_EXPORT Model : public Resource
    void
    changeMaterial(Material & newMat);
 
+   /**
+    * @brief This function returns the material of the model
+    */
+   FORCEINLINE
+   Vector<Material*>
+   getMaterial() {
+     Vector<Material*> tmpMaterialVector;
+     for (auto it :  m_mesh)
+     {
+       tmpMaterialVector.push_back(it.meshMaterial);
+     }
+     return tmpMaterialVector;
+   }
+
    //TODO: Fix this public variables, make them private and make getters
-
-   Buffer * m_vertexBuffer;
-
-   Buffer * m_indexBuffer;
 
    String m_modelName;
 
@@ -83,8 +95,6 @@ class GZ_CORE_EXPORT Model : public Resource
     */
    Material *
    createMaterial(aiMaterial* material);
-
-   
 
   /************************************************************************/
   /* Member functions                                                     */

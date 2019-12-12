@@ -124,6 +124,18 @@ namespace gzEngineSDK {
     return m_activeScene->getChildren();
   }
 
+  void
+  SceneManager::changeGameObjectName(GameObjectHandle gameObject, 
+                                     String newName) 
+  {
+    auto mapObjectName = m_gameObjectMap.find(gameObject->m_objectName);
+    if (mapObjectName != m_gameObjectMap.end())
+    {
+
+    }
+
+  }
+
   String
   SceneManager::getActiveSceneName()
   {

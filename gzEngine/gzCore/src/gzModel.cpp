@@ -26,9 +26,6 @@ namespace gzEngineSDK {
   {
     Assimp::Importer importer;
 
-    uint32 numOfVertices = 0;
-    uint32 numOfIndices = 0;
-
     const aiScene * pScene = importer.ReadFile(
       filename,
       aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_ConvertToLeftHanded);
@@ -39,111 +36,111 @@ namespace gzEngineSDK {
     }
 
     m_mesh.resize(pScene->mNumMeshes);
-    m_modelName = pScene->mMeshes[0]->mName.C_Str();
+    m_modelName = filename;
       
     for (uint32 i = 0; i < pScene->mNumMeshes; ++i)
     {
-      m_mesh[i].vertexBase = numOfVertices;
-      numOfVertices += pScene->mMeshes[i]->mNumVertices;
       m_mesh[i].numVertex = pScene->mMeshes[i]->mNumVertices;
-      m_mesh[i].indexBase = numOfIndices;
-
+      m_mesh[i].meshName = pScene->mMeshes[i]->mName.C_Str();
       if (pScene->mMeshes[i]->HasFaces())
       {
         for (uint32 j = 0; j < pScene->mMeshes[i]->mNumFaces; ++j)
         {
-          numOfIndices += pScene->mMeshes[i]->mFaces[j].mNumIndices;
           m_mesh[i].numIndex += pScene->mMeshes[i]->mFaces[j].mNumIndices;
         }
       }
 
-      m_mesh[i].material = new Material();
+      m_mesh[i].meshMaterial = new Material();
       if (pScene->mMeshes[i]->mMaterialIndex > 0)
       {
         aiMaterial * material =
           pScene->mMaterials[pScene->mMeshes[i]->mMaterialIndex];
-        m_mesh[i].material = createMaterial(material);
+        m_mesh[i].meshMaterial = createMaterial(material);
       }
 
     }
 
-    m_vertices.resize(numOfVertices);
-    m_indices.resize(numOfIndices);
 
     for (uint32 i = 0; i < pScene->mNumMeshes; ++i)
     {
       auto& it = pScene->mMeshes[i];
       auto& currentMesh = m_mesh[i];
+      m_vertices.resize(currentMesh.numVertex);
+      m_indices.resize(currentMesh.numIndex);
 
+      //Vertices
       for (uint32 j = 0; j < it->mNumVertices; ++j)
       {
-        uint32 index = currentMesh.vertexBase + j;
-        m_vertices[index].position.x = it->mVertices[j].x;
-        m_vertices[index].position.y = it->mVertices[j].y;
-        m_vertices[index].position.z = it->mVertices[j].z;
+        m_vertices[j].position.x = it->mVertices[j].x;
+        m_vertices[j].position.y = it->mVertices[j].y;
+        m_vertices[j].position.z = it->mVertices[j].z;
 
         if (it->mTextureCoords[0])
         {
-          m_vertices[index].texcoord.x =
+          m_vertices[j].texcoord.x =
             static_cast<float>(it->mTextureCoords[0][j].x);
-          m_vertices[index].texcoord.y =
+          m_vertices[j].texcoord.y =
             static_cast<float>(it->mTextureCoords[0][j].y);
         }
         if (it->HasNormals())
         {
-          m_vertices[index].normal.x = it->mNormals[j].x;
-          m_vertices[index].normal.y = it->mNormals[j].y;
-          m_vertices[index].normal.z = it->mNormals[j].z;
+          m_vertices[j].normal.x = it->mNormals[j].x;
+          m_vertices[j].normal.y = it->mNormals[j].y;
+          m_vertices[j].normal.z = it->mNormals[j].z;
         }
         if (it->HasTangentsAndBitangents())
         {
-          m_vertices[index].binormal.x = it->mBitangents[j].x;
-          m_vertices[index].binormal.y = it->mBitangents[j].y;
-          m_vertices[index].binormal.z = it->mBitangents[j].z;
+          m_vertices[j].binormal.x = it->mBitangents[j].x;
+          m_vertices[j].binormal.y = it->mBitangents[j].y;
+          m_vertices[j].binormal.z = it->mBitangents[j].z;
 
-          m_vertices[index].tangent.x = it->mTangents[j].x;
-          m_vertices[index].tangent.y = it->mTangents[j].y;
-          m_vertices[index].tangent.z = it->mTangents[j].z;
+          m_vertices[j].tangent.x = it->mTangents[j].x;
+          m_vertices[j].tangent.y = it->mTangents[j].y;
+          m_vertices[j].tangent.z = it->mTangents[j].z;
         }
       }
+
+      BUFFER_DESCRIPTOR tempDesc;
+      memset(&tempDesc, 0, sizeof(tempDesc));
+      tempDesc.BindFlags = BIND_FLAGS::E::BIND_VERTEX_BUFFER;
+      tempDesc.Usage = USAGES::E::USAGE_DEFAULT;
+      tempDesc.ByteWidth = currentMesh.numVertex * sizeof(VERTEX);
+      
+      SUBRESOUCE_DATA initData;
+      memset(&initData, 0, sizeof(initData));
+      initData.pSysMem = &m_vertices[0];
+      initData.SysMemPitch = m_vertices.size();
+
+      currentMesh.vertexBuffer = 
+        g_GraphicsManager().createBuffer(tempDesc, &initData);
+
+      int32 iterator = 0;
+      //Indices
       for (uint32 j = 0; j < it->mNumFaces; ++j)
       {
-        for (uint32 k = 0; k < it->mFaces[j].mNumIndices; ++k)
+        aiFace face = it->mFaces[j];
+        for (uint32 k = 0; k < face.mNumIndices; ++k)
         {
-          m_indices[m_mesh[i].indexBase + j * it->mFaces[j].mNumIndices + k] =
-            it->mFaces[j].mIndices[k] + m_mesh[i].vertexBase;
+          m_indices[iterator] = face.mIndices[k];
+          iterator++;
         }
       }
+
+      tempDesc.BindFlags = BIND_FLAGS::E::BIND_INDEX_BUFFER;
+      tempDesc.Usage = USAGES::E::USAGE_DEFAULT;
+      tempDesc.ByteWidth = currentMesh.numIndex * sizeof(uint32);
+
+      memset(&initData, 0, sizeof(initData));
+      initData.pSysMem = &m_indices[0];
+      initData.SysMemPitch = m_indices.size();
+
+      currentMesh.indexBuffer = 
+        g_GraphicsManager().createBuffer(tempDesc, &initData);
     }
-
-    BUFFER_DESCRIPTOR tempDesc;
-    memset(&tempDesc, 0, sizeof(tempDesc));
-    tempDesc.BindFlags = BIND_FLAGS::E::BIND_VERTEX_BUFFER;
-    tempDesc.Usage = USAGES::E::USAGE_DEFAULT;
-    tempDesc.ByteWidth = numOfVertices * sizeof(VERTEX);
-    
-    SUBRESOUCE_DATA initData;
-    memset(&initData, 0, sizeof(initData));
-    initData.pSysMem = &m_vertices[0];
-    initData.SysMemPitch = m_vertices.size();
-
-    m_vertexBuffer = 
-      g_GraphicsManager().createBuffer(tempDesc, &initData);
-    
-    tempDesc.BindFlags = BIND_FLAGS::E::BIND_INDEX_BUFFER;
-    tempDesc.Usage = USAGES::E::USAGE_DEFAULT;
-    tempDesc.ByteWidth = numOfIndices * sizeof(uint32);
-
-    memset(&initData, 0, sizeof(initData));
-    initData.pSysMem = &m_indices[0];
-    initData.SysMemPitch = m_indices.size();
-
-    m_indexBuffer = 
-      g_GraphicsManager().createBuffer(tempDesc, &initData);
-
     return true;
   }
 
+/*
   void 
   Model::Draw()
   {
@@ -162,21 +159,21 @@ namespace gzEngineSDK {
 
     for (uint32 i = 0; i < m_mesh.size(); i++)
     {
-      if (nullptr != m_mesh[i].material)
+      if (nullptr != m_mesh[i].meshMaterial)
       {
-        g_GraphicsManager().setShaderResources(&m_mesh[i].material->getAlbedoTexture(),
+        g_GraphicsManager().setShaderResources(&m_mesh[i].meshMaterial->getAlbedoTexture(),
                                                        0,
                                                        1);
-        g_GraphicsManager().setShaderResources(&m_mesh[i].material->getNormalTexture(),
+        g_GraphicsManager().setShaderResources(&m_mesh[i].meshMaterial->getNormalTexture(),
                                                        1,
                                                        1);
-        g_GraphicsManager().setShaderResources(&m_mesh[i].material->getMetallicTexture(),
+        g_GraphicsManager().setShaderResources(&m_mesh[i].meshMaterial->getMetallicTexture(),
                                                        2,
                                                        1);
-        g_GraphicsManager().setShaderResources(&m_mesh[i].material->getRoughnessTexture(),
+        g_GraphicsManager().setShaderResources(&m_mesh[i].meshMaterial->getRoughnessTexture(),
                                                        3,
                                                        1);
-        g_GraphicsManager().setShaderResources(&m_mesh[i].material->getEmissiveTexture(),
+        g_GraphicsManager().setShaderResources(&m_mesh[i].meshMaterial->getEmissiveTexture(),
                                                        4,
                                                        1);
       }
@@ -184,7 +181,7 @@ namespace gzEngineSDK {
                                               m_mesh[i].indexBase, 
                                               0);
     }
-  }
+  }*/
 
   Material * 
   Model::createMaterial(aiMaterial * material)
@@ -255,7 +252,7 @@ namespace gzEngineSDK {
   {
     for (auto &it : m_mesh)
     {
-      it.material = &newMat;
+      it.meshMaterial = &newMat;
     }
   }
 

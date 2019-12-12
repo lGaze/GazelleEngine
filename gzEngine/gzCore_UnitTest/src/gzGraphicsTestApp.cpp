@@ -7,6 +7,7 @@
 #include <ImGui/imgui.h>
 #include <ImGui/imgui_impl_win32.h>
 #include <ImGui/imgui_impl_dx11.h>
+#include <Imgui/imgui_stdlib.h>
 #include "gzGraphicsTestApp.h"
 #include <gzSceneManager.h>
 #include <gzCameraManager.h>
@@ -449,13 +450,58 @@ namespace gzEngineSDK {
     ImGui::End();
 
     ImGui::Begin("Inspector");
-
     if (gameObjectWasSelected)
     {
       m_gameObject = SceneManager::instance().findGameObjectByName(
         MenuOptions::s_gameObjectName);
+
+      ImGui::InputText("Name",
+                       &MenuOptions::s_gameObjectName);
+      if (ImGui::IsItemDeactivatedAfterEdit())
+      {
+        //TODO: Rename Function
+      }
+
+      ImGui::Separator();
+      MenuOptions::s_inspectorPosition[0] = m_gameObject->m_transform.m_position.x;
+      MenuOptions::s_inspectorPosition[1] = m_gameObject->m_transform.m_position.y;
+      MenuOptions::s_inspectorPosition[2] = m_gameObject->m_transform.m_position.z;
+      ImGui::DragFloat3("Position", MenuOptions::s_inspectorPosition);
+
+      MenuOptions::s_inspectorScale[0] = m_gameObject->m_transform.m_scale.x;
+      MenuOptions::s_inspectorScale[1] = m_gameObject->m_transform.m_scale.y;
+      MenuOptions::s_inspectorScale[2] = m_gameObject->m_transform.m_scale.z;
+      ImGui::DragFloat3("Scale", MenuOptions::s_inspectorScale);
+
+      MenuOptions::s_inspectorRotation[0] = m_gameObject->m_transform.m_rotation.x;
+      MenuOptions::s_inspectorRotation[1] = m_gameObject->m_transform.m_rotation.y;
+      MenuOptions::s_inspectorRotation[2] = m_gameObject->m_transform.m_rotation.z;
+      ImGui::DragFloat3("Rotation", MenuOptions::s_inspectorRotation);
+      ImGui::Spacing();
+      ImGui::Spacing();
+
+
+      ImGui::Separator();
+
+      if (m_gameObject->haveComponents())
+      {
+        for (Component * it : m_gameObject->getComponents())
+        {
+          if (it->getComponentType() == COMPONENT_TYPE::kMeshComponent)
+          {
+            ImGui::Text("Model");
+            MeshComponent * tmpModel = 
+              reinterpret_cast<MeshComponent*>(
+                m_gameObject->getComponent(COMPONENT_TYPE::kMeshComponent));
+            //Material tmppMaterial = tmpModel->
+ 
+          }
+        }
+      }
+
     }
     ImGui::End();
+
     //Assemble Together Draw Data
     ImGui::Render();
     //Render Draw Data

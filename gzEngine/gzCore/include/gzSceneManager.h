@@ -99,6 +99,12 @@ class GZ_CORE_EXPORT SceneManager : public Module<SceneManager>
   getChildren();
 
   /**
+   * @brief This function changes the name of the given Game Object
+   */
+  void
+  changeGameObjectName(GameObjectHandle gameObject, String newName);
+
+  /**
    * @brief This function returns the name of the active scene
    */
   String

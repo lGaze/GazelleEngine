@@ -93,12 +93,34 @@ class GZ_CORE_EXPORT GameObject
   }
 
   /**
+   * @brief This function returns the components of the Game Object
+   */
+  FORCEINLINE
+  Vector<Component*>
+  getComponents() {
+    return m_components;
+  }
+
+  /**
    * @brief This fuction returns true if the Game Object has children
    */
   FORCEINLINE
   bool
   haveChildren() {
     if (m_children.size() > 0)
+    {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * @brief This function returns true if the Game Object has components
+   */
+  FORCEINLINE
+  bool
+  haveComponents() {
+    if (m_components.size() > 0)
     {
       return true;
     }

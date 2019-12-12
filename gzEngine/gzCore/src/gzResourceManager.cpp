@@ -9,6 +9,7 @@
 #include "gzGraphicsManager.h"
 #include "gzTexture.h"
 #include "gzModel.h"
+#include "gzMaterial.h"
 
 namespace gzEngineSDK {
 
@@ -56,11 +57,21 @@ namespace gzEngineSDK {
     return handle;
   }
 
+  ResourceHandle<Material> 
+  ResourceManager::createMaterial()
+  {
+    Material * newMaterial = new Material(/*m_materialUniqueID*/);
+    m_materialUniqueID++;
+    ResourceHandle<Material> handle;
+    handle.setHandle(newMaterial);
+    return handle;
+  }
+
   void 
   ResourceManager::drawModel(ResourceHandle<Model> model)
   {
     Model * tempModel = reinterpret_cast<Model*>(model.getHandle());
-    tempModel->Draw();
+    //tempModel->Draw();
   }
 
   void 
@@ -69,6 +80,14 @@ namespace gzEngineSDK {
     Model * tempModel = reinterpret_cast<Model*>(model.getHandle());
     tempModel->changeMaterial(newMat);
   }
+
+//   Material 
+//   ResourceManager::getMaterial(ResourceHandle<Model> model)
+//   {
+//     Model * tempModel = reinterpret_cast<Model*>(model.getHandle());
+//     
+//     return tempModel->getMaterial();
+//   }
 
   String 
   ResourceManager::getModelName(ResourceHandle<Model> model)
